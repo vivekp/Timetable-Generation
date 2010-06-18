@@ -1,0 +1,1233 @@
+-- MySQL dump 10.13  Distrib 5.1.37, for debian-linux-gnu (i486)
+--
+-- Host: localhost    Database: timetable2
+-- ------------------------------------------------------
+-- Server version	5.1.37-1ubuntu5.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `TURBINE_GROUP`
+--
+
+DROP TABLE IF EXISTS `TURBINE_GROUP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_GROUP` (
+  `GROUP_ID` int(11) NOT NULL,
+  `GROUP_NAME` varchar(99) NOT NULL,
+  `OBJECTDATA` mediumblob,
+  PRIMARY KEY (`GROUP_ID`),
+  UNIQUE KEY `GROUP_NAME` (`GROUP_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_GROUP`
+--
+
+LOCK TABLES `TURBINE_GROUP` WRITE;
+/*!40000 ALTER TABLE `TURBINE_GROUP` DISABLE KEYS */;
+INSERT INTO `TURBINE_GROUP` VALUES (1,'global',NULL),(2,'author',NULL);
+/*!40000 ALTER TABLE `TURBINE_GROUP` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TURBINE_PERMISSION`
+--
+
+DROP TABLE IF EXISTS `TURBINE_PERMISSION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_PERMISSION` (
+  `PERMISSION_ID` int(11) NOT NULL,
+  `PERMISSION_NAME` varchar(99) NOT NULL,
+  `OBJECTDATA` mediumblob,
+  PRIMARY KEY (`PERMISSION_ID`),
+  UNIQUE KEY `PERMISSION_NAME` (`PERMISSION_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_PERMISSION`
+--
+
+LOCK TABLES `TURBINE_PERMISSION` WRITE;
+/*!40000 ALTER TABLE `TURBINE_PERMISSION` DISABLE KEYS */;
+INSERT INTO `TURBINE_PERMISSION` VALUES (1,'admin_users',NULL),(2,'read',NULL),(3,'write',NULL),(4,'update_user',NULL),(5,'add_user',NULL),(6,'delete_user',NULL),(7,'add',NULL),(8,'update',NULL),(9,'delete',NULL),(10,'traverse',NULL),(11,'backup',NULL),(12,'restore',NULL);
+/*!40000 ALTER TABLE `TURBINE_PERMISSION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TURBINE_ROLE`
+--
+
+DROP TABLE IF EXISTS `TURBINE_ROLE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_ROLE` (
+  `ROLE_ID` int(11) NOT NULL,
+  `ROLE_NAME` varchar(99) NOT NULL,
+  `OBJECTDATA` mediumblob,
+  PRIMARY KEY (`ROLE_ID`),
+  UNIQUE KEY `ROLE_NAME` (`ROLE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_ROLE`
+--
+
+LOCK TABLES `TURBINE_ROLE` WRITE;
+/*!40000 ALTER TABLE `TURBINE_ROLE` DISABLE KEYS */;
+INSERT INTO `TURBINE_ROLE` VALUES (1,'turbine_root',NULL),(2,'instructor',NULL),(3,'student',NULL),(4,'group_admin',NULL),(5,'author',NULL),(6,'user',NULL);
+/*!40000 ALTER TABLE `TURBINE_ROLE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TURBINE_ROLE_PERMISSION`
+--
+
+DROP TABLE IF EXISTS `TURBINE_ROLE_PERMISSION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_ROLE_PERMISSION` (
+  `ROLE_ID` int(11) NOT NULL,
+  `PERMISSION_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ROLE_ID`,`PERMISSION_ID`),
+  KEY `PERMISSION_ID` (`PERMISSION_ID`),
+  CONSTRAINT `TURBINE_ROLE_PERMISSION_ibfk_1` FOREIGN KEY (`ROLE_ID`) REFERENCES `TURBINE_ROLE` (`ROLE_ID`),
+  CONSTRAINT `TURBINE_ROLE_PERMISSION_ibfk_2` FOREIGN KEY (`PERMISSION_ID`) REFERENCES `TURBINE_PERMISSION` (`PERMISSION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_ROLE_PERMISSION`
+--
+
+LOCK TABLES `TURBINE_ROLE_PERMISSION` WRITE;
+/*!40000 ALTER TABLE `TURBINE_ROLE_PERMISSION` DISABLE KEYS */;
+INSERT INTO `TURBINE_ROLE_PERMISSION` VALUES (1,1),(4,1),(2,2),(3,2),(6,2),(2,3),(2,4),(2,5),(2,6),(2,7),(3,7),(2,8),(3,8),(2,9),(3,9),(2,10),(6,10),(2,11),(2,12);
+/*!40000 ALTER TABLE `TURBINE_ROLE_PERMISSION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TURBINE_SCHEDULED_JOB`
+--
+
+DROP TABLE IF EXISTS `TURBINE_SCHEDULED_JOB`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_SCHEDULED_JOB` (
+  `JOB_ID` int(11) NOT NULL,
+  `SECOND` int(11) NOT NULL DEFAULT '-1',
+  `MINUTE` int(11) NOT NULL DEFAULT '-1',
+  `HOUR` int(11) NOT NULL DEFAULT '-1',
+  `WEEK_DAY` int(11) NOT NULL DEFAULT '-1',
+  `DAY_OF_MONTH` int(11) NOT NULL DEFAULT '-1',
+  `TASK` varchar(99) NOT NULL,
+  `EMAIL` varchar(99) DEFAULT NULL,
+  `PROPERTY` mediumblob,
+  PRIMARY KEY (`JOB_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_SCHEDULED_JOB`
+--
+
+LOCK TABLES `TURBINE_SCHEDULED_JOB` WRITE;
+/*!40000 ALTER TABLE `TURBINE_SCHEDULED_JOB` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TURBINE_SCHEDULED_JOB` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TURBINE_USER`
+--
+
+DROP TABLE IF EXISTS `TURBINE_USER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_USER` (
+  `USER_ID` int(11) NOT NULL,
+  `LOGIN_NAME` varchar(32) NOT NULL,
+  `PASSWORD_VALUE` varchar(32) NOT NULL,
+  `FIRST_NAME` varchar(99) NOT NULL,
+  `LAST_NAME` varchar(99) NOT NULL,
+  `EMAIL` varchar(99) DEFAULT NULL,
+  `CONFIRM_VALUE` varchar(99) DEFAULT NULL,
+  `MODIFIED` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `CREATED` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `LAST_LOGIN` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `OBJECTDATA` mediumblob,
+  PRIMARY KEY (`USER_ID`),
+  UNIQUE KEY `LOGIN_NAME` (`LOGIN_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_USER`
+--
+
+LOCK TABLES `TURBINE_USER` WRITE;
+/*!40000 ALTER TABLE `TURBINE_USER` DISABLE KEYS */;
+INSERT INTO `TURBINE_USER` VALUES (0,'guest','084e0343a0486ff05530df6c705c8bb4','guest','',NULL,NULL,'2010-04-15 15:26:32','2010-01-07 16:29:15','2010-04-15 15:26:32','¨Ì\0sr\0java.util.Hashtableª%!J‰∏\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0_access_countersr\0java.lang.Integer‚†§˜Åá8\0I\0valuexr\0java.lang.NumberÜ¨ïî‡ã\0\0xp\0\0\0ìx'),(1,'admin','21232f297a57a5a743894a0e4a801fc3','turbine','turbine',NULL,NULL,'2010-01-07 16:23:51','2009-12-31 14:37:13','2010-01-07 14:21:23','¨Ì\0sr\0java.util.Hashtableª%!J‰∏\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0_access_countersr\0java.lang.Integer‚†§˜Åá8\0I\0valuexr\0java.lang.NumberÜ¨ïî‡ã\0\0xp\0\0\0x');
+/*!40000 ALTER TABLE `TURBINE_USER` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TURBINE_USER_GROUP_ROLE`
+--
+
+DROP TABLE IF EXISTS `TURBINE_USER_GROUP_ROLE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TURBINE_USER_GROUP_ROLE` (
+  `USER_ID` int(11) NOT NULL,
+  `GROUP_ID` int(11) NOT NULL,
+  `ROLE_ID` int(11) NOT NULL,
+  PRIMARY KEY (`USER_ID`,`GROUP_ID`,`ROLE_ID`),
+  KEY `GROUP_ID` (`GROUP_ID`),
+  KEY `ROLE_ID` (`ROLE_ID`),
+  CONSTRAINT `TURBINE_USER_GROUP_ROLE_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `TURBINE_USER` (`USER_ID`),
+  CONSTRAINT `TURBINE_USER_GROUP_ROLE_ibfk_2` FOREIGN KEY (`GROUP_ID`) REFERENCES `TURBINE_GROUP` (`GROUP_ID`),
+  CONSTRAINT `TURBINE_USER_GROUP_ROLE_ibfk_3` FOREIGN KEY (`ROLE_ID`) REFERENCES `TURBINE_ROLE` (`ROLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TURBINE_USER_GROUP_ROLE`
+--
+
+LOCK TABLES `TURBINE_USER_GROUP_ROLE` WRITE;
+/*!40000 ALTER TABLE `TURBINE_USER_GROUP_ROLE` DISABLE KEYS */;
+INSERT INTO `TURBINE_USER_GROUP_ROLE` VALUES (1,1,1);
+/*!40000 ALTER TABLE `TURBINE_USER_GROUP_ROLE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `assignment`
+--
+
+DROP TABLE IF EXISTS `assignment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `assignment` (
+  `ASSIGN_ID` varchar(32) NOT NULL,
+  `GROUP_NAME` varchar(99) NOT NULL,
+  `TOPIC_NAME` varchar(255) NOT NULL,
+  `CUR_DATE` datetime NOT NULL,
+  `DUE_DATE` datetime NOT NULL,
+  `PER_DATE` datetime NOT NULL,
+  `GRADE` int(3) NOT NULL,
+  PRIMARY KEY (`ASSIGN_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assignment`
+--
+
+LOCK TABLES `assignment` WRITE;
+/*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `attendence_seet`
+--
+
+DROP TABLE IF EXISTS `attendence_seet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attendence_seet` (
+  `ID` int(11) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `LOGIN_DATE` datetime NOT NULL,
+  `IPADDRESS` varchar(16) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attendence_seet`
+--
+
+LOCK TABLES `attendence_seet` WRITE;
+/*!40000 ALTER TABLE `attendence_seet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attendence_seet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `batch`
+--
+
+DROP TABLE IF EXISTS `batch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `batch` (
+  `batch_code` varchar(10) NOT NULL DEFAULT '',
+  `strength` int(11) DEFAULT NULL,
+  `batch_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`batch_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `batch`
+--
+
+LOCK TABLES `batch` WRITE;
+/*!40000 ALTER TABLE `batch` DISABLE KEYS */;
+INSERT INTO `batch` VALUES ('B1',23,'CS II'),('B2',48,'EC II'),('B3',63,'CS III'),('B4',56,'EC III'),('B5',75,'CS IV'),('B6',44,'CSI IV'),('B7',36,'EC IV'),('B8',74,'ECW IV'),('B9',23,'CSI V'),('B10',85,'ECW V'),('B11',45,'IT I'),('B12',73,'CSM I'),('B13',64,'SDVT I'),('B14',73,'RFME I'),('B15',23,'CAG I'),('B16',87,'IT II'),('B17',73,'CSM II'),('B18',23,'RFME II'),('B19',84,'SDVT II'),('B20',41,'CAG II');
+/*!40000 ALTER TABLE `batch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `batch2`
+--
+
+DROP TABLE IF EXISTS `batch2`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `batch2` (
+  `batch_code` varchar(10) NOT NULL,
+  `strength` int(2) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `batch2`
+--
+
+LOCK TABLES `batch2` WRITE;
+/*!40000 ALTER TABLE `batch2` DISABLE KEYS */;
+INSERT INTO `batch2` VALUES ('B1',55),('B2',35),('B3',45),('B4',65),('B5',25),('B6',67),('B7',87);
+/*!40000 ALTER TABLE `batch2` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `batch_course`
+--
+
+DROP TABLE IF EXISTS `batch_course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `batch_course` (
+  `batch_code` varchar(10) NOT NULL DEFAULT '',
+  `course_code` varchar(10) NOT NULL DEFAULT '',
+  PRIMARY KEY (`batch_code`,`course_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `batch_course`
+--
+
+LOCK TABLES `batch_course` WRITE;
+/*!40000 ALTER TABLE `batch_course` DISABLE KEYS */;
+INSERT INTO `batch_course` VALUES ('B1','EC-201'),('B1','EC-202'),('B1','EC-203'),('B1','EC-204'),('B1','EC-205'),('B1','EC-206'),('B10','EC-534'),('B10','EC-651'),('B11','EC-535'),('B11','EC-536'),('B11','EC-537'),('B11','EC-538'),('B12','EC-535'),('B12','EC-539'),('B12','EC-540'),('B12','EC-541'),('B13','EC-535'),('B13','EC-542'),('B13','EC-543'),('B13','EC-544'),('B14','EC-535'),('B14','EC-545'),('B14','EC-546'),('B14','EC-547'),('B15','EC-535'),('B15','EC-548'),('B15','EC-549'),('B15','EC-550'),('B16','EC-651'),('B17','EC-651'),('B18','EC-651'),('B19','EC-652'),('B2','EC-201'),('B2','EC-202'),('B2','EC-203'),('B2','EC-204'),('B2','EC-205'),('B2','EC-207'),('B20','EC-653'),('B3','EC-308'),('B3','EC-309'),('B3','EC-310'),('B3','EC-311'),('B3','EC-312'),('B3','EC-313'),('B4','EC-308'),('B4','EC-309'),('B4','EC-310'),('B4','EC-314'),('B4','EC-315'),('B4','EC-316'),('B5','EC-417'),('B5','EC-418'),('B5','EC-419'),('B5','EC-420'),('B5','EC-421'),('B6','EC-417'),('B6','EC-418'),('B6','EC-422'),('B6','EC-423'),('B6','EC-424'),('B7','EC-425'),('B7','EC-426'),('B7','EC-427'),('B7','EC-428'),('B7','EC-429'),('B8','EC-425'),('B8','EC-426'),('B8','EC-430'),('B8','EC-431'),('B8','EC-432'),('B9','EC-533'),('B9','EC-651');
+/*!40000 ALTER TABLE `batch_course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cal_information`
+--
+
+DROP TABLE IF EXISTS `cal_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cal_information` (
+  `INFO_ID` int(11) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `GROUP_ID` int(11) NOT NULL,
+  `P_DATE` datetime NOT NULL,
+  `DETAIL_INFORMATION` longblob,
+  `START_TIME` time NOT NULL,
+  `END_TIME` time NOT NULL,
+  `EXPIRY` int(11) NOT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  PRIMARY KEY (`INFO_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cal_information`
+--
+
+LOCK TABLES `cal_information` WRITE;
+/*!40000 ALTER TABLE `cal_information` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cal_information` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `course` (
+  `course_code` varchar(10) CHARACTER SET ascii NOT NULL,
+  `course_type` varchar(3) CHARACTER SET ascii NOT NULL,
+  `events_per_week` tinyint(2) unsigned NOT NULL DEFAULT '1',
+  `duration` tinyint(2) unsigned NOT NULL DEFAULT '1',
+  `computer` smallint(2) unsigned NOT NULL,
+  `projector` smallint(2) unsigned NOT NULL DEFAULT '0',
+  `venue_code` varbinary(10) DEFAULT NULL,
+  `scheduled` int(11) DEFAULT NULL,
+  PRIMARY KEY (`course_code`,`course_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=binary COMMENT='Representing a course.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course`
+--
+
+LOCK TABLES `course` WRITE;
+/*!40000 ALTER TABLE `course` DISABLE KEYS */;
+INSERT INTO `course` VALUES ('EC-101','L',4,1,0,0,'',1),('EC-102','L',3,1,0,0,'',1),('EC-102','T',1,1,0,0,'',1),('EC-103','L',3,1,0,0,'',1),('EC-103','P',1,2,0,0,'',1),('EC-103','T',1,1,0,0,'',1),('EC-104','L',3,1,0,0,'',1),('EC-104','T',1,1,0,0,'',1),('EC-105','L',3,1,0,0,'',1),('EC-201','P',1,3,0,0,'',0),('EC-202','P',1,3,0,0,'',0),('EC-203','L',4,1,0,0,'',0),('EC-204','L',3,1,0,0,'',0),('EC-204','T',1,1,0,0,'',0),('EC-205','L',3,1,0,0,'',0),('EC-205','P',1,2,0,0,'',0),('EC-205','T',1,1,0,0,'',0),('EC-206','L',3,1,0,0,'',0),('EC-206','T',1,1,0,0,'',0),('EC-207','L',3,1,0,0,'',0),('EC-207','T',1,1,0,0,'',0),('EC-308','P',1,3,0,0,'',0),('EC-309','L',3,1,0,0,'',0),('EC-309','T',1,1,0,0,'',0),('EC-310','L',3,1,0,0,'',0),('EC-310','T',1,1,0,0,'',0),('EC-311','P',1,3,0,0,'',0),('EC-312','L',3,1,0,0,'',0),('EC-312','P',1,2,0,0,'',0),('EC-312','T',1,1,0,0,'',0),('EC-313','L',3,1,0,0,'',0),('EC-313','P',1,2,0,0,'',0),('EC-313','T',1,1,0,0,'',0),('EC-314','P',1,3,0,0,'',0),('EC-315','L',4,1,0,0,'',0),('EC-316','L',4,1,0,0,'',0),('EC-417','P',1,3,0,0,'',0),('EC-418','L',3,1,0,0,'',0),('EC-418','T',1,1,0,0,'',0),('EC-419','P',1,3,0,0,'',0),('EC-420','L',3,1,0,0,'',0),('EC-420','P',1,2,0,0,'',0),('EC-420','T',1,1,0,0,'',0),('EC-421','L',4,1,0,0,'',0),('EC-422','P',1,3,0,0,'',0),('EC-423','L',3,1,0,0,'',0),('EC-423','T',1,1,0,0,'',0),('EC-424','L',3,1,0,0,'',0),('EC-424','P',1,2,0,0,'',0),('EC-424','T',1,1,0,0,'',0),('EC-425','P',1,3,0,0,'',0),('EC-426','L',4,1,0,0,'',0),('EC-427','P',1,3,0,0,'',0),('EC-428','L',3,1,0,0,'',0),('EC-428','T',1,1,0,0,'',0),('EC-429','L',3,1,0,0,'',0),('EC-429','P',1,2,0,0,'',0),('EC-429','T',1,1,0,0,'',0),('EC-430','P',1,3,0,0,'',0),('EC-431','L',4,1,0,0,'',0),('EC-432','L',3,1,0,0,'',0),('EC-432','T',1,1,0,0,'',0),('EC-533','P',1,3,0,0,'',0),('EC-534','P',1,3,0,0,'',0),('EC-535','L',3,1,0,0,'',0),('EC-535','T',1,1,0,0,'',0),('EC-536','P',1,3,0,0,'',0),('EC-537','L',3,1,0,0,'',0),('EC-537','P',1,2,0,0,'',0),('EC-537','T',1,1,0,0,'',0),('EC-538','L',4,1,0,0,'',0),('EC-539','P',1,3,0,0,'',0),('EC-540','L',3,1,0,0,'',0),('EC-540','T',1,1,0,0,'',0),('EC-541','L',3,1,0,0,'',0),('EC-541','P',1,1,0,0,'',0),('EC-541','T',1,1,0,0,'',0),('EC-542','P',1,3,0,0,'',0),('EC-543','L',4,1,0,0,'',0),('EC-544','L',3,1,0,0,'',0),('EC-544','T',1,1,0,0,'',0),('EC-545','P',1,3,0,0,'',0),('EC-546','L',4,1,0,0,'',0),('EC-547','L',3,1,0,0,'',0),('EC-547','T',1,1,0,0,'',0),('EC-548','P',1,3,0,0,'',0),('EC-549','L',3,1,0,0,'',0),('EC-549','P',1,2,0,0,'',0),('EC-549','T',1,1,0,0,'',0),('EC-550','L',3,1,0,0,'',0),('EC-550','T',1,1,0,0,'',0),('EC-651','L',3,1,0,0,'',0),('EC-651','P',1,2,0,0,'',0),('EC-651','T',1,1,0,0,'',0),('EC-652','L',4,1,0,0,'',0),('EC-653','L',4,1,0,0,'',0);
+/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `course_venue`
+--
+
+DROP TABLE IF EXISTS `course_venue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `course_venue` (
+  `course_code` varchar(10) COLLATE ascii_bin NOT NULL DEFAULT 'C',
+  `venue_code` varchar(10) COLLATE ascii_bin NOT NULL DEFAULT 'V',
+  PRIMARY KEY (`course_code`,`venue_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course_venue`
+--
+
+LOCK TABLES `course_venue` WRITE;
+/*!40000 ALTER TABLE `course_venue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `course_venue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `courses`
+--
+
+DROP TABLE IF EXISTS `courses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `courses` (
+  `GROUP_NAME` varchar(99) NOT NULL,
+  `CNAME` varchar(255) DEFAULT NULL,
+  `GROUP_ALIAS` varchar(99) NOT NULL,
+  `DEPT` varchar(255) DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `ACTIVE` tinyint(4) NOT NULL DEFAULT '0',
+  `CREATIONDATE` datetime DEFAULT NULL,
+  `LASTMODIFIED` datetime DEFAULT NULL,
+  `LASTACCESS` datetime DEFAULT NULL,
+  `QUOTA` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`GROUP_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `courses`
+--
+
+LOCK TABLES `courses` WRITE;
+/*!40000 ALTER TABLE `courses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `courses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `db_receive`
+--
+
+DROP TABLE IF EXISTS `db_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `db_receive` (
+  `MSG_ID` int(11) NOT NULL,
+  `RECEIVER_ID` int(11) NOT NULL,
+  `GROUP_ID` int(11) NOT NULL,
+  `READ_FLAG` int(11) DEFAULT NULL,
+  PRIMARY KEY (`MSG_ID`,`RECEIVER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `db_receive`
+--
+
+LOCK TABLES `db_receive` WRITE;
+/*!40000 ALTER TABLE `db_receive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `db_receive` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `db_send`
+--
+
+DROP TABLE IF EXISTS `db_send`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `db_send` (
+  `MSG_ID` int(11) NOT NULL,
+  `REPLY_ID` int(11) NOT NULL,
+  `MSG_SUBJECT` varchar(255) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `GROUP_ID` int(11) DEFAULT NULL,
+  `POST_TIME` datetime DEFAULT NULL,
+  `EXPIRY` int(11) NOT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  `PERMISSION` int(1) DEFAULT NULL,
+  `GRPMGMT_TYPE` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`MSG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `db_send`
+--
+
+LOCK TABLES `db_send` WRITE;
+/*!40000 ALTER TABLE `db_send` DISABLE KEYS */;
+/*!40000 ALTER TABLE `db_send` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fac_info`
+--
+
+DROP TABLE IF EXISTS `fac_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fac_info` (
+  `fac_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `department` varchar(100) DEFAULT NULL,
+  `institute` varchar(100) DEFAULT NULL,
+  `id` varchar(10) NOT NULL,
+  PRIMARY KEY (`fac_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fac_info`
+--
+
+LOCK TABLES `fac_info` WRITE;
+/*!40000 ALTER TABLE `fac_info` DISABLE KEYS */;
+INSERT INTO `fac_info` VALUES (97,'Padam kumar','EC','IITR','PK'),(98,'Manoj Mishra','EC','IITR','MM'),(99,'Kumkum Garg','EC','IITR','KKG'),(100,'Kuldeep Singh','EC','IITR','KDS'),(101,'Durga Toshniwal','EC','IITR','DT'),(102,'S. P. Yadav','EC','IITR','SPY'),(103,'S N Sinha','EC','IITR','SNS'),(104,'R C Joshi','EC','IITR','RCJ'),(105,'Rajdeep Niyogi','EC','IITR','RN'),(106,'Arun Kumar','EC','IITR','AK'),(107,'A K Sarje','EC','IITR','AKS'),(108,'Vinod Kumar','EC','IITR','VK'),(109,'N P Padhy','EC','IITR','NPP'),(110,'R S Anand','EC','IITR','RSA'),(111,'Pramod Agarwal','EC','IITR','PA'),(112,'D K Mehra','EC','IITR','DKM'),(113,'A K Saxena','EC','IITR','AKX'),(114,'S Mukharjee','EC','IITR','SM'),(115,'Debasish  Gosh','EC','IITR','DG'),(116,'H O Gupta','EC','IITR','HOG'),(117,'M J Nigam','EC','IITR','MJN'),(118,'Vikas Mohanti','EC','IITR','VM'),(119,'Anjali Sardana','EC','IITR','AS'),(120,'Babita Sinha','EC','IITR','BS');
+/*!40000 ALTER TABLE `fac_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `faculty_course`
+--
+
+DROP TABLE IF EXISTS `faculty_course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faculty_course` (
+  `faculty_id` varchar(10) CHARACTER SET ascii NOT NULL DEFAULT '',
+  `course_code` varchar(10) CHARACTER SET ascii NOT NULL DEFAULT '',
+  PRIMARY KEY (`faculty_id`,`course_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `faculty_course`
+--
+
+LOCK TABLES `faculty_course` WRITE;
+/*!40000 ALTER TABLE `faculty_course` DISABLE KEYS */;
+INSERT INTO `faculty_course` VALUES ('AK','EC-310'),('AK','EC-539'),('AK','EC-548'),('AKS','EC-311'),('AKS','EC-540'),('AKS','EC-549'),('AKX','EC-417'),('AKX','EC-546'),('AS','EC-105'),('AS','EC-423'),('BS','EC-424'),('DG','EC-101'),('DG','EC-419'),('DKM','EC-316'),('DKM','EC-545'),('DT','EC-205'),('DT','EC-429'),('DT','EC-534'),('HOG','EC-102'),('HOG','EC-420'),('KDS','EC-204'),('KDS','EC-428'),('KDS','EC-533'),('KKG','EC-203'),('KKG','EC-427'),('KKG','EC-432'),('MJN','EC-103'),('MJN','EC-421'),('MM','EC-202'),('MM','EC-426'),('MM','EC-431'),('NPP','EC-313'),('NPP','EC-542'),('PA','EC-315'),('PA','EC-544'),('PK','EC-201'),('PK','EC-425'),('PK','EC-430'),('RCJ','EC-308'),('RCJ','EC-537'),('RCJ','EC-652'),('RN','EC-309'),('RN','EC-538'),('RN','EC-653'),('RSA','EC-314'),('RSA','EC-543'),('SM','EC-418'),('SM','EC-547'),('SNS','EC-207'),('SNS','EC-536'),('SNS','EC-651'),('SPY','EC-206'),('SPY','EC-535'),('SPY','EC-550'),('VK','EC-312'),('VK','EC-541'),('VM','EC-104'),('VM','EC-422');
+/*!40000 ALTER TABLE `faculty_course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `glossary`
+--
+
+DROP TABLE IF EXISTS `glossary`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `glossary` (
+  `WORD_ID` int(11) NOT NULL,
+  `WORD` varchar(40) NOT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `DEFINITION` longblob,
+  PRIMARY KEY (`WORD_ID`,`WORD`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `glossary`
+--
+
+LOCK TABLES `glossary` WRITE;
+/*!40000 ALTER TABLE `glossary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `glossary` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `glossary_alias`
+--
+
+DROP TABLE IF EXISTS `glossary_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `glossary_alias` (
+  `ALIAS_ID` int(11) NOT NULL,
+  `WORD_ALIAS` varchar(40) DEFAULT NULL,
+  `WORD_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ALIAS_ID`),
+  KEY `WORD_ID` (`WORD_ID`),
+  CONSTRAINT `glossary_alias_ibfk_1` FOREIGN KEY (`WORD_ID`) REFERENCES `glossary` (`WORD_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `glossary_alias`
+--
+
+LOCK TABLES `glossary_alias` WRITE;
+/*!40000 ALTER TABLE `glossary_alias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `glossary_alias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hint_question`
+--
+
+DROP TABLE IF EXISTS `hint_question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hint_question` (
+  `QUESTION_ID` int(11) NOT NULL,
+  `QUESTION_NAME` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`QUESTION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hint_question`
+--
+
+LOCK TABLES `hint_question` WRITE;
+/*!40000 ALTER TABLE `hint_question` DISABLE KEYS */;
+INSERT INTO `hint_question` VALUES (1,'What is your pet\'s name?'),(2,'What was the name of your first school?'),(3,'Who was your child hero?'),(4,'What is your favorite past time?'),(5,'What is your all time favorite sports team?'),(6,'What is your father\'s middle name?'),(7,'What is your high school mascot?'),(8,'What was your first bike or car?'),(9,'Where did you first meet your girlfriend/boyfriend?'),(10,'What is your favorite food?');
+/*!40000 ALTER TABLE `hint_question` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `id_table`
+--
+
+DROP TABLE IF EXISTS `id_table`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `id_table` (
+  `ID_TABLE_ID` int(11) NOT NULL,
+  `TABLE_NAME` varchar(255) NOT NULL,
+  `NEXT_ID` int(11) DEFAULT NULL,
+  `QUANTITY` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_TABLE_ID`),
+  UNIQUE KEY `TABLE_NAME` (`TABLE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `id_table`
+--
+
+LOCK TABLES `id_table` WRITE;
+/*!40000 ALTER TABLE `id_table` DISABLE KEYS */;
+INSERT INTO `id_table` VALUES (101,'NOTE',1000,10),(102,'RDF',1000,10),(103,'COURSES',1000,10),(104,'CAL_INFORMATION',1000,10),(105,'DB_SEND',1000,10),(106,'DB_RECEIVE',1000,10),(107,'GLOSSARY',1000,10),(108,'GLOSSARY_ALIAS',1000,10),(109,'HINT_QUESTION',1000,10),(110,'MAIL_SEND',1000,10),(111,'MAIL_RECEIVE',1000,10),(112,'NEWS',1000,10),(113,'NOTICE_SEND',1000,10),(114,'NOTICE_RECEIVE',1000,10),(115,'SYSTEM_CLEANTIME',1000,10),(116,'TASK',1000,10),(117,'USAGE_DETAILS',2970,10),(118,'USER_CONFIGURATION',1000,10),(119,'REMOTE_COURSES',1000,10),(120,'PROXY_USER',1000,10),(121,'SURVEY_QUESTION',1000,10),(122,'SURVEY_STUDENT',1000,10),(123,'SURVEY_RESULT',1000,10),(124,'QUIZ',1000,10),(125,'ATTENDENCE_SEET',1000,10),(126,'ASSIGNMENT',1000,10),(127,'LECTURE',1000,10),(128,'SessionAddress',1000,10),(129,'RESEARCH_REPOSITORY',1000,10),(1101,'TURBINE_PERMISSION',1000,10),(1102,'TURBINE_ROLE',1000,10),(1103,'TURBINE_GROUP',1000,10),(1104,'TURBINE_ROLE_PERMISSION',1000,10),(1105,'TURBINE_USER',1000,10),(1106,'TURBINE_USER_GROUP_ROLE',1000,10),(1107,'TURBINE_SCHEDULED_JOB',1000,10);
+/*!40000 ALTER TABLE `id_table` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mail_receive`
+--
+
+DROP TABLE IF EXISTS `mail_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mail_receive` (
+  `MAIL_ID` int(11) NOT NULL,
+  `RECEIVER_ID` int(11) NOT NULL,
+  `MAIL_READFLAG` int(11) DEFAULT NULL,
+  `MAIL_TYPE` int(11) DEFAULT NULL,
+  PRIMARY KEY (`MAIL_ID`,`RECEIVER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mail_receive`
+--
+
+LOCK TABLES `mail_receive` WRITE;
+/*!40000 ALTER TABLE `mail_receive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail_receive` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mail_send`
+--
+
+DROP TABLE IF EXISTS `mail_send`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mail_send` (
+  `MAIL_ID` int(11) NOT NULL,
+  `SENDER_ID` int(11) DEFAULT NULL,
+  `MAIL_SUBJECT` varchar(255) DEFAULT NULL,
+  `REPLY_STATUS` int(11) DEFAULT NULL,
+  `POST_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`MAIL_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mail_send`
+--
+
+LOCK TABLES `mail_send` WRITE;
+/*!40000 ALTER TABLE `mail_send` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail_send` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `news`
+--
+
+DROP TABLE IF EXISTS `news`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `news` (
+  `NEWS_ID` int(11) NOT NULL,
+  `GROUP_ID` int(11) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `NEWS_TITLE` varchar(255) DEFAULT NULL,
+  `NEWS_DESCRIPTION` longblob,
+  `PUBLISH_DATE` datetime NOT NULL,
+  `EXPIRY` int(11) NOT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  PRIMARY KEY (`NEWS_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `news`
+--
+
+LOCK TABLES `news` WRITE;
+/*!40000 ALTER TABLE `news` DISABLE KEYS */;
+/*!40000 ALTER TABLE `news` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `note`
+--
+
+DROP TABLE IF EXISTS `note`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `note` (
+  `NOTE_ID` int(11) NOT NULL,
+  `POSTED_BY` varchar(255) DEFAULT NULL,
+  `DATE_POSTED` datetime DEFAULT NULL,
+  `NOTE` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`NOTE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `note`
+--
+
+LOCK TABLES `note` WRITE;
+/*!40000 ALTER TABLE `note` DISABLE KEYS */;
+/*!40000 ALTER TABLE `note` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notice_receive`
+--
+
+DROP TABLE IF EXISTS `notice_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notice_receive` (
+  `NOTICE_ID` int(11) NOT NULL,
+  `RECEIVER_ID` int(11) NOT NULL,
+  `GROUP_ID` int(11) NOT NULL,
+  `READ_FLAG` int(11) DEFAULT NULL,
+  PRIMARY KEY (`NOTICE_ID`,`RECEIVER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notice_receive`
+--
+
+LOCK TABLES `notice_receive` WRITE;
+/*!40000 ALTER TABLE `notice_receive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notice_receive` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notice_send`
+--
+
+DROP TABLE IF EXISTS `notice_send`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notice_send` (
+  `NOTICE_ID` int(11) NOT NULL,
+  `NOTICE_SUBJECT` varchar(255) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `GROUP_ID` int(11) DEFAULT NULL,
+  `ROLE_ID` int(11) DEFAULT NULL,
+  `POST_TIME` datetime DEFAULT NULL,
+  `EXPIRY` int(11) NOT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  PRIMARY KEY (`NOTICE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notice_send`
+--
+
+LOCK TABLES `notice_send` WRITE;
+/*!40000 ALTER TABLE `notice_send` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notice_send` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proxy_user`
+--
+
+DROP TABLE IF EXISTS `proxy_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proxy_user` (
+  `USERNAME` varchar(32) NOT NULL,
+  `PASSWORD` varchar(32) NOT NULL,
+  `IPADDRESS` varchar(32) NOT NULL,
+  `LECTURE_ID` int(32) NOT NULL,
+  `PORT_NO` int(11) NOT NULL,
+  PRIMARY KEY (`USERNAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proxy_user`
+--
+
+LOCK TABLES `proxy_user` WRITE;
+/*!40000 ALTER TABLE `proxy_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `proxy_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `quiz`
+--
+
+DROP TABLE IF EXISTS `quiz`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quiz` (
+  `ID` int(11) NOT NULL,
+  `QUIZ_ID` varchar(255) NOT NULL,
+  `USER_ID` varchar(255) NOT NULL,
+  `CID` varchar(255) DEFAULT NULL,
+  `QUIZ_TITLE` varchar(255) NOT NULL,
+  `START_TIME` time NOT NULL,
+  `END_TIME` time NOT NULL,
+  `POST_DATE` datetime NOT NULL,
+  `MAX_MARKS` int(3) DEFAULT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `quiz`
+--
+
+LOCK TABLES `quiz` WRITE;
+/*!40000 ALTER TABLE `quiz` DISABLE KEYS */;
+/*!40000 ALTER TABLE `quiz` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rdf`
+--
+
+DROP TABLE IF EXISTS `rdf`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rdf` (
+  `RDF_ID` int(11) NOT NULL,
+  `TITLE` varchar(255) DEFAULT NULL,
+  `BODY` varchar(255) DEFAULT NULL,
+  `URL` varchar(255) DEFAULT NULL,
+  `AUTHOR` varchar(255) DEFAULT NULL,
+  `DEPT` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`RDF_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rdf`
+--
+
+LOCK TABLES `rdf` WRITE;
+/*!40000 ALTER TABLE `rdf` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rdf` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `remote_courses`
+--
+
+DROP TABLE IF EXISTS `remote_courses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `remote_courses` (
+  `SR_NO` int(11) NOT NULL,
+  `LOCAL_COURSE_ID` varchar(50) DEFAULT NULL,
+  `REMOTE_COURSE_ID` varchar(50) DEFAULT NULL,
+  `COURSE_SELLER` varchar(50) DEFAULT NULL,
+  `COURSE_PURCHASER` varchar(50) DEFAULT NULL,
+  `INSTITUTE_IP` varchar(15) DEFAULT NULL,
+  `INSTITUTE_NAME` varchar(50) DEFAULT NULL,
+  `EXPIRY_DATE` datetime DEFAULT NULL,
+  `STATUS` int(1) DEFAULT NULL,
+  `SECRET_KEY` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`SR_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `remote_courses`
+--
+
+LOCK TABLES `remote_courses` WRITE;
+/*!40000 ALTER TABLE `remote_courses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `remote_courses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `research_repository`
+--
+
+DROP TABLE IF EXISTS `research_repository`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `research_repository` (
+  `SUBJECT_ID` int(11) NOT NULL,
+  `REPLY_ID` int(11) NOT NULL,
+  `SUBJECT` varchar(255) DEFAULT NULL,
+  `REPLIES` int(11) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `REPO_NAME` varchar(255) DEFAULT NULL,
+  `POST_TIME` datetime DEFAULT NULL,
+  `EXPIRY` int(11) NOT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  PRIMARY KEY (`SUBJECT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `research_repository`
+--
+
+LOCK TABLES `research_repository` WRITE;
+/*!40000 ALTER TABLE `research_repository` DISABLE KEYS */;
+/*!40000 ALTER TABLE `research_repository` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sessionaddress`
+--
+
+DROP TABLE IF EXISTS `sessionaddress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sessionaddress` (
+  `SerialNo` int(11) NOT NULL,
+  `MulticastAddress` varchar(255) DEFAULT NULL,
+  `Flag` int(11) DEFAULT NULL,
+  PRIMARY KEY (`SerialNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sessionaddress`
+--
+
+LOCK TABLES `sessionaddress` WRITE;
+/*!40000 ALTER TABLE `sessionaddress` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sessionaddress` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `survey_question`
+--
+
+DROP TABLE IF EXISTS `survey_question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `survey_question` (
+  `SURVEY_ID` int(11) NOT NULL,
+  `INST_ID` int(11) NOT NULL,
+  `CID` varchar(25) DEFAULT NULL,
+  `QUES1` varchar(50) DEFAULT NULL,
+  `QUES2` varchar(50) DEFAULT NULL,
+  `QUES3` varchar(50) DEFAULT NULL,
+  `QUES4` varchar(50) DEFAULT NULL,
+  `QUES5` varchar(50) DEFAULT NULL,
+  `PDATE` datetime NOT NULL,
+  PRIMARY KEY (`SURVEY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `survey_question`
+--
+
+LOCK TABLES `survey_question` WRITE;
+/*!40000 ALTER TABLE `survey_question` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey_question` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `survey_result`
+--
+
+DROP TABLE IF EXISTS `survey_result`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `survey_result` (
+  `RESULT_ID` int(11) NOT NULL,
+  `SURVEY_ID` int(11) NOT NULL,
+  `CID` varchar(25) DEFAULT NULL,
+  `NUM_STU_ATTD` int(11) DEFAULT NULL,
+  `TOTALMARKS_PER` int(11) DEFAULT NULL,
+  `GRADE` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`RESULT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `survey_result`
+--
+
+LOCK TABLES `survey_result` WRITE;
+/*!40000 ALTER TABLE `survey_result` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey_result` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `survey_student`
+--
+
+DROP TABLE IF EXISTS `survey_student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `survey_student` (
+  `SURVEYST_ID` int(11) NOT NULL,
+  `SURVEY_ID` int(11) NOT NULL,
+  `INST_ID` int(11) NOT NULL,
+  `CID` varchar(25) DEFAULT NULL,
+  `STU_ID` varchar(25) DEFAULT NULL,
+  `QUES1` int(2) DEFAULT NULL,
+  `QUES2` int(2) DEFAULT NULL,
+  `QUES3` int(2) DEFAULT NULL,
+  `QUES4` int(2) DEFAULT NULL,
+  `QUES5` int(2) DEFAULT NULL,
+  `TOTALMARKS` int(11) DEFAULT NULL,
+  PRIMARY KEY (`SURVEYST_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `survey_student`
+--
+
+LOCK TABLES `survey_student` WRITE;
+/*!40000 ALTER TABLE `survey_student` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey_student` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `system_cleantime`
+--
+
+DROP TABLE IF EXISTS `system_cleantime`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `system_cleantime` (
+  `ID` int(11) NOT NULL,
+  `CLEAN_DATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `system_cleantime`
+--
+
+LOCK TABLES `system_cleantime` WRITE;
+/*!40000 ALTER TABLE `system_cleantime` DISABLE KEYS */;
+INSERT INTO `system_cleantime` VALUES (1,'2010-03-16 00:00:00');
+/*!40000 ALTER TABLE `system_cleantime` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `task`
+--
+
+DROP TABLE IF EXISTS `task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `task` (
+  `TASK_ID` int(11) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `TITLE` varchar(100) DEFAULT NULL,
+  `STATUS` int(1) DEFAULT NULL,
+  `START_DATE` datetime NOT NULL,
+  `END_DATE` datetime NOT NULL,
+  `EXPIRY` int(11) NOT NULL,
+  `EXPIRY_DATE` datetime NOT NULL,
+  `DUE_DAYS` int(11) NOT NULL,
+  `DUE_DATE` datetime NOT NULL,
+  PRIMARY KEY (`TASK_ID`,`START_DATE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task`
+--
+
+LOCK TABLES `task` WRITE;
+/*!40000 ALTER TABLE `task` DISABLE KEYS */;
+/*!40000 ALTER TABLE `task` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usage_details`
+--
+
+DROP TABLE IF EXISTS `usage_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usage_details` (
+  `ENTRY_ID` int(11) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `LOGIN_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`ENTRY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usage_details`
+--
+
+LOCK TABLES `usage_details` WRITE;
+/*!40000 ALTER TABLE `usage_details` DISABLE KEYS */;
+INSERT INTO `usage_details` VALUES (2780,0,'2010-03-07 20:22:19'),(2800,0,'2010-03-07 20:25:13'),(2820,0,'2010-03-07 20:26:52'),(2840,0,'2010-03-12 17:46:54'),(2860,0,'2010-03-12 17:48:11'),(2880,0,'2010-03-16 12:06:57'),(2900,0,'2010-03-16 12:11:13'),(2910,0,'2010-03-16 12:12:06'),(2930,0,'2010-03-16 18:21:00'),(2950,0,'2010-03-16 18:23:23');
+/*!40000 ALTER TABLE `usage_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_configuration`
+--
+
+DROP TABLE IF EXISTS `user_configuration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_configuration` (
+  `USER_ID` int(11) NOT NULL,
+  `QUESTION_ID` int(2) DEFAULT '0',
+  `ANSWER` varchar(50) DEFAULT NULL,
+  `LIST_CONFIGURATION` int(2) DEFAULT '10',
+  `PHOTO` varchar(50) DEFAULT NULL,
+  `TASK_CONFIGURATION` int(2) DEFAULT '7',
+  PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_configuration`
+--
+
+LOCK TABLES `user_configuration` WRITE;
+/*!40000 ALTER TABLE `user_configuration` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_configuration` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `venue`
+--
+
+DROP TABLE IF EXISTS `venue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `venue` (
+  `code` varchar(10) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `capacity` int(4) unsigned NOT NULL DEFAULT '50',
+  `ncomputers` smallint(2) unsigned NOT NULL DEFAULT '0',
+  `projector` smallint(2) NOT NULL,
+  `type` int(11) NOT NULL,
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=binary COMMENT='Table representing the venues of the Department.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE `timetable` (
+  `course_code` varchar(100),
+  `slot` int(10),
+  `day` int(10),
+  `class_type` varchar(100),
+  `room_code`  varchar(100) 
+);
+--
+-- Dumping data for table `venue`
+--
+
+LOCK TABLES `venue` WRITE;
+/*!40000 ALTER TABLE `venue` DISABLE KEYS */;
+INSERT INTO `venue` VALUES ('L1',50,1,0,2),('L2',50,1,0,2),('L3',50,1,0,2),('L4',100,1,0,2),('L5',100,1,0,2),('V1',50,1,1,1),('V10',100,1,1,1),('V2',100,1,1,1),('V3',50,1,1,1),('V4',100,1,1,1),('V5',50,1,1,1),('V6',100,1,1,1),('V7',50,1,1,1),('V8',100,1,1,1),('V9',50,1,1,1);
+/*!40000 ALTER TABLE `venue` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2010-05-19 19:34:11
