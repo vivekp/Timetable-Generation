@@ -1,0 +1,103 @@
+
+
+$page.setTitle("Admin Home | User Management | View All Users")
+$page.setBgColor($ui.bgcolor)
+
+<font face="$ui.sansSerifFonts"> </font>
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+	<a href=$link.setPage("Index.vm")>????????? ????</a> |
+	<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("mode","All")>?????? ???????????</a> | 
+			????????? ????????? ????
+		</td>
+	<td width="30%" align="right">
+		</td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+        <td>
+   	<a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">????? ???????? ????</a>
+        </td>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">????? ???? ?????</a>
+        </td>
+</tr>
+</table>
+
+<form name=frm method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin").addPathInfo("status","ForallUser")">
+<table width=100% align=left bgcolor="$ui.menuColor">
+        <tr>
+                <td>?????? ??????    </td>
+                <td>
+                        <select name="queryList">
+                                <option value="User Name">????? ????</option>
+                                <option value="First Name">???? ????</option>
+                                <option value="Last Name">?????? ????</option>
+                                <option value="Email">?????</option>
+                        </select>
+                </td>
+                <td><b>???? ????????? </b></td>
+                <td>
+                        <input align=center type="text" name="valueString" value="">
+                </td>
+                <td>
+                        <input type="button" name="Search" value="??????" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+		<td>
+			<b><a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">????? ????? ??????</a></b>
+		<td>
+        </tr>
+</table>
+<br><br>
+<table width="100%" align="left" bgcolor="$ui.tableColor">
+</table>
+</form>
+<br>
+<table width=60%  bgcolor="$ui.tableColor" align=center>
+        </table>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+	function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+	
+	function checkField(frm,field)
+   	{
+    		if(frm.deleteFileNames.value!="")
+    		{
+     			frm.actionName.value=field.name;
+     			frm.submit();
+    		}
+    		else
+     		alert("Please select checkbox !!");
+   	}
+					
+	function addDeleteList(field,frm)
+        {
+                if(field.checked) {
+                       frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+		else{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;
+		}
+	}
+</SCRIPT>

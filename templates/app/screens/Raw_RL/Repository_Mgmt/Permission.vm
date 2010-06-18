@@ -1,0 +1,98 @@
+#** 
+ *@(#) Permission.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *
+ *  @author <a href="mailto:seema_020504@yahoo.com">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com">Kishore kumar shukla</a>
+ *
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *
+*#
+ 
+$page.setTitle(" $Repo_Repo1")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+<table bgcolor="#d9e3ec" width=100%>
+        <tr><td><b>
+        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")>$brih_authorHome</a>| 
+        <a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm")>$Repo_Repo1</a> | $Repo_Perm
+        </b></td>
+	</tr>
+</table>
+<br>
+<br>
+<table width="100%">
+<tr>
+<td bgcolor="#ffffff" width="100%">
+ 	<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+                                       <b>${Repo_Instrct}</b>
+                                        </marquee>
+</td>
+</tr>
+</table>
+<br>
+		
+		<form  name=frm method="post" action=$link.setPage("call,Repository_Mgmt,Permission.vm").setAction("Repo_Permission")>
+		<div align="center">
+		<table align="center" border=1 bgcolor="#d9e3ec" cellspacing=1 cellpadding=5>
+		<tr>
+       		<td><b>$brih_topic $brih_name</b></td>
+		<td>$contentlist</td>
+      		</tr>
+		<tr>
+		<td>
+		<b>$brih_usrName </font><font color=red>*</font></b>
+		</td>
+		<td>
+		<input type="text" name="UNAME"  value="" style="" size=30 onKeyUp="if (this.disabled) this.value=''"/>
+		</td>
+      		</tr>
+		<tr>
+		<td><b>$brih_course $brih_ID </font><font color=red>*</font></td></b>
+                <td><input type="text" name="CNAME" disabled value="" size=30 onKeyUp="if (this.disabled) this.value=''"/></td>
+      		</tr>
+		<tr>
+                <td  colspan=2 align=center>
+                <b>
+                $brih_select<font color=RED>*</font>
+                </b>
+                <input type="radio" checked="true" name="group1" value="Author" onClick="this.form.UNAME.disabled=false;this.form.CNAME.disabled=true;this.form.UNAME.focus();" />$brih_author 
+                <input type="radio" name="group1" value="Instructor" onClick="this.form.UNAME.disabled=false;this.form.CNAME.disabled=true;this.form.UNAME.focus();" />$brih_instructor1
+                <input type="radio" name="group1" value="Courses" onClick="this.form.UNAME.disabled=true;this.form.CNAME.disabled=false;this.form.CNAME.focus();" />$brih_course
+                </td>
+                </tr>
+
+		<tr>
+		<td  colspan=2 align=center>		
+		<input type="hidden" name="actionName" >
+		<input type="hidden" name="status" value=$status>
+		<input type="hidden" name="statvalue" value="PermissionRecieve">
+		<input type="hidden" name="stats" value="permission" >
+		<input type="hidden" name="tname" value=$contentlist>
+        	<input type="button" name="eventSubmit_doPermission" value="$Repo_Perm $Repo_Permgiv" onClick="checkField(document.frm,this);"/>
+		</td>
+		</tr>
+</table>
+</div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+	document.frm.UNAME.disabled=false; 
+	document.frm.CNAME.disabled=true;  
+
+        function checkField(frm,field)
+        {
+                if((frm.UNAME.value!="")||(frm.CNAME.value!==""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !!");
+                }
+        }
+
+</SCRIPT>
+
+            

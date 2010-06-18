@@ -1,0 +1,127 @@
+
+
+$page.setTitle("create group")
+$page.setBgColor("$ui.bgcolor")
+
+
+<table bgcolor="$ui.tableColor" width=100% >         <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>|
+	        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>Ð?Ñ?Ñ?Ð¿Ð¿Ð° Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ </a>|
+	        <a href=$link.setPage("call,Group_Mgmt,Editgroup.vm")>Ð?Ñ?Ñ?Ð¿Ð¿Ð° Ð¸Ð· Ð?Ð·Ð¼ÐµÐ½Ð¸Ñ?Ñ?</a> | Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð£Ð´Ð°Ð»Ð¸Ñ?Ñ?</b>
+		     </td></tr>
+</table> <table width=100% >         <tr>
+                <td align ="right">
+		             <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/edit-removemembers.html","newWin");>Ð?Ð¾Ð¼Ð¾Ñ?Ñ?</a>
+
+		                </td>
+        </tr>
+</table> <br>
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Addmembers.vm").setAction("Groupmanagement")>
+
+<table align="center" border=1 bgcolor="$ui.menuColor" width=85% >
+	<tr bgcolor="$ui.menuColor"> <td> 					                 	<I><b><font size="3">Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ?Ð°Ð¼  ?? Ð?Ð½Ñ?Ð¾Ñ?Ð¼Ð°Ñ?Ð¸Ð¸ :</font>Ð§Ñ?Ð¾Ð±Ñ? Ñ?Ð´Ð°Ð»Ð¸Ñ?Ñ? mebers Ð² Ð³Ñ?Ñ?Ð¿Ð¿Ñ?, Ð½Ð°Ð¶Ð¼Ð¸Ñ?Ðµ ÐºÐ½Ð¾Ð¿ÐºÑ? Ð£Ð´Ð°Ð»Ð¸Ñ?Ñ? Ñ?Ð»ÐµÐ½Ñ? Ð±Ñ?Ñ?Ð¾Ð½</b></I><br>
+						</tr></td>
+	<tr><td>
+						<b><font color="blue"><i>Ð?Ð¸ÐºÐ°ÐºÐ°Ñ? Ð³Ñ?Ñ?Ð¿Ð¿Ð° Ð½Ðµ Ñ?Ñ?Ñ?ÐµÑ?Ñ?Ð²Ñ?ÐµÑ? Ð² Ñ?Ñ?Ð¾Ð¼ ÐºÑ?Ñ?Ñ?Ðµ.</i></font></b>
+				        </tr></td>
+	<input type="hidden" name="actionName" value="$actionName">
+	<input type="hidden" name="grpdesc" value="$grpdesc" >
+        <input type="hidden" name="type" value="$type" >
+        <input type="hidden" name="val">
+        <input type="hidden" name="grpname" value="$grpname" >
+        <input type="hidden" name="StudentNames" value="">
+        <input type="hidden" name="Status" value="$Status">
+</table>
+</form>
+<SCRIPT LANGUAGE="javascript">
+	function checkselect(frm,field)
+	{
+                var items;
+                items=frm.StudentNames.value;
+		var val1=document.frm.groupname.value; 
+                if((items.length!=0)&&(val1.length!=0))
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                 	alert("Please Select check box and option  !!");
+	}
+	function checkfield(frm,field)
+	{
+                var items;
+                items=frm.StudentNames.value;
+                if(items.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                 	alert("Please Select check box  !!");
+	}
+	function addstudentList(field,frm)
+	{
+		if(field.checked)
+        	{
+        		frm.StudentNames.value=frm.StudentNames.value+field.name+"^";
+        	}
+        	else
+        	{
+        		var rmFile,index,actualString,preString,postString;
+                	actualString=frm.StudentNames.value;
+                	index=actualString.indexOf(field.name+"^",0);
+                	preString=actualString.substring(0,index);
+                	postString=actualString.substring(index+field.name.length+1);
+                	actualString=preString+postString;
+                	frm.StudentNames.value=actualString;
+        	}
+	}
+	function selectAll(field)
+	{
+        	if(field.checked)
+        	{
+                	var rmFile,index,actualString,pre=0,next=0;
+                	actualString=document.frm.StudentNames.value="$count";
+                	while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                        	var temp=actualString.substring(next,pre);
+                        	next=pre+1;
+                        	rmFile=document.frm.elements[temp].checked=true;
+                        }
+        	}
+        	else
+        	{
+                	var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.StudentNames.value="$count";
+                  	while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                        	var temp=actualString.substring(next,pre);
+                        	next=pre+1;
+                         	rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.StudentNames.value="";
+           	}
+	}
+	function Changegroup(frm,field)
+        {
+                frm.val.value=document.frm.groupname.value;
+
+	}
+        function checkselect1(frm,field)
+        {
+                var val1=document.frm.groupname.value;
+                if(val1.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert("Please Select option  !!");
+        }
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+     
+</SCRIPT>

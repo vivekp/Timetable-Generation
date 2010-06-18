@@ -1,0 +1,276 @@
+#*
+ * @(#) Addmembers.vm
+ *  Copyright (c) 2006-07 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 04-05-09
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor("$ui.bgcolor")
+$!data.getMessage()
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr align="right"> <td><b>
+	#if($Status!="Edit")
+        	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")> $brih_mgmt $brih_grp </a>|
+		$brih_member $brih_add</b>
+	#else
+        	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>$brih_mgmt $brih_grp </a>|
+	        <a href=$link.setPage("call,Group_Mgmt,Editgroup.vm")>$brih_grp $brih_Of1 $brih_edit</a> | $brih_member $brih_remove</b>
+	#end
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>|
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+     </td></tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+        <tr align="left">
+                <td>
+		#if($Status!="Edit")
+			<a href=javascript:popupWin("/brihaspati2/docs/add-viewmembers.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+		#else
+			<a href=javascript:popupWin("/brihaspati2/docs/edit-removemembers.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+
+		#end
+                </td>
+        </tr>
+</table> ## table 2 end
+<br>
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Addmembers.vm").setAction("Groupmanagement")>
+
+<table align="center" border=1 bgcolor="$ui.menuColor" width=85% >
+	<tr bgcolor="$ui.menuColor" align="right"> <td> ## td tr of 7
+		#if($Status!="Edit")
+               		<I><b><font size="3">$brih_students $brih_Of $brih_infos :</font>$brih_grpmsg9</b></I><br>
+			<img src="$content.getURI("/images/star.png")"> -- $brih_grpmsg10
+		#else
+                 	<I><b><font size="3">$brih_students $brih_Of $brih_infos :</font>$brih_grpmsg11</b></I><br>
+		#end
+	</tr></td>
+	<tr><td>
+	#if($Mode == "NoBlank")
+        	<table border="0" bgcolor="$ui.tableColor" width="100%" > ## table 6 start
+			#if($Status != "Edit")
+				<tr align="right">
+					<td align="right">
+                			<select name="groupname" size="1" onChange="Changegroup(document.frm,this);"/>
+                        			<option> </option>
+                        			#foreach($grpname in $grplist)
+                        			<option value="$grpname.Name">$grpname.Name
+                        			#end
+                        			</option>
+                        		</select>
+					&nbsp;&nbsp;&nbsp;
+						<b>: $brih_grp $brih_select <font color="Red">*</font> 
+                			</td>
+				</tr>
+			#end
+		</table>
+	</td> </tr>
+        <tr> <td>
+                <table border="0" bgcolor="$ui.tableColor" width="100%" > ## table 6 start
+			<td valign="top" align="right" colspan= "4">
+			#if($Status !="Edit" )
+				#if($nolist == "yeslist")
+					#if($val == "")
+						<td align="center"><i><font color="blue">$brih_grpmsg13</font><i></td>
+					#else
+						<table align="right">
+							#if($mode == "noempty")
+								#foreach($selectedlist in $selectedlist)
+									<tr bgcolor="$ui.menuColor">
+										<td align="right"> &nbsp;&nbsp; $selectedlist.UserName</td>
+									</tr>
+								#end
+							#else
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td align="center"><b><font color=blue><I><font size="4">$brih_grpmsg12</font></I></font></b></td>
+							#end
+						</table>
+        	                		#set($headings=["$brih_grp $brih_Of2 $brih_selected $brih_student <font color=green>$val</font>",""])
+						#foreach($headings in $headings)
+                        	        		<font size="4"><I><b>$headings</b></I></font>
+                        			#end
+					#end
+				#end
+			#end
+			</td>
+			<td align="right">
+			#if($nolist == "yeslist")
+				#if($Status!="Edit")
+                      			#set($headings=["$brih_student $brih_Of2 $brih_name &nbsp;&nbsp;",""])
+				#else
+                        		#set($headings=["$brih_grp $brih_Of2 $brih_selected $brih_student <font color=green>$grpname</font>",""])
+				#end
+			#end
+
+                        #foreach($headings in $headings)
+                        	<font size="4"><I><b>$headings</b></I></font>
+                        #end
+			#if($Status == "Edit")
+				<table align="right">
+				#if($mode == "noempty")
+					<tr>
+        	                		<td align="left" bgcolor="$ui.menuColor">
+	        	               		<input type="CHECKBOX" name="checkAll" onClick="selectAll(this);">
+                        			<font face="$ui.sansSerifFonts"><b>$brih_selAll</b>
+                        			</td>
+						<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b> $brih_grp $brih_member</b>
+						</td>
+					</tr>
+         					#set( $count="")
+                        			#foreach($selectedlist1 in $selectedlist)
+							<tr>
+                        				<td align="left"> <input type="checkbox" name="$!selectedlist1.UserName" onClick="addstudentList(this,document.frm);"/></td>
+                        				<td align ="center">$!selectedlist1.UserName</td>
+							</tr>
+							#set( $count = "$count$!selectedlist1.UserName^" )
+						#end
+				#else
+						<td align="center"><b><font color=blue><I><font size="4">$brih_grpmsg12</font></I></font></b></td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				#end
+				</table>
+			#else
+         			#set ($count="")
+				<table align="right">
+               			#foreach($studentnames in $studentlist)
+					#set($flag=0)
+				<tr>
+					#set( $conuter ="")
+					#foreach($sellist in $list)
+						#if($studentnames == $sellist)
+							
+							#set($flag=1)
+							<td><img src="$content.getURI("/images/star.png")"> </td>	
+						#end
+					#end
+					#set($counter=$counter+1)
+					#if($flag == 0 )
+              					<td align ="right" colspan ="2" >$studentnames</td>
+					#else 
+						<td align ="right">$studentnames</td>
+              				#end
+               				<td align="right"><input type="checkbox"name="$!studentnames" onClick="addstudentList(this,document.frm);"/></td>
+				</tr>
+				#set($count=$count+1)
+				#end
+				</table>
+			#end
+			</td>
+                </table> ## table end 6
+        </tr></td> ## end of tr td 7
+        <tr bgcolor="$ui.menuColor"><td align="left">
+		#if($Status =="Edit")
+        		<input type="button" name="eventSubmit_doRemoveselectedstudent" value="$brih_member $brih_remove" onClick="checkfield(document.frm,this);"/>
+		#else
+        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="eventSubmit_doAddSelected" value="$brih_member $brih_add" onClick="checkselect(document.frm,this);"/>
+        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="eventSubmit_doViewmember" value="$brih_member $brih_view" onClick="checkselect1(document.frm,this);"/>
+		#end
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+	#else
+		<b><font color="blue"><i>$brih_grpmsg18.</i></font></b>
+	#end
+        </tr></td>
+	<input type="hidden" name="actionName" value="$actionName">
+	<input type="hidden" name="grpdesc" value="$grpdesc" >
+        <input type="hidden" name="type" value="$type" >
+        <input type="hidden" name="val">
+        <input type="hidden" name="grpname" value="$grpname" >
+        <input type="hidden" name="StudentNames" value="">
+        <input type="hidden" name="Status" value="$Status">
+</table>
+</form>
+<SCRIPT LANGUAGE="javascript">
+	function checkselect(frm,field)
+	{
+                var items;
+                items=frm.StudentNames.value;
+		var val1=document.frm.groupname.value; 
+                if((items.length!=0)&&(val1.length!=0))
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                 	alert("Please Select check box and option  !!");
+	}
+	function checkfield(frm,field)
+	{
+                var items;
+                items=frm.StudentNames.value;
+                if(items.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                 	alert("Please Select check box  !!");
+	}
+	function addstudentList(field,frm)
+	{
+		if(field.checked)
+        	{
+        		frm.StudentNames.value=frm.StudentNames.value+field.name+"^";
+        	}
+        	else
+        	{
+        		var rmFile,index,actualString,preString,postString;
+                	actualString=frm.StudentNames.value;
+                	index=actualString.indexOf(field.name+"^",0);
+                	preString=actualString.substring(0,index);
+                	postString=actualString.substring(index+field.name.length+1);
+                	actualString=preString+postString;
+                	frm.StudentNames.value=actualString;
+        	}
+	}
+	function selectAll(field)
+	{
+        	if(field.checked)
+        	{
+                	var rmFile,index,actualString,pre=0,next=0;
+                	actualString=document.frm.StudentNames.value="$count";
+                	while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                        	var temp=actualString.substring(next,pre);
+                        	next=pre+1;
+                        	rmFile=document.frm.elements[temp].checked=true;
+                        }
+        	}
+        	else
+        	{
+                	var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.StudentNames.value="$count";
+                  	while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                        	var temp=actualString.substring(next,pre);
+                        	next=pre+1;
+                         	rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.StudentNames.value="";
+           	}
+	}
+	function Changegroup(frm,field)
+        {
+                frm.val.value=document.frm.groupname.value;
+
+	}
+        function checkselect1(frm,field)
+        {
+                var val1=document.frm.groupname.value;
+                if(val1.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert("Please Select option  !!");
+        }
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+     
+</SCRIPT>

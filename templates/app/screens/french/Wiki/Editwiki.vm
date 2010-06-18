@@ -1,0 +1,95 @@
+
+
+$page.setTitle("$brih_home | $course | $brih_Wiki |  $brih_edit $brih_Wiki $WikiPage")
+$page.setBgColor("#ffffff")
+
+<style type="text/css">input{width:170px;}</style>
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>Maison</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,Wiki,Wiki.vm")>Wiki</a> 
+							        	                	| Ã?diter  Wiki Page
+				                        
+
+        </font>
+</td>
+</tr>
+</table>
+
+
+
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati2/docs/Wikiusermanual.html","newWin");>Aide </a>
+                </td>
+        </tr>
+</table>
+
+
+
+<br>
+<div align=center>
+	<FORM  name=frm method="POST" 
+					action="$link.setPage("call,Wiki,Wiki.vm").setAction("Wikieditaction").addPathInfo("fName",$filename).addPathInfo("query",$query).addPathInfo("searchtype",$searchtype)">
+					<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5" width="10%" >
+								<tr bgcolor="$ui.menuColor">
+									<td>
+						PageNom  <INPUT type="text" name="createname" size="25">
+					</td>
+								</tr>
+
+				<tr>
+					<td>
+<TEXTAREA   name="text" rows="25"  cols="100" >
+</TEXTAREA>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" bgcolor="$ui.menuColor" > 
+						<input type="hidden" name="actionName" >
+																					<input type="submit" name="eventSubmit_doEdit" value="Sauver" />
+														 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 						<input type="reset" name="Clear" value="Clair" onClick="checkClear(document.frm,this);"/>
+
+					</td>
+				</tr>
+			</table>
+	</FORM>
+</div>
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"scrollbars=1,height=400,width=400");
+        }
+
+ 	function checkFileName(frm,field)
+        {
+                j=frm.createname.value;
+                if((frm.createname.value!="") && (j.length<26) && (frm.text.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        if(j.length >26)
+                        {
+                                alert("Page name cannot have characters greater than 25 ");
+                        }
+                        else
+                        {
+                                alert("Please Fill Page name Field and  Page Content ");
+                        }
+                }
+        }
+
+	function checkClear(frm,field)
+        {
+        	frm.text.value="";
+        }
+</SCRIPT>

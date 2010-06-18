@@ -1,0 +1,89 @@
+#*
+ * @(#) Author.vm
+ *  Copyright (c) 2005-2006 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com">Kishore kumar shukla</a>
+ *  @author <a href="mailto:manjaripal@yahoo.co.in">Manjaripal</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("Author Interface") 
+$page.setBgColor($ui.bgcolor)
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table width=100% cellspacing=0  bgcolor="$ui.menuColor">
+<tr>
+	<td align="center" bgcolor="$ui.tableColor"><font size=5><I><b>$brih_author $brih_inter</b><I></font></td>
+</tr>
+<tr>
+	<td align=center bgcolor="$ui.tableColor">
+		<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+		<font size=4><b> #if($lang=="hindi") #UNAME() $brih_welcome  #else $brih_welcome #UNAME() #end
+		</font>
+        </td>
+</tr>
+</table>
+$!data.getMessage()
+<table width=100% >
+<tr>
+<td align="right">
+	<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/AuthorManagement.html","newWin");>$brih_help</a>
+</td>
+</tr>
+</table>
+<table bgcolor="$ui.menuColor" width=20% align="center">
+	#if($check == "disable")
+        <tr><td align="center">
+        	<a href=$link.setPage("call,Repository_Mgmt,UploadSCO.vm")>
+        	<img src="$content.getURI("/images/$lang/uploadcontent.jpg")"border=0></a><br>
+        </td></tr>
+        <tr><td align="center">
+		<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("status","fromViewContent")>
+        	<img src="$content.getURI("/images/$lang/viewContent.jpg")"border=0></a><br>
+        </td></tr>
+        <tr><td align="center">
+        	<a href=$link.setPage("call,Repository_Mgmt,RepositoryBrowser.vm")>
+        	<img src="$content.getURI("/images/$lang/repositoryBrowser.jpg")"border=0></a>
+        </td></tr>
+	<tr><td align="center">
+		<a href="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","personal")">
+		<img src="$content.getURI("/images/$lang/personalcalendar.jpg")"border=0></a></td>
+	</tr>
+#*       <tr><td align="center">
+        	<a href=$link.setPage("call,Repository_Mgmt,PlayerContent.vm")>
+        	Player</a>
+        </td></tr>
+*#
+        #else
+        <tr>
+        <td align=center>
+        	<font face="$ui.sansSerifFonts" size=3>
+        	<a href="$link.setPage("call,Repository_Mgmt,Author.vm").setAction("RepositoryAction").addPathInfo("actionName","eventSubmit_doCreate_Repo")">$WikiCreate $Repo_Repo1</a> &nbsp;&nbsp;
+		</font>
+        </td>
+        </tr>
+        #end
+</table>
+<br>
+#*<table border=0 align=center>
+
+                <tr>
+                <td colspan=3 align=center bgcolor="$ui.tableColor">
+                <font face="$ui.sansSerifFonts"><b><u>TODAYS EVENT</font>
+                </td>
+                </tr>
+                </table>
+<br>
+<table border=0 align=center >
+<tr>
+        <td colspan=3 align=center bgcolor="$ui.tableColor">
+        <font face="$ui.sansSerifFonts"><b><U>TASK TO BE DONE TODAY</font>
+        </td>
+</tr></table>*#
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

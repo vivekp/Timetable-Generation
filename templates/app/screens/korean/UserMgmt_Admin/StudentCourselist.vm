@@ -1,0 +1,62 @@
+
+
+$page.setTitle("Admin Home | User Management | Search Student | Course Details for '$username'")
+
+
+$page.setBgColor($ui.bgcolor)
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr><td>
+<b><a href=$link.setPage("Index.vm")>Admin's ì§?</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>ì?¬ì?©ì?? ê´?ë¦¬</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>í??ì?? ê²?ì??</a> | ì½?ì?¤ ì??ì?¸
+</b></td>
+</tr>
+</table>
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">ì?¬ì?©ì?? ì¶?ê°?</a></td>
+       <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>í??ì??ê³¼ì ? ëª©ë¡?</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>ì?­ì ? ì§?ë??ì??</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>ì?­ì ? í??ì??</a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>ì?¬ë?¬ ì?¬ì?©ì?? ì¶?ê°?</a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>ì??ë¡?ë?? ì?¬ì§?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>ì¶?ì?? ë³´ê³ ì??</a></td>
+
+</tr>
+</table>
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_Admin,StudentCourselist.vm").setAction("RemoveStudentCourse").addPathInfo("username",$username)">
+<table align=left width=100% bgcolor="$ui.tableColor">
+				<tr bgcolor="$ui.menuColor">
+		<td>ì??ë¡?ì?´ ì½?ì?¤ì?? ë?±ë¡?</td>
+		<td><select name="group" size=1>
+				</option>
+		</select>
+		</td>
+		<td><INPUT TYPE="SUBMIT" NAME=eventSubmit_doRegister VALUE="ê¸°ë¡?ê¸°">
+		</td>
+	</tr>
+</table>
+
+<INPUT TYPE="hidden" NAME=deleteFileNames VALUE="">
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function addDeleteList(field,frm)
+{
+if(field.checked)
+	{
+	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	}
+else
+        {
+        var rmFile,index,actualString,preString,postString;
+        actualString=frm.deleteFileNames.value;
+        index=actualString.indexOf(field.name+"^",0);
+        preString=actualString.substring(0,index);
+        postString=actualString.substring(index+field.name.length+1);
+	actualString=preString+postString;
+	
+	frm.deleteFileNames.value=actualString;
+	}
+}
+</SCRIPT>																			

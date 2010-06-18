@@ -1,0 +1,167 @@
+#*
+ * @(#)Attendence_seet.vm
+ *  Copyright (c) 2007 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:arvindjss17@yahoo.co.in ">Arvind Pal</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+$!data.getMessage()
+<table bgcolor="$ui.tableColor" width=100% align="center">
+    <tr bgcolor="$ui.menuColor"> <td colspan=7>
+        <a href=$link.setPage("index.vm")>$brih_ad $brih_home</a> |
+        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_usr $brih_mgmt</a> | $brih_attendence
+     </td></tr>
+##</table>
+##<table align=left width=100% bgcolor="$ui.tableColor">
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">$brih_add $brih_usr</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>$brih_student $brih_course $brih_list</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>$brih_delete $brih_ins</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>$brih_delete $brih_student</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>$brih_add $brih_multiple1 $brih_usr</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>$brih_upload $brih_photo</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>$brih_attendence</a></td>
+</tr>
+##</table>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("status","ForallUser")">
+
+
+##<table align="left" width=100% bgcolor="$ui.tableColor">
+        <tr bgcolor="$ui.menuColor">
+                ##<td align=left colspan=2 bgcolor="$ui.menuColor">
+                <td align=left colspan=7>
+                        <b>$brih_match_str </b>
+                        <input align=center type="text" name="valueString" value="" >
+                        <input type="button" name="Search" value="$brih_search" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+        </tr>
+
+	<tr>	
+		##<td colspan=2 align="left" bgcolor="$ui.menuColor" ><font size=4>
+		<td colspan=7 align="left">
+	                <b> $brih_attendence $brih_for <font color=green><i> $brih_ins </i></b></font>
+                </td>
+	</tr> 
+  	<tr>
+	##<td bgcolor="$ui.tableColor" valign=top width="40%">
+	<td colspan=7>
+      		##<table width="100%" valign=top > 
+			##<tr bgcolor="$ui.menuColor">
+			<tr bgcolor="$ui.menuColor">
+				<td colspan=7 align="left"><b>
+					$brih_ins $brih_name  
+				</td>
+			</tr>
+			#foreach ($e in $userlist)
+			#if($velocityCount%2==0)
+	        	<tr bgcolor="$ui.menuColor">
+			#else
+	        	<tr bgcolor="$ui.tableColor">
+			#end
+		                <td colspan=7>
+                		<a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("name",$e.getSender()).addPathInfo("userId",$e.getMSubject()).addPathInfo("status","Subcolumn")> $e.getSender() </a>&nbsp;&nbsp;&nbsp;
+                		</td>
+			</tr>
+        		#end
+		##</table> 
+	</td>
+	#if($status == "Subcolumn")
+	##<td  bgcolor="$ui.menuColor" width="60%" valign=top>
+	<td>
+		##<table width="100%">
+			<tr bgcolor="$ui.menuColor">
+				<td colspan=7 align="left">$brih_attendence $brih_of <font color=green><i>$name</i></td>
+			</tr>
+			##<tr bgcolor="$ui.menuColor" >
+			<tr>
+				<td>$brih_Da $brih_and $brih_time</td>
+			</tr>
+		#if($status1 == "check")
+			#foreach ($e in $instructorList)
+                        ##<tr bgcolor="$ui.menuColor">
+                        <tr>
+                                <td>
+                                        $e
+                               </td>
+                         </tr>
+        		#end
+		#else
+			<tr>
+			        <td>
+					<b> <font color=green>	<i> $mess   </i></b></font>
+                        	</td>
+			</tr>
+		#end
+		##</table>
+	</td>
+	#end
+	</tr>
+## For pagination
+#if($status != "Subcolumn")
+<tr bgcolor="$ui.menuColor">
+                ##<td align=left colspan=2 bgcolor="$ui.menuColor">
+                <td align=left colspan=7>
+        #if($mode!="Search")
+        #if($total_size<= $AdminConf)
+         <u><font color="white">$brih_first</font></u> &nbsp;
+         <u><font color="white">$brih_nxt</font></u> &nbsp;
+         <u><font color="white">$brih_pre</font></u> &nbsp;
+         <u><font color="white">$brih_last</font></u> &nbsp;
+        #elseif($startIndex== $AdminConf_str)
+          <u><font color="white">$brih_first</font></u> &nbsp;
+          <u><font color="white">$brih_pre</font></u> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode)">$brih_nxt</a> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode)">$brih_last</a> &nbsp;
+        #elseif($endIndex == $total_size || $endIndex > $total_size)
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode)">$brih_first</a> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode)">$brih_pre</a> &nbsp;
+        <u><font color="white">$brih_nxt</font></u> &nbsp;
+        <u><font color="white">$brih_last</font></u> &nbsp;
+       #else
+         <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode)">$brih_first</a> &nbsp;
+         <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode)">$brih_pre</a> &nbsp;
+         <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex).addPathInfo("mode",$mode)">$brih_nxt</a> &nbsp;
+          <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode)">$brih_last</a> &nbsp;
+        #end
+#else
+                #if($total_size<= $AdminConf)
+         <u><font color="white">$brih_first</font></u> &nbsp;
+         <u><font color="white">$brih_nxt</font></u> &nbsp;
+         <u><font color="white">$brih_pre</font></u> &nbsp;
+         <u><font color="white">$brih_last</font></u> &nbsp;
+                #elseif($startIndex== $AdminConf_str)
+          <u><font color="white">$brih_first</font></u> &nbsp;
+          <u><font color="white">$brih_pre</font></u> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_nxt</a> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_last</a> &nbsp;
+        #elseif($endIndex == $total_size || $endIndex > $total_size)
+      <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_first</a> &nbsp;
+      <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_pre</a> &nbsp;
+        <u><font color="white">$brih_nxt</font></u> &nbsp;
+        <u><font color="white">$brih_last</font></u> &nbsp;
+                #else
+        <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_first</a> &nbsp;
+                <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_pre</a> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_nxt</a> &nbsp;
+       <a href="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_last</a> &nbsp;
+                #end
+        #end
+        </td>
+        </tr>
+#end
+</table>
+
+<SCRIPT language="JavaScript">
+        function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

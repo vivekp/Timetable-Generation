@@ -1,0 +1,103 @@
+#*
+ * @(#) MultiCourseRegister.vm
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | Course User Management | Upload Multiple Course ")
+$!data.getMessage()
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+
+        <td align="right">
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+      <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+      <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")> $brih_mgmt $brih_reg </a> |
+		$brih_multi_usr2 $brih_course $brih_upload
+
+        </td>
+
+	</b>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align="left">
+        <a href=javascript:popupWin("/brihaspati/docs/RegisterMultiCourseInstructor.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+</td>
+</tr>
+</table>
+
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_Admin,MultiCourseRegister.vm").setAction("RegisterMultiCourseInstructor")">
+<div align="left">
+<br>
+<br>
+<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+      	<tr bgcolor="$ui.tableColor">
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>$brih_upload_msg3</b></font>
+	</td>
+	</tr>
+	<tr align="right" bgcolor="$ui.tableColor">
+
+        	## #fileUpload ("$brih_at_file <font color=RED>*</font>" "file")
+		<td><input type="file" size="30%" name="file" value=""> </td>
+		<td> <b> <font color="$ui.fontColorRed">*</font> $brih_at_file </b> </td>			
+
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.menuColor">
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadcourse" value="$brih_upload" onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+##<table width=60% border=1 bgcolor="#d9e3ec" align=center>
+<table width=60% border=1 bgcolor="$ui.menuColor" align=center>
+#foreach( $e in $Msg )
+        <tr bgcolor="WHITE">
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">Entry <font color="$ui.fontColorBrown">"$e.getErr_User()"</font>
+        </font>
+        </td>
+        </tr>
+#end
+</table>
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+</SCRIPT>

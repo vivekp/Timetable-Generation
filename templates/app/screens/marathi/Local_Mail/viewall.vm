@@ -1,0 +1,109 @@
+
+$page.setTitle(" Home | $cname | Communication | Local Mail | Compose Message | Address Book")
+$page.setBgColor($ui.bgcolor)
+
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+    <td>
+	<font face="$ui.sansSerifFonts" size=3>
+		<a href=$link.setPage("call,IndexHome.vm")>???</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>????????</a> |
+	<a href=$link.setPage("call,Local_Mail,Mail.vm")>???????    ???</a> |
+ 	<a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","compose")>?????   ????    ???</a> |
+				?????      ????   ?????
+		</b>
+	</font>
+   </td>
+	<td width="30%" align="right">
+		</td>
+</tr>
+</table>
+<form name="frm" ENCTYPE="multipart/form-data" method="post" action="$link.setPage("call,Local_Mail,MailTestMessage.vm").setAction("Add")">
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+	<td><b>??   ??? ???????????    ???</b></td>
+        <td><b>????  ?????  ??? </b></td>
+        <td><input align=center type="text" name="valueString" value=""></td>
+        <td>
+        	<input type="button" name="Search" value="???" onClick="checkNull(document.frm,this);">
+                <input type="hidden" name="mode" value="Search">
+                <input type="hidden" name="mod" value="$modes">
+        </td>
+	<td>
+			<b><a href="$link.setPage("call,Local_Mail,viewall.vm").addPathInfo("mode","courseWiseAll")">??????? ?? $cname</a></b> |
+		<b><a href="$link.setPage("call,Local_Mail,viewall.vm").addPathInfo("mode","All")">???  ???????????  ????</a></b>
+		<td>
+</tr>
+</table>
+<INPUT TYPE="hidden" NAME="actionName">
+</form>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+        </table>
+
+<SCRIPT language="JavaScript">
+	function addAddressList(field,frm){
+                if(field.checked)
+ 		{
+ 			frm.DB_subject.value=frm.DB_subject.value+field.name+"^";
+		}
+                else{
+        		var rmFile,index,actualString,preString,postString;
+                        actualString=frm.DB_subject.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.DB_subject.value=actualString;
+                 }
+        }
+        
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+	
+	function selectAll(field){
+                if(field.checked){
+  
+                        var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.DB_subject.value="$count";
+                        while( ( pre=actualString.indexOf("^",next) ) >=0 ){
+                                var temp=actualString.substring(next,pre);
+                                next=pre+1;
+                                rmFile=document.frm.elements[temp].checked=true;
+   
+                        }
+                }
+	        else{
+                        var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.DB_subject.value="$count";
+                        while( ( pre=actualString.indexOf("^",next) ) >=0 ){
+                                var temp=actualString.substring(next,pre);
+                                next=pre+1;
+                                rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.DB_subject.value="";
+                }
+        }
+
+        function checkField(frm,field)
+        {
+                        
+              frm.actionName.value=field.name;
+              frm.submit();
+
+       }
+    
+	function checkNull(frm,field){
+              if(frm.valueString.value!=""){
+                  frm.actionName.value=field.name;
+                    frm.submit();
+          }
+        else{
+              alert("The 'Match String' text box can not be NULL");
+    }
+  }
+</SCRIPT>

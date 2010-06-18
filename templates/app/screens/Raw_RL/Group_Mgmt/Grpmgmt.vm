@@ -1,0 +1,84 @@
+#*
+ * @(#)Grpmgmt.vm
+ * Copyright (c) 2006-07, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modified <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ * @date 01-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+$page.setTitle("Home | $courseName | $brih_grpmgmt")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts">
+	$brih_mgmt $brih_grp |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a>|
+	<a href=$link.setPage("call,IndexHome.vm")><b>$brih_home</a>  
+	</font>
+</td></tr>
+</table>
+<table width=100%>
+<tr>
+<td>
+		#if($user_role == "instructor")
+		<a href=javascript:popupWin("/brihaspati2/docs/grpmanagement.html","newWin");>$brih_help</a>
+		<img src="$content.getURI("/images/Lefthand.gif")">
+
+		#else
+		<a href=javascript:popupWin("/brihaspati2/docs/joingroupactivity.html","newWin");>$brih_help</a>
+		<img src="$content.getURI("/images/Lefthand.gif")">
+		#end
+</td>
+</tr>
+</table>
+<br>
+<table align=center bgcolor="$ui.tableHeaderColor" width=20% cellpadding=10>
+<tr><td align=center>
+ 	<table cellspacing=10>
+		#if($user_role == "instructor")
+		<tr><td>
+		<a href=$link.setPage("call,Group_Mgmt,Creategroup.vm")>
+                <img src="$content.getURI("/images/$lang/creategroup.jpg")" border="0"></a><br>
+		</td></tr>
+ 		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,Addmembers.vm")>
+                <img src="$content.getURI("/images/$lang/addmember.jpg")" border="0"></a><br>
+		</td></tr>
+ 		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm")>
+                <img src="$content.getURI("/images/$lang/viewdelete.jpg")" border="0"></a><br>
+		</td></tr>
+ 		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,Editgroup.vm")>
+                 <img src="$content.getURI("/images/$lang/editremove.jpg")" border="0"></a><br>
+		</td></tr>
+		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,Activitygroup.vm")>
+                <img src="$content.getURI("/images/$lang/groupactivity.jpg")" border="0"></a><br>
+		</td></tr>
+		#else
+		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,Signupform.vm")>
+                <img src="$content.getURI("/images/$lang/joingroup.jpg")" border="0"></a><br>
+               	</td></tr>
+		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,ViewActivity.vm")>
+                <img src="$content.getURI("/images/$lang/viewactivity.jpg")" border="0"></a><br>
+		</td></tr>
+		#end
+ 	</table>
+</td></tr>
+</table>
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</SCRIPT>

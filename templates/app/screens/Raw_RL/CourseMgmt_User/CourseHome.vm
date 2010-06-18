@@ -1,0 +1,522 @@
+
+#*
+ * @(#) CourseHome.vm
+ * Copyright (c) 2006-2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:singhnk@iitk.ac.in ">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("Course Home Page")
+$!data.getMessage()
+<body>
+## Representation of TOP BAR
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+	<tr align="right">
+	    <td>
+		 $cName |
+		<font face="$ui.sansSerifFonts" size=3><b>
+	     		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	    </td>
+	</tr>
+</table>
+
+<table width=100%>
+	<tr>
+		## Representation of Survey link
+		<td align="center">
+                        #if(($user_role != "instructor") && ($guest_login == "false"))
+                                #if($size > 0 && $size1 == 0)
+                                        <center><table><tr><td align="center">
+                                        <a href=$link.setPage("call,EventMgmt_Admin,Survey_Inst.vm").addPathInfo("mode","stphase")><b>$brih_survey</b></a>
+                                        </center></td></tr></table>
+     				#end
+                        #end
+                </td>
+		## Representation of HELP link
+		<td>
+		<a href=javascript:popupWin("/brihaspati2/docs/CourseHome.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+		</td>
+	</tr>
+</table>
+
+## Representation of UNREAD MESSAGES
+
+#foreach($msg in $unreadMsg)
+	<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+	<tr align="right">
+		#if(($msg!="0" ) && ($guest_login == "false") )
+                <td align=center>
+                <font face="$ui.sansSerifFonts">
+                <a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("courseId",$groupName).addPathInfo("flag","FromCourseHome")>
+				$brih_uHave $msg $brih_unreadNotice</a>
+                 </font>
+                 </td>
+                 #end
+	</tr>
+	</table>
+#end
+## main table
+<table border=1 width="100%" valign="top">
+	## main row 1 open
+	<tr>
+##########################
+##main column 2 open
+			<td width="30%" valign="top">
+				 ## Result of Survey for this course
+                                                #if($user_role == "instructor")
+                                                <table width="100%"  border=1>
+                                                        <tr><td bgcolor="$ui.tableColor" align="center">
+                                                                <font face="$ui.sansSerifFonts">
+                                                                <b>$brih_survey $brih_Of2 $brih_result </b>
+                                                                </font>
+                                                        </td></tr><tr>
+                                                        #if($ldetail.size()>0)
+                                                                #foreach($d in $ldetail)
+                                                                        <td align="right">  $d.getGrade() : $survey_cpl</td>
+                                                                #end
+                                                        #else
+                                                                <td align="right">$brih_survey $brih_Of2 $brih_result $brih_no $brih_message </td>
+                                                        #end
+                                                        </td>
+                                                </table>
+                                                #end
+
+				<table border="1" cellspacing="4" cellpadding="2" align="center" width="100%">
+					<tr><td align="right">
+						<table width="100%"  bgcolor="$ui.tableColor">
+							<tr><td align="center">
+								<font face="$ui.sansSerifFonts">
+									<b>$brih_newsHeadline </b>
+								</font>
+							</td></tr>
+						</table>
+						#if($status!="empty")				
+						<table width="100%">
+							<tr><td align="right">
+								<marquee scrollamount="1" direction="up" loop="2" width="100%" height="100" behaviour="slide">
+								#set($count=1)
+								#foreach($news in $detail)
+									#if($count % 2 == 0)
+										<font size=3>
+										<table bgcolor="$ui.buttonBoxColor" width="100%">
+										<tr><td align ="right">
+                                <a href=javascript:popupWin("$link.setPage("call,ViewNews_Photo.vm").addPathInfo("newsid",$news.getNews_ID()).addPathInfo("date",$news.getPDate()).addPathInfo("user",$news.getSender())","newWin");>...$brih_more</a>
+										$news.getNews_Subject()
+										</td></tr>
+										</table>
+										</font>
+										#set($count = $count + 1)
+									#else
+										<font size=3>
+										<table bgcolor="$ui.tableColor" width="100%">
+										<tr><td align="right">
+                                <a href=javascript:popupWin("$link.setPage("call,ViewNews_Photo.vm").addPathInfo("newsid",$news.getNews_ID()).addPathInfo("date",$news.getPDate()).addPathInfo("user",$news.getSender())","newWin");>..$brih_more</a>
+										$news.getNews_Subject()
+										</td></tr>
+										</table>
+										</font>
+										#set($count = $count + 1)
+									#end
+								#end
+								</marquee>
+							</td></tr>	
+						</table>
+						<table align=center>
+						<tr><td align="center">
+							<a href="$link.setPage("call,News,News_Course.vm")"> &laquo;$brih_news $brih_more $brih_in </a>
+						</td></tr>
+						</table>
+						#else
+							##No News Till Today's Date
+							$brih_newsNo
+						#end
+					</td></tr>
+					##code for event today
+                			<tr><td>
+			                <table width="100%">
+				                <tr><td bgcolor="$ui.tableColor" align="center">
+				                <font face="$ui.sansSerifFonts">
+				                <b> $brih_today $brih_Of1 $brih_event </b>
+				                </font>
+				                </tr></td>
+				                </table>
+				                <table width="100%">
+					                #set ( $count1 = 1 )
+					                #foreach ($element in $information)
+				                        #set ( $count2 = 1 )	
+					                        #foreach ($begt in $Stime)
+				                                #set ( $count3 = 1 )
+					                                #foreach ($stt in $Etime)
+					                                #if(($count1 == $count2) && ($count1 == $count3))
+				                                        <tr>
+                                					        #if ($INT.valueOf($begt) > $INT.valueOf($currenttime))
+					                                        <td ><font color="green">$element</font>
+                                        					#elseif($INT.valueOf($currenttime) < $INT.valueOf($stt))
+					                                        <td><font color="red">$element</font>
+					                                        #else
+					                                        <td><font color="black">$element</font>
+					                                        #end
+					                                        </td></tr>
+					                                #end
+					                                #set($count3=$count3+1)
+					                                #end
+					                        #set ( $count2 =$count2 + 1 )
+					                        #end
+					                #set ( $count1 = $count1 + 1 )
+					                #end
+				                </table>	
+			                </td></tr>
+		                </table>
+
+			</td>
+		##main column 2 close
+######################
+		## main column 1 open
+		<td width="70%">
+ 			## inner table
+			<table border=0 width="100%" cellpadding=10 bgcolor="$ui.tableColor" cellspacing=0 valign="top">
+		#if($guest_login == "false") ## for guestis not login
+			#if ($user_role == "instructor")
+				## inner row 1 open
+				<tr>
+					## inner column 1 (1)open
+					<td align="center" valign="top">
+						<table border=0 valign="top">
+                                            	<tr><td align=center>
+                                                   <a href=$link.setPage("call,Assignment,ASS_subm.vm")>
+                                                   <img border=0 src="$content.getURI("/images/assignment.jpg")"  width="50" height="50" >  </a>
+                                            	</td></tr>
+                                            	<tr><td align=center>
+                                                    <font face="$ui.sansSerifFonts">
+                                                    <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment </a>
+                                            	</td></tr>
+                                          	</table>
+					</td>
+					## inner column 1 (1)close
+					## inner column 2 (1)open
+					<td align=center>
+						<table border=0>
+							<tr><td align=center>
+								<a href=$link.setPage("call,Backups,BackupIns.vm")><img border=0 src="$content.getURI("/images/book6.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     								<a href=$link.setPage("call,Backups,BackupIns.vm")>$brih_backup</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 2 (1)close
+					## inner column 3 (1)open
+					<td align=center>
+						<table border=0 valign="top">
+							<tr><td align=center>
+  				   				<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")><img border=0 src="$content.getURI("/images/opnclass.jpg")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     								<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 3 (1)close
+				</tr>
+				## inner row 1 close
+				## inner row 2 open
+				<tr>
+					## inner column 2 (1)open
+					<td align=center>
+						<table border=0>
+							<tr><td align=center>
+								<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","fromcourse")><img border=0 src="$content.getURI("/images/CourseCalendar.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+								<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","fromcourse")>$brih_course1 $brih_calendar</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 2 (1)close
+					## inner column 2 (2)open
+					<td align="center" valign="top">
+						<table border=0 valign="top">
+							<tr><td align="center" valign="top">
+									 <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>
+									<img border=0 src="$content.getURI("/images/book.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+									<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")> $brih_mgmt $brih_course </a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 2 (2)close
+					## inner column 3 (2)open
+                                        <td align=center>
+                                                <table border=0>
+							<tr><td align=center>
+                                                    <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")><img border=0 src="$content.getURI("/images/groupimages.jpg")"></a>
+                                               </td></tr>
+                                               <tr><td align=center>
+                                                   <font face="$ui.sansSerifFonts">
+                                                  <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>$brih_mgmt $brih_grp</a>
+                                                     </td></tr>
+                                                </table>
+                                        </td>
+					## inner column 3 (2)close
+				</tr>
+				## inner row 2 close
+				## inner row 3 open
+				<tr>
+					## inner column 1 (3)open
+					<td align=center>
+						<table border=0>
+							<tr><td align=center>
+							<a href=$link.setPage("call,Question_Bank,Question_bank.vm")>
+							<img border=0 src="$content.getURI("/images/book_que.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     									<a href=$link.setPage("call,Question_Bank,Question_bank.vm")>$brih_qus $brih_bank</a><br>
+							</td></tr>
+						</table>
+					</td> 
+					## inner column 1 (3)close
+					## inner column 2 (3)open
+                                        <td align=center>
+                                                <table border=0>
+                                                        <tr><td align=center>
+                                                                       <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>
+                                                                        <img border=0 src="$content.getURI("/images/quiz.jpg")"></a>
+                                                        </td></tr>
+                                                        <tr><td align=center>
+                                                                <font face="$ui.sansSerifFonts">
+                                                                        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")> $brih_mgmt $brih_quiz </a><br>
+                                                        </td></tr>
+                                                </table>
+                                        </td>
+                                        ## inner column 2 (3)close
+                                        ## inner column 3 (3)open
+					<td align=center>
+						<table border=0>
+							<tr><td align=center>
+								<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm").addPathInfo("courseid",$user_role)><img border=0 src="$content.getURI("/images/images.jpg")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     								<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_mgmt $brih_student </a><br>
+							</td></tr>
+						</table>
+					</td>
+                                        ## inner column 3 (3)close
+                                </tr>
+
+				## inner row 3 close
+				## inner row 4 open
+				<tr>
+                                        ## inner column 1 (4)close
+					<td align=center>
+					<table border=0>
+						<tr><td align=center>
+     							<a href=$link.setPage("call,UserMgmt_User,UploadMarks.vm")><img border=0 src="$content.getURI("/images/marks.png")"></a>
+						</td></tr>
+						<tr><td align=center>
+							<font face="$ui.sansSerifFonts">
+     							<a href=$link.setPage("call,UserMgmt_User,UploadMarks.vm")>$brih_upload $brih_marks</a><br>
+						</td></tr>
+					</table>
+					</td>
+                                        ## inner column 1 (4)close
+                                        ## inner column 2 (4)open
+					<td align=center>
+						<table border=0>
+							<tr><td align=center>
+	     							<a href=$link.setPage("call,Wiki,Wiki.vm")><img border=0 src="$content.getURI("/images/greenpen.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+								<a href=$link.setPage("call,Wiki,Wiki.vm")>$brih_Wiki</a>
+							</td></tr>
+						</table>
+					</td>
+                                        ## inner column 2 (4)close
+
+				</tr>
+			#elseif($user_role=="student")
+				## inner row 1 open
+				<tr>
+					## inner column 1 (1)open
+					<td align="center" valign="top">
+						<table border=0 valign="top">
+                                            	<tr><td align=center>
+                                                   <a href=$link.setPage("call,Assignment,ASS_subm.vm")>
+                                                   <img border=0 src="$content.getURI("/images/assignment.jpg")" width="50" height="50" >  </a>
+                                            	</td></tr>
+                                            	<tr><td align=center>
+                                                    <font face="$ui.sansSerifFonts">
+                                                    <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment </a>
+                                            	</td></tr>
+                                          	</table>
+					</td>
+					## inner column 1 (1)close
+					## inner column 2 (1)open
+					<td align=center>
+						<table border=0 valign="top">
+							<tr><td align=center>
+  				   				<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")><img border=0 src="$content.getURI("/images/opnclass.jpg")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     								<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 2 (1)close
+					## inner column 3 (1)open
+					<td align=center>
+						<table border=0>
+							<tr><td align=center>
+								<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","fromcourse")><img border=0 src="$content.getURI("/images/CourseCalendar.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+								<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","fromcourse")>$brih_course1 $brih_calendar</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 3 (1)close
+				</tr>
+				## inner row 1 close
+				## inner row 2 open
+				<tr>
+					## inner column 2 (1)open
+					<td align="center" valign="top">
+						<table border=0 valign="top">
+							<tr><td align="center" valign="top">
+								 	<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+									<img border=0 src="$content.getURI("/images/book.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+									<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>$brih_course  $brih_Of $brih_content</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 2 (1)close
+					## inner column 2 (2)open
+                                        <td align=center>
+                                                <table border=0>
+							<tr><td align=center>
+                                                    <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")><img border=0 src="$content.getURI("/images/groupimages.jpg")"></a>
+                                               </td></tr>
+                                               <tr><td align=center>
+                                                   <font face="$ui.sansSerifFonts">
+                                                  <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>$brih_mgmt $brih_grp </a>
+                                                     </td></tr>
+                                                </table>
+                                        </td>
+					## inner column 2 (2)close
+					## inner column 3 (2)open
+                                        <td align=center>
+                                                <table border=0>
+                                                        <tr><td align=center>
+                                                                       <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>
+                                                                        <img border=0 src="$content.getURI("/images/quiz.jpg")"></a>
+                                                        </td></tr>
+                                                        <tr><td align=center>
+                                                                <font face="$ui.sansSerifFonts">
+                                                                        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")> $brih_mgmt $brih_quiz </a><br>
+                                                        </td></tr>
+                                                </table>
+                                        </td>
+					## inner column 3 (2)close
+				</tr>
+				## inner row 2 close
+				## inner row 3 open
+				<tr>
+                                        ## inner column 1 (3)open
+				<td align=center>
+
+					<table border=0>
+						<tr><td align=center>
+	     						<a href=$link.setPage("call,UserMgmt_User,ViewMarks.vm")><img border=0 src="$content.getURI("/images/marks.png")"></a>
+						</td></tr>
+						<tr><td align=center>
+							<font face="$ui.sansSerifFonts">
+		     					<a href=$link.setPage("call,UserMgmt_User,ViewMarks.vm")>
+								$brih_view $brih_marks</a><br>
+						</td></tr>
+					</table>
+				</td>
+                                        ## inner column 1 (3)close
+                                        ## inner column 2 (3)open
+				<td align=center>
+                                                <table border=0>
+                                                        <tr><td align=center>
+                                                                <a href=$link.setPage("call,Wiki,Wiki.vm")><img border=0 src=
+"$content.getURI("/images/greenpen.gif")"></a>
+                                                        </td></tr>
+                                                        <tr><td align=center>
+                                                                <font face="$ui.sansSerifFonts">
+                                                                <a href=$link.setPage("call,Wiki,Wiki.vm")>$brih_Wiki</a>
+                                                        </td></tr>
+						</table>
+				<td>
+                                        ## inner column 2 (3)close
+				</tr>
+				##inner row 3 close 
+			#end
+		#else  ## for guest is not login
+				## inner row 1 open
+				<tr>
+					## inner column 1 (1)open
+					<td align="center" valign="top">
+						<table border=0 valign="top">
+							<tr><td align="center" valign="top">
+								 	<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+									<img border=0 src="$content.getURI("/images/book.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+									<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>$brih_course $brih_Of $brih_content</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 1 (1)close
+					## inner column 2 (1)open
+					<td align=center>
+						<table border=0 valign="top">
+							<tr><td align=center>
+  				   				<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")><img border=0 src="$content.getURI("/images/opnclass.jpg")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     								<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a><br>
+							</td></tr>
+						</table>
+					</td>
+					## inner column 2 (1)close
+				</tr>
+				##inner row 1 close 
+		#end ## for guest is login
+			
+				</table>
+				##inner table
+			</td>
+			## main column 1 close
+			
+	</tr>
+	##main row 1 close
+</table>
+## main table
+</body>    
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

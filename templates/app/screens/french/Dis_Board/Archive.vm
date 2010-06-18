@@ -1,0 +1,59 @@
+
+
+<table bgcolor="#d9e3ec" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>Maison</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | 
+		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>Communication </a> | 
+		<a href =$link.setPage("call,Dis_Board,DB.vm")>DiscussionConseil</a> | Show Archive
+		</font>
+		</td>
+	</tr>
+</table>
+	
+
+<br><br>
+	</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	function checkValue(frm,field)
+	{
+       		if(frm.deleteFileNames.value!="")
+        	{
+	        	frm.actionName.value=field.name;
+                	frm.submit();
+        	}
+        	else
+        	{
+        		alert("Please select checkbox  !!");
+        	}
+	}
+	function addDeleteList(field,frm) {
+                if(field.checked)
+                {
+ 
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                        frm.DB_subject.value=frm.DB_subject.value+field.value+"@@@@";
+			 
+                 }
+                 else
+                     {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                     }
+        }
+	function popupWin(urlName,popupName) {
+		window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+	}                                    
+</script>
+
+
+
+
+

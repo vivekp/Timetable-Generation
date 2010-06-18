@@ -1,0 +1,250 @@
+#*
+ * @(#) Default.vm
+ * Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ * @author<a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ * @author<a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ *
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+$page.DefaultDoctype
+
+<html>
+
+$page.setBgColor("$ui.bgcolor")
+
+##$page.addStyleSheet($content.getURI("resources/css/brihaspati.css"))
+
+#TurbineHtmlHead()
+
+<body>
+<table width="100%">
+  	<tr>
+    	<td colspan="2">
+      		$navigation.setTemplate("/DefaultTop.vm")
+    	</td>
+  	</tr>
+  	<tr>
+	<td colspan=2>
+#set($lang=$data.getUser().getTemp("lang" ).toString())
+##############################################################
+
+## --------------------------------------------------------
+#if($lang != "urdu")
+        <table width="100%" cellspaceing="0" cellpadding="0">
+                <tr bgcolor="$ui.headerLinkColor" cellspacing="0" cellpadding="0">
+                #if($data.getUser().hasLoggedIn()) ##if(7)
+                        <td align="left" cellspacing="0" cellpadding="0">
+                        <td align="left">
+                        <a href=$link.setPage("Index.vm")>
+			<img src="$content.getURI("/images/$lang/Home1.jpg")"border=0></a>
+                        </td>
+                        #if($data.getUser().getUserName() != "guest") ##if(0)
+                        #if($data.getUser().getTemp("role") == "author") ##if(8)
+                        <td align="left">
+                        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")>
+			<img src="$content.getURI("/images/$lang/Reposetory.jpg")"border=0 ></a>
+                        </td>
+                        #else
+                        <td align="left">
+                        <a href=$link.setPage("call,Repository_Mgmt,RepositoryBrowser.vm")>
+			<img src="$content.getURI("/images/$lang/Reposetory.jpg")"border=0 ></a>
+                        </td>
+                        #end ##(end8)
+			#end	 ##end(0)
+
+                        #if($data.getUser().getUserName() == "admin") ##if(9)
+                        <td align="left">
+                                <a href=$link.setPage("Index.vm")>
+				<img src="$content.getURI("/images/$lang/admin_Home.jpg")"border=0 ></a>
+                        </td>
+                        <td align="left">
+                                <a href=$link.setPage("call,UserMgmt_Admin,ProxyUser.vm")>
+				<img src="$content.getURI("/images/$lang/proxy-user.jpg")"border=0></a>
+                        </td>
+
+                        #end  ##end(9)
+                        #if($data.getUser().getUserName() != "guest") ##if(10)
+                        #if($data.getUser().getUserName() != "admin") ##if(11)
+                        <td align="left">
+                        <a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm")>
+			<img src="$content.getURI("/images/$lang/task.jpg")"border=0></a>
+                        </td>
+                        #end ##end(11)
+                        <td align="left">
+                        <a href=$link.setPage("call,Glossary,Glossary.vm")> 
+			<img src="$content.getURI("/images/$lang/glossory.jpg")"border=0></a>
+                        </td>
+                        <td align="left">
+                        <a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status","fromIndex")>
+			<img src="$content.getURI("/images/$lang/G_news.jpg")"border=0></a>
+                        </td>
+  <td align="Right">
+                        <b><a href=$link.setPage("call,Search.vm")> 
+			<img src="$content.getURI("/images/$lang/Search-engine.jpg")"border=0></a></b>
+                        </td>
+			#end	 ##end(10)
+                        <td align="Right">
+                        <b><a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm")> 
+			<img src="$content.getURI("/images/$lang/ResearchRepo.jpg")"border=0></a></b>
+                        </td>
+                        <td align="Right">
+                        <b><a href=$link.setPage("call,Calculator.vm")>
+			<img src="$content.getURI("/images/$lang/calculator.jpg")"border=0></a></b>
+                        </td>
+		
+                	<td align="Right">
+                        <b><a href=$link.setPage("timetable,uploadfile.vm")>Upload File</a></b>
+	              
+                        <td align="Right">
+                        <b><a href=$link.setPage("timetable,generate.vm")>Generate Timetable</a></b>
+                        </td>
+                        <td align="right">
+                                <b> <a href=$link.setAction("logoutUser")> 
+				<img src="$content.getURI("/images/$lang/logout.jpg")"border=0></a> </b>
+                        </td>
+                #end ##end(7)
+                </tr>
+        </table>
+        <br>
+################################
+#else
+        <table width="100%" cellspaceing="0" cellpadding="0">
+                <tr bgcolor="$ui.headerLinkColor" cellspacing="0" cellpadding="0">
+                #if($data.getUser().hasLoggedIn()) ##if(7)
+                        <td align="left" cellspacing="0" cellpadding="0">
+                        
+                        
+                        <td align="right">
+                                <b> <a href=$link.setAction("logoutUser")>
+				 <img src="$content.getURI("/images/$lang/logout.jpg")"border=0></a> </b>
+                        </td>
+						<td align="Right">
+                        <b><a href=$link.setPage("timetable,generate.vm")>
+						</a><img src="$content.getURI("/images/$lang/Search-engine.jpg")"border=0></a></b>
+                        </td>
+                        <td align="right">
+                        <b><a href=$link.setPage("call,Calculator.vm")>
+			</a><img src="$content.getURI("/images/$lang/calculator.jpg")"border=0></a></b>
+                        </td>
+                        <td align="Right">
+                        <b><a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm")>
+			<img src="$content.getURI("/images/$lang/ResearchRepo.jpg")"border=0></a></b>
+			#if($data.getUser().getUserName() != "guest") ##if(10)
+			<td align="Right">
+                        <b><a href=$link.setPage("call,Search.vm")>
+			 </a><img src="$content.getURI("/images/$lang/Search-engine.jpg")"border=0></a></b>
+                        </td>
+                        <td align="right">
+                        <a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status","fromIndex")>
+			<img src="$content.getURI("/images/$lang/G_news.jpg")"border=0></a>
+                        </td>
+                        <td align="right">
+                        <a href=$link.setPage("call,Glossary,Glossary.vm")>
+			<img src="$content.getURI("/images/$lang/glossory.jpg")"border=0></a>
+                        </td>
+			
+			#if($data.getUser().getUserName() != "admin") ##if(11)
+                        <td align="right">
+                        <a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm")>
+			</a> <img src="$content.getURI("/images/$lang/task.jpg")"border=0></a>
+                        </td>
+                        #end ##end(11)
+                        #end	 ##end(10)
+                        
+			#if($data.getUser().getUserName() == "admin") ##if(9)
+                        <td align="right">
+                                <a href=$link.setPage("call,UserMgmt_Admin,ProxyUser.vm")>
+				<img src="$content.getURI("/images/$lang/proxy-user.jpg")"border=0></a>
+                        </td>
+                        <td align="right">
+                                <a href=$link.setPage("Index.vm")>
+				<img src="$content.getURI("/images/$lang/admin_Home.jpg")"border=0 ></a>
+                        </td>
+
+                        #end  ##end(9)////
+			
+			#if($data.getUser().getUserName() != "guest") ##if(0)
+                        #if($data.getUser().getTemp("role") == "author") ##if(8)
+                        <td align="right">
+                        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")> <img src="$content.getURI("/images/$lang/Reposetory.jpg")"border=0 ></a>
+                        </td>
+                        #else
+                        <td align="right">
+                        <a href=$link.setPage("call,Repository_Mgmt,RepositoryBrowser.vm")> <img src="$content.getURI("/images/$lang/Reposetory.jpg")"border=0 ></a>
+                        </td>
+                        #end ##(end8)
+			#end	 ##end(0)
+			<td align="right">
+                        <a href=$link.setPage("Index.vm")>
+			##Home</a>
+			<img src="$content.getURI("/images/$lang/Home1.jpg")"border=0></a>
+                        </td>
+                        
+
+                #end ##end(7)
+                </tr>
+        </table>
+#end
+################################
+
+        </td>
+        </tr>
+## ----------------------------------------------
+##end ##end(1)
+## ------------------------------------------------
+	<tr>
+	 #if($data.getUser().getUserName() == "admin")
+                ##<td bgcolor="$ui.menuColor" width="17%" valign="top">
+                <td width="17%" valign="top">
+                                <table width="100%">
+                                <tr bgcolor="$ui.menuColor">
+                                <td valign="top">
+                                        $navigation.setTemplate("/AdminMenu.vm")
+                                </td>
+                                </tr>
+                                </table>
+                                </td>
+        #end
+
+	#set($flag = true)
+				#if($lang == "urdu")
+				    	<td align="left" height="100%" valign="top">
+      					$screen_placeholder
+					#set($flag= false)
+    					</td>
+				#end
+    	#if($data.getUser().hasLoggedIn())
+    		#if($data.getUser().getTemp("role")!="")
+   			#if($data.getUser().getTemp("course_id")!="")
+  				<td bgcolor="$ui.menuColor" width="17%" valign="top">
+       				<table width="100%" >
+        			<tr>
+        			<td valign="top">
+					#if($lang == "urdu")
+      						$navigation.setTemplate("/Screen_Menu_Urdu.vm")
+					#else
+      						$navigation.setTemplate("/Screen_Menu.vm")
+					#end
+        			</td>
+        			</tr>
+        			</table>
+    				</td>
+			#end
+		#end
+	#end
+				#if($flag) 
+		    			<td align="left" height="100%" valign="top">
+      					$screen_placeholder
+    					</td>
+				#end
+  	</tr>
+  	<tr>
+    	<td colspan="2" >
+      		$navigation.setTemplate("/DefaultBottom.vm")
+    	</td>
+  	</tr>
+</table>
+</body>
+</html>

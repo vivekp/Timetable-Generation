@@ -1,0 +1,111 @@
+
+
+
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | Glossary | Search Word")
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+	<td>
+	        <font face="$ui.sansSerifFonts"><b>
+	        				<a href="$link.setPage("Index.vm")">Home page</a> |
+										<a href="$link.setPage("call,Glossary,Glossary.vm")">Glossario</a> | Ricerca Parola
+						</font>
+	</td>
+	</tr>
+</table>
+<br>
+
+<form name="frm" method="post" action=$link.setPage("call,Glossary,Glossary_Search_Word.vm").setAction("Glossary_Action").addPathInfo("stat","Noblank")>
+<div align="center">
+
+<table bgcolor="$ui.tableColor" cellpadding="5" width="5" height="5">	<tr>
+        	
+		           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Un  </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>B </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>C </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>D </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>E </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>F  </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>G </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>H </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Io,I </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>J </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>K </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>L </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>M </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>N </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>O </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>P </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Q </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>R </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>S </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>T </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>U </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>V </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>W </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>X </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Y </b></a> 
+           	</td>
+        	           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Z </b></a> 
+           	</td>
+        	     	</tr>
+</table>
+<br>
+<table>
+	<tr>
+       	<td>
+			  		#formCell("Stringa Ricerca" "WORD" "")
+		       </td>
+       <td align=center colspan=2>
+		<input type="button" name="eventSubmit_doSearch" value="Ricerca" onClick="checkValue(document.frm,this);"/>
+	  	<input type ="hidden" name="search" value="search">
+	  	<input type ="hidden" name="actionName">
+       </td>
+       </tr>
+</table>
+<br>
+</div>
+</form>
+
+
+<SCRIPT LANGUAGE="javascript">
+ function checkValue(frm,field)
+   {
+    if(frm.WORD.value!="") 
+      {
+       frm.actionName.value=field.name;
+       frm.submit();
+      }
+    else
+      {
+       alert("Please Insert String for search");
+      }
+   }
+</SCRIPT>

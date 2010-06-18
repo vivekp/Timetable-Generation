@@ -1,0 +1,79 @@
+
+
+$page.setTitle("Home | $course | Course Management | Remote Course |Remote Course View")
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr align="right">
+		<td><font face="$ui.sansSerifFonts"><b>
+			<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>????? ???? </a> | <a href=$link.setPage("call,CourseMgmt_User,Configuration.vm")> ?????? ???? </a>| 
+ 		      			????? ????? ??  ???? |
+ 					<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+                	<a href=$link.setPage("call,IndexHome.vm")>????</a> 
+        	</b></font></td>
+	</tr>
+</table>
+
+<table width=100%>
+        <tr>
+		<td>
+		<a href=javascript:popupWin("/brihaspati2/docs/RemoteCourses.html","newWin");>??? </a>
+		<img src="$content.getURI("/images/Lefthand.gif")"> </td>
+		<td align="right">
+ 		                        <h4><a href=$link.setPage("call,CourseMgmt_User,ViewRemote.vm").addPathInfo("status","1")> ????? ????? ??  ???? ????</a></h4>
+		                </td>
+	</tr>
+</table>
+<p align="center"><font size=3 color="red"></font></p>
+<form name=frm method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_User,ViewRemote.vm").setAction("RemoteCoursesAction").addPathInfo("updatestartIndex",$startIndex)">
+
+<table width=100% border=0 align=center cellpadding=12 cellspacing=0>
+		<tr><td align="center"><font color="blue" size="3">???? ??? ?? ??? ???? ?? ?</font></td></tr>
+		
+        </table>
+</form>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>
+
+
+<SCRIPT LANGUAGE="javascript">
+
+function checkValue(frm,field)
+{
+	if(frm.deleteFileNames.value!="")
+		{
+			
+			frm.actionName.value=field.name;
+				frm.submit();
+		 }
+	else
+		{
+			alert("Please select checkbox for deletion !!");
+		}
+}
+
+function addDeleteList(field,frm)
+	{
+        	if(field.checked)
+		{
+			
+	        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	        	frm.DB_subject.value=frm.DB_subject.value+field.value+"@@@@";
+	         }
+	         else
+		     {
+		        var rmFile,index,actualString,preString,postString;
+		        actualString=frm.deleteFileNames.value;
+		        index=actualString.indexOf(field.name+"^",0);
+		        preString=actualString.substring(0,index);
+		        postString=actualString.substring(index+field.name.length+1);
+		        actualString=preString+postString;
+		        frm.deleteFileNames.value=actualString;
+		     }
+	}
+
+	
+/SCRIPT>																				    

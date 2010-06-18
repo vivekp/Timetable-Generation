@@ -1,0 +1,198 @@
+#*
+ * @(#) Notices.vm
+ * Copyright (c) 2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:madhavi_mungole@hotmail.com ">Madhavi Mungole</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#if($data.getUser().getUserName() == "admin")
+	 $page.setTitle("AdminHome | Notices")
+#else
+	$page.setTitle("Home | $course | Communication | Notices")
+#end
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+	<font face="$ui.sansSerifFonts"><b>
+	#if($data.getUser().getUserName() == "admin")
+        	<a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> | $brih_Notices
+	#else
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$data.getUser().getTemp("course_name" ).toString()</a> |
+		##<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $brih_Notices
+		<a href=$link.setPage("call,Local_Mail,Mail.vm")>$brih_communication</a> | $brih_Notices
+	#end
+	</font>
+</td></tr>
+</table>
+<table align=left bgcolor="$ui.tableColor" width="100%">
+<tr><td align=left>
+
+    	##<a href=$link.setPage("call,Notice_User,Notice_Send.vm")>Send Notice</a></td>
+    	<a href=$link.setPage("call,Notice_User,Notices.vm")>$Notice_NoticeSend_msg1</a></td>
+ 	#if($data.getUser().getUserName() == "admin")
+		<td><a href=$link.setPage("call,Notice_User,DeletePostedAdmin.vm")>$Notice_DeletePosted_msg1</a></td>
+		<td><a href=$link.setPage("call,Notice_User,Notices.vm").addPathInfo("nflag","fh")>$brih_flash $brih_heading</a></td>
+		<td><a href=$link.setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")>$brih_localmail</a></td>
+	#else
+		<td><a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("flag","FromNotices")>$Notice_NoticeContent_msg1</a></td>
+	<td><a href=$link.setPage("call,Notice_User,DeletePosted.vm")>$Notice_DeletePosted_msg1</a></td>
+	#end
+
+</td></tr>
+</table>
+###########################Add by jai Notice_Send.vm
+<form name=frm method="post" action="$link.setPage("call,Notice_User,Notices.vm").setAction("Notice_Send_Delete")">
+<table align=left bgcolor="$ui.tableColor" width="100%">
+#*if ($errorTemplate)
+<tr><td colspan="4">
+<table bgcolor="$ui.bgcolor">
+<tr><td>
+<img src="$ui.image($ui.alertImage,$data)">
+</td>
+<td>
+#parse ($errorTemplate)
+</td>
+</tr>
+</table>
+</td>
+</tr>
+#end*#
+#if($nflag == "fh")
+##<tr bgcolor="$ui.menuColor"><td>Flash Heading Configuration</td></tr>
+<tr bgcolor="$ui.menuColor"><td>$brih_flash $brih_heading $RemoteConfiguration</td></tr>
+</table>
+<table align=left bgcolor="$ui.tableColor" width="100%">
+#else
+<tr width=100% bgcolor="$ui.menuColor">
+#if(( $data.getUser().getTemp("lang" ).toString())=="hindi")
+<td>$Notice_NoticeSend_msg2</td>
+#else
+<td>$Notice_NoticeSend_msg2</td>
+<td>$brih_courseName</td>
+#end
+</tr>
+#if($data.getUser().getUserName() == "admin")
+<tr bgcolor="$ui.tableColor">
+<td>$brih_sel_course</td>
+<td>
+<select name="course_list" size=1>
+#foreach($c_ls in $clist)
+	#if(($c_ls.getName()!="author")&&($c_ls.getName()!="global"))
+	<option value="$c_ls.getName()">$c_ls.getName()
+	#end
+#end
+	</option>
+</select>
+</td></tr>
+#else
+	#foreach($course_ls in $courselist)
+	<tr bgcolor="$ui.tableColor"><td>
+		#if($course_ls == $course)
+		<input type="checkbox" checked="true" name="course_list" value="$course_ls">
+		#else
+		<input type="checkbox"  name="course_list" value="$course_ls">
+		#end
+		</td>
+		<td>$course_ls</td>
+	</tr>
+	#end
+#end
+<tr bgcolor="$ui.menuColor">
+#formCell("$Notice_Subject <font color=red>*</font>" "subject" "")
+</tr>
+<tr bgcolor="$ui.tableColor"><td>$Notice_NoticeSend_msg3</td>
+<td>
+<select name="role" size=1>
+#if($mode1!= "grpmgmt")
+	<option value="all">$Notice_All
+	<option value="instructor">$brih_Instructor
+	<option value="student">$brih_student
+#else
+	<option value="all">$Notice_All
+#end
+        </option>
+</select>
+</td>
+</tr>
+#end ##end for Flash Heading
+<tr bgcolor="$ui.tableColor"><td>$brih_msg2</td>
+<td><textarea name="message" rows=10 cols=60></textarea></td>
+</tr>
+                        #if($nflag == "fh")
+                               #set ($ext=10)
+                        #else
+                               #set ($ext=1)
+                                <tr>
+                                        #formCell("$Notice_NoticeSend_msg4" "expiry" "$ext")
+                                </tr>
+                        #end
+			<tr>
+        <td align=left bgcolor="$ui.menuColor" colspan=2>
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+
+          <font face="$ui.sansSerifFonts">
+          <input type="hidden" name="mode1" value="$mode1">
+          <input type="hidden" name="val" value="$val">
+         ## <input type="hidden" name="flag" value="$nflag">
+
+          <input type="hidden" name="actionName">
+        #if($nflag == "fh")
+          <input type="button" name="eventSubmit_doWrite" value="$Notice_Send" onClick="checkField1(document.frm,this);"/>
+        #else
+          <input type="button" name="eventSubmit_doSend" value="$Notice_Send" onClick="checkField(document.frm,this);"/>
+        #end
+
+          </font>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+
+        function checkField1(frm,field)
+        {
+                if(frm.message.value!="")
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+
+                }
+                else
+                {
+                        alert("Message can not be empty !!");
+                }
+        }
+
+        function checkField(frm,field)
+        {
+                if(frm.subject.value!="" && frm.message.value!="")
+                {
+                         if((frm.expiry.value>=1) && (frm.expiry.value<=365))
+                                {
+                                        frm.actionName.value=field.name;
+                                        frm.submit();
+                                }
+                         else
+                                alert("Deletion Time should not be less than 1 day and greater than 365 days");
+
+                }
+                else
+                {
+                        alert("Subject and Message can not be empty !!");
+                }
+        }
+</SCRIPT>
+
+
+###################################

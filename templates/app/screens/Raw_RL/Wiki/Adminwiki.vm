@@ -1,0 +1,258 @@
+#*
+ * @(#) Adminwiki.vm
+ * Copyright(c)2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:manav_cv@yahoo.co.in">Manvendra Baghel</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_home|$course|$brih_Wiki | $Wikimain5")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<style type="text/css"> input{ width:170px; } </style>
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,Wiki,Wiki.vm")>$brih_Wiki</a> | $Wikimain5
+        </font>
+</td>
+</tr>
+</table>
+
+
+
+## Representation of HELP link
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href="/brihaspati2/docs/Wikiusermanual.html">$brih_help</a>
+                </td>
+        </tr>
+</table>
+
+
+
+
+#if($mypage=="empty")
+	<h3><b>${Wikiadmin1}</b></h3>
+#else
+
+	<div align=left>
+		<table width="80%" align="center">
+			<tr>
+				<td>
+        				<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+        				<b>${Wikiadmin2}</b>
+        				</marquee>
+					<br>
+					#if($num != 0)
+						<p align=center><b><font color="red">${Wikiadmin3} ( $num ) $dispage</font></b></p>
+					#end
+				</td>
+			</tr>
+		</table>
+
+
+
+
+		<FORM  name=frm method="POST" action="$link.setPage("call,Wiki,Adminwiki.vm").setAction("Wikieditaction")">
+		<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5" width="10%" >
+			<tr>
+				<td>
+					<p align=center>
+					<input type="hidden" name="actionName" >
+		 			#if($merge == "false")
+						<input type="submit" name="eventSubmit_doShowhistory" value="$Wikibutton1"/>
+						<input type="submit" name="eventSubmit_doShowhistory" value="$Wikibutton2"/>
+						<input type="submit" name="eventSubmit_doDiff" value="$Wikibutton3"/>
+						<input type="submit" name="eventSubmit_doDiff" value="$Wikibutton4"/>
+ 						<input type="submit" name="eventSubmit_doShoworiginal" value="$Wikibutton5"/>
+						<input type="button" name="eventSubmit_doRevert" value="$Wikibutton6"  onClick="checktextName(document.frm,this);"/>
+						<input type="button" name="eventSubmit_doDelpage" value="$Wikibutton7" onClick="doAskPage(document.frm,this);"/>
+						#if($fname!="")
+        						#if($traffic == "stop")
+                						<input disabled type="submit" name="eventSubmit_doStoptraffic" value="$Wikibutton8"/>
+               							<input type="submit" name="eventSubmit_doStoptraffic" value="$Wikibutton9"/>
+        						#end
+        						#if($traffic == "start")
+                						<input type="submit"  name="eventSubmit_doStoptraffic" value="$Wikibutton8"/>
+                						<input disabled type="submit" name="eventSubmit_doStoptraffic" value="$Wikibutton9"/>
+        						#end
+						#end
+					#end
+ 	                               	#if(($traffic == "stop")&&($merge != "true"))
+
+
+						<input type="button" name="eventSubmit_doDelversion" value="$Wikibutton10" onClick="doAskVersion(document.frm,this);"/>
+
+					#end
+					#if($traffic == "stop")
+						<input type="button" name="eventSubmit_doMergenow" value="$Wikibutton11" onClick="checkVersion(document.frm,this);"/>
+					#end
+        	        		#if(($fname!="")&&($merge == "true"))
+						<input type="submit" name="eventSubmit_doMergedone" value="$Wikibutton12"/>
+                				<input type="submit" name="eventSubmit_doShoworiginal" value="$Wikibutton13"/>
+                				<input type="submit" name="eventSubmit_doRevert" value="$Wikibutton14"/>
+        				#end
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align ="center">
+					${WikiCreatetxt2} <SELECT  name="fname" >
+					#if($fname!="")
+						<OPTION >$fname</OPTION>
+					#end
+					#foreach($file in $mypage)			
+						<OPTION >$file</OPTION>
+					#end
+					</SELECT>
+					${Wikiadmin4} <INPUT type="text" name="vname" 
+					#if($vname!="")
+						value ="$vname" 
+					#end
+					size="25">
+					<input type="submit" name="eventSubmit_doShoworiginal" value="$Wikibutton15"  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align =center>
+#*
+* Setting of textarea tag  contents below may seem untidy but don't touch them
+* as they work properly only in this way
+*#
+<TEXTAREA  name="text" rows="25"  cols="100" >
+#if($pad!="")
+$pad
+#end
+#foreach($t in $first)
+$t
+#end
+</TEXTAREA>
+					<br><br>
+					</p>	
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align=center>
+		 			#if($merge == "false")
+						<input type="submit" name="eventSubmit_doShowhistory" value="$Wikibutton1"/>
+						<input type="submit" name="eventSubmit_doShowhistory" value="$Wikibutton2"/>
+						<input type="submit" name="eventSubmit_doDiff" value="$Wikibutton3"/>
+						<input type="submit" name="eventSubmit_doDiff" value="$Wikibutton4"/>
+ 						<input type="submit" name="eventSubmit_doShoworiginal" value="$Wikibutton5"/>
+						<input type="button" name="eventSubmit_doRevert" value="$Wikibutton6"  onClick="checktextName(document.frm,this);"/>
+						<input type="button" name="eventSubmit_doDelpage" value="$Wikibutton7" onClick="doAskPage(document.frm,this);"/>
+
+						#if($fname!="")
+
+        						#if($traffic == "stop")
+                						<input type="submit" disabled name="eventSubmit_doStoptraffic" value="$Wikibutton8"/>
+                						<input type="submit" name="eventSubmit_doStoptraffic" value="$Wikibutton9"/>
+        						#else
+               							<input type="submit" name="eventSubmit_doStoptraffic" value="$Wikibutton8"/>
+                						<input type="submit" disabled  name="eventSubmit_doStoptraffic" value="$Wikibutton9"/>
+        						#end
+						#end
+		  			#end
+					
+					#if(($traffic == "stop")&&($merge != "true"))
+
+						<input type="button" name="eventSubmit_doDelversion" value="$Wikibutton10" onClick="doAskVersion(document.frm,this);"/>
+
+					#end
+					#if($traffic == "stop")
+
+						<input type="button" name="eventSubmit_doMergenow" value="$Wikibutton11" onClick="checkVersion(document.frm,this);"/>
+		   			#end
+        	   			#if(($fname!="")&&($merge == "true"))
+						<input type="submit" name="eventSubmit_doMergedone" value="$Wikibutton12"/>
+                				<input type="submit" name="eventSubmit_doShoworiginal" value="$Wikibutton13"/>
+                				<input type="submit" name="eventSubmit_doRevert" value="$Wikibutton14"/>
+        	    			#end
+					</p>
+		
+				</td>
+			</tr>
+			<tr>
+				<td>
+## This space is for look and feel
+
+				</td>
+			</tr>
+
+		</table>
+		</FORM>
+#end   #* end of #if($mypage=="empty")*#
+
+
+
+
+<SCRIPT LANGUAGE="javascript">
+        function checkVersion(frm,field)
+        {
+                if(frm.vname.value!="") 
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill Page Version Field");
+                }
+        }
+	function checktextName(frm,field)
+        {
+                if(frm.text.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please write something on the page ");
+                }
+        }
+
+
+      function doAskPage(frm,field)
+        {
+                if(confirm('Are you sure you want to delete?'))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+        }
+
+
+
+      function doAskVersion(frm,field)
+        {
+                if(confirm('Are you sure ,all current versions will be deleted by this?'))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+        }
+
+	 function doAskMerge(frm,field)
+        {
+                if(confirm('Are you sure , you have  clicked on merge now before ?'))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+        }
+
+
+</SCRIPT>

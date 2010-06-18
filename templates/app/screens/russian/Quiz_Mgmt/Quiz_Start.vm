@@ -1,0 +1,35 @@
+
+
+
+$page.setTitle("Quiz Management")
+$page.setBgColor("#ffffff")
+<font face="$ui.sansSerifFonts">
+
+<table width=100%  bgcolor="$ui.tableColor" cellpadding=0>
+<tr><td>
+	<b>	<a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> | Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð°
+	</b>
+</td></tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=right>
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Quizstudent.html","newWin");>Ð?Ð¾Ð¼Ð¾Ñ?Ñ?</a>
+	</td>
+</tr>
+</table>
+
+
+
+<br>
+			</table>
+
+<SCRIPT LANGUAGE="javascript">
+ function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</SCRIPT>

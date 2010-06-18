@@ -1,0 +1,100 @@
+
+ 
+
+$page.setTitle("Home | $cname | Communication | Local Mail | Compose Message")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	 		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")> ??????? </a> | 
+		<a href=$link.setPage("call,Local_Mail,Mail.vm")> ????  ???? </a> |
+		<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")> ?? ???? </a> |
+				????
+				| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |
+        	<a href=$link.setPage("call,IndexHome.vm")>????</a>
+	</tr>
+</table>
+<br>
+
+<form name ="frm" method = "post" enctype="multipart/form-data" action="$link.setAction("MailSendMessage").setPage("call,Local_Mail,Mail.vm")">
+<table align="center" border=1 cellpadding=3>  
+<tr> 
+	                			<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="addressNames" value="" ></td>
+			<td> <font color=Red> * </font> ????? </td>
+                        
+</tr>
+<tr> 
+	<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="subject" value="" ></td>
+	<td  align="center" bgcolor="$ui.tableColor"> <b>????? </b> </td>
+</tr>
+<input type="hidden" name="hexaStr" value="">
+<tr>
+<td align="left" bgcolor="$ui.tableColor">
+	<font face="$ui.sansSerifFonts">
+      	<textarea  name="wpTextbox1" rows=8 cols=50></textarea >
+</td>
+<td align="center" bgcolor="$ui.tableColor">
+	<b><font face="$ui.sansSerifFonts">?????</font></b>
+</td>
+<tr>
+	<td  bgcolor="$ui.tableColor" > <input type=file size="35" name="file" ></td>
+	<td  align="center" bgcolor="$ui.tableColor"> <b> ???? ?????  </b></td>
+</tr>
+<tr>
+<td align="center" bgcolor="$ui.menuColor" colspan=2>
+<font face="$ui.sansserifFonts">
+  <input type="button" name="eventSubmit_doSend" value="?????"  onClick="checkValue(document.frm,this);"/>
+    <input type="hidden" name="actionName">
+  <input type="hidden" name="RepMsg_Id" value=$RepMsg_id>
+</font>
+</td>
+</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+ function checkValue(frm,field)
+  {
+   if(frm.addressNames.value!="") 
+    {
+   	if(frm.subject.value=="")
+    	{
+     		alert("Fill the Subject Field");
+     		frm.subject.focus();
+    	}
+	else{
+   	if(frm.wpTextbox1.value.value=="") 
+    	{
+		if(confirm("Your message is empty !!"))
+		{
+                        frm.hexaStr.value = frm.wpTextbox1.value;
+                        if(frm.repStat.value == "reply")
+                                frm.hexaStr.value = frm.sentMessage.value + frm.hexaStr.value;
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                {
+                        return;
+                }
+        }
+        else
+        {
+                frm.actionName.value=field.name;
+                frm.hexaStr.value = frm.wpTextbox1.value;
+                frm.submit();
+        }
+        }
+
+    }
+   else
+    {
+     	alert("Fill the Address Field");
+     	frm.addressNames.focus();
+    }
+  }
+
+</SCRIPT>

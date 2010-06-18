@@ -1,0 +1,45 @@
+
+        $page.setTitle("Home | $course | Communication | Notices")
+
+
+<br>
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+			<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>???????</a> | ?????
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+		<a href=$link.setPage("call,IndexHome.vm")>????</a> 
+		</font>
+</td>
+</tr>
+</table>
+
+<br>
+<table align=center bgcolor="$ui.menuColor" cellpadding=10>
+<tr>
+<td align=center>
+ <table cellspacing=10>
+	<tr>
+ 	<td align=center>
+    	<a href=$link.setPage("call,Notice_User,Notice_Send.vm")>
+	<img src="$content.getURI("/images/$lang/sendnotice.jpg")"></a><br>
+	</td>
+ </tr>
+ <tr>
+	<td>
+    	<a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("flag","FromNotices")>
+	<img src="$content.getURI("/images/$lang/readnotice.jpg")"></a><br>
+	</td>
+ </tr>
+ <tr>
+	<td align=center>
+    	<a href=$link.setPage("call,Notice_User,DeletePosted.vm")>
+	<img src="$content.getURI("/images/$lang/deletepostednotices.jpg")">
+	</a>
+	</td>
+ </tr>
+ </table>
+</td>
+</tr>
+</table>

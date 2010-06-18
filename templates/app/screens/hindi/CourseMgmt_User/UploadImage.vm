@@ -1,0 +1,171 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle(" Home | Course Management | Upload Course Header")
+
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>?????</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>????   ???????</a> |
+        		                ????? ?? ???????  ????????
+                
+                 
+                </font>
+</td>
+</tr>
+</table>
+	
+	<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_User,CourseManagement.vm").setAction("UserAction_Instructor")">
+	<div align="left"> <br>
+	<br> <table width=50% cellpadding="2" bgcolor="$ui.tableColor"  align="center" border=1>
+	<tr bgcolor="$ui.menuColor" >
+		<td colspan=2 align="center" >
+                	<font size=4  >  ????? ?? ???????  ???????? </font>
+        	</td>
+	</tr>
+	<tr>
+                <td align="center">
+	 		<font size=2><b> ????? </b></font> 
+                </td>
+                <td align="center">
+                        <font size=2><b> ??????? </b></font>
+                </td>
+        </tr>
+        <tr>
+	        <td align="center">
+			 <font size=2><b> ? </b></font>
+        	</td>
+		<td align="center">
+			<input type="text" name=A  size=10 value= >
+		</td>
+        </tr>
+        <tr>
+		<td align="center">
+			<font size=2><b> ?? </b></font>
+                </td>
+                <td align="center">
+			<input type="text" name=B  size=10 value= >
+                </td>
+        </tr>
+	<tr>
+		<td align="center">
+                    <font size=2><b> ?? </b></font>
+                </td>
+                <td align="center">	
+			<input type="text" name=C size=10 value= >
+                </td>
+	</tr>
+	<tr>
+                <td align="center">
+                    <font size=2><b> ?? </b></font>
+                </td>
+                <td align="center">
+				<input type="text" name=D  size=10 value= >
+                </td>
+        </tr>
+	<tr>
+                <td align="center">
+                        <font size=2><b> ? </b></font>
+                </td>
+                <td align="center">
+			<input type="text" name=E  size=10 value= >
+                </td>
+        </tr>
+	<tr align="center" bgcolor="$ui.menuColor" >
+		<td colspan=2 align="center">
+                <font face="$ui.sansSerifFonts">
+			<input type="button" name="eventSubmit_doGradecard" value="????? (?????  ???? )" onClick="CheckFields(document.frm,this);"/>
+        	        <input type="hidden" name="actionName" value=""/>
+                </font>
+	        </td>
+        </tr>
+</table>
+</div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckField(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+	function CheckFields(frm,field)
+        {
+                if(frm.A.value!="" && frm.B.value!="" && frm.C.value!="" && frm.D.value!="" && frm.E.value!="" )
+                {
+			var temp=100;
+                        if(frm.A.value > temp)
+                        {
+                                alert("Percentage should be in between 0 to 100 in grade A !!");
+                                return false;
+                        }
+                        if(frm.B.value > temp)
+                        {
+                                alert("Percentage should be in between 0 to 100 in grade B !!");
+                                return false;
+                        }
+                        if(frm.C.value > temp)
+                        {
+                                alert("Percentage should be in between 0 to 100 in grade C !!");
+                                return false;
+                        }
+                        if(frm.D.value > temp)
+                        {
+                                alert("Percentage should be in between 0 to 100 in grade D !!");
+                                return false;
+                        }
+                        if(frm.E.value > temp)
+                        {
+                                alert("Percentage should be in between 0 to 100 in grade E !!");
+                                return false;
+                        }
+
+
+			var temp1=frm.A.value+frm.B.value+frm.C.value+frm.D.value+frm.E.value;
+			if(isNumberString(temp1))
+                        {
+                               alert("Percentage should be only positive integer !!");
+                               return false;
+                        }
+			
+			frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+	
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }	
+</SCRIPT>

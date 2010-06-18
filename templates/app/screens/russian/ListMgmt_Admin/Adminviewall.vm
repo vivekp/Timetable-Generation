@@ -1,0 +1,103 @@
+
+
+$page.setTitle("Admin Home | User Management | View All Users")
+$page.setBgColor($ui.bgcolor)
+
+<font face="$ui.sansSerifFonts"> </font>
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+	<a href=$link.setPage("Index.vm")>Admin's Ð?Ð¾Ð¼</a> |
+	<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("mode","All")>Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ñ?Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ñ?</a> | 
+			Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ð²Ñ?Ð±Ñ?Ð°Ð½Ð½Ñ?Ñ? ÐºÑ?Ñ?Ñ?Ð¾Ð²
+		</td>
+	<td width="30%" align="right">
+		</td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+        <td>
+   	<a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">Ð?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?ÐµÑ?Ñ? Ð²Ñ?Ðµ ÐºÑ?Ñ?Ñ?Ñ?</a>
+        </td>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">Ð?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?ÐµÑ?Ñ? Ð²Ñ?Ðµ Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ?</a>
+        </td>
+</tr>
+</table>
+
+<form name=frm method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin").addPathInfo("status","ForallUser")">
+<table width=100% align=left bgcolor="$ui.menuColor">
+        <tr>
+                <td>Ð?Ð¾Ð¸Ñ?Ðº Ð¼Ð¸Ð¼Ð¾ </td>
+                <td>
+                        <select name="queryList">
+                                <option value="User Name">Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð?Ð¼Ñ?</option>
+                                <option value="First Name">Ð?ÐµÑ?Ð²Ñ?Ð¹ Ð?Ð¼Ñ?</option>
+                                <option value="Last Name">Ð?Ð¾Ñ?Ð»ÐµÐ´Ð½Ð¸Ð¹ Ð?Ð¼Ñ?</option>
+                                <option value="Email">Ð­Ð»ÐµÐºÑ?Ñ?Ð¾Ð½Ð½Ð°Ñ? Ð¿Ð¾Ñ?Ñ?Ð°</option>
+                        </select>
+                </td>
+                <td><b>Ð?Ð°Ñ?Ñ? Ð¡Ñ?Ñ?Ñ?Ð½Ð° </b></td>
+                <td>
+                        <input align=center type="text" name="valueString" value="">
+                </td>
+                <td>
+                        <input type="button" name="Search" value="Ð?Ð¾Ð¸Ñ?Ðº" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+		<td>
+			<b><a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ð²Ñ?ÐµÑ? Ð¿Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»ÐµÐ¹</a></b>
+		<td>
+        </tr>
+</table>
+<br><br>
+<table width="100%" align="left" bgcolor="$ui.tableColor">
+</table>
+</form>
+<br>
+<table width=60%  bgcolor="$ui.tableColor" align=center>
+        </table>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+	function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+	
+	function checkField(frm,field)
+   	{
+    		if(frm.deleteFileNames.value!="")
+    		{
+     			frm.actionName.value=field.name;
+     			frm.submit();
+    		}
+    		else
+     		alert("Please select checkbox !!");
+   	}
+					
+	function addDeleteList(field,frm)
+        {
+                if(field.checked) {
+                       frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+		else{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;
+		}
+	}
+</SCRIPT>

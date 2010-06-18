@@ -1,0 +1,87 @@
+
+
+
+$page.setTitle("Enter the Question")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Question_Bank,Question_bank.vm")>Frage Bank</a> |
+		<a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>allem  Frage Bank</a> |
+	<a href=$link.setPage("call,Question_Bank,Question_List.vm").addPathInfo("modulename","$modulename").addPathInfo("Ques_Type","$Ques_Type")>allem  Frage innen $modulename </a> |   editieren  Frage 	        </td>
+</tr>
+</table>
+<br>
+
+<form name="frm" method="post" action="$link.setAction("Question_Bank")">
+<table border=1 align="center" width="60%" bgcolor="$ui.tableColor" cellpadding="2">  
+  <tr>
+   <td width=30% align="centre" bgcolor="$ui.tableColor">
+     <b><font face="$ui.sansSerifFonts">Frage</font></b>
+   </td>
+   <td	width=70% align="left" bgcolor="$ui.tableColor">
+     <font face="$ui.sansSerifFonts">
+      <textarea name="Question" rows=3 cols=50 > </textarea >
+     </td>
+ </tr>
+  <tr> 
+  	<td width=30% align="centre" bgcolor="$ui.tableColor">
+    	<b><font face="$ui.sansSerifFonts">  Antwort  </font></b>
+   	</td>
+   	<td width=70% align="left" bgcolor="$ui.tableColor">
+    	<font face="$ui.sansSerifFonts">
+      <textarea name="Answer" rows=3 cols=50 > </textarea >
+   	</td>
+ </tr> 
+  <tr> 
+	<td width=30% align="centre" bgcolor="$ui.tableColor">
+        <b><font face="$ui.sansSerifFonts">Tip</font></b>
+        </td>
+        <td  width=70% align="left" bgcolor="$ui.tableColor">
+        <font face="$ui.sansSerifFonts">
+        <textarea name="hint" rows=3 cols=50  ></textarea >
+        </td>
+	
+ </tr> 
+<tr>
+<td align=center colspan=2 bgcolor="$ui.menuColor">  
+<font face ="$ui.sansserifFonts">
+			<input type="button" name="eventSubmit_doEditQuestion" value="editieren" onClick="checkValue(document.frm,this);">
+  		<input type="hidden" name="qid" value=$qid>
+  		<input type="reset" value="Zurüllen"> 
+	  <input type="hidden" name="modulename" value=$modulename> 
+  <input type="hidden" name="actionName" value="">
+  <input type="hidden" name="mode" value=$mode>
+  <input type="hidden" name="FromPath" value=$FromPath>
+  <input type="hidden" name="Ques_Type" value="Short">
+</font>
+</td>
+</tr>
+</table>
+</form>
+<script LANGUAGE="JAVASCRIPT">
+        function checkValue(frm,field)
+        {
+                if(frm.Question.value!="")
+                {
+			if(frm.Answer.value!="") 
+			{
+                        	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else
+			{
+                        	alert("Please write the answer !!");
+                        	frm.Answer.focus();
+			}
+                }
+                else
+                {
+                        alert("Please write Question !!");
+                        frm.Question.focus();
+                }
+        }
+</script>

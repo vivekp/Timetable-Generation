@@ -1,0 +1,209 @@
+#*
+ * @(#) UserManagement_Remove.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author  <a href="awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author  <a href="sweetshaista00@yahoo.com">Shaista Shekh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#if($role=="instructor")
+	$page.setTitle("Admin Home | User Management | Remove Instructor")
+#else	
+	$page.setTitle("Admin Home | User Management | Remove Student")
+#end
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<br>
+##<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+ <td>
+ <font face="$ui.sansSerifFonts" size=3>
+ <b><a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+ <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_usr $brih_mgmt</a> | 
+
+  #if($role=="instructor")
+	$brih_rem_ins
+  #else
+	$brih_rem_student
+  #end
+
+ </b></font>
+</td>
+</tr>
+</table>
+
+<br>
+<body>
+<form name="frm" method="post" action="$link.setPage("call,UserMgmt_Admin,UserMgmt_Remove.vm").setAction("UserManagement_RemoveUser")">
+<table align="center">
+<tr>
+<td>
+<table bgcolor="$ui.menuColor">
+	<tr>
+          <td bgcolor="$ui.tableColor">
+          <b>
+          <font face="$ui.sansSerifFonts">
+	  #if($role=="instructor")
+		$brih_selCourseRemIns 
+	  #else
+		$brih_selCourseRemStu
+	  #end
+          </font>
+          </b>
+          </td>
+          <td>
+          <select name="group" size=1>
+          #set($i=1)
+          <option name=all value="All">$Notice_All
+	  #foreach($course in $courses)
+		#if(($course.getName()!="author") && ($course.getName()!="global"))
+          <option name=option$i value="$course.getName()">$course.getName()
+	  #set($i=$i+1)
+          #end
+	  	#end
+          </option>
+          </select>
+          </space>
+         </td>
+  	<td align="center">
+      	<input type="submit" name="eventSubmit_doSearch" value="$brih_search">
+      	<input type="hidden" name="role" value="$role">
+     	</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td align="center">
+#if($status=="notempty")
+
+ #set($headings = ["$brih_course $brih_ID","$brih_usr $brih_name","$brih_first $brih_name","$brih_last $brih_name"] )
+<table align=center border=1 bgcolor="$ui.tableColor">
+	<tr>
+		<td align=center>
+		<table border=1 cellspacing=1 cellpadding=5>
+		<tr>
+			#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+			<td bgcolor="$ui.menuColor" align=center>
+			<input type="CHECKBOX" name="checkAll" onClick=selectAll(this);>
+			<font face="$ui.sansSerifFonts"><b>
+			#if($lang == "hindi")
+				 $brih_all $brih_select</b>
+			#else
+				$brih_select $brih_all</b>
+			#end
+			</td>
+
+			#foreach ($heading in $headings)
+				#headerCell ($heading)
+			#end
+		</tr>
+ 		#set($count="")
+                #set($count2=1)
+                #foreach($user in $selected_users)
+                        #foreach($i in $user)
+                                #set($count1=1)
+                                #foreach($groupname in $groupname)
+                                        #if($count2==$count1)
+                                        <tr>
+                                        <td>
+                                                #set($userAndGroup = "$groupname:$!i.UserName" )
+                                                <INPUT TYPE="CHECKBOX" NAME="$userAndGroup" onClick="addDeleteList(this,document.frm);">
+                                        </td>
+                                        #entryCell($groupname)
+                                        #entryCell ($!i.UserName)
+                                        #entryCell ($!i.getFirstName())
+                                        #entryCell ($!i.getLastName())
+                                        </tr>
+                                        #end
+                                        #set($count1=$count1+1)
+                                #end
+                                #set($count="$count$userAndGroup^")
+                                #set($count2=$count2+1)
+                        #end
+                #end
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+		<input type="submit" name="eventSubmit_doRemoveUser" value="$brih_remove" onClick="checkField(document.frm,this);">
+		<input type="hidden" name="deleteFileNames" value="">
+		<input type="hidden" name="group" value="$group">
+		<input type="hidden" name="role" value="$role">
+		</td>
+	</tr>
+</table>
+#end
+</td>
+</tr>
+</table>
+		<input type="hidden" name="actionName" value="">
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+
+	function addDeleteList(field,frm){
+		if(field.checked){
+		frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+		else{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;
+		}
+	}
+
+
+	function selectAll(field){
+		if(field.checked){
+			var rmFile,index,actualString,pre=0,next=0;
+			actualString=document.frm.deleteFileNames.value="$count";
+			while( ( pre=actualString.indexOf("^",next) ) >=0 ){
+				var temp=actualString.substring(next,pre);
+				next=pre+1;
+				rmFile=document.frm.elements[temp].checked=true;
+			}
+		}
+		else{
+			var rmFile,index,actualString,pre=0,next=0;
+			actualString=document.frm.deleteFileNames.value="$count";
+			while( ( pre=actualString.indexOf("^",next) ) >=0 ){
+				var temp=actualString.substring(next,pre);
+				next=pre+1;
+				rmFile=document.frm.elements[temp].checked=false;
+			}
+			document.frm.deleteFileNames.value="";
+		}
+	}
+	function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }
+
+</SCRIPT>
+
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#foreach( $e in $error_user )
+	<tr bgcolor="$ui.tableColor"> 
+	<td align=center>
+       	<font face="$ui.sansSerifFonts">$brih_usr $brih_name <font color="brown">"$e.getErr_User()"</font>
+       	</font>
+       	</td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        </tr>
+#end
+</table>

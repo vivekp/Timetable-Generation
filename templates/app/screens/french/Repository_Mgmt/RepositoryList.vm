@@ -1,0 +1,62 @@
+
+
+$page.setTitle("$Repo_Repo1")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% align="center">
+    <tr> <td><b>
+        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")>Auteur à la maison  </a>| Dépôt </b>
+     </td></tr>
+
+</table>
+<table width=100% >
+<tr>
+	<td align="right">
+	<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin1("/brihaspati2/docs/ViewContent.html","newWin");>Aide </a>
+</td>
+</tr>
+</table>
+
+<table align="center" bgcolor="$ui.tableColor" border=1 cellpadding=4 width="70%">
+		<tr bgcolor="$ui.tableColor">
+			<td colspan=2 align="center" bgcolor="$ui.menuColor"><font size=4>
+			<b>Auteur   Nom:
+      			<font size=5 color=green><i>
+			$authorname</i></b></font>
+			</td>
+		</tr>
+		<tr>
+		<td align="center" width="50%">	
+		  	<b><a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("status","fromDirectory").addPathInfo("name",$authorname)>Contenu </a></b>
+		</td> 
+		<td align ="center" width="50%">
+			<b><a href=$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").addPathInfo("status","permissionreceive").addPathInfo("status","permissiongiven").addPathInfo("mode","fromauthor").addPathInfo("mode1","permRec")>  Regarder Permissions  </a></b>	
+		</td></tr>
+</table> 
+<br>
+<table align="center" width=70%> 
+  <tr>
+			</tr>
+	</table>
+<br>
+	<form name="frm" action="$link.setPage("call,Repository_Mgmt,RepositoryList.vm").setAction("RepositoryAction").addPathInfo("filename",$filename).addPathInfo("seq",$seq).addPathInfo("actionName","eventSubmit_doMove")">
+        <table  border=1 bgcolor="$ui.tableColor" align="center" width=50%>
+		</table>
+	</form>
+
+<script LANGUAGE="JAVASCRIPT">
+        function popupWin1(urlName,popupName)
+        {
+                window.open(urlName,popupName,"scrollbars=yes, width=400, height=400");
+        }
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+	function ChangeDir(frm,field)
+        {
+        	frm.dir_author.value=frm.Total.value;
+        }
+
+</script>

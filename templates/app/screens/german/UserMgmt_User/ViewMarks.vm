@@ -1,0 +1,23 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("View Marks")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,IndexHome.vm")>Heim</a> |
+<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |  Anzeigen Markierungen, Ã?dern </font>
+</td>
+</tr>
+</table>
+
+<br>
+
+<form enctype="multipart/form-data" >
+    <table align="center" bgcolor="$ui.bgcolor" cellpadding="0">
+          <tr>
+						      </tr>	
+    </table>
+</form>

@@ -1,0 +1,54 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Backup")
+
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Admin.vm")>Admin's Home </a> | <a href=$link.setPage("call,Backups,Backups.vm")> Backup </a> |  Course Wise Backup         </td>
+</tr>
+</table>
+<br>
+<center>
+<blink><font color="red"><b>Please do not take database backup for "All" Courses</b></font></blink>
+</center>
+
+<br>
+<form name=frm method="post" action="$link.setAction("BackupAction").setPage("call,Backups,BackupAdmin.vm")">
+
+	<div align="center">
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" >
+        
+      
+		<tr><td colspan="3" align="center" >
+			<font size=4><b>Select the course whose Backup you want to take</b></font>
+		</td></tr>
+		<tr><td bgcolor="$ui.tableColor">
+			<select name="courses">
+				<option value="Courses">All Courses</option>
+						</select>		
+		</td>
+		<td bgcolor="$ui.tableColor">
+          		<font face="$ui.sansSerifFonts">
+	        	<input type="button" name="eventSubmit_doCourseBackup" value="Content  Backup" onClick="checkField(document.frm,this);"/>
+          		<input type="button" name="eventSubmit_doStudent_db_backup" value="Database Backup" onClick="checkField(document.frm,this);"/>
+			<input type="hidden" name="actionName">
+          		</font>
+		</td></tr>
+		     
+	</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }
+</SCRIPT>

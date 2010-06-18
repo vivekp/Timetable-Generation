@@ -1,0 +1,147 @@
+
+
+
+<table bgcolor="$ui.tableColor" width=100% >         <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>Heim</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | </b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> Zuteilung  </a>|</b>
+	<a href=$link.setPage("call,Assignment,AssView.vm")> </a> Pfosten Zuteilung  </b>
+        </td></tr>
+</table> 
+
+<table width=100%>
+<tr>
+<td align=right>
+                			<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Ass.html","newWin");>Hilfe </a>
+                </td>
+</tr>
+</table>
+  
+
+<br>
+	<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,AssView.vm").setAction("Assignments")>
+	<br>
+	       	<table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor" width="70%">
+		<tr bgcolor="$ui.menuColor">    
+ 		        <td>
+			<b><font face="$ui.sansSerifFonts"> Thema Name </font><font color=Red>*</font> </b>                
+			</td>
+            		<td>
+				<input type="text" name="contentTopic"  size=26 onChange="validate1(this)"  /> &nbsp;
+				<input type="button" name="dosubmitView" value="Vorhanden" onClick="checkBlank1(document.uploadform,this);"/>
+			</td>    
+                </tr>
+		<tr>
+		        <td>
+                		<b>FÃ¤llig Datum </b>
+                        </td>
+			<td>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     	<select id="arvind" name="Start_year"  >
+                  		<option value="$cyear" >$cyear
+                  			                		</select>
+				&nbsp <b><font size=+1>-</font></b>&nbsp
+          			<select id="arvind1" name="Start_mon"  >
+            				<option value="$cmonth">$cmonth
+            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            			</select>
+			        &nbsp<b><font size=+1>-</font></b>&nbsp
+        		        <select id="arvind2" name="Start_day"  >
+                  			<option value="$cdays">$cdays
+                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                		</select>
+				
+				<br>
+
+				</br>
+                	</td>
+		</tr>
+	        <tr>	<td><b> Anweisung  <font color=RED> * </font></b></td>
+			<td><textarea name="message" wrap="physical" rows=7 cols=50 >  </textarea></td>
+                </tr>
+                <tr>
+                        <td> <b> Max Markierungen, Ã?dern </b> <b><font color=RED> * </font></b> </b></td>
+			<td> <input type="text" size=3 name="grade" value="10" ></td>
+                </tr>
+                <tr> 
+			#fileUpload ("Befestigung File  <font color=RED> * </font></b> " "file")
+		</tr>
+		<tr bgcolor="$ui.menuColor">
+                        <td align=center colspan=2>
+			<font face="$ui sanSerif fonts">
+  	               	<input type="button" name="brih_upload" value="Antriebskraft" onClick="checkBlank(document.uploadform,this);" />
+		  	<input type="hidden" name="actionName">
+		        </font>                               
+                        </td>
+		</tr>
+	</table>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+ 
+	function checkBlank1(uploadform,field)
+        {
+			uploadform.actionName.value=field.name;
+			uploadform.submit();
+	}
+
+	function checkBlank(uploadform,field)
+	{
+		if( (uploadform.contentTopic.value!="")  && (uploadform.message.value!="")  && (uploadform.grade.value!="") && uploadform.file.value!="")
+                {
+			if(isNumberString(uploadform.grade.value))
+                        {
+                                alert("Max Grade should be an positive value");
+                                frm.grade.focus();
+                                return false;
+                        }
+			
+			var temp=uploadform.message.value+uploadform.contentTopic.value;
+			if(isString(temp))
+                        {
+				
+                                alert("Please check the special character !!");
+                                                                return false;
+                        }
+	
+			uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+                else
+			alert("Please fill all mandatory  fields !!");
+        }
+
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789&.";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+	function isString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+           	var RefString="~`!&";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)>0)
+                        {
+				return true;
+                        }
+                }
+                return false;
+        }
+</script>

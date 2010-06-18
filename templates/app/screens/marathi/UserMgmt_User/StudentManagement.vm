@@ -1,0 +1,20 @@
+
+
+
+$page.setTitle("$brih_home | $brih_course | $brih_student $brih_mgmt")
+
+
+<font face="$ui.sansSerifFonts">
+<body>
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,IndexHome.vm")>???</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | ????????? ????????
+</font>
+</tr>
+</table>
+<br>
+</font>
+</body>

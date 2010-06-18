@@ -1,0 +1,44 @@
+#*
+ * @(#) ListManagement.vm
+ * Copyright (c) 2004 - 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | User Management")
+$page.setBgColor("bgcolor")
+
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> | $brih_mgmt $brih_list
+	</td>
+</tr>
+</table>
+<br>
+<table width=20% align=center cellpadding=10 bgcolor="$ui.menuColor">
+<tr>
+	<td>
+        <table align=center>
+	<tr>
+	<td>
+        <a href="$link.setPage("call,ListMgmt_Admin,ListCourse.vm").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">
+        <img src="$content.getURI("/images/$lang/viewallcourses.jpg")"></a><br>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">
+        <img src="$content.getURI("/images/$lang/viewallusers.jpg")"></a>
+        </td>  
+	</tr>
+  </table>
+</td>
+</tr>
+</table>

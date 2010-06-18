@@ -1,0 +1,56 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		  			$page.setTitle("Course Calendar Day Information")
+			<a href=$link.setPage("call,IndexHome.vm")>???</a> | 
+  			<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+  			<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>????????? </a> | $day of $month_name'$year
+				</font>
+		</td>
+	</tr>
+</table>
+<form name="frm" action="$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").setAction("Calendar_Actions")"> 
+<table align=left  width=100% cellpadding=5 cellspacing=0 bgcolor="$ui.tableColor">
+<tr> 
+	<td align=left colspan=5><b><I>$day - $month_name - $year</I></td>
+</tr>
+	    </tr>
+</table> 
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+	{
+		if(frm.deleteFileNames.value!="")
+		{
+     			frm.actionName.value=field.name;
+     			frm.submit();
+    		}
+    		else
+     			alert("Please select checkbox for deletion !!");
+	}
+	function addDeleteList(field,frm)
+	{
+		if(field.checked)
+		{
+			frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        	}
+		else
+		{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;
+		}
+	}
+ 
+</SCRIPT>

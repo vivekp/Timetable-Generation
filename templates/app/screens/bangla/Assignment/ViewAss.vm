@@ -1,0 +1,62 @@
+
+
+
+<table bgcolor="$ui.tableColor" width=100% >         <tr> 
+		<td>
+			<a href=$link.setPage("call,IndexHome.vm")>????? ??????</a> |
+	        	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> |
+        		<a href=$link.setPage("call,Assignment,ASS_subm.vm")> ????????? ???  </a>|
+	        	<a href=$link.setPage("call,Assignment,AssView.vm")> </a> ????? ????????? ???</b>
+        	</td>
+	</tr>
+</table> 
+
+<table width=100%>
+	<tr>
+		<td align=right>
+        			</td>
+	</tr>
+</table>
+<br>
+	<Form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,ViewAss.vm").setAction("Assignments")>   
+		<table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor" width="85%">
+	<tr bgcolor="$ui.menuColor" >   
+		<td align=center colspan=10 >
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<b> ?????? ???   </b> &nbsp;
+                	                	<SELECT name=topicList>
+				<option value="" ></option>
+				                	</SELECT> &nbsp;
+                	<input type="button" name="dosubmitView" value="?????" onClick="checkBlank(document.uploadform,this);"  />
+                       	<input type="hidden" name="actionName">
+                </td>
+        </tr>
+</table>
+</form>
+<script language="javascript">
+        
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+        function checkBlank(uploadform,field)
+        {
+               	if(uploadform.topicList.value!="" )
+               	{
+			uploadform.actionName.value=field.name;
+			uploadform.submit();
+                }
+                else{
+			alert("Topic Name Can not Empty !! "+uploadform.topicList.value);
+		}
+
+        }
+	
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+</script>
+
+

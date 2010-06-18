@@ -1,0 +1,91 @@
+ 
+
+$page.setTitle("Change Profile")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr><td>
+
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("Index.vm")>Home page</a> | Profilo
+</font></td>
+</tr></table>
+
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("Index.vm").setAction("ProfileUser")">
+<br>
+        <table border=5 cellpadding=4 align="center">
+	 <tr>
+	 <td align=center colspan=2  bgcolor="$ui.menuColor">
+	 <font face="$ui.sansSerifFonts" size=4><b>Profilo Updation </b></font>
+	 </td>
+	 </tr>
+	   	 <tr>
+	   #fileUpload("Foto" "PHOTO")
+	 </tr>
+	 <tr>
+	   #formCell("Numero massimo di studenti in vista elenco" "Conf" "")
+         </tr>
+	   <td bgcolor="$ui.tableColor">
+              <b>
+               <font face="$ui.sansSerifFonts">
+                 Selezionare Domanda                </font>
+              </b>
+            </td>
+	    <td>
+		 <select name="que" size=1 onChange="clearAnswer(document.frm,this);"/>
+                 <option value=>                                   </option>
+              </select>
+            </td>
+                <tr>
+                #formCell("Inserisci la tua risposta:" "ANSWER" "")
+                </tr>
+		<tr>
+                #formCell("Task_Configuration (in giorni)" "TaskConf" "")
+                </tr>
+
+		<tr bgcolor="$ui.menuColor">
+                <td align="center" colspan=2>
+                 <input type="button" name="eventSubmit_doUpdate" value="Inoltrare" onClick="checkAnswer(document.frm,this);"/>                 
+		 <input type="reset"  value="Reset"/>
+		 <input type="hidden" name="actionName"/>
+                </td>
+          </tr>
+     </table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkAnswer(frm,field)
+        {
+                if((frm.Conf.value!="" )&&(frm.ANSWER.value!="")) 
+                {
+			if(frm.Conf.value > 100 || frm.Conf.value < 1 )
+                        {
+                                alert("Maximum  No. of Student in list view should be between 1 to 100 !!");
+                        }
+			else if (frm.TaskConf.value >7 || frm.TaskConf.value < 1)
+                        {
+                                alert(" Task Configuration  value should be between 1 to 7 !!");
+                        }
+                        else
+                        //if( (frm.Conf.value>=1 && frm.Conf.value<=100) && (frm.TaskConf.value>=1 && frm.TaskConf.value<=7))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                }
+                else
+		{
+			if(frm.ANSWER.value =="")
+			{
+	                        alert("The answer should not be null !!");
+			}
+			else if(frm.Conf.value =="" )	
+				 alert("Maximum  No. of Student in list view should not be null !!");
+                	else
+			{
+	                        alert("The task configuration value should not be null !!");
+			}
+		}
+        }
+</SCRIPT>

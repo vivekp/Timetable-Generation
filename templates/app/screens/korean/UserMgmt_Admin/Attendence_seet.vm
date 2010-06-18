@@ -1,0 +1,56 @@
+
+
+
+
+<table bgcolor="$ui.tableColor" width=100% align="center">
+    <tr bgcolor="$ui.menuColor"> <td colspan=7>
+        <a href=$link.setPage("index.vm")>Admin's ì§?</a> |
+        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>ì?¬ì?©ì?? ê´?ë¦¬</a> | ì¶?ì?? ë³´ê³ ì??
+     </td></tr>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">ì¶?ê°? ì?¬ì?©ì??</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>í??ì?? ê³¼ì ? ëª©ë¡?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>ì?­ì ? ì§?ë??ì??</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>ì?­ì ? í??ì??</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>ì¶?ê°? ë³µì?? ì?¬ì?©ì??</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>ì??ë¡?ë?? ì?¬ì§?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>ì¶?ì?? ë³´ê³ ì??</a></td>
+</tr>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("status","ForallUser")">
+
+
+        <tr bgcolor="$ui.menuColor">
+                                <td align=left colspan=7>
+                        <b>ì?¼ì¹?í??ë?? ë¬¸ì??ì?´ </b>
+                        <input align=center type="text" name="valueString" value="" >
+                        <input type="button" name="Search" value="ì??ì??" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+        </tr>
+
+	<tr>	
+				<td colspan=7 align="left">
+	                <b> ì¶?ì?? ë³´ê³ ì?? ì?? ì??í?´ <font color=green><i> ì§?ë??ì?? </i></b></font>
+                </td>
+	</tr> 
+  	<tr>
+		<td colspan=7>
+      								<tr bgcolor="$ui.menuColor">
+				<td colspan=7 align="left"><b>
+					ì§?ë??ì?? ì?´ë¦?  
+				</td>
+			</tr>
+						</td>
+		</tr>
+</table>
+
+<SCRIPT language="JavaScript">
+        function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

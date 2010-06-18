@@ -1,0 +1,6 @@
+$page.DefaultDoctype
+$page.setBgColor("$ui.bgcolor")
+$page.setTitle("Generate Timetable")
+<form method="post" action="$link.setPage("timetable,batchList.vm").setAction("GenerateTimeTable")">
+<input type="submit" name="eventSubmit_doGenerate" value="Generate Timetable" />
+</form>

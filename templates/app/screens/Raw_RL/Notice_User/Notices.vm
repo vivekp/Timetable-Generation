@@ -1,0 +1,86 @@
+#*
+ * @(#) Notices.vm
+ * Copyright (c) 2006-2007, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * @modify date: 12-05-2009
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+#if($data.getUser().getUserName() == "admin")
+         $page.setTitle("AdminHome | Notices")
+#else
+        $page.setTitle("Home | $course | Communication | Notices")
+#end
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+$!data.getMessage()
+<br>
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	#if($data.getUser().getUserName() == "admin")
+                <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> | $brih_Notices
+        #else
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $brih_Notices
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	#end
+	</font>
+</td>
+</tr>
+</table>
+
+<br>
+<table align=center bgcolor="$ui.menuColor" cellpadding=10>
+<tr>
+<td align=center>
+ <table cellspacing=10>
+	<tr>
+ 	<td align=center>
+    	<a href=$link.setPage("call,Notice_User,Notice_Send.vm")>
+	<img src="$content.getURI("/images/$lang/sendnotice.jpg")"></a><br>
+	</td>
+ </tr>
+#if($data.getUser().getUserName() == "admin")
+  <tr>
+       <td align=center>
+       <a href=$link.setPage("call,Notice_User,DeletePostedAdmin.vm")>
+       <img src="$content.getURI("/images/$lang/deletepostednotices.jpg")"border=0></a><br>
+       </a>
+       </td>
+  </tr>
+  <tr>
+       <td align=center>
+       <a href=$link.setPage("call,Notice_User,Notice_Send.vm").addPathInfo("nflag","fh")>
+       <img src="$content.getURI("/images/$lang/Flashheading.jpg")"border=0></a><br>
+       </a>
+       </td>
+  </tr>
+   <tr>
+        ## Modified Local_Mail for admin Shaista
+       <td align=center>
+       <a href=$link.setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")>
+       <img src="$content.getURI("/images/$lang/localm.jpg")"border=0></a><br>
+       </td>
+  </tr>
+ #else
+ <tr>
+	<td>
+    	<a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("flag","FromNotices")>
+	<img src="$content.getURI("/images/$lang/readnotice.jpg")"></a><br>
+	</td>
+ </tr>
+ <tr>
+	<td align=center>
+    	<a href=$link.setPage("call,Notice_User,DeletePosted.vm")>
+	<img src="$content.getURI("/images/$lang/deletepostednotices.jpg")">
+	</a>
+	</td>
+ </tr>
+#end
+ </table>
+</td>
+</tr>
+</table>

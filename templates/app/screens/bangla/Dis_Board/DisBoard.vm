@@ -1,0 +1,173 @@
+
+
+$page.setBgColor($ui.bgcolor)
+	$page.setTitle("$brih_home | $course |$brih_communication | $DiscussionBoard |$LocalMail_Reply")
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr><td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("Index.vm")>????? ??????</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+				<a href=$link.setPage("call,Dis_Board,DB.vm")>???????? ?????</a> |
+									       ???? ???
+				</font>
+		</td></tr>
+</table>
+<br>
+
+<script LANGUAGE="JAVASCRIPT">
+	function blurTopicName(frm)
+	{
+		document.uploadform.topicExisting.value="OLDTOPIC";
+		frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+	}
+	function changeTopic(frm)
+	{
+		if(frm.topicExisting[0].checked)
+		{
+			frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+		}
+		else
+		{
+			frm.contentTopic.focus();
+		}
+	}
+	function checkRadio()
+	{
+		if(document.uploadform.topicExisting[0].checked)
+		{
+			document.uploadform.contentTopic.blur();
+		}
+	}
+  	function validate(uploadform,field)
+        {	
+		var tList=uploadform.topicList;
+	 	var cTopic=uploadform.contentTopic;
+		if(uploadform.contentTopic.value!="")
+		{
+			var totNamedEntries=uploadform.topicList.length;
+			for(i=1;i<totNamedEntries;i++)
+			{
+				if(tList.options[i].text==cTopic.value)
+				{
+					if(uploadform.topicExisting[1].checked)
+					{
+						if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+						{
+							uploadform.actionName.value=field.name;
+							uploadform.submit();
+						}
+					       	else
+					       	{
+					       	return;
+					        }
+					}
+                             	}
+                         }
+                         uploadform.actionName.value=field.name;
+                         uploadform.submit();
+            	}
+            	else
+            	{
+	        	alert("Topic Name Can not Empty !!");
+	     	}
+  	}
+	function checkBlank(uploadform,field)
+	{
+		if((uploadform.contentTopic.value!="") && (uploadform.message.value!=""))
+		{
+			if(uploadform.status[0].checked)
+			{
+			
+				if((uploadform.expiry.value>=1) && (uploadform.expiry.value<=365))
+	    			{
+	    				uploadform.actionName.value=field.name;
+	    				uploadform.submit();
+	    			}
+	    			else
+	    				alert("Deletion Time should not be less than 1 day and greater than 365 days");
+			}
+			else
+			{
+				uploadform.actionName.value=field.name;
+                                uploadform.submit();
+			}
+		}
+	  	else
+	        	alert("Please fill all mandatory  fields");
+	}
+	function insertminus(uploadform)	
+	{
+		 if(uploadform.status[1].checked)
+	 	{
+	       		uploadform.expiry.value="-1";
+			uploadform.expstatus.value=uploadform.expiry.value;
+	       		makeDisable();
+	 	}
+         	else
+	 	{
+			uploadform.expiry.value="30";
+			makeEnable();
+		}
+	}
+	function makeDisable()
+	{
+        	var x=document.getElementById("exp_id")
+		x.disabled=true
+	}
+	function makeEnable()
+	{
+		var x=document.getElementById("exp_id")
+		x.disabled=false
+	}
+
+</script>
+
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Dis_Board,DB.vm").setAction("SendDB")">
+	<div align="left">
+		<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5">
+		<tr><td align="center" colspan=2 bgcolor="$ui.menuColor">
+			<b><u><font size=4>?? :</font></u>&nbsp</font><font color="Green" size=3>$cid</font></b>
+		</td></tr>
+					<tr>
+				#formCell("?????? ???" "contentTopic" "")
+			</tr>
+			<tr>
+				<td bgcolor="$ui.tableColor">
+				<b><font face="$ui.sansSerifFonts">????? </font> </b>
+				</td>
+				<td>
+				<font face="$ui.sansSerifFonts" size=4><textarea name="message" rows=10 cols=55 wrap=physical></textarea></font>
+				</td>
+			</tr>
+                        <input type="hidden" name="Repid" value="$msg_id">				
+				<tr>
+			#fileUpload ("???? ?? ???????" "file")
+		</tr>
+		<tr>
+			<td><b><font face="$ui.sansSerifFonts">????? ????????(????) ?????? ????? ??? ( ???? )</b></td>
+			<td><input id="exp_id" type="text" name="expiry" value="30" size="26" enabled=true></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"> 
+			<input type="RADIO" name="status" checked=true value="Enable" onClick="insertminus(document.uploadform);"/>&nbsp<b>?????</b>
+			<input type="RADIO" name="status" value="Disable" onClick="insertminus(document.uploadform);"/>&nbsp<b>????? </b>
+			</td>
+		</tr>
+		<tr align="$ui.buttonAlignment">
+			<td align="center" colspan=2 bgcolor="$ui.menuColor">
+	        	<font face="$ui.sansSerifFonts">
+			<input type="hidden" name="mode" value="All">
+			<input type="hidden" name="courseid" value="$cid">
+			<input type="hidden" name="actionName">
+                        <input type="hidden" name="expstatus">		
+			<input type="hidden" name="mode1" value="$mode1">
+                        <input type="hidden" name="val" value="$val">
+
+			<input type="button" name="eventSubmit_doSend" value="?????" onClick="checkBlank(document.uploadform,this);"/>&nbsp&nbsp	
+			<input type="reset" value="???????? ??" onClick="makeEnable();">
+			</font>
+			</td>
+		</tr>
+		</table>
+	</div>
+</form>

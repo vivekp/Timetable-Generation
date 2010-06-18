@@ -1,0 +1,60 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Instructor Backup")
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")>Home page </a> |<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$data.getUser().getTemp("course_name" ).toString() </a> |  Backup  
+        </td>
+</tr>
+</table>
+
+
+<br>
+<br>
+<form name=frm method="post" action="$link.setAction("BackupAction").setPage("call,Backups,BackupIns.vm")">
+
+	<div align="center">
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" >
+        
+      
+	<tr><td colspan="3" align="center">
+			<font size=4><b> 
+									Course di Backup  
+							</b></font>
+	</td></tr>
+	<tr bgcolor="$ui.tableColor" >
+		<td>
+			<input type="text" name="courses" value="$data.getUser().getTemp("course_id" ).toString()" readonly />
+
+								</td>
+		<td>
+          		
+			<font face="$ui.sansSerifFonts">
+	        	<input type="button" name="eventSubmit_doCourseBackup" value="Contenuto  Backup " onClick="checkField(document.frm,this);"/>
+          		<input type="button" name="eventSubmit_doStudent_db_backup" value="Database  Backup " onClick="checkField(document.frm,this);"/>
+			<input type="hidden" name="actionName">
+          		</font>
+		</td>
+	</tr>
+	<tr><td align="center" colspan="2">
+                	<a href=$link.setPage("call,Backups,BackupList.vm").addPathInfo("st","ins")>
+        	        <img src="$content.getURI("/images/$lang/backuplist.jpg")" border="0"></a>
+	        </td></tr>
+	     
+	</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }	
+</SCRIPT>

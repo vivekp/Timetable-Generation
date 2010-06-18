@@ -1,0 +1,139 @@
+#*
+ * @(#) Editwiki.vm
+ * Copyright(c)2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:manav_cv@yahoo.co.in">Manvendra Baghel</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_home | $course | $brih_Wiki |  $brih_edit $brih_Wiki $WikiPage")
+$page.setBgColor("$ui.bgcolor")
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+<style type="text/css">input{width:170px;}</style>
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,Wiki,Wiki.vm")>$brih_Wiki</a> 
+			#if($filename=="")
+				#if($lang == "hindi")
+                        		| $brih_Wiki $WikiPage $brih_Of1 $WikiCreate
+				#else
+        	                	| $WikiCreate $brih_Wiki $WikiPage
+				#end
+                        #else
+				#if($lang == "hindi")
+                        		| $brih_Wiki $WikiPage $brih_Of1 $brih_edit
+				#else
+        	                	| $brih_edit $brih_Wiki $WikiPage
+				#end
+                        #end
+
+
+        </font>
+</td>
+</tr>
+</table>
+
+## Representation of HELP link
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href="/brihaspati2/docs/Wikiusermanual.html">$brih_help</a>
+                </td>
+        </tr>
+</table>
+
+
+
+<br>
+<div align=center>
+	<FORM  name=frm method="POST" 
+		#if($filename=="")
+			action="$link.setPage("call,Wiki,Editwiki.vm").setAction("Wikieditaction").addPathInfo("fName",$filename)">
+		#else
+			action="$link.setPage("call,Wiki,Wiki.vm").setAction("Wikieditaction").addPathInfo("fName",$filename).addPathInfo("query",$query).addPathInfo("searchtype",$searchtype)">
+		#end
+			<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5" width="10%" >
+				#if($filename == "")
+					<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+					<b>${WikiCreatetxt1}</b>
+					</marquee>
+				#end
+				<tr>
+				#if($filename != "")
+
+					<td>
+						${WikiCreatetxt2}  <INPUT type="text" value="$filename" size="25" READONLY>
+					</td>
+				#else
+					<td>
+						${WikiCreatetxt2}  <INPUT type="text" name="createname" size="25">
+					</td>
+				#end
+				</tr>
+
+				<tr>
+					<td>
+<TEXTAREA   name="text" rows="25"  cols="100" >
+#if($pad!="")
+$pad
+#end
+#foreach($t in $first)
+$t
+#end
+</TEXTAREA>
+					</td>
+				</tr>
+				<tr>
+					<td align="center"> 
+						<input type="hidden" name="actionName" >
+						#if($filename == "")
+							<input type="button" name="eventSubmit_doCreate" value="$WikiSave" onClick="checkFileName(document.frm,this);" />
+						#else
+							#if($traffic =="stop")
+								<input type="submit" disabled  name="eventSubmit_doEdit" value="$WikiSave" />
+							#else
+								<input type="submit" name="eventSubmit_doEdit" value="$WikiSave" />
+							#end
+						#end
+	 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 						<input type="reset" name="Clear" value="${brih_clear}" onClick="checkClear(document.frm,this);"/>
+
+					</td>
+				</tr>
+			</table>
+	</FORM>
+</div>
+
+<SCRIPT LANGUAGE="javascript">
+ 	function checkFileName(frm,field)
+        {
+                j=frm.createname.value;
+                if((frm.createname.value!="") && (j.length<26) && (frm.text.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        if(j.length >26)
+                        {
+                                alert("Page name cannot have characters greater than 25 ");
+                        }
+                        else
+                        {
+                                alert("Please Fill Page name Field and  Page Content ");
+                        }
+                }
+        }
+
+	function checkClear(frm,field)
+        {
+        	frm.text.value="";
+        }
+</SCRIPT>

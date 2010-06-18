@@ -1,0 +1,54 @@
+
+
+$page.setTitle("")
+
+		
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+        	<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð°</a> |  
+		<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm")>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð° Ð?Ð¾Ð´Ñ?Ð¾Ð±Ð½Ð¾Ñ?Ñ?Ð¸</a> | Ð?Ñ?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ? & Ð?Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð°
+                </font>
+                </td>
+        </tr>
+</table>
+
+<br>
+
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,ViewQuiz.vm").setAction("Quiz_Action")>
+<div align="left">
+	<table align=center bgcolor="$ui.tableColor" border=0 cellpadding="5" width=70% >
+        <tr bgcolor="$ui.menuColor" >
+        	<td align=center colspan=2 >
+        		<font size=4><b>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð° Ð?Ð¼Ñ?    </b></font>
+                </td>
+        </tr>
+	<tr>
+		<td>
+		<table align=center bgcolor="$ui.tableColor" border=1 cellpadding="3" width=100% >
+				</table>
+		</td>
+	</tr>
+			
+			 <input type="hidden" name="qid" value="">	
+			<input type="hidden" name="actionName">
+		</table>
+		</td>
+        </tr>
+   </table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+        function checkField(frm,field)
+        {
+			frm.actionName.value=field.name;
+                	frm.submit();
+	}
+
+</script>

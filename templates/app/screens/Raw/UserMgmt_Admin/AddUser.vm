@@ -1,0 +1,172 @@
+#*
+ * @(#) AddUser.vm
+ * Copyright (c) 2004-2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | User Management | Add User")
+$!data.getMessage()
+<br>
+##<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+	<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_usr $brih_mgmt</a> | $brih_a_usr
+	</td>
+</tr>
+</table>
+<br>
+<br>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,AddUser.vm").setAction("AddUser")">
+  <div align="center">
+    <table align=center bgcolor="$ui.bgcolor" border=2 cellpadding="5">
+      <tr>
+	<td colspan=2 face="$ui.sansSerifFonts" bgcolor="$ui.menuColor" align=center>
+        <font size=4><b>$brih_entUsrDetail</b></font>
+	</td>
+      </tr>
+      <tr>
+        #formCell ("$brih_usr $brih_name <font color=red>*</font>" "UNAME" "")
+      </tr>
+      <tr>
+        #formPasswordCell ("$brih_pwd" "PASSWD" "")
+      </tr>
+	  <tr>
+	  	#formCell ("$brih_first $brih_name" "FNAME" "")
+	  </tr>
+	  <tr>
+	   #formCell("$brih_last $brih_name" "LNAME" "")
+	  </tr>
+	  <tr>
+	   #formCell("$brih_email $brih_ID" "EMAIL" "")
+	  </tr>
+	  
+	  <tr>
+	  <td bgcolor="$ui.tableColor">
+	  <b>
+	  <font face="$ui.sansSerifFonts">$brih_sel_course <font color=RED>*</font>
+	  </font>
+	  </b>
+	  </td>
+     <td>
+    	<select id="group_id" name="group" size=1 onChange="ChangeRole(document.frm,this);"/>
+	  <option>
+	  #foreach($name in $courseList)
+	  #if($name.getName()!="global")
+	  <option value="$name.getName()">$name.getName()
+	   #end
+	   #end
+	   </option>
+	  </select>
+	 </td>
+	 </tr>
+
+ <tr>
+	  <td bgcolor="$ui.tableColor">
+	  <b>
+	  <font face="$ui.sansSerifFonts">$brih_sel_Role <font color="Red">*</font>
+	  </font>
+	  </b>
+	  </td>
+     <td>
+    <select id="role_id" name="role" size=1 onChange="ChangeGroup(document.frm,this);"/>
+	  <option>
+	  <option value="instructor">$brih_Instructor
+	  <option value="student">$brih_student
+	  <option value="group_admin">$brih_groupAdmin
+	  <option value="author">$brih_author
+	  </option>
+	  </select>
+	</td>
+	</tr>
+	<tr>
+	<td colspan=2 align="center" bgcolor="$ui.menuColor">
+	<input type="hidden" name="actionName">
+    	<input type="hidden" name="group_author">
+    	<input type="hidden" name="role_author">
+    	<input type="button" name="eventSubmit_doRegister" value="$brih_reg1" onClick="checkField(document.frm,this);"/> 
+	<input type="Reset" name="Reset" Value="$brih_clear"/>
+	</td>
+	</tr>
+        </table>
+	<br>
+  </div>
+</form>
+</body>
+
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+	{
+		if((frm.UNAME.value!="") &&(frm.group.value!="") && (frm.role.value!=""))
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill the Mandatory(*) Fields !");
+		}
+	}
+	function ChangeRole(frm,field)
+	        {
+			if(frm.group.value=="author")
+			{
+			       frm.role.value="author";
+			       frm.role_author.value=frm.role.value;
+			       makeDisable();
+			}
+			else
+			{
+			       if(frm.role.value=="author")
+			       {
+			       frm.role.value="";
+			       }
+			       makeEnable();
+			}
+		}
+	function ChangeGroup(frm,field)
+	        {
+			if(frm.role.value=="author")
+			{
+			       frm.group.value="author";
+			       frm.group_author.value=frm.group.value;
+			       makeDisable_group();
+			}
+			else
+			{
+			       if(frm.group.value=="author")
+			       {
+			       frm.group.value="";
+			       }
+			       makeEnable_group();
+			}
+		}
+	function makeDisable_group()
+	{
+	var x=document.getElementById("group_id")
+	x.disabled=true
+	}
+	function makeEnable_group()
+	{
+	var x=document.getElementById("group_id")
+	x.disabled=false
+	}
+	function makeDisable()
+	{
+	var x=document.getElementById("role_id")
+	x.disabled=true
+	}
+	function makeEnable()
+	{
+	var x=document.getElementById("role_id")
+	x.disabled=false
+	}
+</SCRIPT>

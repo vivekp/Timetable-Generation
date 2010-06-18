@@ -1,0 +1,97 @@
+
+
+$page.setTitle("")
+
+			<table>
+						</table>
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+        	<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð°</a> | Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð° Ð?Ð°Ñ?Ð°Ð»Ð¾
+                </font>
+                </td>
+        </tr>
+</table>
+
+<table width=100%>
+        <tr>
+                <td align=right>
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/stquiz.html","newWin");>Ð?Ð¾Ð¼Ð¾Ñ?Ñ?</a>
+                </td>
+        </tr>
+</table>
+</head>
+<br>
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm").setAction("Quiz_Action")>
+<div align="left">
+	<table align=center bgcolor="$ui.tableColor" border=1 cellpadding="5" width=70% >
+        <tr bgcolor="$ui.menuColor" >
+        	<td align=center colspan=4 >
+        		<font size=4><b>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð° Ð?Ð¼Ñ? </b> <i>   </i></font>
+                </td>
+        </tr>
+		</table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+        function checkValue(frm,field)
+        {
+			frm.actionName.value=field.name;
+                	frm.submit();
+	}
+	
+	function checkValue1(frm,field)
+        {
+			if(frm.deleteFileNames.value!="") {
+                        	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else if( frm.message.value !=""){
+				frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else{
+				alert(" Please select answer options ");
+			}
+        }
+	
+	function addDeleteList(field,frm)
+        {
+                if(field.checked)
+				frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+			
+		else
+                {
+			var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+
+                }
+        }
+	
+	function radio_button_checker(field,frm)
+        {
+			frm.deleteFileNames.value="";
+			frm.deleteFileNames.value=field.name+"^";
+			
+	}
+	
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+	
+
+</script>

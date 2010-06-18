@@ -1,0 +1,65 @@
+#** 
+
+This template is used to display the permissions
+for a role.
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxRolePermissionForm.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+#set ($role = $flux.Role)
+$page.setTitle("User Administration")
+$page.setBgColor($ui.bgcolor)
+
+<font face="$ui.sansSerifFonts">
+  <b>
+    Permissions for the $role.Name role
+  </b>
+</font>
+
+<table cellpadding="$ui.tableCellPadding" "cellspacing="$ui.tableCellSpacing">
+  
+  <form method="post" action="$link.setAction("role.FluxRoleAction").setPage("role,FluxRoleList.vm")">
+    
+  #foreach ($permission in $flux.Permissions)
+  <tr>
+    <td bgcolor="$ui.labelColor">
+      <font face="$ui.sansSerifFonts">
+        $permission.Name
+      </font>
+    </td>
+
+    #if ($role.Permissions.contains($permission))
+      #set ($checked = "checked")
+    #else
+      #set ($checked = "")
+    #end
+    
+    <td align="center" bgcolor="$ui.dataColor">
+      <input type="checkbox" name="${role.Name}${permission.Name}" $checked>
+      <input type="hidden" name="name" value="$role.Name">
+    </td>
+    
+  </tr>
+  #end
+  
+  <tr>
+    <td>
+      <font face="$ui.sansSerifFonts">
+        <input type="submit" name="eventSubmit_doPermissions" value="Update Permissions">
+      </font>
+    </td>
+  </tr>
+  
+  #if ($showEmbeddedMenu)
+  <tr>
+    <td>
+      <hr size="1" noshade>
+      #parse ("screens/FluxEmbeddedMenu.vm")
+    </td>
+  </tr>
+  #end
+  
+  </form>
+</table>

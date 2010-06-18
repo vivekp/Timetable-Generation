@@ -1,0 +1,110 @@
+
+
+	$page.setTitle("Admin Home | User Management | Remove Student")
+
+$page.setBgColor($ui.bgcolor)
+
+
+<br>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+ <td>
+ <font face="$ui.sansSerifFonts" size=3>
+ <b><a href=$link.setPage("call,Admin.vm")>Admin's ì§?</a> |
+ <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>ì?¬ì?©ì?? ê´?ë¦¬</a> | 
+
+  	ì ?ê±° í??ì??
+  
+ </b></font>
+</td>
+</tr>
+</table>
+
+<br>
+<body>
+<form name="frm" method="post" action="$link.setPage("call,UserMgmt_Admin,UserMgmt_Remove.vm").setAction("UserManagement_RemoveUser")">
+<table align="center">
+<tr>
+<td>
+<table bgcolor="$ui.menuColor">
+	<tr>
+          <td bgcolor="$ui.tableColor">
+          <b>
+          <font face="$ui.sansSerifFonts">
+	  		ì ?ê±° ê³¼ì ? í??ì??ì??ì??í?? ì? í??
+	            </font>
+          </b>
+          </td>
+          <td>
+          <select name="group" size=1>
+                    <option name=all value="All">ëª¨ë??
+	            </option>
+          </select>
+          </space>
+         </td>
+  	<td align="center">
+      	<input type="submit" name="eventSubmit_doSearch" value="ì??ì??">
+      	<input type="hidden" name="role" value="$role">
+     	</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td align="center">
+</td>
+</tr>
+</table>
+		<input type="hidden" name="actionName" value="">
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+
+	function addDeleteList(field,frm){
+		if(field.checked){
+		frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+		else{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;
+		}
+	}
+
+
+	function selectAll(field){
+		if(field.checked){
+			var rmFile,index,actualString,pre=0,next=0;
+			actualString=document.frm.deleteFileNames.value="$count";
+			while( ( pre=actualString.indexOf("^",next) ) >=0 ){
+				var temp=actualString.substring(next,pre);
+				next=pre+1;
+				rmFile=document.frm.elements[temp].checked=true;
+			}
+		}
+		else{
+			var rmFile,index,actualString,pre=0,next=0;
+			actualString=document.frm.deleteFileNames.value="$count";
+			while( ( pre=actualString.indexOf("^",next) ) >=0 ){
+				var temp=actualString.substring(next,pre);
+				next=pre+1;
+				rmFile=document.frm.elements[temp].checked=false;
+			}
+			document.frm.deleteFileNames.value="";
+		}
+	}
+	function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }
+
+</SCRIPT>
+
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>

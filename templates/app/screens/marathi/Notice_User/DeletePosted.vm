@@ -1,0 +1,50 @@
+
+
+$page.setTitle("Home | $Course | Communication | Notices | Delete Posted Notice")
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts">
+		<b>
+		<a href=$link.setPage("call,IndexHome.vm")>???</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$Course</a> | 
+		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>????????</a> | 
+		<a href=$link.setPage("call,Notice_User,Notices.vm")>?????</a> | ???????    ?????   ?????
+		</font>
+		</td>
+	</tr>
+</table>
+
+<br>
+<form name="frm" method="Post" action="$link.setPage("call,Notice_User,DeletePosted.vm").setAction("Notice_Send_Delete")">
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function CheckValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        {
+                alert("Please select checkbox for deletion !!");
+        }
+}
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+</SCRIPT>

@@ -1,0 +1,144 @@
+
+
+$page.setTitle("Login in Brihaspati")
+$page.setBgColor($ui.bgcolor)
+
+<form name="frm" method="post" action="$link.setAction("myLogin")">
+<table width="100%">
+<tr><td>
+<marquee><font size=4>$fNoti</font>
+</morque></td></tr>
+</table>
+<table align=left>
+<tr><td valign="top" width="25%">
+		<table bgcolor="$ui.tableColor" width="100%">
+        	<tr bgcolor="$ui.menuColor"><td>
+                <img src="$content.getURI("/images/newspaper.gif")"><u><b>ë?´ì?¤ í?¤ë?? ë?¼ì?¸</b></u>
+        	</td></tr>
+        	        	<tr><td><marquee scrollamount="1" direction="up" loop="2" width="100%" behaviour="slide">
+					<b>ì??ë?? ë?´ì?¤ ì?¤ë??ì?? ë? ì§? ì??ë?¤ì?´ë?¼</b>
+		                </marquee></td></tr>
+		<tr><td align=right>
+		<a href="$link.setPage("News_All.vm").addPathInfo("lang",$lang)">ê¸°í?? ë?´ì?¤ &raquo;</a>
+                </td></tr>
+        				</tr>
+	</table>
+	</td>
+	<td valign="top" width="50%">
+	<table align="left" bgcolor="$ui.tableColor">
+	<tr><td>
+		<b>ì?´ ì¸¡ì?? í??ë??ì?? ì??ì?? ì??ëª¨ì?´ë?¤. ë?¹ì? ì?? ì²´ê³?ë¥¼ ì?¬ì?©í??ê³  ì??ë?? ë??ì?? ì°¸ì??ì?± ì??ì?? ê²?ì?? ì??êµ¬ë??ë?¤.</b>
+		</td></tr>
+					<tr><td>
+	<b>What is BRIHASPATI?</b><br>
+	A platform independent, highly scalable content-delivery tool for web based e-learning system !!<br>
+	<b><u>Entities !!</u></b><br>
+	ENJOY the features of Administrator, Instructor (Primary/Secondary) or Student !!
+	<br><b><u>Interactive communication tools !!</u></b>
+	<ul><li> CHAT :- Users can communicate online...</ul>
+	<ul><li> WHITE BOARD :- Instructor can make drawings,freehand or pre-defined components while chatting...</ul>
+	
+	</td></tr>
+	</table>
+	</td>
+	<td valign="top" bgcolor="$ui.tableColor" width="25%">
+	<table align="left" width="100%">
+	<tr>
+	                <td>ì??ì??ì?? ì?¸ì?´ ì? í??</td>
+                <td>
+	<select id="language" onChange ="javascript:OnChange();">
+	         ($lang == "urdu")
+                <option>ì?°ë¥´ë??ì?´ (Urdu)</option>
+        		
+        
+        
+                                                                
+        </select>
+        </td>
+	</tr>
+<tr>
+#formCell("ì?¬ì?©ì??" "username" "")
+</tr>
+<tr>
+#formPasswordCell("ë¹?ë°? ë²?í?¸" "password" "")
+</tr>
+<tr align="right">
+<td align=left>
+<font face="$ui.sansSerifFonts">
+<input type="button" value="Login" onClick="checkUNamePwd(document.frm,this);">
+<input type=hidden name="LangFile" value="$LangFile">
+<input type=hidden name="lang" value="$lang">
+</font>
+</td>
+</tr>
+<tr><td colspan=2>ê²?ì?¤í?¸ ì?¡ì?¸ì?¤ ë?¤ì?´, ì?¬ì?©ì??ê°? 'ì??ë??'ê³¼ ë¹?ë°? ë²?í?¸ë¥¼ 'ì??ë??'ì?´ë?¤</td></tr>
+<tr><td colspan=2><b>
+<img src="$content.getURI("/images/orange_sq_but.gif")">&nbsp;
+<a href=$link.setPage("ForgotPassword.vm").addPathInfo("lang",$lang).addPathInfo("status","User")>ì??ì??ë?¤ ë¹?ë°? ë²?í?¸</a>
+</b></td></tr>
+<tr><td colspan=2><b>
+<img src="$content.getURI("/images/orange_sq_but.gif")">&nbsp;
+<a href=$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang)>ë?±ë¡?í??ë?? ê³¼ì ? ëª©ë¡?</a>
+</b></td></tr>
+<tr><td colspan=2><b>
+<img src="$content.getURI("/images/orange_sq_but.gif")">&nbsp;
+<a href=$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).addPathInfo("status","UserResitration")> ì?¨ë?¼ì?¸ ë?±ë¡? </a>
+</b></td></tr>
+
+<tr><td colspan=2><b>
+<img src="$content.getURI("/images/orange_sq_but.gif")">&nbsp;
+<a href=$link.setAction("myLogin").addPathInfo("username","guest").addPathInfo("password","guest")> Open ì ?ê·¼ ì½?ì?¤</a>
+</b></td></tr>
+</tr>
+</table>
+</td></tr>
+</table>
+</form>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=400");
+        }
+	function checkUNamePwd(frm,field)
+	{
+		if(frm.username.value!="")
+		{
+			if(frm.password.value!="")
+			{
+				frm.submit();  
+			}
+	        	else
+	        	{
+                		alert("Password should not be blank !!"); 
+				frm.password.focus();
+			}
+		}
+	        else
+	        {
+                	alert("User Name should not be blank !!"); 
+			frm.username.focus();
+		}
+	}
+
+function doSomething(e)
+ {
+
+        if (!e) var e = window.event;
+        if (e.keyCode == 13)
+        {
+        checkUNamePwd(document.frm,this);
+        }
+}
+
+document.onkeydown = doSomething;
+function OnChange()
+{
+var x=document.getElementById("language");
+/** These below line show the selected index value (lang ) at very first row of selected box while u select. **/
+//var index = (x.value).indexOf("lang");
+//var str=(x.value).substring(index+5);
+//x.options[x.selectedIndex].text=str;
+window.location=x.value;
+}
+                         
+</SCRIPT>

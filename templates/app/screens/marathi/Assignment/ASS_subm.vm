@@ -1,0 +1,38 @@
+
+
+<table bgcolor="$ui.tableColor" width=100% > 
+        <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>???</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>| ???? ?????? ??? </b>
+        </td></tr>
+
+</table> 
+<table width=100%>
+<tr>
+<td align=right>
+                			<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/ASS1.html","newWin");>???</a>
+                </td>
+</tr>
+</table>
+
+ 
+	<br>
+	  <table align="Center" bgcolor="$ui.menuColor" width="20%" border=0 cellpadding="10">
+          <tr>
+          <td align=center> 
+          	<table cellspacing=3> 
+		                </table>
+        </td>
+        </tr>
+        </table>                             
+		<form name="frm" method="post" action=$link.setPage("call,Assignment,AssView.vm").setAction("Assignments")>
+<br>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+ function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</SCRIPT>

@@ -1,0 +1,86 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | $course | Student Management | Add Multiple Users ")
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")>Heim</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>Kursteilnehmer Vorstand Management</a> | Füie hinzu  Mehrfach Benutzer
+        </td>
+	</b>
+</tr>
+</table>
+	<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+        	<font size=4 color=red><b>Die Datei zum Hochladen haben sollte. "Txt" Extension & richtige Format!</b></font>
+        </marquee>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_User,MultiUserReg_Instructor.vm").setAction("UserAction_Instructor")">
+<div align="left">
+<br>
+<table align="Right"><tr><td ><img src="$content.getURI("/images/hand.gif")">
+<font face="$ui.sansSerifFonts" size=3>
+<a href=javascript:popupWin("/brihaspati2/docs/Userdoc.html","newWin");>Hilfe </a>
+</font></td></tr></table>
+<br>
+<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+            	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>Akte  Antriebskraft füOC  automatisch mehrfach  Ausrichtung<b></font>
+	</td>
+	</tr>
+	<tr>
+	<td bgcolor="$ui.tableColor">
+	 	 <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	Kurs Name
+	  	</b>
+	</td>
+     	<td>
+		$course		
+	</td>
+    	</tr>
+  	</tr>
+   	<tr>
+        	#fileUpload ("Befestigung File  <font color=RED>*</font>" "file")
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.buttonBoxColor">
+          
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUpload" value="Antriebskraft" onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+</SCRIPT>

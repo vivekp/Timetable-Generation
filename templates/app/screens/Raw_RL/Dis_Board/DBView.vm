@@ -1,0 +1,103 @@
+#*
+ * @(#)DBView.vm
+ * Copyright (c)2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ * @author <a href="rekha_20july@yahoo.co.in">Rekha Pal</a>
+ *#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home|$CName|Communication|Discussion Board|Read Message")
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100%> 
+<tr><td> 
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | <a href=$link.setPage("CourseHome.vm")>$CName</a> | 
+        <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | 
+        <a href=$link.setPage("call,Dis_Board,DB.vm")>$DiscussionBoard</a> |
+	<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All")>$LocalMail_MailContent_msg3</a> | $Notice_Read $brih_msg2
+	</font>
+</td></tr> 
+</table> 
+<br>
+<form method="post" enctype="multipart/form-data">
+<div align="left">
+<table align="center" border=1> 
+	<tr><td>    
+    	<table bgcolor="$ui.tableColor" border=1 cellpadding="5"> 
+      	#if($errorTemplate)
+      		<tr><td colspan="4"> 
+        		<table bgcolor="$ui.bgcolor"> 
+            			<tr> 
+				<td> 
+                		<img src="$ui.image($ui.alertImage,$data)">
+              			</td>
+              			<td> 
+                		#parse ($errorTemplate)
+              			</td>  
+				</tr>  
+          		</table> 
+        	</td></tr> 
+      	#end
+	<tr><td><b><u>$Notice_Subject :</u></b>&nbsp $sub </td></tr>
+     	<tr><td><b><u>$Notice_Sender :</u></b>&nbsp $retrive_user </td></tr>
+	#if($lang == "hindi")
+     	<tr><td><b><u>$brih_Da $LocalMail_MailView_msg2 :</u></b>&nbsp $retrive_date</td></tr>
+	#else
+     	<tr><td><b><u>$LocalMail_MailView_msg2 :</u></b>&nbsp $retrive_date</td></tr>
+	#end
+     	<tr><td> 
+     	<table align=center> 
+     		<tr><td><b><u>$brih_msg2 :</u><b></td></tr>
+      		<tr> <td bgcolor="$ui.bgcolor">
+		<textarea name=description rows=10 cols=55 wrap=physical onFocus="this.blur();"> $message</textarea>
+       		</td></tr>
+	</table> 
+     	</td></tr> 
+   	</table> 
+	#set($count=1)
+	<table cellpadding=0 cellspacing=0> 
+				<tr><td><b><u>$brih_attachment:</u></b></td></tr>
+		#foreach($file in $dirContent)
+			<tr> 
+				<td>&nbsp;&nbsp;</td>
+		     		#set($countfield=0)
+		     		<td>&nbsp <image src="$content.getURI("/images/star_off_2.gif")" height=10 width=10> &nbsp </td>
+				#foreach($var in $file)
+		     			#if($countfield==0)
+    						<td><a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("topic","$topic").addPathInfo("view","content").addPathInfo("type","DB").addPathInfo("msgid",$msgID).addPathInfo("filename",$var)","newWin");>$var</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	             			#else
+		         			<td><b>
+						#if($lang == "hindi")	
+							$var $DisBoard_DBView_msg22 
+						#else
+							$DisBoard_DBView_msg22  $var
+						#end
+						</b></td>
+		     			#end
+		     		#set($countfield=1)
+			#end
+			</tr> 
+		#set ( $count= $count+1)
+		#end
+	</table>
+	<tr><td align="center">
+		<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("msgid",$msgID).addPathInfo("mode","reply").addPathInfo("course_id",$workgroup)>$LocalMail_Reply</a>&nbsp&nbsp
+		<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("course_id",$workgroup).addPathInfo("mode","All")>$LocalMail_Close</a>
+
+ 	 </td></tr>
+</table> 
+</td></tr> 
+</div>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">									  
+	function popupWin(urlName,popupName)
+	{
+		 window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+	 }
+</script>

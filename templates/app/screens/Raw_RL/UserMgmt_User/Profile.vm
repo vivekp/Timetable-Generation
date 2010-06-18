@@ -1,0 +1,169 @@
+#*
+  * @(#)Profile.vm
+  * Copyright (c) 2008,2009 ETRG,IIT Kanpur.
+  * All Rights Reserved
+  * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+  * Contributors: Members of ETRG, I.I.T. Kanpur
+  *#
+
+$page.setTitle("Change Profile")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align=right><td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("Index.vm")>$brih_home</a> | $Profile_user
+</font></td>
+</tr></table>
+$!data.getMessage()
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("Index.vm").setAction("ProfileUser")">
+<br>
+        <table border=5 cellpadding=4 align="center" bgcolor="$ui.tableColor">
+	<tr>
+	<td align=center colspan=2  bgcolor="$ui.tableColor">
+	 	<font face="$ui.sansSerifFonts" size=4><b>$brih_profile1 </b></font>
+	 </td>
+	</tr>
+	#foreach($ud in $udetl)
+	  <tr align="right">
+	  <td>
+          	<input type="text" name="FName" value="$!ud.getFirstName()" size=30>
+          </td>
+	  <td align=right>
+	  	$brih_first $brih_name
+	  </td>
+          </tr>
+	  <tr align="right">
+	  <td>
+          	<input type="text" name="LName" value="$!ud.getLastName()" size=30>
+          </td>
+	  <td align=right>
+	  	$brih_last $brih_name
+	  </td>
+          </tr>
+          <tr align="right">
+	  <td>
+          	<input type="text" name="EMAIL" value="$!ud.getEmail()" size=30>
+          </td>
+	  <td align=right>
+	  	$brih_email
+	  </td>
+	  </tr>
+	 #end
+          <tr align=right>
+	  <td>
+          	<input type="file" name="PHOTO"  size=30>
+          </td>
+	  <td>
+	  	$brih_photo
+	  </td>
+	</tr>
+	<tr align="right">
+	  <td>
+          	<input type="text" name="Conf" value="$!conf" size=30>
+          </td>
+	  <td align=right>
+	  	$List_config
+	  </td>
+	</tr>
+	<tr align="right">
+	    <td size ="30%">
+		 <select name="que" size=1 onChange="clearAnswer(document.frm,this);"/>
+		<option value=$!qid> #foreach($q in $qname) $q.getQuestionName() #end
+                 #foreach($questions in $question)
+                        <option value="$questions.getQuestionId()">$questions.getQuestionName()
+                 #end
+                 </option>
+              </select>
+            </td>
+	    <td bgcolor="$ui.tableColor">
+            	<b> <font face="$ui.sansSerifFonts"> $brih_select $brih_qus </font></b>
+            </td>
+	</tr>
+                <tr align=right>
+		  <td> <input type="text" name="ANSWER" value="$!ans" size=30> 
+		  </td>
+	          <td>
+			$Profile_Ans
+	          </td>
+                </tr>
+		 <tr align="right">
+		   <td>  <input type="text" name="TaskConf" value="$!TaskConf" size=30> </td>
+		   <td>$brih_tcf</td>
+                </tr>
+
+		<tr>
+             <td align="center" colspan=2>
+                 <input type="button" name="eventSubmit_doUpdate" value="$brih_submit" onClick="checkAnswer(document.frm,this);"/>                 
+		 <input type="reset"  value="$brih_reset"/>
+		 <input type="hidden" name="actionName"/>
+             </td>
+          </tr>
+     </table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+/*
+<!--        function clearAnswer(frm,field)
+        {
+                frm.ANSWER.value="";
+        } -->
+
+        function checkAnswer(frm,field)
+        {
+//          <!--      if(frm.ANSWER.value!="" && frm.Conf.value!="" ) -->
+		if((frm.conf.value!="")&&(frm.ANSWER.value!=""))
+                {
+			if( (frm.Conf.value>=1) && (frm.Conf.value<=100) )
+			{
+                                frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else
+			{
+				alert("Not a valid configuration parameter. It should be between 1 to 100 !!");
+			}
+                }
+                else
+                {
+                        alert("The answer or the configuration should not be null !!");
+                }
+        }
+*/
+	function checkAnswer(frm,field)
+        {
+		alert("This is Test");
+                if((frm.Conf.value!="" )&&(frm.ANSWER.value!=""))
+                {
+			 if(frm.Conf.value > 100 || frm.Conf.value < 1 )
+                        {
+                                alert("Maximum  No. of Student in list view should be between 1 to 100 !!");
+                        }
+                        else if (frm.TaskConf.value >7 || frm.TaskConf.value < 1)
+                        {
+                                alert(" Task Configuration  value should be between 1 to 7 !!");
+                        }
+                        else
+                        //if( (frm.Conf.value>=1 && frm.Conf.value<=100) && (frm.TaskConf.value>=1 && frm.TaskConf.value<=7))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+                else
+                        if(frm.ANSWER.value =="")
+                        {
+                                alert("The answer should not be null !!");
+                        }
+                        else if(frm.Conf.value =="" )
+                                 alert("Maximum  No. of Student in list view should not be null !!");
+                        else
+                        {
+                                alert("The task configuration value should not be null !!");
+                        }
+
+        }
+
+</SCRIPT>

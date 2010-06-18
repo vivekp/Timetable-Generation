@@ -1,0 +1,62 @@
+
+
+$page.setTitle("Admin Home | User Management | Search Student | Course Details for '$username'")
+
+
+$page.setBgColor($ui.bgcolor)
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr><td>
+<b><a href=$link.setPage("Index.vm")>Admin's Ð?Ð¾Ð¼</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>Ð?Ð¾Ð¸Ñ?Ðº Ñ?Ñ?Ñ?Ð´ÐµÐ½Ñ?Ð°</a> | Ð?Ñ?Ñ?Ñ? Ð?Ð¾Ð´Ñ?Ð¾Ð±Ð½ÐµÐµ
+</b></td>
+</tr>
+</table>
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">Ð?Ð¾Ð±Ð°Ð²Ð¸Ñ?Ñ? Ð¿Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ?</a></td>
+       <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ?Ð?Ñ?Ñ?Ñ? Ð¡Ð¿Ð¸Ñ?Ð¾</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>Delete Instructoor</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>Delete Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ?</a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>Ð?Ð¾Ð±Ð°Ð²Ñ?Ñ?Ðµ Ð¼Ð½Ð¾Ð¶ÐµÑ?Ñ?Ð²ÐµÐ½Ð½Ñ?Ñ? Ð¿Ð¾Ñ?Ñ?ÐµÐ±Ð¸Ñ?ÐµÐ»ÐµÐ¹</a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>Ð?Ð²ÐµÑ?Ñ?Ð?Ð°Ð³Ñ?Ñ?Ð·Ð¸Ñ?Ñ? Ð¤Ð¾Ñ?Ð¾</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>Ð?Ð¾Ñ?ÐµÑ?Ð°ÐµÐ¼Ð¾Ñ?Ñ?Ñ?Ð Ð°Ð¿Ð¾Ñ?Ñ?</a></td>
+
+</tr>
+</table>
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_Admin,StudentCourselist.vm").setAction("RemoveStudentCourse").addPathInfo("username",$username)">
+<table align=left width=100% bgcolor="$ui.tableColor">
+				<tr bgcolor="$ui.menuColor">
+		<td>Ð ÐµÐ³Ð¸Ñ?Ñ?Ñ?Ð°Ñ?Ð¸Ñ? Ð² Ð½Ð¾Ð²Ñ?Ñ? ÐºÑ?Ñ?Ñ?Ð°</td>
+		<td><select name="group" size=1>
+				</option>
+		</select>
+		</td>
+		<td><INPUT TYPE="SUBMIT" NAME=eventSubmit_doRegister VALUE="Ð ÐµÐ³Ð¸Ñ?Ñ?Ñ?">
+		</td>
+	</tr>
+</table>
+
+<INPUT TYPE="hidden" NAME=deleteFileNames VALUE="">
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function addDeleteList(field,frm)
+{
+if(field.checked)
+	{
+	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	}
+else
+        {
+        var rmFile,index,actualString,preString,postString;
+        actualString=frm.deleteFileNames.value;
+        index=actualString.indexOf(field.name+"^",0);
+        preString=actualString.substring(0,index);
+        postString=actualString.substring(index+field.name.length+1);
+	actualString=preString+postString;
+	
+	frm.deleteFileNames.value=actualString;
+	}
+}
+</SCRIPT>																			

@@ -1,0 +1,93 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Add Multiple Users ")
+
+
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+	<font face="$ui.sansSerifFonts" size=3> <b>
+		<a href=$link.setPage("call,Admin.vm")>????? ????</a> |
+	        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>????? ?????? </a> |????? ?????? ???? ???? 
+        </font></td> </b>
+</tr>
+</table>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,MultiUserReg_Admin.vm").setAction("UserAction_Admin")">
+<div align="right">
+<br>
+<table><tr align="right"><td><b>???? ???? ???? ??? ??? ?? ?? </b><img src="$content.getURI("/images/Lefthand.gif")">
+<font face="$ui.sansSerifFonts" size=3>
+<a href="/brihaspati2/docs/Userdoc.html">????</a> ??? ????
+</font></td></tr></table>
+<br>
+<table width=60% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+            	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>????? ???? ?????  ??????? ???? ????? ?? ??????? ?? ?? ???? ???? ????</b></font>
+	</td>
+	</tr>
+	<tr align="right">
+     	<td>
+    		<select name="GroupName" size=1>
+			   	</option>
+	  	</select>
+	</td>
+	<td bgcolor="$ui.tableColor"> <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	<font color=RED>*</font> ???? ????? ???? 
+	  	</font>
+	</b></td>
+    	</tr>
+     	<tr align="right">
+     	  <td>
+    	  	<select name="role" size=1>
+	 	<option value="instructor">???? 
+	  	<option value="student">????? ???
+	  	</option>
+	  	</select>
+	 </td>
+	  <td bgcolor="$ui.tableColor"> <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	<font color=RED>*</font> ????? ?????
+	  	</font>
+	 </b> </td>
+  	</tr>
+   	<tr align="right">
+		<td> <input type="file" size="35" name="file"> </td>
+		<td> <b> <font color=RED>*</font>???? ????? </b> </td>
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.menuColor">
+          
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadadmin" value="???? ???? " onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+                function CheckFields(frm,field)
+        {
+                if((frm.GroupName.value!="") && (frm.role.value!="")  && (frm.file.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+			                }
+        }
+</SCRIPT>

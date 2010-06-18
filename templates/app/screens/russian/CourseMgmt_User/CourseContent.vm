@@ -1,0 +1,51 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Course Content")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+			<a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+						Ð?Ñ?Ñ?Ñ? ?? Ð¡Ð¾Ð´ÐµÑ?Ð¶Ð°Ð½Ð¸Ðµ
+			</font>
+</td>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=right>
+	</td>
+</tr>
+</table>
+<form method="post" enctype="multipart/form-data" >
+  <div align="left">
+    <table bgcolor="$ui.bgcolor" cellpadding="5">
+            <tr>
+		<table border=1 align="Center" bgcolor="$ui.tableColor" cellpadding=0 cellspacing=0 width=50%>
+	<tr><td bgcolor="$ui.menuColor"></td><td align="center" bgcolor="$ui.menuColor" colspan=1>
+	<font size=4><b>Ð¢ÐµÐ¼Ð°  Ð?Ð¼Ñ?
+	</td>
+	<td align="center" bgcolor="$ui.menuColor" colspan=4>
+	<font size=4><b>Ð?Ð¾Ñ?Ñ?Ñ?Ð¿Ð½Ñ?Ðµ Ð´ÐµÐ¹Ñ?Ñ?Ð²Ð¸Ñ? 
+	</td>
+	</tr>
+	<br>
+				 		
+			
+	</table>
+
+      </tr>
+      
+    </table>
+  </div>
+</form>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

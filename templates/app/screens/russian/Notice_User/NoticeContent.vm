@@ -1,0 +1,48 @@
+
+
+
+$page.setTitle("Home | $CName | Communication | Local Mail | Mails")
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>�?ом</a> |
+				</font>
+		</td>
+	</tr>
+</table>
+
+<br>
+<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Notice_User,NoticeContent.vm").setAction("Notice_Send_Delete")">
+<form>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+	{
+		frm.actionName.value=field.name;
+        	frm.submit();
+	}
+	else
+	{
+		alert("Please select checkbox for deletion !!");
+	}
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+       	}
+}
+
+</SCRIPT>

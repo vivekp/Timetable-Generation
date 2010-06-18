@@ -1,0 +1,138 @@
+#*
+ * @(#) MultiUserReg_Admin.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Add Multiple Users ")
+$!data.getMessage()
+
+#set($lang = $data.getUser().getTemp("lang").toString())
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+	<font face="$ui.sansSerifFonts" size=3> <b>
+		<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+	        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_mgmt $brih_usr</a> |$brih_multi_usr
+        </font></td> </b>
+</tr>
+</table>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,MultiUserReg_Admin.vm").setAction("UserAction_Admin")">
+<div align="right">
+<br>
+<table><tr align="right"><td><b>$brih_upload_msg </b><img src="$content.getURI("/images/Lefthand.gif")">
+<font face="$ui.sansSerifFonts" size=3>
+<a href="/brihaspati2/docs/Userdoc.html">$brih_here</a> $brih_click
+</font></td></tr></table>
+<br>
+<table width=60% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+      	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>$brih_upload_msg1</b></font>
+	</td>
+	</tr>
+	<tr align="right">
+     	<td>
+    		<select name="GroupName" size=1>
+		#foreach($name in $courseList)
+          	#if(($name.getName()!="global") && ($name.getName()!="author"))
+          		<option value="$name.getName()">$name.getName()
+           	#end
+           	#end
+	   	</option>
+	  	</select>
+	</td>
+	<td bgcolor="$ui.tableColor"> <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	<font color=RED>*</font> $brih_sel_course 
+	  	</font>
+	</b></td>
+    	</tr>
+     	<tr align="right">
+     	  <td>
+    	  	<select name="role" size=1>
+	 	<option value="instructor">$brih_Instructor
+	  	<option value="student">$brih_student
+	  	</option>
+	  	</select>
+	 </td>
+	  <td bgcolor="$ui.tableColor"> <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	<font color=RED>*</font> $brih_sel_Role
+	  	</font>
+	 </b> </td>
+  	</tr>
+   	<tr align="right">
+		<td> <input type="file" size="35" name="file"> </td>
+		<td> <b> <font color=RED>*</font>$brih_at_file</b> </td>
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.menuColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadadmin" value="$brih_upload" onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#foreach( $e in $Msg )
+        <tr bgcolor="WHITE">
+        <td align=center>
+        <font face="$ui.sansSerifFonts">Entry <font color="brown">"$e.getErr_User()"</font>
+        </font>
+        </td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        </tr>
+#end
+</table>
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        ##function CheckFields(frm,field,v)
+        function CheckFields(frm,field)
+        {
+                if((frm.GroupName.value!="") && (frm.role.value!="")  && (frm.file.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+			##alert(v);
+                }
+        }
+</SCRIPT>

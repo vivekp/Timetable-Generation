@@ -1,0 +1,242 @@
+#*
+ * @(#)DBContent.vm
+ * Copyright (c)2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * @author <a href="mailto:sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ * @author <a href="mailto:rekha_20july@yahoo.co.in">Rekha Pal</a>
+ *#
+ 
+$page.setTitle("$brih_home | $cname | $brih_communication |$DiscussionBoard |$DisBoard_DB_msg23")
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr align="right"><td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | 
+		<a href =$link.setPage("call,Dis_Board,DB.vm")>$DiscussionBoard</a> | 
+		#if($mode=="All")
+			$LocalMail_show $brih_all $brih_msg2
+		#else
+			$brih_unreadMsg
+		#end
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | 
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+		</font>
+	</td></tr>
+</table>
+$!data.getMessage()
+<table align=center>
+	<tr>
+		#if($data.getUser().getUserName()!="guest")
+			<td>
+			       <a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("mode","compose").addPathInfo("course_id",$workgroup)>$LocalMail_MailContent_msg1</a> <td><li></td>
+			</td>
+		#end
+		#if($mode=="All")
+			<td>
+				<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","Unread").addPathInfo("course_id",$workgroup)>$LocalMail_MailContent_msg2</a><td> <li></td>
+			</td>
+		#else
+			<td>
+				<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All").addPathInfo("course_id",$workgroup)>$LocalMail_show $brih_all $brih_msg2</a> 
+			</td>
+			<td><li></td>
+	        #end	
+	</b></tr>
+</table>
+
+<br><br>
+
+
+<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Dis_Board,DBContent.vm").setAction("SendDB")">
+
+	#if($status!="blank")
+	<table border=2 align=center cellpadding=10 cellspacing=0>
+ 		<tr>
+  			<td colspan=8 align=center bgcolor="$ui.menuColor">
+  				<font face="$ui.sansSerifFonts">
+     					<b>$brih_Of2 $DiscussionBoard $DisBoard_DBCont_msg20  
+					<font color="$ui.fontColorBlue">$username</font> 
+					$brih_course $brih_ID $brih_in -
+					<font color="$ui.fontColorGreen"> $workgroup</font>
+  				</font>
+  			</td>
+ 		</tr>
+
+		#set($headings=["$DisBoard_Expiry $brih_Da","$brih_status","$LocalMail_Task","$Notice_Subject","$DisBoard_posting $brih_Of2 $brih_Da","$Notice_Sender","$brih_select"])
+		<tr bgcolor="$ui.menuColor">
+			#foreach($heading in $headings)
+			<td align="center" bgcolor="$ui.menuColor">
+  					<b>$heading</b>
+					
+			</td>
+			#end
+		</tr>
+		#foreach($e in $entry)
+			#if($e.getStatus()=="0")
+				<tr bgcolor="$ui.tableColor">
+			#else
+				<tr bgcolor="$ui.bgcolor">
+			#end
+			<td align="Center">$e.getExpiryDate()</td>
+     			
+						#if($e.getStatus() == "0")
+			<td width="2%" align=center>
+						<font face="$ui.sansSerifFonts" color="$ui.fontColorRed"> 
+							#if($mode=="All")
+								$brih_unread
+							#else
+								$brih_new
+							#end
+	 					</font>
+			</td>
+						#else
+			<td width="5%" align=center>
+						<font face="$ui.sansSerifFonts">
+							$Notice_Read
+	 					</font>
+			</td>
+						#end
+			<td width="48%" align="center"> 
+						<a href=$link.setPage("call,Dis_Board,DBView.vm").addPathInfo("topic",$e.getMSubject()).addPathInfo("course_id",$workgroup).addPathInfo("msgid",$e.getMsgID())>
+							<font face="$ui.sansSerifFonts">
+	       							$brih_view
+							</font>
+						</a>&nbsp
+						#if($user_role=="instructor")
+    		 					<a href=$link.setPage("call,Dis_Board,Edit.vm").addPathInfo("topic",$e.getMSubject()).addPathInfo("msgid",$e.getMsgID()).addPathInfo("sender",$e.getSender()).addPathInfo("course_id",$workgroup)>
+								<font face="$ui.sansSerifFonts">
+									$brih_edit
+		     						</font>
+							</a>&nbsp;
+						#end	        
+	        
+						#if($user_role == "student")
+							#if($e.getSender()== $UserName)
+     								<a href=$link.setPage("call,Dis_Board,Edit.vm").addPathInfo("topic",$e.getMSubject()).addPathInfo("msgid",$e.getMsgID()).addPathInfo("sender",$e.getSender()).addPathInfo("course_id",$workgroup)>
+									<font face="$ui.sansSerifFonts">
+										$brih_edit
+		     							</font>
+								</a>&nbsp;
+	      						#else 
+	         				       		<font color="white"><u>$brih_edit</u></font>&nbsp;
+				      			#end
+ 			     			#end
+   
+  						#if($data.getUser().getUserName()!="guest")
+       				 			<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("topic",$e.getMSubject()).addPathInfo("msgid",$e.getMsgID()).addPathInfo("mode","reply").addPathInfo("course_id",$workgroup) >
+	 							<font face="$ui.sansSerifFonts">
+	   			   					$LocalMail_Reply 
+	 							</font>
+							</a>&nbsp
+	 					#end
+	 			 		</td>
+					
+					<a href=$link.setPage("call,Dis_Board,Edit.vm").addPathInfo("topic",$e.getMSubject()).addPathInfo("msgid",$e.getMsgID()).addPathInfo("course_id",$workgroup) >
+			<td width="1%" align="Center">$e.getMSubject()</td>
+			<td width="50%" align="Center">$e.getPDate()</td>
+			<td width="1%" align="Center">$e.getSender()</td>
+ 	       		<td width="2%" align="Center">
+			 
+			 	#if($user_role == "student")
+                                	#if(($e.getSender()== $UserName)&&($e.getPermission() == "1"))
+                                        	<INPUT TYPE="CHECKBOX" NAME="$e.getMsgID()" VALUE ="$e.getMSubject()" onClick="addDeleteList(this,document.frm);">
+				#else
+					<input type="CHECKBOX" disabled="true">
+	 			#end
+	 		#end
+			#if($user_role == "instructor")
+						<INPUT TYPE="CHECKBOX" NAME="$e.getMsgID()" VALUE ="$e.getMSubject()" onClick="addDeleteList(this,document.frm);">
+	    
+	   		#end
+	 
+			</td>
+
+
+		</tr>
+			
+      		#end ## foreach ends
+       		<tr>
+     	         <td colspan=8 align="right">
+			<INPUT TYPE="button" NAME="eventSubmit_doDelete" VALUE="$brih_delete" onClick="checkValue(document.frm,this);">
+                	<INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+	     		<INPUT TYPE="hidden" NAME="actionName">
+			<INPUT TYPE="hidden" name="msg_id" value="$msgid">
+			<INPUT TYPE="hidden" name="DB_subject" value="">
+			<INPUT TYPE="hidden" name="user_id" value="$userid">
+			<INPUT TYPE="hidden" name="course_id" value="$course_id">
+			<INPUT TYPE="hidden" NAME="mode" VALUE="$mode">
+			<INPUT TYPE="hidden" NAME="" VALUE="">
+	        </td>
+		</tr>
+      #end  ## if ends
+	</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+	if(frm.deleteFileNames.value!="")
+		{
+			
+			frm.actionName.value=field.name;
+				frm.submit();
+		 }
+	else
+		{
+			alert("Please select checkbox for deletion !!");
+		}
+}
+
+function addDeleteList(field,frm)
+	{
+        	if(field.checked)
+		{
+			
+	        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	        	frm.DB_subject.value=frm.DB_subject.value+field.value+"@@@@";
+	         }
+	         else
+		     {
+		        var rmFile,index,actualString,preString,postString;
+		        actualString=frm.deleteFileNames.value;
+		        index=actualString.indexOf(field.name+"^",0);
+		        preString=actualString.substring(0,index);
+		        postString=actualString.substring(index+field.name.length+1);
+		        actualString=preString+postString;
+		        frm.deleteFileNames.value=actualString;
+		     }
+	}
+
+function selectAll(field)
+{
+        if(field.checked)
+	  {
+	           var rmFile,index,actualString,pre=0,next=0;
+	            actualString=document.frm.deleteFileNames.value="$count";
+	             while( ( pre=actualString.indexOf("^",next) ) >=0 )
+	                     {
+	                       var temp=actualString.substring(next,pre);
+	                         next=pre+1;
+	                       rmFile=document.frm.elements[temp].checked=true;
+	                     }
+
+            }
+
+
+        else
+	 {
+		  var rmFile,index,actualString,pre=0,next=0;
+		  actualString=document.frm.deleteFileNames.value="$count";
+                    while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                             {
+                               var temp=actualString.substring(next,pre);
+                                   next=pre+1;
+                               rmFile=document.frm.elements[temp].checked=false;
+                              }
+                                document.frm.deleteFileNames.value="";
+	  }
+}
+</SCRIPT>

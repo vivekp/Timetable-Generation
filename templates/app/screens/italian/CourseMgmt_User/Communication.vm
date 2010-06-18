@@ -1,0 +1,28 @@
+
+
+$page.setTitle("Home | $courseName | Communication")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts">
+	<a href=$link.setPage("call,IndexHome.vm")><b>Home page</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $courseName </a>|
+	Comunicazione 
+	</font>
+</td>
+</tr>
+</table>
+<form>
+<br>
+<table align=center bgcolor="$ui.menuColor" width=20% cellpadding=10>
+<tr>
+<td align=center>
+ <table cellspacing=10>
+	 	 		<tr>
+	 	</tr>
+	 </table>
+</td>
+</tr>
+</table>
+</form>

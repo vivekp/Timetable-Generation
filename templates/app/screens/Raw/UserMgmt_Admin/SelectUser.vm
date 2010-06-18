@@ -1,0 +1,87 @@
+#*
+ * @(#)SelectUser.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a> 
+ *#
+
+$page.setTitle("Admin Home | User Management | Search Student")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+##<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+ <tr>
+  <td>
+  <font face="$ui.sansSerifFonts" size=3>
+   <b><a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+    <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_usr $brih_mgmt</a> | $brih_ser_student
+     </b>
+     </td>
+  </tr>
+</table>
+	<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("status","ForallStudent")">
+
+<br>
+##<table border=1 align=center width=40% bgcolor="#d9e3ec" cellpadding=1 cellspacing=1>
+<table border=1 align=center width=40% bgcolor="$ui.menuColor" cellpadding=1 cellspacing=1>
+	<tr>
+		<td width=40% align=center><b>$brih_searchBy</b></td>
+		<td width=60% align=left>
+			<select name="queryList">
+				<option value="User Name">$brih_usr $brih_name</option>
+				<option value="First Name">$brih_first $brih_name</option>
+				<option value="Last Name">$brih_last $brih_name</option>
+				<option value="Email">$brih_email</option>
+
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=40% align=center><b>$brih_match_str</b></td>
+		<td width=60% align=left>
+			<input align=center type="text" name="value" value="">
+		</td>
+	</tr>
+	<tr>
+		<td align=center colspan=2>
+			<input type="button" name="Search" value="$brih_search" onClick="checkNull(document.frm,this);">
+		</td>
+	</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkNull(frm,field){
+		if(frm.value.value!=""){
+			frm.submit();
+		}
+		else{
+			alert("The 'Match String' text box can not be NULL !");
+		}
+	}
+</SCRIPT>
+
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#set ( $count = 1 )
+        #foreach( $entry in $error_user )
+                #set ( $count2 = 1 )
+                #foreach( $type in $error_type )
+                        #if( $count == $count2 )
+                        <tr bgcolor="$ui.tableColor">
+                        <td align=center>
+                                <font face="$ui.sansSerifFonts">$brih_usr $brih_name <font color="brown">"$entry"</font></font>
+                        </td>
+                        <td align=center>
+                                <font
+face="$ui.sansSerifFonts">$type</font>
+                        </td>
+                        </tr>
+                        #end
+                        #set ( $count2 = $count2+1 )
+                #end
+                #set ( $count = $count+1 )
+        #end
+</table>

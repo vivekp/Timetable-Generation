@@ -1,0 +1,59 @@
+#*
+ * @(#) Question_bank.vm
+ * Copyright(c)2004-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:tarankhan1@yahoo.com">Tarannum Khan</a>
+ * @author <a href="mailto:manju_14feb@yahoo.com">Mithelesh Parihar</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a> 
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+ 
+$page.setTitle("Login | Index | Question Bank")
+$page.setBgColor("#ffffff")
+#set($lang=$data.getUser().getTemp("lang" ).toString())
+
+##<table bgcolor="#d9e3ec" width=100% align=center>
+##<body>
+
+<table bgcolor="$ui.tableColor" width=100%>
+##<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | $brih_qus $brih_mgmt
+        </font>
+</td>
+##</tr>
+</table>
+<br>
+<table bgcolor="$ui.tableColor" width=100% align=center>
+<tr>
+<td align=center>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+	#if($lang!="english")
+	<font size=4><b>$brih_qus $brih_bank $Repo_Repo1  $brih_in #UNAME() $brih_welcome</b></font>
+	#else
+        <font size=4><b>$brih_welcomeQuestionBankRepository</b></font>
+	#end
+        </marquee>
+</td>
+</tr>
+</table>
+$!data.getMessage()
+<br>
+<table width="60%" align="center" bgcolor="$ui.menuColor">
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")> #if ($lang!="english") $brih_qus $brih_bank $Repo_Repo1 $brih_Of1 $WikiCreate #else $WikiCreate $brih_qus $brih_bank $Repo_Repo1 #end </a>
+                </td></tr>
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,RepositoryList.vm")> #if($lang!="english") $brih_viewAllTopicQuestionBank #else $brih_viewAllTopicQuestionBank #end </a>
+	
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,UploadQuestions.vm")></a> #if($lang!="english")$brih_qus $brih_upload #else $brih_upload $brih_qus #end 
+                </td></tr>
+				
+</td>
+</tr>
+</table>
+##</body>
+##</table>

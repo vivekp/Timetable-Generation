@@ -1,0 +1,102 @@
+#*
+ * @(#) Question_List.vm
+ * Copyright(c)2004-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:tarankhan1@yahoo.com">Tarannum Khan</a>
+ * @author <a href="mailto:manju_14feb@yahoo.com">Mithelesh Parihar</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Edit Test Information")
+$page.setBgColor("$ui.bgcolor")
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	<a href=$link.setPage("call,Question_Bank,Question_bank.vm")>$brih_queBank</a> | 
+	<a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>$brih_all $brih_queBank</a> | $brih_listOf $brih_qus 
+        </td>
+</tr>
+</table>
+$!data.getMessage()
+<br>
+<form name="frm" method="post" action="$link.setPage("call,Question_Bank,Question_List.vm").setAction("Question_Bank")">
+#if($status=="NoBlank")
+
+<table align="center">
+<tr>
+<td bgcolor="$ui.menuColor" align="center">
+	<font size=4><b>$brih_listOf <font color="magenta">$Ques_Type</font> Questions</b></font>
+</td>
+</tr>
+<tr>
+<td>
+       <table cellspacing="1" cellpadding="1" bgcolor="$ui.tableColor">
+  	#set($count = 1)  
+        #foreach ($title in $questions)  
+		#set($count1 = 1)
+		#foreach($ids in $id)
+		 	#if($count == $count1)
+         			<tr>
+				<td width="3%" align="center"><input type="checkbox" name="$ids" onClick="addDeleteList(this,document.frm);">
+				</td>
+             			<td width="12%">$brih_qus $count</td>
+				<td>$title</td>
+				#set($temp="InsertEdit_${Ques_Type}.vm") 
+            			<td> <a href="$link.setPage("call,Question_Bank,InsertEdit_${Ques_Type}.vm").addPathInfo("modulename",$modulename).addPathInfo("qid",$ids).addPathInfo("Ques_Type",$Ques_Type).addPathInfo("mode","Edit")">$brih_edit </a>&nbsp</td>
+        			</tr>
+			#end
+		#set ($count1= $count1 + 1)
+		#end
+	#set ($count = $count + 1)
+	#end
+	<tr>
+	<td>
+		<input type="button" name="eventSubmit_doQuesDelete" Value=$brih_delete onClick="checkField(document.frm,this);">
+		<input type="hidden" name="actionName">
+		<input type="hidden" name="deleteQuestionsId">
+		<input type="hidden" name="modulename" value="$modulename">
+		<input type="hidden" name="Ques_Type" value="$Ques_Type">
+		<input type="hidden" name="qid" value="$qids">
+	</td>
+	<td align="center" colspan=3> 
+	<a href="$link.setPage("call,Question_Bank,InsertEdit_${Ques_Type}.vm").addPathInfo("modulename",$modulename).addPathInfo("Ques_Type",$Ques_Type).addPathInfo("mode","Insert").addPathInfo("FromPath","QuesList")">$brih_add $brih_new $Ques_Type $brih_question</a>&nbsp
+	</td>
+	</tr>
+      </table>
+   </td>        
+ </tr>
+</table>
+#end
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteQuestionsId.value=frm.deleteQuestionsId.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteQuestionsId.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteQuestionsId.value=actualString;
+        }
+}
+function checkField(frm,field)
+   {
+    if(frm.deleteQuestionsId.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+</script>

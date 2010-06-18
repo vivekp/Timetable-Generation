@@ -1,0 +1,48 @@
+
+
+$page.setTitle("Chat")
+$page.setBgColor($ui.bgcolor)
+
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>ì§?</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>ì»¤ë®¤ë??ì¼?ì?´ì??</a> | ì±?í??
+		</font>
+		</td>
+	</tr>
+<td>
+</tr>
+</table>
+<br>
+
+<br>
+<table align="center">
+<tr><td>
+        <blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+                ì±?í??ê³¼ í??ì?´í?¸ë¥¼ ì ?ì?¥í??ë ¤ë©´, ë?¹ì? ì?? ì??ë°? ì ?ì±? í??ì?¼ì?? ì?¼ë¶? ë³?í??ë¥¼ ë§?ë?¤ í??ì??ê°?ì??ì?µë??ë?¤. ê·¸ê²?ì?? ì??í?´ ë??ì??í??ë ¤ë©´ ì?¬ê¸°ë¥¼ í?´ë¦­í??ì?­ì??ì?¤.  <a href="/brihaspati/docs/saveChat.html">ì?¬ê¸°ì??</a><br>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+		<a href=http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=8&PartDetailId=jre-6u5-oth-JPR&SiteId=JSC&TransactionId=noreg> Download Java SE Runtime Environment</a>
+</td></tr>
+
+<tr>
+<td>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+	ì?°ê²°í?  ì??ì??ë?? ê²½ì?°, ì?¼ë?¨ ë??í??ë¥¼ì??í?? ê³?ì ?ì?? ì??ì?±í??ê¸° ì??í?´ ë¹?ë°? ë²?í?¸ë¥¼ ë³?ê²½ ì? í??ë¦¿ ì±?í??.
+	<a href=$link.setPage("call,UserMgmt_User,changePassword.vm")>ë¹?ë°? ë²?í?¸ ë³?ê²½</a>
+</td>
+</table>
+<applet archive="babylon.jar" code="babylon.babylonApplet.class" codebase=$codeBase width="0" height="0">
+	<param name="chatroom" value=$chatRoom>
+	<param name="username" value=$username>
+	<param name="password" value=$password>
+	<param name="servername" value=$serverName>
+	<param name="autoconnect" value="yes">
+	<param name="locksettings" value="yes">
+	<param name="embed" value="no">
+	<param name="lang" value=$lang>
+</applet>

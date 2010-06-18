@@ -1,0 +1,103 @@
+
+
+	$page.setTitle("Home | $course | Communication | Notices")
+
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+	<font face="$ui.sansSerifFonts"><b>
+			<a href=$link.setPage("call,IndexHome.vm")>Home</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$data.getUser().getTemp("course_name" ).toString()</a> |
+				<a href=$link.setPage("call,Local_Mail,Mail.vm")>Communication</a> | Notices
+		</font>
+</td></tr>
+</table>
+<table align=left bgcolor="$ui.tableColor" width="100%">
+<tr><td align=left>
+
+    	    	<a href=$link.setPage("call,Notice_User,Notices.vm")>Send Notice</a></td>
+ 			<td><a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("flag","FromNotices")>Read Notice</a></td>
+	<td><a href=$link.setPage("call,Notice_User,DeletePosted.vm")>Delete Posted Notice</a></td>
+	
+</td></tr>
+</table>
+<form name=frm method="post" action="$link.setPage("call,Notice_User,Notices.vm").setAction("Notice_Send_Delete")">
+<table align=left bgcolor="$ui.tableColor" width="100%">
+
+<tr width=100% bgcolor="$ui.menuColor">
+<td>Send to</td>
+<td>Course Name</td>
+</tr>
+	<tr bgcolor="$ui.menuColor">
+#formCell("Subject <font color=red>*</font>" "subject" "")
+</tr>
+<tr bgcolor="$ui.tableColor"><td>Select a role</td>
+<td>
+<select name="role" size=1>
+	<option value="all">All
+        </option>
+</select>
+</td>
+</tr>
+ <tr bgcolor="$ui.tableColor"><td>Message</td>
+<td><textarea name="message" rows=10 cols=60></textarea></td>
+</tr>
+                                                        <tr>
+                                        #formCell("Deletion Time (in Days)" "expiry" "1")
+                                </tr>
+                        			<tr>
+        <td align=left bgcolor="$ui.menuColor" colspan=2>
+          
+
+          <font face="$ui.sansSerifFonts">
+          <input type="hidden" name="mode1" value="$mode1">
+          <input type="hidden" name="val" value="$val">
+         
+          <input type="hidden" name="actionName">
+                  <input type="button" name="eventSubmit_doSend" value="Send" onClick="checkField(document.frm,this);"/>
+        
+          </font>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+
+        function checkField1(frm,field)
+        {
+                if(frm.message.value!="")
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+
+                }
+                else
+                {
+                        alert("Message can not be empty !!");
+                }
+        }
+
+        function checkField(frm,field)
+        {
+                if(frm.subject.value!="" && frm.message.value!="")
+                {
+                         if((frm.expiry.value>=1) && (frm.expiry.value<=365))
+                                {
+                                        frm.actionName.value=field.name;
+                                        frm.submit();
+                                }
+                         else
+                                alert("Deletion Time should not be less than 1 day and greater than 365 days");
+
+                }
+                else
+                {
+                        alert("Subject and Message can not be empty !!");
+                }
+        }
+</SCRIPT>
+
+

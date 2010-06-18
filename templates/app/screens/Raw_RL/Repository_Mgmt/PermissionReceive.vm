@@ -1,0 +1,260 @@
+#*
+ * @(#) PermissionReceive.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("$brih_ad $brih_home |$Repo_Repo1")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align=right> <td><b>
+	#if($mode=="fromauthor")
+        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")>$brih_authorHome </a>| 
+        <a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm")>$Repo_Repo1</a> | $Repo_Perm $brih_view </b>
+	#end
+	#if($mode=="frominstructor")
+        <a href=$link.setPage("Index.vm")>$brih_home </a>| 
+        <a href=$link.setPage("call,UserMgmt_User,PersonalArea.vm")> $personal $area</a> | $Repo_Perm  $brih_view </b>
+	#end
+</tr> </td></b>
+</table>
+
+<br>
+<table bgcolor="$ui.tableColor" width=80% align="center">
+   <tr><td align =center>
+                <marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+                <font size=4 color="blue">
+                <b>
+		#if( $lang == "english")
+        	        $brih_welcome $authorname
+	        #else
+        	        $authorname $brih_welcome
+	        #end
+		</b>
+
+                </font>
+</td>
+</tr>
+</table>
+
+<br>
+	<div align="center">
+ <table  bgcolor="$ui.tableColor" cellspacing=1 cellpadding=5 border="1">
+                        <tr> 
+                                <td  valign="top"> 
+				 <table bgcolor="$ui.tableColor" cellspacing=1 cellpadding=5 border=1>
+					<form name="frm" action="$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").setAction("Repo_Permission")">
+					<tr>
+					<td align="center" colspan=2 bgcolor="$ui.menuColor">
+                                                <b>$Repo_Perm $Repo_PermRec</b>
+					</td>
+					</tr>
+					#if($check!="NoPermm")
+					<tr>
+						<td valign="center"> 
+                        			<font face="$ui.sansSerifFonts"><b>$Repo_select</b>
+						</td>
+						<td valign="center"> 
+						<b>$brih_usr $brih_name &nbsp; $brih_topic $brih_name</b></td>
+					</tr>
+
+						
+					#set($countm=0)
+	 					#foreach($r in $read)
+						
+					<tr>
+						
+						<td>
+						<INPUT TYPE="CHECKBOX" name="permdel" value="$countm" > 
+						</td> 
+                                                <td align=left> 
+                                                $r.UserName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+						#if($mode=="fromauthor")
+                                                <a href=$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").addPathInfo("name",$r.UserName).addPathInfo("list",$r.Topic).addPathInfo("status","permissionreceive").addPathInfo("mode","fromauthor")>$r.Topic</a>
+						#end
+						#if($mode=="frominstructor")
+						
+                                                <a href=$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").addPathInfo("name",$r.UserName).addPathInfo("list",$r.Topic).addPathInfo("status","permissionreceive").addPathInfo("mode","frominstructor")>$r.Topic</a>
+						#end
+						#if($mode=="fromCourses")
+                                                <a href=$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").addPathInfo("name",$r.UserName).addPathInfo("list",$r.Topic).addPathInfo("status","permissionreceive").addPathInfo("CourseDir",$CourseDir).addPathInfo("mode","fromCourses")>$r.Topic</a>
+						#end
+                                                </td> 
+						</tr>
+					#set($countm = $countm+1)
+					#end
+		<tr>
+                <td colspan=3 align="center">
+		<input type="hidden" name="mode" value="$mode">
+		<input type="hidden" name="empty" value="false">
+		<input type="hidden" name="actionName" value="">
+                <input type="button" name="eventSubmit_doRemoveperm_receive" value="$brih_remove" onClick="checkField(frm,this);">
+               </td>
+		</tr>
+				#else
+				<tr><td>$Repo_PermmNo</td></tr>
+				#end	
+		</form>
+				</table>
+				</td> 
+                                #if($listvalue!= "")
+                                <td valign="top"> 
+                                        <table cellspacing=1 cellpadding=1 bgcolor="$ui.menuColor">
+                                                <tr>
+                                                        <td align="center">
+							<b>
+							#if($lang == "hindi")
+                                                        	$listvalue  $brih_file1 
+							#else
+                                                        	$brih_file1 $listvalue
+							#end
+							</b>
+                                                        </td>
+                                                </tr>
+                                                #foreach($values in $listfile)
+                                                <tr>
+                                                        <td align=left>
+                                                        <font face="$ui.sansSerifFonts">
+		<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("contents",$listname).addPathInfo("TotalFiles",$listvalue).addPathInfo("type","repo").addPathInfo("filename",$!values.getName())","newWin")>$!values.getName()</a>
+
+
+
+                                                        </font>
+                                                        </td>
+                                                </tr>
+                                                #end
+                                        </table>
+                                </td> 
+                               #end
+				
+#if(($status != "")&&($mode =="fromauthor"))
+                                <td valign="top"> 
+                                        <table width=100% cellspacing=1 cellpadding=5 bgcolor="$ui.tableColor" border=1>
+					<form name="frm1" action="$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").setAction("Repo_Permission")">
+					<tr>
+                                        <td align="center" colspan=2 bgcolor="$ui.menuColor">
+                                         <b>$Repo_Perm $Repo_Permgiv</b>
+                                        </td>
+					</tr>
+					#if($check1!="NoPermm")
+					<tr>
+                                         <td valign ="center">
+                                                <font face="$ui.sansSerifFonts"><b>$Repo_select</b>
+                                         </td>
+						<td>
+						<b>$brih_usr$brih_name &nbsp; $brih_topic$brih_name</b></td>
+                                         </tr>
+                                         #set($countm=0)
+					
+                                         #foreach($d in $write)
+                                        <tr>
+                                        <td>
+					<INPUT TYPE="CHECKBOX" name="permdel" value="$countm" > 
+                                        </td>
+                                        <td align=left>
+                                        #if($d.UserName!="")
+					$d.UserName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp  
+					#else
+                                        $d.CourseName
+					#end
+                                        $d.Topic 
+                                        </td>
+					#set($countm = $countm+1)
+                                        #end
+					</tr>
+		<tr>
+                <td colspan=3 align="center">
+		<input type="hidden" name="actionName" value="">
+		<input type="hidden" name="mode" value="$mode">
+		<input type="hidden" name="empty" value="false">
+                <input type="button" name="eventSubmit_doRemoveperm_given" value="$brih_remove" onClick="checkField(document.frm1,this);">
+                </td>
+		</tr>
+				#else
+				<tr><td>$Repo_PermmNo</td></tr>
+				#end	
+                                        </table>
+				</form>
+
+                                </td> 
+				#end
+                       </tr> 
+</table>
+</div>
+
+<script LANGUAGE="JAVASCRIPT">
+
+	function checkField(frm,field)
+        {
+		var i=0;
+                var bool=false;
+                var bool2=true;
+                var permdel = frm.permdel;
+                var bool1 = isNaN(permdel.length) ;
+                if(!bool1)
+                {
+
+                        for(i=0;i< permdel.length ;i++)
+                        {
+                                if(permdel[i].checked)
+                                {
+                                        bool=true;
+                                        break;
+                                }
+
+                        }//for
+
+                        for(i=0;i< permdel.length  ;i++)
+                        {
+                               bool2 = ((permdel[i].checked)&& (bool2))
+
+                        } //for
+
+                        if( bool)
+                        {
+                                 if(bool2)
+                                {
+                                       frm.empty.value="true";
+                                }
+
+                                frm.actionName.value=field.name;
+                                frm.submit();
+
+                        }
+                        else
+                        {
+                                alert("Please select checkbox");
+                        }
+                }//if
+                else
+                {
+                 if(permdel.checked)
+                 {
+                                /*
+                                * empty value is made true when the list is empty
+                                */
+                                frm.empty.value="true";
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                        else
+                        {
+                                alert("Please select checkbox");
+                        }
+                } //else
+
+
+        }
+
+ function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+
+</script>

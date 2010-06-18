@@ -1,0 +1,85 @@
+
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Upload Multiple Users Photo")
+
+
+
+<br>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+      <a href=$link.setPage("call,Admin.vm")>Admin's �?ом</a> |
+      <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>�?ол�?зова�?ел�? Уп�?авление</a> | �?аг�?�?зи�?�? �?о�?о множе�?�?венного
+
+        </td>
+
+	</b>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=right>
+        <img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati/docs/PhotoUpload.html","newWin");>�?омо�?�?</a>
+</td>
+</tr>
+</table>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+        <font size=4 color=red><b>Файл дл�? заг�?�?зки должен име�?�? ". �?о�?�?ов�?й" п�?одлени�? �? надлежа�?его ziped!!</b></font>
+        </marquee>
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,UserPhoto_Upload.vm").setAction("UserAction_Admin")">
+<div align="left">
+<br>
+<br>
+<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+      	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+				<font size=4><b>�?аг�?�?зка �?айла дл�? ав�?ома�?и�?е�?кого не�?кол�?ким пол�?зова�?ел�?м Фо�?о</b></font>
+	</td>
+	</tr>
+	<tr>
+
+        	#fileUpload ("�?ложи�?�? �?айл <font color=RED>*</font>" "file")
+
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.buttonBoxColor">
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadphoto" value="�?ве�?�?�?аг�?�?зи�?�?" onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+</SCRIPT>

@@ -1,0 +1,39 @@
+
+ 
+$page.setTitle("Login | Index | Question Bank")
+$page.setBgColor("#ffffff")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>ì§?</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | ì§?ë¬¸  ê´?ë¦¬
+        </font>
+</td>
+</table>
+<br>
+<table bgcolor="$ui.tableColor" width=100% align=center>
+<tr>
+<td align=center>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+	        <font size=4><b>ì?? ì?¤ì?  ê²?ì?? í??ì??í?©ë??ë?¤ ë¬¸ì ? ì??í?? Repository</b></font>
+	        </marquee>
+</td>
+</tr>
+</table>
+
+<br>
+<table width="60%" align="center" bgcolor="$ui.menuColor">
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")>  ë§?ë?¤ê¸° ì§?ë¬¸  ì??í?? Repository   </a>
+                </td></tr>
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>  ì§?ë¬¸ì?? ëª¨ë??ë³´ê¸° ì£¼ì ? ì??í??  </a>
+	
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,UploadQuestions.vm")></a>  ì??ë¡?ë?? ì§?ë¬¸                  </td></tr>
+				
+</td>
+</tr>
+</table>

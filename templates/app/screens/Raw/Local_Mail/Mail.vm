@@ -1,0 +1,105 @@
+#*
+ * @(#)Mail.vm
+ *  Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:chitvesh@yahoo.com">Chitvesh Dutta</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+ *#
+#if($mode=="adminmail")
+$page.setTitle("Home | Communication | Local Mail")
+#else
+$page.setTitle("Home | $cname | Communication | Local Mail")
+#end
+<body>
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100%>
+       <tr><td>
+	<font face="$ui.sansSerifFonts"><b>
+	#if($mode=="adminmail")
+        <a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> |
+        <a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_communication</a> | $brih_localmail
+        #else
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |
+        ##<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $brih_localmail
+        <a href=$link.setPage("call,Local_Mail,Mail.vm")>$brih_communication</a> | $brih_localmail
+        #end
+       </font>
+	</td>
+       </tr>
+</table>
+
+#macro(UNAME1)
+
+        #if($Fname!="")
+                <b> $Fname</b>
+        #else
+        	<b>$Uname</b>
+        #end
+#end
+
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+#if($mode=="adminmail")	
+<form method="GET" action="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("stat","admns")">
+#else
+<form method="GET" action="$link.setPage("call,Local_Mail,MailContent.vm")">
+#end
+<table width=100% align=left bgcolor="$ui.tableColor"> 
+<tr>
+	#if($mode=="adminmail")
+		<td><a href=$link.setPage("call,Notice_User,Notices.vm")>$Notice_NoticeSend_msg1</a></td>
+                <td><a href=$link.setPage("call,Notice_User,DeletePostedAdmin.vm")>$Notice_DeletePosted_msg1</a></td>
+                <td><a href=$link.setPage("call,Notice_User,Notices.vm").addPathInfo("nflag","fh")>$brih_flash $brih_heading</a></td>
+                <td><a href=$link.setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")>$brih_localmail</a></td>
+	#else
+		<td><a href=$link.setPage("call,Chat,Chat.vm")>$brih_chat</a></td>
+		<td><a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_Notices</td>
+		<td><a href=$link.setPage("call,Dis_Board,DB.vm")>$DiscussionBoard</td>
+		<td><a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status","fromCourse")>$brih_news</td>	
+	#end
+#*<td colspan=2><b><u><font color=green size=4><I>
+	#if(( $data.getUser().getTemp("lang" ).toString())=="hindi")
+        	<font face="$ui.sansSerifFonts"><b> #UNAME1() $brih_welcome
+	        </font>	
+	#else
+        	<font face="$ui.sansSerifFonts"><b>$brih_welcome
+	        #UNAME1()
+        	</font>
+	#end
+
+</u></I></font></b></td>*#
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor"> 
+<tr bgcolor="$ui.menuColor"><td colspan=2 align="left">
+<img src="$content.getURI("/images/newmail1.gif")">
+#if($unread=="0")
+<font size="3"><b>$brih_unreadMsg(<font color="Blue">$unread</font>)&nbsp&nbsp
+#else
+<blink>
+<font size="3"><b>$brih_unreadMsg(<font color="Blue">$unread</font>)</blink>&nbsp&nbsp
+#end 
+&nbsp&nbsp; $LocalMail_Mail_msg1(<font color="blue">$total</font>)</b></font>
+	#if($total!="0")
+	<tr><td align="left">
+	<input type="hidden" name="mode" value="All">
+	<input type="submit" name=submit value="$LocalMail_Mail_msg2">
+	</td></tr>
+	#end
+	</td>
+	</tr>
+	#if($mode=="adminmail")
+	<tr bgcolor="$ui.menuColor"><td align="left"><a href=$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("status","compose")>
+	#else 
+	<tr bgcolor="$ui.menuColor"><td align="left"><a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","compose")>
+	#end 
+	##<img border=0 src="$content.getURI("/images/ml.gif")"><img src="$content.getURI("/images/$lang/DB.jpg")"border="0"></a></td></tr>
+	<img border=0 src="$content.getURI("/images/ml.gif")"><b>$LocalMail_MailContent_msg1</b></a></td></tr>
+	##<img border=0 src="$content.getURI("/images/$lang/ml.gif")">$LocalMail_MailContent_msg1</a></td></tr>
+</table>
+
+</body>
+</form>

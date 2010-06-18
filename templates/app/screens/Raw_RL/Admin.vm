@@ -1,0 +1,106 @@
+#*
+ * @(#) Admin.vm
+ * Copyright(c)2007, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista</a>
+ *  @modify 12-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+$page.setTitle("Brihaspati Administrator")
+$page.setBgColor("$ui.bgcolor")
+$!data.getMessage()
+
+<table width=100% cellpadding=0 cellspacing=1 align=center>
+<tr>
+<td align=center bgcolor="$ui.tableColor"><b>
+	<font face="century Schoolbook L" size=4><u>$brih_ad $brih_Of1 $brih_home</u></font>
+</b></td>
+</tr>
+
+<tr><td>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+        <b> $date :$brih_Da</b>
+        </marquee>
+</td>
+</tr>
+</table>
+
+<br>
+<font face="$ui.sansSerifFonts">
+<table width=20% align=center bgcolor="$ui.menuColor" cellpadding=0>
+<tr>
+<td align=center>
+	<table cellspacing=3>
+	<tr>
+	<td>
+    		<a href="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")">
+		<img src="$content.getURI("/images/$lang/registration.jpg")" border="0"></a><br>
+	</td>
+	</tr>
+	<tr>
+	<td>
+    		<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>
+		<img src="$content.getURI("/images/$lang/usermanagement.jpg")"border=0></a><br>
+	</td>
+	</tr>
+	<tr>
+	<td>
+    		<a href=$link.setPage("call,ListMgmt_Admin,ListManagement.vm")>
+		<img src="$content.getURI("/images/$lang/listmanagement.jpg")"border=0></a><br>
+	</td>
+	</tr>
+	<tr>
+        <td>
+                 <table>
+                <a href="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","personal")">
+                <img src="$content.getURI("/images/$lang/personalcalendar.jpg")"border=0></a><br>
+                </table>
+        </td>
+        </tr>	
+	<tr>
+        <td>
+		## Added by Shaista
+		<a href=$link.setPage("call,Notice_User,Notices.vm")>
+                <img src="$content.getURI("/images/$lang/communications.jpg")"border=0></a><br>
+        </td>
+        </tr>
+        <tr>
+        <td align="center">
+                <a href=$link.setPage("call,Backups,Backups.vm")>
+                <img src="$content.getURI("/images/$lang/adminbackup.jpg")" border="0"></a>
+        </td>
+        </tr>
+        <tr>
+        <td align="center">
+                <a href=$link.setPage("call,Backups,Restoration.vm")>
+                <img src="$content.getURI("/images/$lang/restoration.jpg")" border="0"></a><br>
+        </td>
+        </tr>
+        <tr>
+        <td align="center">
+                <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm")>
+                <img src="$content.getURI("/images/$lang/eventmanagement.jpg")"border=0></a><br>
+        </td>
+        </tr>
+		## Added by Shaista & Jaivir
+	<tr>
+        <td align="center">
+                <a href=$link.setPage("call,Quota_Mgmt,Quota.vm")>
+                <img src="$content.getURI("/images/$lang/quotamanagement.jpg")"border=0></a><br>
+        </td>
+        </tr>
+	<tr>
+        <td align="center">
+                ##<a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("status","CourseRegistration")>
+                <a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm") >
+                <img src="$content.getURI("/images/$lang/onlineRegView.jpg")"border=0></a><br>
+        </td>
+        </tr>
+	</table>
+</td>
+</tr>
+
+</table>

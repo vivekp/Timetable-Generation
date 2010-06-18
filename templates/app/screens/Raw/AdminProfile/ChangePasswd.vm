@@ -1,0 +1,96 @@
+#*
+ * @(#)ChangePasswd.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:madhavi_mungole@hotmail.com ">Madhavi Mungole</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | Change Password")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	##<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | $brih_changePassword
+     	<a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> | $brih_changePassword
+	</td>
+</tr>
+</table>
+<form name=frm method="post" action="$link.setAction("changePW").setPage("call,AdminProfile,ChangePasswd.vm")">
+  ##<table border=1 cellspacing=1 cellpadding=5 align=center>
+<table width="100%" bgcolor="$ui.tableColor">
+##if($guest_login=="false" )
+##	#if($Role1=="AdminRole")
+	<tr>
+        	<td><a href=$link.setPage("call,AdminProfile,ChangePasswd.vm")>$brih_changePassword</a></td>
+		<td><a href=$link.setPage("call,AdminProfile,AdminParam.vm")>$brih_ap</a></td>
+	</tr>
+##	#end
+##end
+</table>
+  <table align=left width="100%" bgcolor="$ui.tableColor">
+	<tr width="100%"><td align="left" bgcolor="$ui.menuColor"><font size=4><b>
+		#if(( $data.getUser().getTemp("lang" ).toString())=="hindi")
+		$brih_ad $brih_changePassword1
+		#else
+		$brih_changePassword1 $brih_ad
+		#end
+	</b></font></td></tr>
+  </table>
+  <table align=left width="100%" bgcolor="$ui.tableColor">
+		
+	<tr>
+	#formPasswordCell("$brih_pwdOld" "oldpassword" "")
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+	#formPasswordCell("$brih_pwdNew" "newpassword" "")
+	</tr>
+    	<tr>
+	#formPasswordCell("$brih_pwdNewRetype" "retypepassword" "")
+	</tr>
+    	<tr bgcolor="$ui.menuColor">
+      	<td colspan=2 align=left>	
+	  <input type="hidden" name="actionName">
+	<input type="button" name="eventSubmit_doUpdate" value="$brih_submit" onClick="checkPassword(document.frm,this);"/>   
+	<input type="reset" name="reset" value="$brih_reset" onClick="checkClear(document.frm,this);"/>
+      	</td>
+    	</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        //function checkPassword(frm,field,v,b)
+        function checkPassword(frm,field)
+        {
+		if((frm.oldpassword.value!="") && (frm.newpassword.value!="")  && (frm.retypepassword.value!=""))
+		{
+			if(frm.newpassword.value == frm.retypepassword.value)
+			{
+                                frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else
+			{
+				alert("The values in 'New Password' and 'Retype New Password' fields are not same !!");
+				//alert(v);
+			}
+                }
+                else
+                {
+                       alert("None of the fields can be empty !!");
+			//alert(b);
+                }
+        }
+
+        function checkClear(frm,field)
+        {
+	        frm.oldpassword.value="";
+        	frm.newpassword.value="";
+	        frm.retypepassword.value="";
+        }
+</SCRIPT>

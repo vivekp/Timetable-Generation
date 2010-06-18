@@ -1,0 +1,33 @@
+
+
+$page.setTitle("$brih_reg2 $brih_courses $brih_list")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<a href=$link.setPage("BrihaspatiLogin.vm").addPathInfo("lang",$lang)>Login Ð¡Ñ?Ñ?Ð°Ð½Ð¸Ñ?Ð°</a> |
+	Ð?Ð°Ñ?ÐµÐ³Ð¸Ñ?Ñ?Ñ?Ð¸Ñ?Ð¾Ð²Ð°Ð½Ð½Ñ?Ð¹ Ð?Ñ?Ñ?Ñ?Ñ?
+	</font>
+	</td>
+</tr>
+</table>
+<form name="frm" method="Post">
+<table align="left" width="100%" bgcolor="$ui.tableColor">
+<tr><td>
+			<b>Ð?Ñ?Ð±Ð¾Ñ?Ð½Ð¾ Ð?Ð½Ð°Ñ?ÐµÐ½Ð¸Ðµ Ð´Ð»Ñ? Ð²ÐºÐ»Ñ?Ñ?ÐµÐ½Ð¸Ñ? Ð² Ñ?Ð¿Ð¸Ñ?Ð¾:Ðº</b> &nbsp;&nbsp;
+	<select name="SearchList" onChange="ShowList(document.frm,this);"/>
+<option value=$ListConf_str>$ListConf_str</option>
+					</select>     
+</td>
+<td><b>Ð?Ð¾Ð¸Ñ?Ðº Ð?Ñ?Ñ?Ñ?Ñ?</b>&nbsp;&nbsp;<input type="text" name="SearchKey" value="" onSelect="ShowList(document.frm,this);"/></td>
+</tr>
+</table>
+</form>
+<SCRIPT LANGUAGE="javascript">
+	function ShowList(frm,field)
+	{
+		frm.submit();
+	}
+</SCRIPT>

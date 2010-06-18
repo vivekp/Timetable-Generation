@@ -1,0 +1,48 @@
+
+
+$page.setTitle("Admin Home | User Management | Proxy User")
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td><a href=$link.setPage("Index.vm")>Admin's ì§?</a> | í??ë¡?ì?? ì?¬ì?©ì??</td>
+</tr>
+</table>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,ProxyUser.vm").setAction("AddProxyUser")">
+<table align=left bgcolor="$ui.tableColor" width=100%>
+<tr>
+	<td colspan="2">
+	<font size=4><b>
+					Enter í??ë¡?ì?? ì?¬ì?©ì?? ì?¸ë¶? ë?´ì?©
+			</b></font>
+	</td>
+</tr>
+<tr bgcolor="$ui.menuColor">
+	#formCell ("í??ë¡?ì?? ì?¬ì?©ì?? ì?´ë¦? <font color=red>*</font>" "UNAME" "")
+</tr>
+			<tr>
+				#formPasswordCell ("ë¹?ë°? ë²?í?¸" "PASSWD" "")
+			</tr>
+			<tr bgcolor="$ui.menuColor"><td width=100%>
+				<input type="hidden" name="actionName">
+				<input type="button" name="eventSubmit_doRegister" value="ê¸°ë¡?ê¸°" onClick="checkField(document.frm,this);"/> 
+			</td></tr>
+		</table>
+	</div>
+</form>
+
+
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+	{
+		if(frm.UNAME.value!="") 
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill the Mandatory(*) Fields !!");
+		}
+	}
+</SCRIPT>

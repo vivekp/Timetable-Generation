@@ -1,0 +1,162 @@
+#*
+ * @(#)Archive.vm
+ * Copyright (c)2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ * @author <a href="mailto:rekha_20july@yahoo.co.in">Rekha Pal</a>
+ * @author <a href="sneha.srivastava24@gmail.com">Sneha Srivastava</a>
+
+ *#
+
+<table bgcolor="#d9e3ec" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | 
+		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | 
+		<a href =$link.setPage("call,Dis_Board,DB.vm")>$DiscussionBoard</a> | $brih_arch
+		</font>
+		</td>
+	</tr>
+</table>
+	
+$!data.getMessage()
+<br><br>
+	#if($t_size != 0)
+<table border=2 align=center>
+ 		<tr colspan=8 align=center >
+  			<td colspan=6 align=left  bgcolor="$ui.menuColor">
+  				<font face="$ui.sansSerifFonts">
+     					<b> $DiscussionBoard $DisBoard_DBCont_msg20   
+					<font color=blue>$UserName</font> 
+						$brih_in $DisBoard_WorkGroup -
+					<font color=green> $course_id</font>
+  				</font>
+  			</td>
+ 		</tr>
+		
+		<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action=$link.setPage("call,Dis_Board,Archive.vm").setAction("SendDB")> 
+		<tr   bgcolor="$ui.menuColor">
+                        <td  align="center">  <b> $brih_select  </b></td>
+			<td  align="center">  <b> $Notice_Subject </b></td>
+			<td  align="center">  <b> $LocalMail_Task </b></td>
+			#foreach($e in $contentvalue)
+				#if($e.getStatus()=="0")
+				<tr  colspan=2  bgcolor="$ui.tableColor"></tr>
+                                #else
+				<tr  colspan=2  bgcolor="#ffffff"></tr>
+				#end
+				<td width="2%" align="Center">
+					<INPUT TYPE="CHECKBOX" NAME= "$!e.getStudentfile()" VALUE = $!e.getStudentname() onClick="addDeleteList(this,document.frm);" >
+                        	</td> 
+				 
+				<td width="50%" align="Center"> $!e.getStudentname() </td> 
+				<td width="50%" align="center">
+					<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("type","Archive").addPathInfo("msgid",$e.getStudentfile()).addPathInfo("filename",$e.getStudentname())","newWin");>$brih_view</a>
+				#if($e.getfeedback() != "")
+					<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("type","Archive").addPathInfo("msgid",$e.getStudentfile()).addPathInfo("attachment","Attachment").addPathInfo("filename",$e.getfeedback())","newWin");> $brih_attachment </a>
+				#end
+			#end  
+		</tr>
+                <tr>
+			<td colspan=8>
+                        <INPUT TYPE="button" NAME="eventSubmit_doDelete" VALUE="$brih_delete" onClick="checkValue(document.frm,this);">
+                	<INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+                        <INPUT TYPE="hidden" NAME="actionName">
+			<INPUT TYPE="hidden" name="Deleteper" value="Archive_Deleted">
+			<INPUT TYPE="hidden" name="DB_subject" value="">
+			<INPUT TYPE="hidden" name="course_id" value="$course_id">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				
+			#if($mode!="Search")
+				#if($total_size<= $AdminConf)
+        	 		<u><font color="white">$brih_first</font></u> &nbsp;
+        	 		<u><font color="white">$brih_nxt</font></u> &nbsp;
+        	 		<u><font color="white">$brih_pre</font></u> &nbsp;
+        	 		<u><font color="white">$brih_last</font></u> &nbsp;
+        			#elseif($startIndex== $AdminConf_str)
+          			<u><font color="white">$brih_first</font></u> &nbsp;
+				<u><font color="white">$brih_pre</font></u> &nbsp;
+				<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode)">$brih_nxt</a> &nbsp;
+          			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode)">$brih_last</a> &nbsp;
+        			#elseif($endIndex == $total_size || $endIndex > $total_size)
+        			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode)">$brih_first</a> &nbsp;
+				<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode)">$brih_pre</a> &nbsp;
+         			<u><font color="white">$brih_nxt</font></u> &nbsp;
+         			<u><font color="white">$brih_last</font></u> &nbsp;
+         			#else
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode)">$brih_first</a> ## &nbsp;
+				<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode)">$brih_pre</a> ## &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex).addPathInfo("mode",$mode)">$brih_nxt</a> &nbsp;
+        	 		<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode)">$brih_last</a> ## &nbsp;
+         			#end
+         		#else
+         			#if($total_size<= $AdminConf)
+         			<u><font color="white">$brih_first</font></u> &nbsp;
+         			<u><font color="white">$brih_nxt</font></u> &nbsp;
+         			<u><font color="white">$brih_pre</font></u> &nbsp;
+	 			<u><font color="white">$brih_last</font></u> &nbsp;
+         			#elseif($startIndex== $AdminConf_str)
+         			<u><font color="white">$brih_first</font></u> &nbsp;
+         			<u><font color="white">$brih_pre</font></u> &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_nxt</a> &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_last</a> &nbsp;
+         			#elseif($endIndex == $total_size || $endIndex > $total_size)
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_first</a> &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_pre</a> &nbsp;
+         			<u><font color="white">$brih_nxt</font></u>  &nbsp;
+         			<u><font color="white">$brih_last</font></u> &nbsp;
+         			#else
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_first</a> &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_pre</a> &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_nxt</a> &nbsp;
+         			<a href="$link.setPage("call,Dis_Board,Archive.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_last</a> &nbsp;
+         			#end
+    			#end
+                </tr>
+	</table>
+#end
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	function checkValue(frm,field)
+	{
+       		if(frm.deleteFileNames.value!="")
+        	{
+	        	frm.actionName.value=field.name;
+                	frm.submit();
+        	}
+        	else
+        	{
+        		alert("Please select checkbox  !!");
+        	}
+	}
+	function addDeleteList(field,frm) {
+                if(field.checked)
+                {
+ 
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                        frm.DB_subject.value=frm.DB_subject.value+field.value+"@@@@";
+			 
+                 }
+                 else
+                     {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                     }
+        }
+	function popupWin(urlName,popupName) {
+		window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+	}                                    
+</script>
+
+
+
+
+

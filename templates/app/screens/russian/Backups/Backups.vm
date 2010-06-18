@@ -1,0 +1,45 @@
+
+
+
+$page.setTitle("Backups")
+$page.setBgColor("#ffffff")
+
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+	<tr><td>
+		<font face="$ui.sansSerifFonts" size=3>
+				<a href=$link.setPage("Index.vm")>Admin's �?ом</a> | 
+		<a href=$link.setPage("call,Backups,Backups.vm")>Резе�?вное копи�?ование</a> |
+						</font>
+	</td></tr>
+</table>
+<table width=100% bgcolor="$ui.tableColor">
+<tr><td>
+<table width=100% align=left bgcolor="$ui.tableColor">
+
+	<tr><td width=25%>
+    		<a href=$link.setPage("call,Backups,Backups.vm")>Резе�?вное копи�?ование Соде�?жание</a>	
+	</td>
+	<td width=25%>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doCompleteBackup")">System Резе�?вное копи�?ование</a>
+	</td>
+	<td width=25%>
+    		<a href=$link.setPage("call,Backups,Backups.vm").addPathInfo("mode","blist")>Резе�?вное копи�?ование Спи�?о</a>	
+    			</td>
+	<td width=25%>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doGlossaryBackup")">�?ло�?�?а�?ий Резе�?вное копи�?ование
+	</td></tr>
+</table></td></tr>
+<tr><td>
+<table width=100% align=left bgColor="$ui.tableColor">
+</table></td></tr>
+<tr><td>
+</td></tr></table>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+        {
+		frm.actionName.value=field.name;
+                frm.submit();
+        }
+</SCRIPT>

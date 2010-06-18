@@ -1,0 +1,113 @@
+
+
+$page.setTitle("QuestionBank | View All Question Bank")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<td align=left>
+        <td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+        <a href=$link.setPage("call,Question_Bank,Question_bank.vm")>???????? ????? </a>|  ????? ???? ????? 	</b>
+	</font>
+        </td>
+</table>
+
+<br>
+<form name="frm" method="post" action="$link.setPage("call,Question_Bank,RepositoryList.vm").setAction("Question_Bank")">
+<table bgcolor="$ui.menuColor" cellspacing=1 cellpadding=5>
+<tr>
+<td>	<a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")><I><b>  ????????? ??????? ???????? ?????  </b></I></a>
+</td>
+</tr>
+<tr>
+<td width="40%" valign="top">
+     	<table width="100%" border=1 cellspacing=1 cellpadding=2>
+	<tr>
+	<td align="center" colspan=3 bgcolor="ui.tableColor">
+        <font size=4><b>  ???????? ????? ????? ????? 
+	  	<b>$username</b>
+	 </font>
+	</b>
+	</td>
+	</tr>
+			<tr>
+	<td bgcolor="$ui.menuColor">
+		<input type="hidden" name="actionName">
+	<input type="hidden" name="deleteFileNames">
+	</td>
+	<td>
+	</td>
+	</table>
+</td>
+
+</tr>
+</table>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	function ShowQues(frm)
+	{
+		frm.submit();
+	}
+        function blurTopicName(frm)
+        {
+
+                frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+        }
+        function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+                }
+        }
+
+function deleteTopicConfirm(frm,field)
+        {
+                if(frm.delTopic.checked)
+                {
+                        if(confirm("All Data linked to the topic will be Deleted"))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+        }
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+function checkField(frm,field)
+   {
+    if(frm.deleteFileNames.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+
+</script>

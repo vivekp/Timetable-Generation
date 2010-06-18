@@ -1,0 +1,64 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxPermissionForm.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+$page.setTitle("Permission Administration")
+$page.setBgColor($ui.bgcolor)
+
+<form method="post" action="$link.setPage("permission,FluxPermissionList.vm").setAction("permission.FluxPermissionAction")">
+  <div align="left">
+    <table bgcolor="#ffffff" cellpadding="5">
+
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="#ffffff">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+      
+      <tr>
+        #formCell ("Permission Name" "name" "$!flux.Permission.Name" )
+      </tr>
+
+      <tr>
+        <td align="$ui.buttonAlignment" bgcolor="$ui.buttonColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+
+          <font face="$ui.sansSerifFonts">
+
+          #if ($flux.Mode == "modify")
+            <input type="hidden" name="oldname" value="$flux.Permission.Name"/>
+            <input type="submit" name="eventSubmit_doUpdate" value="Update Permission"/>
+          #elseif ($flux.Mode == "delete")
+            <input type="submit" name="eventSubmit_doDelete" value="Confirm Deletion"/>
+          #else
+            <input type="submit" name="eventSubmit_doInsert" value="Add Permission"/>
+          #end
+
+          </font>
+       </td>
+     </tr>
+  </table>
+  </div>
+</form>
+
+#if ($showEmbeddedMenu)
+  <hr size="1" noshade>
+  #parse ("screens/FluxEmbeddedMenu.vm")
+#end

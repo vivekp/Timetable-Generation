@@ -1,0 +1,158 @@
+#* ------------------------------------------------------------------
+#
+# Macros that are used for displaying input forms.
+# @author:- Nagendra Kumar Singh(nksinghiitk@yahoo.co.in)
+# @author(Modify):- Awadhesh Kumar Trivedi(awadhk_t@yahoo.com)
+# @author(Modify):- Jaivir Singh(singh_jaivir@rediffmail.com)
+*# ------------------------------------------------------------------
+
+#macro (text $text)
+  <font face="$ui.sansSerifFonts">
+    $text
+  </font>
+#end
+
+#macro (formLabel $label)
+  ##<td bgcolor="$ui.formFieldColor">
+  ##<td width="25%"> in 22july
+  <td>
+    ##<b>
+      ##<font face="$ui.sansSerifFonts">
+        $label
+      ##</font>
+    ##</b>
+  </td>
+#end
+
+#macro (formTextField $name $value)
+  ##<td width="50" bgcolor="$ui.formFieldColor">
+  <td>
+    ##<font face="$ui.sansSerifFonts">
+      ##<input type="text" size="30" name="$name" value="$value">
+      ##<input type="text" size="30" name="$name" value="$value">in date 22july
+      ##<input type="text" size="20" name="$name" value="$value">
+      <input type="text" name="$name" value="$value">
+    ##</font>
+  </td>
+#end
+
+#macro (textField $name $value $size)
+  <font face="$ui.sansSerifFonts">
+    <input type="text" size="30" name="$name" value="$value">
+  </font>
+#end
+
+#macro (listBox $list)
+  <font face="$ui.sansSerifFonts">
+    $list
+  </font>
+#end
+
+#macro (formPasswordCell $label $name $value)
+  ##<td bgcolor="$ui.formFieldColor">
+  <td width=20%>
+  ##<td>
+##	<b>	
+       ##<font face="$ui.sansSerifFonts">
+       $label
+      ##</font>
+    ##</b>
+  </td>
+  ##<td size="50" bgcolor="$ui.formFieldColor">
+  <td>
+    ##<font face="$ui.sansSerifFonts">
+      ##<input type="password" size="30" name="$name" value="$value">
+      ##<input type="password" size="20" name="$name" value="$value">
+      <input type="password" name="$name" value="$value">
+    ##</font>
+  </td>
+#end
+
+#macro (formCell $label $name $value)
+  #formLabel($label)
+  #formTextField($name $value)
+#end
+
+#macro (fileUploadField $name)
+  ##<td bgcolor="$ui.formFieldColor">
+  <td>
+    ##<font face="$ui.sansSerifFonts">
+      ##<input type="file" size="35" name="$name">
+	##today16apr
+      <input type="file" name="$name">
+    ##</font>
+  </td>
+#end
+
+#macro (fileUpload $label $name)
+  #formLabel($label)
+  #fileUploadField($name)
+#end
+
+#macro (formCheckBox $label $name $checked)
+  <td bgcolor="$ui.formFieldColor">
+    <b>
+      <font face="$ui.sansSerifFonts">
+        $label
+      </font>
+    </b>
+  </td>
+  <td bgcolor="$ui.formFieldColor">
+    <input type="checkbox" name="$name" #if($checked)checked=1#end/>
+  </td>
+#end
+
+#macro (formListBox $label $list)
+  <td bgcolor="$ui.formFieldColor">
+    <b>
+      <font face="$ui.sansSerifFonts">
+        $label
+      </font>
+    </b>
+  </td>
+  <td bgcolor="$ui.formFieldColor">
+    $list
+  </td>
+#end
+
+#* ------------------------------------------------------------------
+#
+# Macros that are used for displaying information in tables.
+#
+*# ------------------------------------------------------------------
+
+#macro (headerCell $body)
+  ##<td bgcolor="$ui.menuColor">
+  <td>
+    <b>
+      <font size=3 face="$ui.sansSerifFonts">
+        $body
+      </font>
+    </b>
+  </td>
+#end
+
+#macro (entryCell $body)
+  <td bgcolor="$ui.formFieldColor">
+    <font face="$ui.sansSerifFonts">
+      $body &nbsp;
+    </font>
+  </td>
+#end
+#macro (entry1Cell $label $body)
+ ##<td bgcolor="$ui.formFieldColor">
+ <td width=25%>
+    ##<b>
+      ##<font face="$ui.sansSerifFonts">
+        $label
+      ##</font>
+    ##</b>
+  </td>
+  ##<td bgcolor="$ui.formFieldColor">
+  <td>
+    ##<font face="$ui.sansSerifFonts">
+      ##$body &nbsp;
+      $body
+    ##</font>
+  </td>
+#end

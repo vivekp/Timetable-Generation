@@ -1,0 +1,93 @@
+#*
+ * @(#) UserPhoto_Upload.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Upload Multiple Users Photo")
+$!data.getMessage()
+
+#set($lang = $data.getUser().getTemp("lang").toString())
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+      <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+      <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_mgmt $brih_usr </a> | $brih_multiple $brih_photo $brih_upload
+##$brih_multi_usr1
+        </td>
+	</b>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=left>
+        $brih_help <img src="$content.getURI("/images/Lefthand.gif")"> <a href="/brihaspati/docs/PhotoUpload.html"></a>
+</td>
+</tr>
+</table>
+
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,UserPhoto_Upload.vm").setAction("UserAction_Admin")">
+<div align="left">
+<br>
+<br>
+<table width=60% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+      	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>$brih_upload_msg2</b></font>
+	</td>
+	</tr>
+	<tr>
+		<td> <input type="file" name="file" size="35%"> </td>
+		<td><font face="$ui.sansSerifFonts"><b>$brih_at_file </b></font> </td>
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.menuColor">
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadphoto" value="$brih_upload" onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#foreach( $e in $Msg )
+        <tr bgcolor="WHITE">
+        <td align=center>
+        <font face="$ui.sansSerifFonts">Entry <font color="brown">"$e.getErr_User()"</font>
+        </font>
+        </td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        </tr>
+#end
+</table>
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+</SCRIPT>

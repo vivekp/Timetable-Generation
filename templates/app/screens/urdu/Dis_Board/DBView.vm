@@ -1,0 +1,53 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home|$CName|Communication|Discussion Board|Read Message")
+
+
+<table bgcolor="$ui.tableColor" width=100%> 
+<tr><td> 
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>????</a> | <a href=$link.setPage("CourseHome.vm")>$CName</a> | 
+        <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>???????</a> | 
+        <a href=$link.setPage("call,Dis_Board,DB.vm")>????? ??????</a> |
+	<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All")>$LocalMail_MailContent_msg3</a> | ???? ??? ?????
+	</font>
+</td></tr> 
+</table> 
+<br>
+<form method="post" enctype="multipart/form-data">
+<div align="left">
+<table align="center" border=1> 
+	<tr><td>    
+    	<table bgcolor="$ui.tableColor" border=1 cellpadding="5"> 
+      		<tr><td><b><u>????? :</u></b>&nbsp $sub </td></tr>
+     	<tr><td><b><u>?????? ???? :</u></b>&nbsp $retrive_user </td></tr>
+	     	<tr><td><b><u>?????? ?? ?????  :</u></b>&nbsp $retrive_date</td></tr>
+	     	<tr><td> 
+     	<table align=center> 
+     		<tr><td><b><u>????? :</u><b></td></tr>
+      		<tr> <td bgcolor="$ui.bgcolor">
+		<textarea name=description rows=10 cols=55 wrap=physical onFocus="this.blur();"> $message</textarea>
+       		</td></tr>
+	</table> 
+     	</td></tr> 
+   	</table> 
+		<table cellpadding=0 cellspacing=0> 
+				<tr><td><b><u>????? :</u></b></td></tr>
+			</table>
+	<tr><td align="center">
+		<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("msgid",$msgID).addPathInfo("mode","reply").addPathInfo("course_id",$workgroup)>????</a>&nbsp&nbsp
+		<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("course_id",$workgroup).addPathInfo("mode","All")>??? ????</a>
+
+ 	 </td></tr>
+</table> 
+</td></tr> 
+</div>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">									  
+	function popupWin(urlName,popupName)
+	{
+		 window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+	 }
+</script>

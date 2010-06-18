@@ -1,0 +1,74 @@
+
+
+
+
+<body>
+$page.setTitle("Admin Home | Registeration Management | Register Secondary Instructor | Registeration")
+
+<table align=left bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	 <a href=$link.setPage("Index.vm")>Admin's ì§?</a> |
+	 <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")>ë?±ë¡? ê´?ë¦¬</a> |
+	 <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","All")>ì ?ì²´ ì½?ì?¤ì?? ì ?ê°?</a> | 
+		  í??ì?? ê°?ì??ì??ì??í?? 2 ì°¨ ì§?ë??ì??  $entry
+		 </td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+        <tr>
+        <td width=33%><a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")>ê¸°ë¡?ê¸° ê³¼ì ?</a></td>
+        <td width=33%><a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","MCRegister")>ê¸°ë¡?ê¸° ë³µì?? ê³¼ì ?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","All")>ê³¼ì ? ëª©ë¡?</a></td>
+        </tr>
+</table>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").setAction("InstructorRegisteration").addPathInfo("cName",$entry)">
+<table align=left width=100% bgcolor="$ui.tableColor">
+<tr bgcolor="$ui.menuColor">  
+		<td><b>ê³¼ì ? ì??ì?´ë?¤í?¸</b></td>
+		<td><b>$entry</b></td>
+      </tr>
+      <tr>
+        #formCell ("ì?¬ì?©ì?? ì?´ë¦? <font color=red>*</font>" "UNAME" "")
+      </tr>
+      <tr bgcolor="$ui.menuColor" >
+        #formPasswordCell ("ë¹?ë°? ë²?í?¸" "PASSWD" "")
+      </tr>
+      <tr>
+  	#formCell ("ì²«ì§¸ë¡? ì?´ë¦?" "FNAME" "")
+      </tr>
+      <tr bgcolor="$ui.menuColor">
+        #formCell("ë§?ì§?ë§? ì?´ë¦?" "LNAME" "")
+      </tr>
+      <tr>
+        #formCell("ì?´ë©?ì?¼ ì??ì?´ë?¤í?¸" "EMAIL" "")
+      </tr>
+	<tr bgcolor="$ui.menuColor">
+	<td colspan=2 align=left>
+	    <input type="button" name="eventSubmit_doRegister" value="ë?±ë¡?" onClick="checkField(document.frm,this);"/>
+	    <input type="reset" name="Clear" value="ë§?ì??"/>
+	</td>
+	</tr>
+    </table>
+    <input type="hidden" name="actionName">
+    <input type="hidden" name="mode" value="$mode">	
+    <input type="hidden" name="cName" value="$entry">	
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                if(frm.UNAME.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !");
+                }
+        }
+</SCRIPT>

@@ -1,0 +1,22 @@
+$page.DefaultDoctype
+$page.setBgColor("$ui.bgcolor")
+$page.setTitle("Upload file")
+
+Please select the file that you would like to upload:<br/><br/>
+
+<form action="$link.setPage("timetable,uploadConfirm.vm").setAction("Upload")" enctype="multipart/form-data" method="post">
+
+<!--
+Type the reference name,with which you want to refer to file later (if you like):<br>
+<input type="text" name="textline" size="30">
+Please include a short explanation:<br>
+<textarea name="expl" rows="3" cols="40"
+onfocus="check();">
+</textarea>
+--!>
+
+<!--Please specify a file, or a set of files:<br>--!>
+<input type="file" name="file" size="40">
+<input type="submit" name="eventSubmit_doUpload" value="Send">
+</form>
+<br/>

@@ -1,0 +1,246 @@
+<html>
+#*
+ * @(#)Post_Reply_topic.vm
+ *  Copyright (c) 2008-09 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="shaistashekh@hotmail.com">Shaista</a>
+ *  @date 10-06-2009
+ *
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+<table bgcolor="#d9e3ec" width=100% > ##table 1 start
+        <tr align="right"><td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm")>$brih_Res $Repo_Repo1</a> |
+	#if($mode == "reply")
+	$brih_add $LocalMail_Reply
+	#else
+        $brih_add $brih_new $brih_topic
+	#end
+     </b></td></tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+        <tr>
+                <td>
+		<a href=javascript:popupWin("/brihaspati2/docs/ResearchRepository.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+                </td>
+        </tr>
+</table> ## table 2 end
+#set($Repid=0)
+<form name="frm" method="post" action=$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").setAction("ResearchRepo_Action")>
+#if($mode=="post" || $mode=="reply")
+	<table align="center" border="0" bgcolor="#d9e3ec" width="100%" > ## table 3 start
+        	<tr bgcolor="#e5e5e5" align="center"> <td colspan="2">
+			#if($mode == "reply")
+                       		<b><font size=4><i>$DisBoard_DB_msg25 $brih_a $LocalMail_Reply</i></font></b>
+			#else
+                        	<b><font size=4><i>$brih_add $brih_new $brih_topic</i></font></b>
+			#end
+		</td></tr>
+		<tr align="right"> <td colspan="2"><b>&nbsp;$topicname</b></td></tr>
+                        	<tr align="right">
+					#if($mode!="reply")
+                                        <td><input type="text"  size="30" name="subject"  value=""/></td>
+					<td><b> : $Notice_Subject <font color=red>*</font> </b></td>
+				<input type="hidden" name="Repid" value="$Repid">
+				#else
+                                       	<td>$subject</td>
+					<td><b> : $Notice_Subject <font color=red>*</font> </b></td>
+				#end
+                                </tr>
+                                <tr align="right">
+					<td><textarea name="message" rows=7 cols=80 value=""></textarea></td>
+                                       	<td><b>:$brih_msg2</b></td>
+					<input type="hidden" name="subject" value="$subject">
+					<input type="hidden" name="Repid" value="$subjectId">
+                                </tr>
+                ## end of usage create ##
+              	<tr bgcolor="#e5e5e5"><td> ## td tr 8 start
+                	<table border="0" align="center" bgcolor="#e5e5e5" colspan="5"> ## table 7 start
+                        	<tr bgcolor="#e5e5e5"><td align="center" colspan="2">&nbsp;&nbsp;&nbsp;
+					#if($mode!="reply")
+                          		<input type="button" name="eventSubmit_doPosttopic" value="$brih_add $brih_new $brih_topic" onClick="checkField(document.frm,this);"/>
+					#else
+					<input type="button" name="eventSubmit_doPosttopic" value="$brih_add $LocalMail_Reply" onClick="checkmessage(document.frm,this);"/>
+					#end
+                           		<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+                        	</tr></td>
+                	</table> ## end of table 7
+        	</tr></td> ## end od td tr 8
+#end
+#if($mode == "view")
+	<table border="0" bgcolor="#d9e3ec" width="100%" colspan="4">
+		#if($status == "Noblank")
+		<tr align="right">
+			<td align="right" bgcolour="#d9e3ec" width="20%">
+			<b>$brih_last $DisBoard_DB_msg25 </b></td>
+			<td align="right" bgcolour="#d9e3ec" width="20%">
+			<b>$brih_rep</b></td>
+			<td align="right" bgcolour="#d9e3ec" width="20%">
+			<b>$brih_topic $brih_Of $brih_starter</b></td>
+			<td align="right" bgcolour="#d9e3ec" width="20%">
+			<b>$brih_topic</b></td>
+			<td align="right" bgcolor="#d9e3ec" width="20%">
+			<b>$brih_select</b></td>
+		</tr>
+		#set ( $count1="" )
+		#foreach($e in $entry)
+		<tr bgcolor="#e5e5e5" align="right">
+			#if($topicname == "$e.getRepoName()" && $e.getReplyId()== "0")
+                        <td width="20%">$e.getPDate()</td>
+			<td width="20%">$e.getReplies()</td>
+			<td width="20%">$e.getSender()</td>
+                        <td width="20%"><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").addPathInfo("mode","Desc").addPathInfo("subjectId",$e.getSubjectId()).addPathInfo("topicname",$e.getRepoName()).addPathInfo("subject",$e.getSubject()).addPathInfo("topicuser",$e.getSender()).addPathInfo("posttime",$e.getPDate())">$e.getSubject()</td>
+			<td align="right" width="20%">
+			#if($e.getSender() == $loginname || $data.getUser().getUserName() =="admin")
+			<INPUT TYPE="CHECKBOX" NAME="$e.getSubjectId()" onClick="addDeleteList(this,document.frm);">
+			#else
+			<input type="CHECKBOX" disabled="true">
+        		#end
+			</td>
+			#end
+		</tr>
+		#set ( $count1= "$count1$!e.getSubjectId()^")
+		#end
+		<tr>
+		<td align="right">
+		<input type="button" name="eventSubmit_doDeleteTopic" value="$brih_delete" onClick="deleteConfirm(document.frm,this);"/></td>
+		</tr>
+		#else
+		<b><font size="3">$Res_mess</font></b>
+		#end		
+	</table>
+#end
+#if($mode == "Desc")
+	<table border="0" bgcolor="#d9e3ec" width="100%">
+	<tr bgcolor="#d9e3ec" align="right">
+		<td width="20%">
+		<b><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").addPathInfo("mode","reply").addPathInfo("subjectId",$subjectId).addPathInfo("topicname",$topicname).addPathInfo("subject",$subject)">$LocalMail_Reply</b>
+		</td>
+		<td width="60%">
+		<b><font size="5">$subject</font></b></td>
+		<td width="20%">
+		$brih_author	
+		</td>
+	</tr>
+	<tr bgcolor="#e5e5e5" align="right">
+		<td width="20%">
+		</td>
+		<td width="60%">
+		$posttime
+		</td>
+		<td align="20%">
+		$brih_Of2 $brih_by $brih_post : $sendername
+		</td>
+	</tr>
+	<tr align="right">
+		<td width="20%">
+		</td>
+		<td width="60%">
+		$message1
+		</td>
+	</tr>
+		#set ( $count = 1 )
+			#foreach($Rrec in $rec)
+				#set ( $count2 = 1 )
+			#foreach($Rmessage in $message2)
+				#if( $count == $count2 )
+			<tr>
+               			<td align="20%">
+				<font color="blue">
+                       		$brih_Of2 $brih_by $LocalMail_Reply :$Rrec.getSender() 
+                       		</td>
+                       		<td width="60%">
+                       		$Rrec.getPDate()
+                       		</td>
+              		</tr>
+				<tr bgcolor="#e5e5e5">
+					<td width="20%">
+					</td>
+					<td width="40%">
+					$Rmessage
+					</td>
+					#if($loginname == $Rrec.getSender() || $data.getUser().getUserName() =="admin")
+		<td width="20%"><b><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").setAction("ResearchRepo_Action").addPathInfo("mode","Desc").addPathInfo("subjectId",$Rrec.getSubjectId()).addPathInfo("topicname",$topicname).addPathInfo("subject",$subject).addPathInfo("actionName","eventSubmit_doDeleteTopic")">$brih_delete</b></td>
+				#end
+				</tr>
+				#end
+				#set ( $count2 = $count2+1 )
+			#end
+		#set ( $count = $count+1 )
+		#end
+	##end
+</table>
+##</td></tr>
+#end
+        <input type="hidden" name="actionName" >
+        <input type="hidden" name="mode" value="$mode">
+        <input type="hidden" name="topicname" value="$topicname">
+	<input type="hidden" name="deleteFileNames" value="">
+</form>
+</table> ## end of table 3
+</html>
+<SCRIPT LANGUAGE="javascript">
+function checkField(frm,field)
+{
+	if(frm.subject.value!="")
+	{
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	else
+		alert("Please fill the Manadatory(*) Fields !!");
+}
+function checkmessage(frm,field)
+{
+        if(frm.message.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+                alert("Please fill the Message Area !!");
+}
+function deleteConfirm(frm,field)
+        {
+                var delfiles;
+                delfiles=frm.deleteFileNames.value;
+                if(delfiles.length!=0)
+                {
+                        if(confirm("Selected Group will be Deleted"))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+                else
+                alert("Please Select check box  !!");
+        }
+function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+
+        }
+function popupWin(url,popupName)
+{
+        Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+</script>
+

@@ -1,0 +1,82 @@
+
+
+
+$page.setTitle(" $brih_home | $course | $brih_Wiki")
+$page.setBgColor("#ffffff")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>Home page</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | Wiki
+        </font>
+</td>
+</tr>
+</table>
+
+
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati2/docs/Wikiusermanual.html","newWin");>Aiuto</a>
+                </td>
+        </tr>
+</table>
+
+<br>
+
+<table border="0" align="center" bgcolor="$ui.tableColor" cellspacing="5" width=100%>
+	<tr>
+     		<td align="center" width="25%">
+			<h4><a href=$link.setPage("call,Wiki,Editwiki.vm")>
+						Crea Pagina  
+						</a></h4>
+		</td>
+
+				<td align="center" width="50%">
+
+			<FORM  name=frm method="POST" action="$link.setPage("call,Wiki,Wiki.vm").setAction("Wikieditaction")">
+			<b>Modello di ricerca / pagina </b><br /><INPUT type="text" name="query" size="15">
+			<input type="hidden" name="actionName" >
+			<input type="submit" name="eventSubmit_doFind" value="Trova Pattern" onClick="return checkSearchName(document.frm,this);" /> 			<input type="submit" name="eventSubmit_doFindPage" value="Trova Page" onClick="return checkSearchName(document.frm,this);" />
+			</FORM>
+		</td>
+	</tr>
+</table>			
+
+
+												
+                
+
+                
+
+	                                                                                        
+
+<table align="center" cellpadding=0 cellspacing=5 bgcolor="$ui.tableColor" width=100% >
+	</table>
+
+
+<table align="center" cellpadding="0" cellspacing="5" bgcolor="$ui.tableColor" width="100%" >
+	</table>
+
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"scrollbars=1,height=400,width=400");
+        }
+
+function checkSearchName(frm,field)
+        {
+                if(frm.query.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill Search  Field");
+			return false;
+                }
+        }
+</SCRIPT>

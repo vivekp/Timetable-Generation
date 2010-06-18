@@ -1,0 +1,41 @@
+
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% > 	<tr><td><b>
+	<a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>|
+        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>Ð?Ñ?Ñ?Ð¿Ð¿Ð° Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ</a> |
+		Ð?ÐµÑ?Ð¾Ð¿Ñ?Ð¸Ñ?Ñ?Ð¸Ðµ Ð¸Ð· Ð?Ñ?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?</b>
+	     </td></tr>
+</table>  
+<table width=100% > 	<tr>
+		<td align ="right">
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/joingroupactivity.html","newWin");>Ð?Ð¾Ð¼Ð¾Ñ?Ñ?</a>
+		</td>
+	</tr>
+</table> 
+<form name="frm">
+<b><font size="4"><font color="blue"><center>Ð?Ñ? Ð½Ðµ Ð¿Ñ?Ð¸Ñ?Ð¾ÐµÐ´Ð¸Ð½Ð¸Ð»Ð¸Ñ?Ñ? Ðº Ð»Ñ?Ð±Ð¾Ð¹ Ð³Ñ?Ñ?Ð¿Ð¿Ðµ Ð´Ð¾ Ñ?Ð¸Ñ? Ð¿Ð¾Ñ?!</center></font></font></b>
+</table> </form>
+
+<SCRIPT LANGUAGE="javascript">
+	function Changeactivity(frm,field)
+	{
+		frm.actvy.value=document.frm.activity.value;
+		//alert(frm.actvy.value);	
+	}
+	function go(frm,field)
+	{
+			location=document.frm.activity.
+			options[document.frm.activity.selectedIndex].value
+			//alert(location=document.frm.activity);
+	}
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</script>

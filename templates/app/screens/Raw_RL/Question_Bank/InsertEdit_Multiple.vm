@@ -1,0 +1,124 @@
+#*
+ * @(#) Insert_Multiple.vm
+ * Copyright(c)2004-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:tarankhan1@yahoo.com">Tarannum Khan</a>
+ * @author <a href="mailto:manju_14feb@yahoo.com">Mithelesh Parihar</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Enter the Question")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Question_Bank,Question_bank.vm")>$brih_queBank</a> |
+	#if($mode=="Insert")
+	<a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")>$WikiCreate $Repo_Repo1</a> | $brih_insert $brih_multiple1 $brih_qus
+	#else
+	<a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>$brih_all $brih_queBank</a> |
+	<a href=$link.setPage("call,Question_Bank,Question_List.vm").addPathInfo("modulename","$modulename").addPathInfo("Ques_Type","$Ques_Type")>$brih_all $brih_qus1 $modulename </a> | $brih_edit $brih_multiple1 $brih_qus
+	#end 
+        </td>
+</tr>
+</table>
+<br>
+$!data.getMessage()
+<form name="frm" method="post" action="$link.setAction("Question_Bank")">
+<table border=1 align="center" width="60%" bgcolor="$ui.tableColor" cellpadding="2">  
+  <tr>
+   <td width=30% align="centre" bgcolor="$ui.tableColor">
+     <b><font face="$ui.sansSerifFonts">$brih_qus</font></b>
+   </td>
+   <td	width=70% align="left" bgcolor="$ui.tableColor">
+     <font face="$ui.sansSerifFonts">
+      <textarea name="Question" rows=3 cols=50>$!question</textarea >
+     </td>
+ </tr>
+  <tr> 
+	#formCell("$brih_option $brih_a" "op1" "$!op1")
+ </tr> 
+  <tr> 
+	#formCell("$brih_option $brih_b" "op2" "$!op2")
+ </tr> 
+  <tr> 
+	#formCell("$brih_option $brih_c" "op3" "$!op3")
+ </tr> 
+  <tr> 
+	#formCell("$brih_option $brih_d" "op4" "$!op4")
+ </tr> 
+  <tr> 
+	#formCell("$brih_option $brih_e" "op5" "$!op5")
+ </tr> 
+  <tr> 
+	#formCell("$brih_option $brih_f" "op6" "$!op6")
+ </tr> 
+  <tr> 
+  	<td width=30% align="centre" bgcolor="$ui.tableColor">
+    	<b><font face="$ui.sansSerifFonts">$brih_answer</font></b>
+   	</td>
+   	<td width=70% align="left" bgcolor="$ui.tableColor">
+    	<font face="$ui.sansSerifFonts">
+      	<select name="Answer" size=1>
+	 <option value=$!ans>$!ans
+         <option value="A">$brih_a</option>
+         <option value="B">$brih_b</option>
+         <option value="C">$brih_c</option>
+         <option value="D">$brih_d</option>
+         <option value="E">$brih_e</option>
+         <option value="F">$brih_f</option>  
+      	</select> 
+   	</td>
+ </tr> 
+  <tr> 
+	#formCell("$brih_hint" "hint" "$!hint")
+
+ </tr> 
+<tr>
+<td align=center colspan=2>  
+<font face ="$ui.sansserifFonts">
+  <input type="reset" value="$brih_reset"> 
+	#if($mode=="Insert")
+  		<input type="button" name="eventSubmit_doSaveQuestion" value="$WikiSave & $brih_add $brih_more" onClick="checkValue(document.frm,this);"> 
+  		<input type="button" name="eventSubmit_doFinishQuestion" value="$WikiSave & $brih_finish" onClick="checkValue(document.frm,this);"> 
+	#else
+		<input type="button" name="eventSubmit_doEditQuestion" value="$brih_edit" onClick="checkValue(document.frm,this);">
+  		<input type="hidden" name="qid" value=$qid>
+	#end
+  <input type="hidden" name="modulename" value=$modulename> 
+  <input type="hidden" name="actionName" value="">
+  <input type="hidden" name="mode" value=$mode>
+  <input type="hidden" name="FromPath" value=$FromPath>
+  <input type="hidden" name="Ques_Type" value="Multiple">
+</font>
+</td>
+</tr>
+</table>
+</form>
+<script LANGUAGE="JAVASCRIPT">
+        function checkValue(frm,field)
+        {
+                if(frm.Question.value!="")
+                {
+			if((frm.op1.value!="") && (frm.op2.value!="") && (frm.op3.value!="") && (frm.op4.value!=""))
+			{
+                        	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else
+			{
+                        	alert("Please write minimum four answer !!");
+                        	frm.op1.focus();
+			}
+                }
+                else
+                {
+                        alert("Please write Question !!");
+                        frm.Question.focus();
+                }
+        }
+</script>

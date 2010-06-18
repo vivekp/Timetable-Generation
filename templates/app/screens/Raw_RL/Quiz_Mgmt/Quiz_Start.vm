@@ -1,0 +1,112 @@
+#*
+ * @(#) Quiz_Start.vm
+ * Copyright(c)2007 - 2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista Bano </a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+
+$page.setTitle("Quiz Management")
+$page.setBgColor("#ffffff")
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+<font face="$ui.sansSerifFonts">
+
+<table width=100%  bgcolor="$ui.tableColor" cellpadding=0>
+<tr align="right"><td>
+	<b>
+	 $brih_quiz | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> 
+		| <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+	</b>
+</td></tr>
+</table>
+$!data.getMessage()
+<table width=100%>
+<tr>
+<td align="left">
+	#if($user_role == "instructor" )	
+	<a href=javascript:popupWin("/brihaspati2/docs/Quizhelp.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+	#else	
+	<a href=javascript:popupWin("/brihaspati2/docs/Quizstudent.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+	#end
+</td>
+</tr>
+</table>
+
+
+
+<br>
+	#if($user_role == "instructor" )	
+	<table width="20%" align="center" bgcolor="$ui.menuColor" cellpadding="5">
+	<tr>
+		<td align="center">
+			<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Schedule.vm")>
+                                <img border=0  src="$content.getURI("/images/$lang/quizschedule.jpg")">
+			</a>
+				
+      		</td>
+        </tr>
+	#if($flag == true )
+		#if($QuizGrade == true )
+		<tr>
+			<td align="center">
+				<a href=$link.setPage("call,Quiz_Mgmt,Grade_Quiz.vm")>
+				<img border=0  src="$content.getURI("/images/$lang/quizgrade.jpg")"> </a>
+			</td>
+        	</tr>
+		<tr>
+                	<td align="center">
+                        	<a href=$link.setPage("call,Quiz_Mgmt,Gradecard.vm")>
+				<img border=0  src="$content.getURI("/images/$lang/gradecard.jpg")"> </a>
+                	</td>
+        	</tr>
+		#end
+	<tr>
+                <td align="center">
+                        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm")>
+			<img border=0  src="$content.getURI("/images/$lang/Quizdetail.jpg")">
+			</a>
+                </td>
+        </tr>
+
+	#end
+	#end
+	#if($user_role == "student")
+		#if($flag == true)
+		<table width=20% align="center" bgcolor="$ui.tableColor" cellpadding="5">
+		#if($startQuiz1 == true)
+		<tr>
+			<td align="center">
+			<a href=$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm")> <img border=0  src="$content.getURI("/images/$lang/startquiz.jpg")"> </a>
+	        	</td>
+        	</tr>
+		#end
+		#if($QuizGrade == true )	
+		<tr>
+			<td align="center">
+				<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Score.vm")>
+					 <img border=0  src="$content.getURI("/images/$lang/scorecard.jpg")">
+				</a>
+			</td>
+        	</tr>
+		<tr>
+                	<td align="center">
+				<a href=$link.setPage("call,Quiz_Mgmt,Gradecard.vm")>
+				 <img border=0  src="$content.getURI("/images/$lang/gradecard.jpg")">		
+			</a>
+                	</td>
+        	</tr>
+		#end
+		#end
+	#end		
+	</table>
+
+<SCRIPT LANGUAGE="javascript">
+ function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</SCRIPT>

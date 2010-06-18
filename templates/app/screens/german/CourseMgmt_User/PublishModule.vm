@@ -1,0 +1,255 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | $course | Course Management | Course Content | Publishing Module")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>Heim</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+ 	<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>Kurs Vorstand Management</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+ 	Kurs Inhalt</a> |publizieren Inhalt
+ 	</font>
+</td>
+</tr>
+</table>
+<br>
+<table bgcolor="$ui.menuColor">
+<tr>
+                                        <br>
+                                                </td>
+        </tr>
+</table>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_User,PublishModule.vm").addPathInfo("topic",$topic).setAction("PublishAction")">
+<div align="center">
+<CENTER><H2><u> $topic </u></H2></CENTER>
+<CENTER><input type="checkbox" name=delTopic><b>Löen Sie das vollstäige Thema  </b>
+	<input type="button" name=eventSubmit_doDeleteTopic value="Löschen " onClick="deleteTopicConfirm(document.frm,this);"></CENTER> 
+<table>
+    <tr>
+    <table bgcolor="$ui.bgcolor" cellpadding="5">
+            <tr>	
+	<H3><u>Befestigung </u></H3>
+		<table border=2 width=90% cellpadding=0 cellspacing=0 bgcolor="$ui.tableColor">
+
+
+	
+	  <tr bgcolor="$ui.menuColor">
+  	  <th><br>S.No. <br></th> 
+	  <th><br>Akte<br></th> 
+	  <th><br>Kreation Titel<br></th> 
+	  <th><br>Unpublish <br></th> 
+	  <th><br>Zugälich<br></th> 
+	  <th><br>Sichtbar <br>Zugälich<br></th>
+	  <th><br>Löschen <br></th>
+	</tr>
+  	<tr><td align="center" colspan=7><br><b>sichtbar und erreichbar</b><br><br></td></tr>
+	<tr align="center">
+                <td colspan=3><br></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(2,0); ></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(2,1); ></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(2,2); checked></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(2,3); ></td>
+        </tr>
+		  	<tr><td align="center" colspan=7><br><b>Zugälich</b><br><br></td></tr>
+	<tr align="center">
+                <td colspan=3><br></td>
+                <td>Auserwät  Alle      <br><input type="radio" name="checkAll" onClick=selectAll(1,0); ></td>
+                <td>Auserwät  Alle      <br><input type="radio" name="checkAll" onClick=selectAll(1,1); checked></td>
+                <td>Auserwät  Alle      <br><input type="radio" name="checkAll" onClick=selectAll(1,2); ></td>
+                <td>Auserwät  Alle      <br><input type="radio" name="checkAll" onClick=selectAll(1,3); ></td>
+        </tr>
+		  	<tr><td align="center" colspan=7><br><b>Unpublish </b><br><br></td></tr>
+	<tr align="center">
+                <td colspan=3><br></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(0,0); checked></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(0,1); ></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(0,2); ></td>
+                <td>Auserwät  Alle       <br><input type="radio" name="checkAll" onClick=selectAll(0,3); ></td>
+        </tr>
+			<tr>
+	<td colspan=7 align=center bgcolor="$ui.menuColor">
+	<input type="button" name="eventSubmit_doPublish" value="unterbreiten" onClick="deleteConfirm(document.frm,this);">
+	<input type="submit" name="eventSubmit_doCancel" value="Abbrechen">
+	</td>
+	</tr>
+	</table>
+
+      </tr>
+      
+    </table>
+<br>
+
+	<input type="hidden" name=actionName value="">
+
+	<input type="hidden" name=visibleList value="">
+	<input type="hidden" name=accessibleList value="">
+	<input type="hidden" name=unpublishedList value="">
+
+	<input type="hidden" name=deleteVisibleFileNames value="">
+	<input type="hidden" name=deleteAccessibleFileNames value="">
+	<input type="hidden" name=deleteUnpublishedFileNames value="">
+	<input type="hidden" name=topic value="$topic">
+	<input type="hidden" name="stat" value="$stat">
+	<input type="hidden" name="cName" value="$cName">
+	<input type="hidden" name="uname" value="$username">
+
+    </tr>
+  </table>	
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function selectAll(originalAccessType,finalAccessType)
+	{
+			switch(originalAccessType)
+			{
+				//invisible
+				case 0:
+					simpleForLoop(document.frm.unpublishedList.value,finalAccessType);
+					break;
+		
+				//accessible
+				case 1:					
+					simpleForLoop(document.frm.accessibleList.value,finalAccessType);
+					break;
+	
+				//visible
+				case 2:
+					simpleForLoop(document.frm.visibleList.value,finalAccessType);
+					break;
+	
+			}
+
+	}
+
+	
+	function simpleForLoop(sourceList,finalOption)
+	{
+		var ini=0,upto=0;
+
+		while( ( upto=sourceList.indexOf("^",ini) ) >=0 )
+		{
+			var temp=sourceList.substring(ini,upto);
+			ini=upto+1;
+			document.frm.elements[temp][finalOption].checked=true;
+		}
+
+	}
+
+	function deleteConfirm(frm,field)
+	{
+		var delfiles;
+		delfiles=frm.deleteVisibleFileNames.value+frm.deleteAccessibleFileNames.value+frm.deleteUnpublishedFileNames.value;
+		if(delfiles.length!=0)
+		{
+			if(confirm("Selected files will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+		else
+		{
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+	}
+
+	function deleteTopicConfirm(frm,field)
+	{
+		if(frm.delTopic.checked)
+		{
+			if(confirm("All Data linked to the topic will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+		else
+		{
+			alert("Please select check box for deletion !!");
+		}
+	}
+	
+
+	function addVisibleDeleteList(field,frm,radiobuttonValue)
+	{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteVisibleFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			if(radiobuttonValue==4)
+			{
+				if(index==-1)
+				{
+					frm.deleteVisibleFileNames.value=frm.deleteVisibleFileNames.value+field.name+"^";
+				}
+			}
+			else
+			{
+				if(index!=-1)
+				{
+				preString=actualString.substring(0,index);
+				postString=actualString.substring(index+field.name.length+1);		
+				actualString=preString+postString;
+				frm.deleteVisibleFileNames.value=actualString;
+				}	
+			}
+	}
+
+
+	function addAccessibleDeleteList(field,frm,radiobuttonValue)
+	{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteAccessibleFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			if(radiobuttonValue==4)
+			{
+				if(index==-1)
+				{
+					frm.deleteAccessibleFileNames.value=frm.deleteAccessibleFileNames.value+field.name+"^";
+				}
+			}
+			else
+			{
+				if(index!=-1)
+				{
+				preString=actualString.substring(0,index);
+				postString=actualString.substring(index+field.name.length+1);		
+				actualString=preString+postString;
+				frm.deleteAccessibleFileNames.value=actualString;	
+				}
+			}
+	}
+
+
+	function addUnpubDeleteList(field,frm,radiobuttonValue)
+	{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteUnpublishedFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			if(radiobuttonValue==4)
+			{
+				if(index==-1)
+				{
+					frm.deleteUnpublishedFileNames.value=frm.deleteUnpublishedFileNames.value+field.name+"^";
+				}
+			}
+			else
+			{
+				if(index!=-1)
+				{
+				preString=actualString.substring(0,index);
+				postString=actualString.substring(index+field.name.length+1);		
+				actualString=preString+postString;
+				frm.deleteUnpublishedFileNames.value=actualString;	
+				}
+			}
+	}
+
+</SCRIPT>

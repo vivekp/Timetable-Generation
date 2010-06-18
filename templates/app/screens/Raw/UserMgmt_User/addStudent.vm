@@ -1,0 +1,78 @@
+#*
+ * @(#) addStudent.vm
+ * Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:madhavi_mungole@hotmail.com">Madhavi Mungole</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_home | $brih_course | $brih_student $brih_mgmt | $brih_student $brih_reg")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		##<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>Student Management</a> | Student Registeration
+		<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_student $brih_mgmt</a> | $brih_student $brih_reg
+		</font>
+		</td>
+	</tr>
+</table>
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<form name="frm" method="post" action="$link.setPage("call,UserMgmt_User,addStudent.vm").setAction("UserAction_Instructor")">
+  <div align="left">
+    <table align=center bgcolor="$ui.bgcolor" border=2 cellpadding="5">
+      	<tr>
+	<td align=center colspan=2 bgcolor="$ui.menuColor">
+		<font size=4><b>$brih_student $brih_reg</b></font>
+	</td>
+	</tr>
+	<tr>
+        	#formCell ("$brih_usr $brih_name <font color=red>*</font>" "UNAME" "")
+      	</tr>
+      	<tr>
+        	#formPasswordCell ("$brih_pwd" "PASSWD" "")
+      	</tr>
+	<tr>
+	  	#formCell ("$brih_first $brih_name" "FNAME" "")
+	</tr>
+	<tr>
+		#formCell("$brih_last $brih_name" "LNAME" "")
+	</tr>
+	<tr>
+		#formCell("$brih_email $brih_ID" "EMAIL" "")
+	</tr>
+	<tr>
+	<td align="center" colspan=2 bgcolor="$ui.menuColor">	
+    		<input type="hidden" name="actionName">
+    		<input type="button" name="eventSubmit_doRegister" value="$brih_reg" onClick="checkField(document.frm,this);"/>
+    		<input type="reset" name="Reset" value="$brih_clear"/>
+	</td>
+	</tr>
+    </table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                if(frm.UNAME.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !!");
+                }
+        }
+</SCRIPT>

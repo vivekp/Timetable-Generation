@@ -1,0 +1,75 @@
+
+
+$page.setTitle("Admin Home | List Management | View All Courses")
+$page.setBgColor("#ffffff")
+
+
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href="$link.setPage("call,Admin.vm")">Admin's Ð?Ð¾Ð¼</a> |
+	<a href="$link.setPage("call,ListMgmt_Admin,ListManagement.vm")">Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ñ?Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ñ?</a> | 
+			Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ð²Ñ?Ð±Ñ?Ð°Ð½Ð½Ñ?Ñ? ÐºÑ?Ñ?Ñ?Ð¾Ð²
+		</td>
+	<td width="30%" align="right">
+		</td>
+</tr>
+</table>
+<br>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,ListCourse.vm")">
+<table border=1 align=center bgcolor="$ui.tableColor" cellpadding=1 cellspacing=1>
+        <tr>
+                <td align=center><b>Ð?Ð¾Ð¸Ñ?Ðº Ð¼Ð¸Ð¼Ð¾</b></td>
+                <td align=left>
+                        <select name="queryList">
+                                <option value="CourseId"> Ð?Ñ?Ñ?Ñ? Ð£Ð´Ð¾Ñ?Ñ?Ð¾Ð²ÐµÑ?ÐµÐ½Ð¸Ðµ Ð»Ð¸Ñ?Ð½Ð¾Ñ?Ñ?Ð¸</option>
+                                <option value="Course Name">Ð?Ñ?Ñ?Ñ? Ð?Ð¼Ñ?</option>
+                                <option value="Dept">Ð?ÐµÐ¿Ð°Ñ?Ñ?Ð°Ð¼ÐµÐ½Ñ?  </option>
+                        </select>
+                </td>
+                <td align=center><b>Ð?Ð°Ñ?Ñ? Ð¡Ñ?Ñ?Ñ?Ð½Ð°</b></td>
+                <td align=left>
+                        <input align=center type="text" name="valueString" value="">
+                </td>
+                <td>
+                        <input type="button" name="Search" value="Ð?Ð¾Ð¸Ñ?Ðº" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+                <td>
+                        <b><a href="$link.setPage("call,ListMgmt_Admin,ListCourse.vm").addPathInfo("mode","All")">Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ð²Ñ?ÐµÑ? ÐºÑ?Ñ?Ñ?Ð¾Ð²</a></b>
+                <td>
+        </tr>
+</table>
+<br>
+<table align="center">
+	<tr>
+        <td>
+                <a href="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")">
+                <img src="$content.getURI("/images/$lang/registration.jpg")"border=0></a><br>
+        </td>
+        </tr>
+</table>
+</form>
+
+<br>
+<table width=60% border=1 bgcolor="$ui.menuColor" align=center>
+        </table>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+	function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

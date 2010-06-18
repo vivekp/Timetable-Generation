@@ -1,0 +1,63 @@
+<html>
+
+
+$page.setTitle("ManageBookmarks")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% >         <tr align="right">
+	<td width="30%" align="left">
+                </td>
+	<td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>????</a> | ????????????</b>
+	</td>
+	</tr>
+
+</table> <br>
+<table bgcolor="#e5e5e5" width="100%">
+        <tr>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td > <a href=javascript:popupWin2("/brihaspati2/docs/ManageBookmarks.html","newWin");>???  <img src="$content.getURI("/images/Lefthand.gif")"> </a> </td>
+                <td align="right"><b>
+                <a href=$link.setPage("call,Bookmarks,AddBookmarks.vm").addPathInfo("mode","addBmarks")>?????? ???? ????  </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href=$link.setPage("call,Bookmarks,ManageBookmarks.vm").addPathInfo("stat1","All")>?????? ??????</a></b>&nbsp;&nbsp;&nbsp;&nbsp;
+		</b>
+		</td>
+        </tr>
+</table>
+<br>
+<table bgcolor="#e5e5e5" width="100%">
+<tr><td align="center"><b><font color="blue"> ?????? ????? ??? ?? </font></b></td></tr>
+</table>
+	<input type="hidden" name="valdir">
+	<input type="hidden" name="stat" value="$stat">
+	<input type="hidden" name="stat1" value="$stat1">
+	<input type="hidden" name="btname" value="$btname">
+</form>
+<SCRIPT LANGUAGE="javascript">
+function popupWin2(url,popupName)
+{
+       Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+function popupWin(urlName,popupName)
+{
+	 window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+}
+function Changedir(frm,field)
+        {
+                frm.valdir.value=document.frm.dirname.value;
+
+        }
+function checkNull(frm,field)
+{
+		if(frm.valdir.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("Please select option");
+                }
+
+}
+function open_mywin(url,height,width) {
+window.open(url,height,width)
+}
+</script>

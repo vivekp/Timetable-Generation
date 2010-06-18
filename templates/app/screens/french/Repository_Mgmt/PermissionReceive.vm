@@ -1,0 +1,115 @@
+
+
+$page.setTitle("$brih_ad $brih_home |$Repo_Repo1")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+
+  <td><b>
+		     </td>
+</table>
+<br>
+<table bgcolor="$ui.tableColor" width=80% align="center">
+   <tr><td align =center>
+                <marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+                <font size=4 color="blue">
+                <b> 
+						        Bienvenue  $authorname 
+					</b>
+                </font>
+</td>
+</tr>
+</table>
+
+<br>
+	<div align="center">
+ <table  bgcolor="$ui.tableColor" cellspacing=1 cellpadding=5 border="1">
+                        <tr> 
+                                <td  valign="top"> 
+				 <table bgcolor="$ui.tableColor"  cellspacing=1 cellpadding=5 border=1>
+					<form name="frm" action="$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").setAction("Repo_Permission")">
+					<tr>
+					<td align="center" colspan=2 bgcolor="$ui.menuColor">
+                                                <b>Permission Recevoir</b>
+					</td>
+					</tr>
+									<tr><td>Aucune Permission jusqu'à la Date D'aujourd'hui....</td></tr>
+						</form>
+				</table>
+				</td> 
+                                				
+                       </tr> 
+</table>
+</div>
+
+<script LANGUAGE="JAVASCRIPT">
+
+	function checkField(frm,field)
+        {
+		var i=0;
+                var bool=false;
+                var bool2=true;
+                var permdel = frm.permdel;
+                var bool1 = isNaN(permdel.length) ;
+                if(!bool1)
+                {
+
+                        for(i=0;i< permdel.length ;i++)
+                        {
+                                if(permdel[i].checked)
+                                {
+                                        bool=true;
+                                        break;
+                                }
+
+                        }//for
+
+                        for(i=0;i< permdel.length  ;i++)
+                        {
+                               bool2 = ((permdel[i].checked)&& (bool2))
+
+                        } //for
+
+                        if( bool)
+                        {
+                                 if(bool2)
+                                {
+                                       frm.empty.value="true";
+                                }
+
+                                frm.actionName.value=field.name;
+                                frm.submit();
+
+                        }
+                        else
+                        {
+                                alert("Please select checkbox");
+                        }
+                }//if
+                else
+                {
+                 if(permdel.checked)
+                 {
+                                /*
+                                * empty value is made true when the list is empty
+                                */
+                                frm.empty.value="true";
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                        else
+                        {
+                                alert("Please select checkbox");
+                        }
+                } //else
+
+
+        }
+
+ function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+
+</script>

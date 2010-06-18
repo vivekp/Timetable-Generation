@@ -1,0 +1,112 @@
+#*
+ * @(#)ViewCourseList.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ *#
+
+$page.setTitle("$brih_reg2 $brih_course $brih_list")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align=right>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b><a href=$link.setPage("BrihaspatiLogin.vm").addPathInfo("lang",$lang)>$brih_login $brih_Of1 $WikiPage</a> |
+	$brih_reg2 $brih_course
+	</b>
+	</font>
+	</td>
+</tr>
+</table>
+<br>
+<form name="frm" method="Post">
+#set($listConf = ["10","20","30","40","50"] )
+<table align="center" width="60%">
+	<tr bgcolor="$ui.tableColor">
+	<td align="left">
+		<select name="SearchList" onChange="ShowList(document.frm,this);"/>
+			<option value=$ListConf_str>$ListConf_str</option>
+			#foreach($list in $listConf)
+				#if($ListConf_str != $list)
+					<option value=$list>$list</option>
+				#end
+			#end
+                </select>     
+		#if($lang == "english")
+			<b>$brih_select $brih_valueList</b>&nbsp;&nbsp;
+		#else
+			<b>$brih_list $brih_for $brih_value $brih_select</b>&nbsp;&nbsp;
+		#end
+	</td>
+	<td align="right">
+	##<b>$brih_course $brih_Of $brih_search</b>&nbsp;&nbsp;<input type="text" name="SearchKey" value="$!SearchKey" onSelect="ShowList(document.frm,this);"/>
+	<input type="text" name="SearchKey" value="$!SearchKey" onSelect="ShowList(document.frm,this);"/>&nbsp;&nbsp;<b> $brih_search1 $brih_course </i>
+	</td>
+	</tr>
+</table>
+#if($status!="empty")
+#set($headings = ["$brih_course $brih_Of1 $brih_ID","$brih_course $brih_Of1 $brih_name","$brih_status","$brih_instructor $brih_Of1 $brih_name","$brih_instructor $brih_Of1 $brih_email"] )
+<table align="center">
+<tr>
+	<td><font size=4><u><b>$brih_reg2 $brih_course</b></u></font></td>
+</tr>
+</table>
+<table border=1 align="center">
+	<tr>
+  		#foreach ($heading in $headings)
+  		<td align=center bgcolor="$ui.menuColor"><font size=4><b>$heading</b></font></td>
+		#end
+	</tr>
+	#foreach($entry in $allcourse)
+	<tr>
+		#entryCell($!entry.getGroupName())
+		#entryCell($entry.getCourseName())
+		#if ($entry.getActive()=="1")
+			<td bgcolor="$ui.tableColor"><font color="Green">$brih_active $brih_in $brih_is</font></td>
+		#else
+		<td bgcolor="$ui.tableColor"><font color="Red">$brih_inactive $brih_in $brih_not $brih_is</font></td>
+		#end
+		#entryCell($!entry.getInstructorName())
+		#entryCell("<a href=mailto:$!entry.getEmail()>$!entry.getEmail()</a>")
+	</tr>
+	#end
+	<tr>
+	<td align="center" colspan=5 bgcolor="$ui.menuColor">
+        	#if($total_size <= $ListConf)
+         	<u><font color="white">$brih_first</font></u> &nbsp;
+         	<u><font color="white">$brih_nxt</font></u> &nbsp;
+         	<u><font color="white">$brih_pre</font></u> &nbsp;
+         	<u><font color="white">$brih_last</font></u> &nbsp;
+          	#elseif($startIndex== $ListConf_str)
+          	<u><font color="white">$brih_first</font></u> &nbsp;
+          	<u><font color="white">$brih_pre</font></u> &nbsp;
+          	<a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$startIndex)">$brih_nxt</a> &nbsp;
+          	<a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+         	#elseif($endIndex == $total_size || $endIndex > $total_size)
+         	<a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$check_first)">$brih_first</a> &nbsp;
+         	<a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+         	<u><font color="white">$brih_nxt</font></u> &nbsp;
+         	<u><font color="white">$brih_last</font></u> &nbsp;
+          	#else
+           	 <a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$check_first)">$brih_first</a> &nbsp;
+           	 <a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+           	 <a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">$brih_nxt</a> &nbsp;
+            	 <a href="$link.setPage("ViewCourseList.vm").addPathInfo("lang",$lang).addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+		#end
+
+
+	</td>
+	</tr>
+</table>
+#end
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function ShowList(frm,field)
+	{
+		frm.submit();
+	}
+</SCRIPT>

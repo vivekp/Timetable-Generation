@@ -1,0 +1,316 @@
+#*
+ * @(#)OnlineRegistration.vm 
+ * Copyright (c) 2008,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a> 
+ * @author <a href="mailto:omprakash_kgp@yahoo.co.in">Om Prakash</a> 	
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @modify 20-03-2009
+ *#
+
+$page.setTitle("Login Page | Online Registration ")
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+		<font face="$ui.sansSerifFonts" size=3><b>
+			<a href=$link.setPage("BrihaspatiLogin.vm")> $brih_login $WikiPage </a>| $online_online $brih_reg   
+</td></tr>
+</table>
+<form name=frm method="post" action="$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).setAction("OnlineRegistration")">
+<table align="left" bgcolor="$ui.tableColor" width=100%><tr><td align="right"><img src="$content.getURI("/images/hand.gif")">
+	<font face="$ui.sansSerifFonts" size=3>
+	<a href=javascript:popupWin("/brihaspati2/docs/OnlineRegistration.html","newWin");>$brih_help</a>
+	</font></td></tr>
+</table>
+$!data.getMessage()
+<table align=left bgcolor="$ui.tableColor" width="100%">
+<tr bgcolor="$ui.menuColor">
+<td align=left width=50%><b>
+<a href=$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).addPathInfo("status","UserResitration")> $brih_usr $brih_reg </a>
+</td>
+<td<b><a href=$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).addPathInfo("status","CourseRegistration")> $brih_course $brih_reg </a></td>
+</tr>
+##</table>
+##<table align=center bgcolor="$ui.tableColor" border=2 cellpadding="5">
+	#if($status == "UserResitration")
+      	<tr>
+	    <td colspan=2 face="$ui.sansSerifFonts" align=left>
+        	<b>$brih_usr $brih_reg </b>
+	</td>
+        </tr>
+        <tr bgcolor="$ui.menuColor">
+        	#formCell ("$brih_usr $brih_name <font color=red>*</font>" "UNAME" "")
+        </tr>
+        <tr>
+        	#formPasswordCell ("$brih_pwd" "PASSWD" "")
+        </tr>
+	<tr bgcolor="$ui.menuColor">
+		#formCell(" $brih_first  $brih_name " "FNAME" "")
+	</tr>
+	<tr>
+		#formCell(" $brih_last $brih_name " "LNAME" "")
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+		#formCell(" $online_organisation " "ORGTN " "")
+	</tr>	
+	  <tr>
+	  	#formCell(" $brih_email $brih_ID <font color=red>*</font>" "EMAIL" "")
+	  </tr>
+	  <tr bgcolor="$ui.menuColor">
+	  <td>$brih_sel_course <font color=RED>*</font></b></td>
+	<td>
+    	<select id="group_id" name="group" size=1 onChange="ChangeRole(document.frm,this);"/>
+	  <option>
+	  #foreach($name in $courseList)
+	  #if($name.getName()!="global")
+	  <option value="$name.getName()">$name.getName()
+	   #end
+	   #end
+	   </option>
+	  </select>
+	 </td>
+	 </tr>
+
+	<tr><td>$brih_sel_Role <font color="Red">*</font></td>
+        <td><select id="role_id" name="role" size=1 onChange="ChangeGroup(document.frm,this);"/>
+	<option>
+		<option value="student">$brih_student
+		<option value="author">$brih_author
+	</option>
+	</select>
+	</td>
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+	<td colspan=2 align="left">
+	<input type="hidden" name="actionName">
+        <input type="hidden" name="groupName" value="$name.getName()">
+    	<input type="hidden" name="group_author">
+    	<input type="hidden" name="role_author">
+    	<input type="button" name="eventSubmit_UserRegister" value="$brih_reg1" onClick="checkField(document.frm,this);"/> 
+	<input type="Reset" name="Reset" Value="$brih_clear"/>
+	</td>
+	</tr>
+       
+	#end
+	<br>
+
+##////////////Course Registration///////////
+
+	#if($status == "CourseRegistration")	
+
+	<tr bgcolor="$ui.tableColor">
+          <td align=left colspan=2>
+           <font face="$ui.sansSerifFonts" size=3> <b> $brih_course $brih_reg </b>
+          </td>
+        </tr>
+        <tr bgcolor="$ui.menuColor">
+            #formCell(" $brih_course $brih_ID <font color=red>*</font>" "COURSEID" "")
+        </tr>
+        <tr>
+            #formCell("$brih_course $brih_name <font color=red>*</font>" "CNAME" "")
+        </tr>
+        <tr bgcolor="$ui.menuColor">
+            #formCell(" $brih_dept " "DEPT" "")
+        </tr>
+ 
+        <tr>
+           #formCell(" $brih_usr $brih_name <font color=red>*</font>" "UNAME" "")
+        </tr>
+        <tr bgcolor="$ui.menuColor">
+            #formPasswordCell(" $brih_pwd " "PASS" "")
+        </tr>
+        <tr>
+	
+           #formCell(" $brih_first  $brih_name " "FNAME" "")
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+
+           #formCell(" $brih_last $brih_name " "LNAME" "")
+	</tr>	
+	<tr>
+	   #formCell(" $online_organisation " "ORGTN" "")
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+            #formCell(" $brih_email $brih_ID <font color=red>*</font>" "EMAIL" "")
+	</tr>
+        <tr bgcolor="$ui.tableColor">
+            <td align=left colspan=2>
+    		<input type="hidden" name="actionName">
+    		<input type="button" name="eventSubmit_CourseRegister" value=" $brih_submit " onClick="checkCourseName(document.frm,this);"/>
+       		 &nbsp;&nbsp;&nbsp;
+    		<input type="reset" name="Clear" value=" $brih_clear " onClick="checkClear(document.frm,this);"/>
+       	    </td>
+        </tr>
+		
+	#end
+
+</table>
+
+##  </div>
+</form>
+</body>
+
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+	
+	function checkField(frm,field)
+	{
+		if((frm.UNAME.value!="")&&(frm.EMAIL.value!="")&&(frm.group.value!="")&&(frm.role.value!=""))
+		{
+			var emailID=document.frm.EMAIL;
+			if (echeck(emailID.value)==false){
+	                emailID.value="";
+			emailID.focus();
+			return; 
+			}
+			else
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill all the Mandatory(*) Fields !");
+			
+		}
+	}
+function echeck(str) {
+
+
+
+                var at="@"
+
+                var dot="."
+
+                var lat=str.indexOf(at)
+
+                var lstr=str.length
+
+                var ldot=str.indexOf(dot)
+
+                if (str.indexOf(at)==-1){
+
+                   alert("Invalid E-mail ID")
+
+                   return false;
+
+                }
+
+                if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+
+                   alert("Invalid E-mail ID")
+
+                   return false;
+
+                }
+
+                if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                }
+
+                 if (str.indexOf(at,(lat+1))!=-1){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+		if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+
+                 if (str.indexOf(dot,(lat+2))==-1){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+
+                 if (str.indexOf(" ")!=-1){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+
+                 return true
+        }
+
+
+	function ChangeRole(frm,field)
+	{
+		if(frm.group.value=="author")
+		{
+		       frm.role.value="author";
+		       frm.role_author.value=frm.role.value;
+		       makeDisable();
+		}
+		else
+		{
+		       if(frm.role.value=="author")
+		       {
+		       frm.role.value="";
+		       }
+		       makeEnable();
+		}
+	}
+	function ChangeGroup(frm,field)
+        {
+		if(frm.role.value=="author")
+		{
+		       frm.group.value="author";
+		       frm.group_author.value=frm.group.value;
+		       makeDisable_group();
+		}
+		else
+		{
+		       if(frm.group.value=="author")
+		       {
+		       frm.group.value="";
+		       }
+		       makeEnable_group();
+		}
+	}
+
+        function checkCourseName(frm,field)
+        {
+                if((frm.COURSEID.value!="")&&(frm.CNAME.value!="")&&(frm.UNAME.value!="")&&(frm.EMAIL.value!=""))
+                {
+			var emailID=document.frm.EMAIL;
+                        if (echeck(emailID.value)==false){
+	                        emailID.value=""
+        	                emailID.focus()
+				return;
+                        }
+                        else
+                        	frm.actionName.value=field.name;
+			frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Text Fields........");
+                }
+        }
+        function checkClear(frm,field)
+        {
+                frm.COURSEID.value="";
+                frm.CNAME.value="";
+                frm.UNAME.value="";
+                frm.EMAIL.value="";
+        }
+
+
+</SCRIPT>

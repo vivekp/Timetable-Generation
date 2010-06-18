@@ -1,0 +1,75 @@
+
+
+
+$page.setTitle("Admin Home | View Online Registration ")
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table  bgcolor="$ui.menuColor" width=100%>
+<tr> <td>
+ <b><a href=$link.setPage("Index.vm")>Admin's Heim</a> |
+ <a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("status","UserResitration")>Anzeigen Online Eintragung</a> |
+Anzeigen Kurs Eintragung
+</td></tr>
+</table>
+<body>
+<form name="frm" method="post" action="$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("lang",$lang).setAction("OnlineRegistration_Admin")">
+<table align="left" width=100% bgcolor="$ui.tableColor">
+<tr>
+<td align=left width=33%><b>
+        <a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("status","UserResitration")>Anzeigen Benutzer Eintragung </a>
+</td>
+<td align=33%><b>
+        <a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("status","CourseRegistration")>Anzeigen Kurs Eintragung </a>
+</td>
+<td align=left>
+<img src="$content.getURI("/images/hand.gif")"><font face="$ui.sansSerifFonts" size=3>
+<a href=javascript:popupWin("/brihaspati2/docs/OnlineRegistrationAdmin.html","newWin");>Hilfe </a></font>
+</tr>
+</table>
+
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function AcceptField(frm,field)
+        {
+		if(frm.deleteFileNames.value != "")
+		{
+			frm.actionName.value=field.name;
+        	        frm.submit();
+		}
+		else
+		{
+			alert("Please select the check box");	
+			return;	
+		}
+	}
+ 
+        function addDeleteList(field,frm)
+        {
+		if(field.checked)
+        	{
+                	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}                
+        	else
+		{
+                      	var rmFile,index,actualString,preString,postString;
+	        	actualString=frm.deleteFileNames.value;
+        	        index=actualString.indexOf(field.name+"^",0);
+                	preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+	                actualString=preString+postString;
+        	        frm.deleteFileNames.value=actualString;
+		}                
+        }
+
+
+</SCRIPT>
+

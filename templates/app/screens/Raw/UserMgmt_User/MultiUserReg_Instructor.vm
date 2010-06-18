@@ -1,0 +1,122 @@
+#*
+ * @(#) MultiUserReg_Instructor.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | $course | Student Management | Add Multiple Users ")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_student $brih_mgmt</a> | $brih_multi_usr
+        </td>
+	</b>
+</tr>
+</table>
+	<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+        	<font size=4 color=red><b>$brih_upload_msg5</b></font>
+        </marquee>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_User,MultiUserReg_Instructor.vm").setAction("UserAction_Instructor")">
+<div align="left">
+<br>
+<table align="Right"><tr><td ><img src="$content.getURI("/images/hand.gif")">
+<font face="$ui.sansSerifFonts" size=3>
+<a href=javascript:popupWin("/brihaspati2/docs/Userdoc.html","newWin");>$brih_help</a>
+</font></td></tr></table>
+<br>
+<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+      	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>$brih_multiStuRegist<b></font>
+	</td>
+	</tr>
+	<tr>
+	<td bgcolor="$ui.tableColor">
+	 	 <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	$brih_course $brih_name
+	  	</b>
+	</td>
+     	<td>
+		$course		
+	</td>
+    	</tr>
+  	</tr>
+   	<tr>
+        	#fileUpload ("$brih_at_file <font color=RED>*</font>" "file")
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.buttonBoxColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUpload" value="$brih_upload" onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#foreach( $e in $Msg )
+        <tr bgcolor="$ui.tableColor">
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$brih_entry <font color="brown">"$e.getErr_User()"</font>
+        </font>
+        </td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        </tr>
+#end
+</table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+</SCRIPT>

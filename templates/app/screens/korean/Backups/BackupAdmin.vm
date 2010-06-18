@@ -1,0 +1,54 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Backup")
+
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Admin.vm")>Admin's ì§? </a> | <a href=$link.setPage("call,Backups,Backups.vm")> ë°±ì?? </a> |  ê³¼ì ? Wise ë°±ì??         </td>
+</tr>
+</table>
+<br>
+<center>
+<blink><font color="red"><b>ì ?ë°? ì¢? ê°?ì ¸ê°? ì§?ë§?  ì?? ë??í?? ë?°ì?´í?°ë² ì?´ì?¤ ë°±ì?? "ëª¨ë? "ì½?ì?¤ </b></font></blink>
+</center>
+
+<br>
+<form name=frm method="post" action="$link.setAction("BackupAction").setPage("call,Backups,BackupAdmin.vm")">
+
+	<div align="center">
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" >
+        
+      
+		<tr><td colspan="3" align="center" >
+			<font size=4><b>ë¬¼ë¡  ë°±ì??ì?? ì? í?? ë??êµ¬ ë?¹ì? ì?? ë?°ë ¤ê°?ê³  ì?¶ì?´ì??</b></font>
+		</td></tr>
+		<tr><td bgcolor="$ui.tableColor">
+			<select name="courses">
+				<option value="Courses">ëª¨ë?? ì½?ì?¤</option>
+						</select>		
+		</td>
+		<td bgcolor="$ui.tableColor">
+          		<font face="$ui.sansSerifFonts">
+	        	<input type="button" name="eventSubmit_doCourseBackup" value="ë?´ì?©   ë°±ì??" onClick="checkField(document.frm,this);"/>
+          		<input type="button" name="eventSubmit_doStudent_db_backup" value="ë?°ì?´í?°ë² ì?´ì?¤ ë°±ì??" onClick="checkField(document.frm,this);"/>
+			<input type="hidden" name="actionName">
+          		</font>
+		</td></tr>
+		     
+	</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }
+</SCRIPT>

@@ -1,0 +1,54 @@
+#*
+ *  @(#) Quiz.vm
+ * Copyright (c) 2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("QuestionBank | Quiz ")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Index.vm")>$brih_home</a>  | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | $brih_quiz $brih_home
+        </td>
+</tr>
+</table>
+<br>
+
+<table width=20% bgcolor="$ui.menuColor" border=0 cellpadding=10>
+<b>This Module is under construction</b>
+#** 
+#if($user_role=="instructor")
+<tr>
+ <td align=centre>
+   <table cellspacing=4>
+   <tr>
+      <td>
+        ##<a href=$link.setPage("TestInfo.vm")>
+        <img src=$content.getURI("/images/GenerateTest.jpg")><a><br>
+      </td>
+   </tr>
+#end
+   <tr>
+        <td>
+          <a href=$link.setPage("call,Question_Bank,ViewList.vm")>
+          <img src=$content.getURI("/images/ViewAllTest.jpg")></a><br>
+        </td>
+    <tr>
+    <tr>
+<td>
+          <a href=$link.setPage("call,Question_Bank,OnLinetest.vm")>
+          <img src=$content.getURI("/images/OnLineTest.jpg")></a><br>
+        </td>
+    </tr>
+*#
+   </table>
+  </td>
+ </tr>
+</table>

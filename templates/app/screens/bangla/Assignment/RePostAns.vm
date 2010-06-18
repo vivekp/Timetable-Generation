@@ -1,0 +1,80 @@
+
+
+
+<table bgcolor="$ui.tableColor" width=100% >         <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>????? ??????</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | </b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> ????????? ???  </a>|</b>
+        <a href=$link.setPage("call,Assignment,AssView.vm")> </a> ????? ???  </b>
+        </td></tr>
+</table> 
+  
+
+<br>
+<br>
+		<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,RePostAns.vm").setAction("Assignments")>
+	<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+	<tr bgcolor="$ui.menuColor" >
+		<td >	<b>	?????? ???   </b> </td>
+		<td>  <SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+         	<option value="" ></option>
+				</SELECT>
+		</td>
+                </tr>         
+	<tr>
+                #fileUpload ("???? ?? ??????? <font color=RED>*</font>" "file")
+        </tr>
+        <tr>
+ <td colspan=2 align="center" bgcolor="$ui.menuColor">
+                <font face="$ui.sansSerifFonts">
+		<input type="button" name="RePostAns" value="??????" onClick="checkBlank(document.uploadform,this);"  />
+                               <input type="hidden" name="actionName">             
+                               <input type="hidden" name="date" value=$date />             
+                               <input type="hidden" name="courseid" value=$courseid />             
+		</font>
+        </td>
+        </tr>
+</table>
+</form>
+<script LANGUAGE="JAVASCRIPT">       
+  
+        function checkBlank(uploadform,field)
+        {
+		var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.topicList.value!="")
+                {
+                        if(uploadform.file.value!="")
+                        {
+			
+	        	        uploadform.actionName.value=field.name;
+        	        	uploadform.submit();
+
+                        }
+                        else
+                         alert("Attach file Can not Empty !!");
+
+                }
+                else
+                        alert("Selected Topic can not Empty !!");
+        }
+
+
+        function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+                }
+                if(frm.group.value=="author")
+                {
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+               }
+        }
+
+
+</script>

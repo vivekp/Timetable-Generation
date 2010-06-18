@@ -1,0 +1,35 @@
+
+
+$page.setTitle("Home | $course | Course management")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>Home</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | Course Management
+	</font>
+</td>
+</tr>
+</table>
+<table width=100%>
+<tr>
+	<td align=right>
+	<img src="$content.getURI("/images/hand.gif")">	<a href=javascript:popupWin("/brihaspati2/docs/CourseManagement.html","newWin");>Help</a>
+	</td>
+</tr>
+</table>
+<body>
+<font face="$ui.sansSerifFonts">
+<ul>
+</ul>
+</font>
+</body>   
+ 
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

@@ -1,0 +1,54 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Backup")
+
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Admin.vm")>Admin's �?ом </a> | <a href=$link.setPage("call,Backups,Backups.vm")> Резе�?вное копи�?ование </a> |  �?�?�?�? Wise Резе�?вное копи�?ование         </td>
+</tr>
+</table>
+<br>
+<center>
+<blink><font color="red"><b>�?ожал�?й�?�?а, не �?�?и�?а�?�? �?езе�?вной копии баз�? данн�?�? дл�? "в�?е�?" �?�?�?�?�?</b></font></blink>
+</center>
+
+<br>
+<form name=frm method="post" action="$link.setAction("BackupAction").setPage("call,Backups,BackupAdmin.vm")">
+
+	<div align="center">
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" >
+        
+      
+		<tr><td colspan="3" align="center" >
+			<font size=4><b>�?�?бе�?и�?е к�?�?�? подпо�?к�? ко�?о�?ого в�? �?о�?и�?е п�?ин�?�?�?</b></font>
+		</td></tr>
+		<tr><td bgcolor="$ui.tableColor">
+			<select name="courses">
+				<option value="Courses">�?�?е �?�?�?�?�?</option>
+						</select>		
+		</td>
+		<td bgcolor="$ui.tableColor">
+          		<font face="$ui.sansSerifFonts">
+	        	<input type="button" name="eventSubmit_doCourseBackup" value="Соде�?жание  Резе�?вное копи�?ование" onClick="checkField(document.frm,this);"/>
+          		<input type="button" name="eventSubmit_doStudent_db_backup" value="�?аза данн�?�? Резе�?вное копи�?ование" onClick="checkField(document.frm,this);"/>
+			<input type="hidden" name="actionName">
+          		</font>
+		</td></tr>
+		     
+	</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }
+</SCRIPT>

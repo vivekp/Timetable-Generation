@@ -1,0 +1,249 @@
+#*
+ * @(#) Quiz_Schedule.vm
+ * Copyright (c) 2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">jaivir singh</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr align="right">
+                <td>
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz </a> | 
+                <font face="$ui.sansSerifFonts"><b>
+		#if($quizinfo == "QuizDetail")
+			$brih_schedule $brih_update
+		#else
+			 $brih_quiz $brih_schedule
+		#end
+                | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+                <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+                </font>
+                </td>
+        </tr>
+</table>
+
+<br>
+$!data.getMessage()
+
+#set($month=["01","02","03","04","05","06","07","08","09","10","11","12"])
+#set($day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+
+#set($hour=["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"])
+#set($second=["00","05","10","15","20","25","30","35","40","45","50","55"])	
+
+
+	#if($quizinfo == "QuizDetail")
+		<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm").setAction("Quiz_Action")>
+	#else	
+		<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Quiz_Schedule.vm").setAction("Quiz_Action")>
+	#end
+  <table Cell padding=20 Cell spacing=0 align=center bgcolor="$ui.tableColor" border=1 width=50% >
+        <tr bgcolor="$ui.menuColor" >
+                <td align=center colspan=4 >
+			<b> $brih_quiz $brih_schedule </b>			                
+                </td>
+        </tr>
+	#if($quizinfo == "QuizDetail")
+	<tr bgcolor="$ui.tableColor">	
+		<td align=center colspan=2 >
+		 <i> $!qid </i> <b> = $brih_quiz $brih_Of1 $brih_ID  </b> &nbsp;&nbsp;  <i> $title  </i> <b> = $brih_quiz $brih_Of $brih_title </b>
+		</td>
+	</tr>	
+	#else
+	<tr align="right">
+		<td> <input type="text" size=8 name="qid" value="$!qid" "readonly"></td>
+		<td><b><font color=RED> *</font> $brih_quiz $brih_ID </b> </td>
+	</tr>
+	<tr align="right">
+                <td><input type="text" size=8 name="title" value=""></td>
+		<td><b> <font color=RED> *</font> $brih_quiz $brih_Of $brih_title </b> </td>
+	</tr>
+	#end
+        <tr align="right">
+		<td>
+                  <select name="Start_year">
+			#if($quizinfo == "QuizDetail")
+				<option value="$year">$cyear
+			#else
+                  		<option value="$year">$year
+			#end
+			#if($totaltime == "notBlockUpdate")
+				#foreach($cyear in $year_list)
+		    			#if($cyear != $year)
+		      				<option value="$cyear">$cyear
+			    		#end
+				#end
+			#end
+		  </select>
+		  &nbsp<b><font size=+1>-</font></b>&nbsp
+		  <select name="Start_mon">
+            		<option value="$cmonth">$cmonth
+			#if($totaltime == "notBlockUpdate")	
+	    			#foreach($mon in $month)
+	    				#if($mon != $cmonth)
+            				<option value="$mon">$mon
+	    				#end
+	    			#end
+			#end
+		</select>
+  		&nbsp;<b><font size=+1>-</font></b>&nbsp;
+                <select name="Start_day">
+			<option value="$cdays">$cdays
+			#if($totaltime == "notBlockUpdate")
+			#foreach($d in $day)
+		    		#if($d!=$cdays)
+					<option value="$d">$d
+		    		#end
+		  	#end
+			#end
+		</select>
+	        </td>
+                <td>
+                	<b> $brih_quiz  $brih_Of $brih_Da </b>
+            	</td>
+	</tr>	
+	<tr align="right">
+                <td>
+                  <select name="Start_hr">
+                  #if($quizinfo == "QuizDetail")
+			<option value="$hr">$hr
+		  #end
+		#if($totaltime == "notBlockUpdate")		
+                  #foreach($hr in $hour)
+                    <option value="$hr">$hr
+                  #end
+		#end
+                </select>
+	
+		&nbsp<b><font size=+1>-</font></b>&nbsp
+	
+		<select name="Start_min">
+		#if($quizinfo == "QuizDetail")
+			<option value="$m">$m
+		#end
+		#if($totaltime == "notBlockUpdate")
+            	#foreach($m in $second)
+            	   	<option value="$m">$m
+        	#end
+		#end
+            	</select>
+ 		</td>
+		<td>
+                        <b> $brih_start $brih_time </b>
+                </td>
+	</tr>
+
+	<tr align="right">
+                <td>
+
+                <select name="Last_hr">
+			#if($quizinfo == "QuizDetail")
+                        	<option value="$hr1">$hr1
+                	#end	
+                	#if($totaltime == "notBlockUpdate")
+			#foreach($hr in $hour)
+				<option value="$hr">$hr
+                  	#end
+			#end
+		</select>
+		&nbsp<b><font size=+1>-</font></b>&nbsp
+		<select name="Last_min">
+			#if($quizinfo == "QuizDetail")
+                        	<option value="$m1">$m1
+                	#end
+			#if($totaltime == "notBlockUpdate")
+			#foreach($m in $second)
+				<option value="$m">$m
+            		#end
+			#end
+		</select>
+
+		</td>
+                <td>
+                        <b> $brih_end $brih_time </b>
+                </td>
+        </tr>
+	<tr align="right">
+		#if($quizinfo == "QuizDetail")
+		<td><input type="text" size=8 name="marks" value="$!marks" "readonly"></td>
+		#else
+		<td><input type="text" size=8 name="marks" value="$!marks"></td>
+		#end
+        	<td><b> <font color=RED> *</font> $brih_marks $brih_Of $brih_max </b></td>
+	</tr>
+        <tr bgcolor="$ui.menuColor" >
+	<td align=center colspan=2>
+        	<font face="$ui sanSerif fonts">
+			#if($quizinfo == "QuizDetail")
+				<input type=button name="eventSubmit_doUpdate" value=$brih_update onClick="checkfield(document.frm,this);"/>
+				<input type="hidden" name="mode" value=$quizinfo >	
+				<input type="hidden" name="quizid" value=$qid>	
+				<input type="hidden" name="title" value=$title>	
+			#else
+			     <input type=button name="eventSubmit_doSchedule" value=$brih_submit onClick="checkQuez(document.frm,this);"/>
+			#end
+			     <input type=button name="reset" value="$brih_reset" >
+			     <input type="hidden" name="actionName">
+                                </font>
+	</td>
+	</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+        function checkQuez(frm,field)
+        {
+		if(frm.title.value !="" && frm.marks.value !="" )
+		{
+			var value=frm.title.value;
+			var temp="~`!@#%^&*()-+={[}]|\\:;'<,>./?\f\n\r\t\v";
+			var btype=new Boolean(true);	
+			for(k=0;k<temp.length;k++)
+	                {
+                        	for (n = 0; n < value.length; n++)
+                        	{
+                                	if(temp.charAt(k) == value.charAt(n))
+                                        	btype=false;
+						
+	                        }
+        	        }
+			if(!btype)
+				alert("Please ckeck the Special cherector !!");	
+			if(btype)
+			{
+				if((frm.marks.value>=10) && (frm.marks.value<=100))
+                        	{
+                                	frm.actionName.value=field.name;
+                                	frm.submit();
+                        	}
+	                        else
+        	                {
+                	                alert("The max marks of quiz should be between 10 to 100");
+                        	}
+			}
+			
+
+		}
+		else
+			alert("Please Fill All (*) Fields");	
+        }
+        function checkfield(frm,field)
+        {
+        	frm.actionName.value=field.name;
+                frm.submit();
+	}
+
+</script>

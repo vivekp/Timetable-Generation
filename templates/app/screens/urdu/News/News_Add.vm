@@ -1,0 +1,117 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<body>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr align=right>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			                        $page.setTitle("Home ")
+                        <a href=$link.setPage("Index.vm")>????</a> |&nbsp;
+									$page.setTitle("| $course | Communication | News | Addnews")
+			<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> &nbsp;| &nbsp;
+			<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>???????</a> &nbsp;|&nbsp;
+			<a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status",$status)>???? ?? ?????</a> &nbsp;| &nbsp;
+			???? ????  ?????
+			                </td>
+        </tr>
+</table>
+<table width=100%>
+        <tr>
+                <td align=left>
+                        			<blink>	<a href="/brihaspati2/docs/CourseHome.html">??? </a><img src="$content.getURI("/images/Lefthand.gif")"> </blink>
+                </td>
+        </tr>
+</table>
+</body>
+<br>
+
+<form name=frm method="post" action="$link.setAction("NewsAction").setPage("call,News,News_Edit.vm").addPathInfo("status",$status)">
+  <table Cell padding=20 Cell spacing=0 align=center bgcolor="$ui.tableColor" border=1">
+          <tr bgcolor="$ui.menuColor" align=center>
+                <td align=center>
+		<font size=4><b><I>?????</I></b></font>&nbsp;&nbsp;<img src="$content.getURI("/images/newspaper.gif")"> 
+                </td>
+        </tr>
+        <tr align="right">
+                                <td>
+                <table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor">
+    		<tr align="right">
+             	<td align=right>
+                  <select name="Start_year">
+                  <option value="$cyear">$cyear
+		                  </select>
+      &nbsp<b><font size=+1>-</font></b>&nbsp
+          <select name="Start_mon">
+            <option value="$cmonth">$cmonth
+	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	    	                </select>
+  		&nbsp;<b><font size=+1>-</font></b>&nbsp;
+                  <select name="Start_day">
+                  <option value="$cdays">$cdays
+		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		  		    		              </select>
+                  </td>
+            	<td>
+                <b>???  ?? ?????</b>
+            	</td>
+   </tr>		
+			<tr align="right">
+				<td><input type="text" size=25 name="nt" value=""></td>
+                                <td><b> <font color=RED> *</font> ??? ?? ???? </b></td>
+				
+                        </tr>
+                        <tr align=right>
+				<td><textarea name="news" wrap="physical" rows=5 cols=50></textarea></td>
+				<td><b> <font color=RED> *</font> ??? ?? ?????</b></td>
+
+			</tr>
+                        <tr align=right>
+				<td><input type="text" size=3 name="et" value="7"></td>
+                                <td><b> <font color=RED> *</font> ???? ???? ???? ??? </b></td>
+                        </tr>
+                        <tr>
+                                <td align=center colspan=2>
+                               <font face="$ui sanSerif fonts">
+			     <input type=button name="eventSubmit_doInsert" value="????  ??? " onClick="checkNews(document.frm,this);"/>
+			     <input type=button name="reset" value="??????  ?????" onClick="clearData(document.frm,this);">
+			     <input type="hidden" name="actionName">
+                                </font>
+                                </td>
+                        </tr>
+   			</td>
+                       </tr>
+                </table>
+                </td>
+        </tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function clearData(frm,field)
+	{
+		frm.nt.value="";
+		frm.news.value="";
+		frm.et.value="";
+		
+	}
+        function checkNews(frm,field)
+        {
+          if((frm.nt.value!="") &&(frm.news.value!="") && frm.et.value!="")
+                {
+		    	if((frm.et.value>=1) && (frm.et.value<=30))
+	       		{
+                        	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else
+			{
+				alert("The Expiry time Should be between 1 to 30 days");
+			}
+                }
+                else 
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+</SCRIPT>

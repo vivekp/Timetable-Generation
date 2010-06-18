@@ -1,0 +1,168 @@
+#*
+ * @(#)Calendar_Day.vm
+ * Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singhnk@iitk.ac.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">Jaivir Singh</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()<br>
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr align="right">
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		#if($data.getUser().getUserName()=="admin")
+		$page.setTitle("$brih_ad $brih_home ")
+         	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | 
+  		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>$brih_calendar</a> 
+			| $day $month_name $year
+		#elseif($path=="personal")
+  			$page.setTitle("$brih_home | $personal $brih_calendar | $day of $month_name'$year")
+			<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+  			<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>$personal $brih_calendar</a> 
+			 | $day  $month_name $year
+		#else
+  			$page.setTitle("$brih_home | $course | $brih_calendar | $day of $month_name'$year")
+			<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+  			<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+  			<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>$brih_calendar</a> | 
+			$day $month_name $year
+		#end
+		</font>
+		</td>
+	</tr>
+</table><br>
+<form name="frm" action="$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").setAction("Calendar_Actions")"> 
+<table align=center  width=70% border="1" cellpadding=5 cellspacing=0>
+<tr bgcolor="$ui.menuColor"> 
+	 <td align=right colspan=5><b><I> $year -  $day -  $month_name </I></td>
+</tr>
+#if($size!="")
+<tr bgcolor="PINK">
+	<font size=1>	
+	<td align=center><b><I>$brih_availableAction</I></b></td></font>
+	<td align=center><b><I>$brih_detail</b></I></td>
+	<td align=center><b><I>$brih_end $brih_time</b></I></td>
+	<td align=center><b><I>$brih_start $brih_time</I></b></td>
+	<td align=center>-</td> 
+</tr>
+	#set($count1=1)
+	#foreach ($element in $information) 
+        <tr bgcolor="$ui.tableColor">
+		#set($count2=1)
+		#foreach($desc in $description) 
+			#set($count3=1)
+			#foreach($acc in $accessible) 
+				#set($count4=1)
+                                #foreach($stTime in $start_time)
+                                #if(($count1 == $count2) && ($count1 == $count3) && ($count1 == $count4)) 
+					
+				#*	#if("$element.getUserId()" == $current_userid)
+                               	<font>  <td width=3% align="center"><input type="checkbox" name="$element.getInfoId()" onClick="addDeleteList(this,document.frm);"></td>
+                        		#elseif($currentRoleId == 2)
+                               		<td width=3% align="center"><input type="checkbox" name="$element.getInfoId()" onClick="addDeleteList(this,document.frm);"></td>
+					#else
+                               			<td width=3% align="center"><input type="checkbox" disabled="true"></td>
+				</font>
+					#end*#
+				#if($path=="personal") 
+		   		<td align=center>
+				<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Insert.vm").addPathInfo("day",$day ).addPathInfo("mon",$month_num).addPathInfo("year",$year).addPathInfo("info_id",$element.getInfoId()).addPathInfo("mode","update").addPathInfo("path","personal")><I>$brih_edit</a>
+					</td>
+				#else
+					#if($primary_instructor=="true") 
+		   			<td align=center>
+					<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Insert.vm").addPathInfo("day",$day ).addPathInfo("mon",$month_num).addPathInfo("year",$year).addPathInfo("info_id",$element.getInfoId()).addPathInfo("mode","update").addPathInfo("path",$path)><I>$brih_edit</a>
+					</td>
+					#else
+						#if($current_userid == $acc) 
+		   				<td align=center>
+						<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Insert.vm").addPathInfo("day",$day ).addPathInfo("mon",$month_num).addPathInfo("year",$year).addPathInfo("info_id",$element.getInfoId()).addPathInfo("mode","update").addPathInfo("path",$path)><I>$brih_edit</a>
+						</td>
+						#else
+		   				<td align=center>
+						<font color=white>$brih_edit</font>
+						</td>
+						#end 
+					#end 
+				#end	
+####################################	
+				<td><I>$desc</I></td>	
+                                <td><I>$element.getEndTime()</I></td>
+				<td><I>$stTime</I></td> 
+					#if("$element.getUserId()" == $current_userid)
+                               	<font>  <td width=3% align="center"><input type="checkbox" name="$element.getInfoId()" onClick="addDeleteList(this,document.frm);"></td>
+                        		#elseif($currentRoleId == 2)
+                               		<td width=3% align="center"><input type="checkbox" name="$element.getInfoId()" onClick="addDeleteList(this,document.frm);"></td>
+					#else
+                               			<td width=3% align="center"><input type="checkbox" disabled="true"></td>
+				</font>
+					#end
+######################################
+			#end 
+			#set($count4=$count4+1)
+                        #end 
+		#set($count3 = $count3 + 1)
+		#end 
+	#set ($count2 = $count2 + 1)
+	#end 
+	</tr>
+	#set ($count1 = $count1 + 1)
+	#end
+		#if($size!="0")	 
+		<tr bgcolor="$ui.menuColor">
+		<td align=left>
+		<input type="button" name="eventSubmit_doDelete" Value=$brih_delete onClick="checkField(document.frm,this);">
+        	<input type="hidden" name="actionName">
+        	<input type="hidden" name="deleteFileNames">
+		<input type="hidden" name="path" value=$path>
+        	<input type="hidden" name="day" value=$day>
+        	<input type="hidden" name="mon" value=$month_num>
+        	<input type="hidden" name="year" value=$year>
+        	<input type="hidden" name="mode" value=$mode>
+        	<input type="hidden" name="info_id" value=$info_id>
+		#end
+#end				
+	#if($t)	
+	<td align=center colspan=5>
+        <a href=$link.setPage("call,Calendar_Mgmt,Calendar_Insert.vm").addPathInfo("day",$day ).addPathInfo("mon",$month_num).addPathInfo("year",$year).addPathInfo("path",$path).addPathInfo("mode","insert")><I>$brih_event $brih_add</a> 
+      </td>
+	#end
+    </tr>
+</table> 
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+	{
+		if(frm.deleteFileNames.value!="")
+		{
+     			frm.actionName.value=field.name;
+     			frm.submit();
+    		}
+    		else
+     			alert("Please select checkbox for deletion !!");
+	}
+	function addDeleteList(field,frm)
+	{
+		if(field.checked)
+		{
+			frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        	}
+		else
+		{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;
+		}
+	}
+ 
+</SCRIPT>

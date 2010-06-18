@@ -1,0 +1,71 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+<td>
+<font face="$ui.sansSerifFonts" size=3>
+<b><a href=$link.setPage("call,Admin.vm")>????? ?? ????</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,ListManagement.vm")>????? ?????</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>??????  ?????</a> | ?????  ??? ?????
+$page.setTitle("call,List Management | User List | Change Password")
+</b>
+</td>
+</tr>
+</table>
+
+<br>
+<br>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin")">
+        <table border=1 align="center" bgcolor="$ui.tableColor" cellpadding=5>
+          <tr>
+	  <td bgcolor="$ui.menuColor" align="center">
+	  <font size=4><b>?? ?? ?????  ??? ????? ???? ? '$username'</b></font>
+	  </td>
+	  </tr>
+	  <tr>
+	  <td>
+          <table cellpadding=5>
+	  <tr align="right">
+	      		<td> <input type="password" size="30" name="newpass" value=""> </td>
+		<td><b> <font color=Red>*</font>?????  ??? </b></td> 
+	  </tr>
+	  </table>
+	  </td>
+	  </tr>
+	  <tr>
+             <td align="center">
+
+               <font face="$ui.sansSerifFonts">
+                 <input type="button" name="eventSubmit_doUpdatePass" value="?????" onClick="checkpass(document.frm,this);"/>
+                 <input type="reset" name="clear" value="???? ????" onClick="clearValues(document.frm,this);"/>
+                 <input type="hidden" name="username" value=$username />
+                 <input type="hidden" name="actionName"/>
+                 <input type="hidden" name="mode" value="All"/>
+               </font>
+     </td>
+     </tr>
+     </table>
+     <br>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkpass(frm,field,v)
+ {
+ if(frm.newpass.value!="")
+     {
+      frm.actionName.value=field.name;
+      frm.submit();
+     }
+ else
+    {
+        alert("Password can not be null!");
+    }
+ }
+
+function clearValues(frm,field)
+{
+	frm.newpass.value="";
+}
+</SCRIPT>

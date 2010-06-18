@@ -1,0 +1,104 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<body>
+<table bgcolor="$ui.menuColor" width=100%>
+        <tr><td>
+			       </td></tr>
+</table>
+<table width=100%><tr><td>
+        <table width=100% align=left bgcolor="$ui.tableColor">
+        <tr><td width=25%>
+        <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","adphase")>Ð?Ð¿Ñ?Ð¾Ñ?</a>
+        </td>
+        <td width=25%>
+        <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","sresult")>Ð?Ð¿Ñ?Ð¾Ñ? Ð ÐµÐ·Ñ?Ð»Ñ?Ñ?Ð°Ñ?</a>
+        </td>
+        <td width=25%>
+                <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","update")>Ð?Ð¿Ñ?Ð¾Ñ? Ð?Ð·Ð¼ÐµÐ½Ð¸Ñ?Ñ?</a>
+        </td>
+        <td width=25%>
+                <a href=$link.setPage("call,EventMgmt_Admin,Academic_Event.vm")>Ð?ÐºÐ°Ð´ÐµÐ¼Ð¸Ñ?Ð½Ñ?Ðµ Ñ?Ð»Ñ?Ñ?Ð°Ð¸</a>
+        </td>
+        </tr>
+</table>
+
+
+<table width=100% align=left bgcolor="$ui.menuColor">
+        <tr>
+	<td><i>Ð? Ð¿Ð¾Ð»Ðµ Ñ?Ð»Ñ?Ñ?Ð°Ñ? Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±Ñ?Ñ?Ñ? " #" Ð¼ÐµÐ¶Ð´Ñ? Ð´Ð½ÐµÐ¼ Ð¸ eventname </i></td>
+                <td align=right>
+<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati/docs/acdcal.html","newWin");>Ð?Ð¾Ð¼Ð¾Ñ?Ñ?</a>
+                </td>
+        </tr>
+</table>
+</body>
+<form name=frm method="post" action="$link.setAction("AcademicAction").setPage("call,EventMgmt_Admin,Academic_Event.vm").addPathInfo("mode","edit")">
+
+  <table align=left bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		        	<td><b><i>Ð?Ð¾Ð±Ð°Ð²Ñ?Ñ?Ðµ Ð?ÐºÐ°Ð´ÐµÐ¼Ð¸Ñ?Ð½Ñ?Ðµ Ñ?Ð»Ñ?Ñ?Ð°Ð¸</i></b></td>
+			</tr>
+	</table>
+
+  <table align=left bgcolor="$ui.tableColor" width=100%>
+			<tr>
+        	<td align=left colspan=2>
+        	<font face="$ui.sanSerifFonts">
+				<input type=button name="eventSubmit_doUpdate" value=update onClick="checkList(document.frm,this);"/>
+				<input type="hidden" name="actionName">
+		<input type="hidden" name="val">
+		<input type="hidden" name="mode" value="edit">
+        	</font>
+        	</td>
+        </tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	 function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=200,width=300,align=center");
+        }
+
+        function checkEvent(frm,field)
+        {
+          	if((frm.event.value!="") && (frm.etype.value!=""))
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+        	else 
+        	{
+        		alert("Please Write the events");
+        	}
+	}
+        function checkList(frm,field)
+        {
+          	if(frm.detail.value!="") 
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+        	else 
+        	{
+        		alert("Please Write the events");
+        	}
+	}
+
+        function checkData(frm,field)
+        {
+          	if((frm.Start_mon.value!="") && (frm.Start_year.value!="") && (frm.etype.value!=""))
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+	}
+	function checkoption (frm,field)
+	{
+        	frm.val.value=document.frm.etype.value;
+	}
+
+</SCRIPT>

@@ -1,0 +1,73 @@
+#*
+ * @(#) Logwiki.vm
+ * Copyright(c)2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:manav_cv@yahoo.co.in">Manvendra Baghel</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_home | $course | $brih_Wiki | $WikiLog $brih_Wiki")
+$page.setBgColor("#ffffff")
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,Wiki,Wiki.vm")>$brih_Wiki</a> | $WikiLog $brih_Wiki
+
+        </font>
+</td>
+</tr>
+</table>
+
+
+
+## Representation of HELP link
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati2/docs/Wikiusermanual.html","newWin");>$brih_help</a>
+                </td>
+        </tr>
+</table>
+
+
+<br>
+
+<div align=center>
+	<table align="center" border=1 bgcolor="$ui.menuColor" cellpadding="5" width="10%" >
+		<tr>
+			<td>
+			#if($lang == "hindi")
+				 <INPUT type="text" value="$filename" size="25" READONLY>  $WikiLogtxt1 
+			#else 
+				$WikiLogtxt1  <INPUT type="text" value="$filename" size="25" READONLY> 
+			#end
+			</td>
+		</tr>
+		<tr>	
+			<td>
+
+<TEXTAREA  wrap="virtual" name="text" rows="25"  cols="100" READONLY>
+#foreach($t in $first)
+$t
+#end
+</TEXTAREA>
+
+			</td>
+		</tr>
+	</table>       
+</div>    
+
+
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

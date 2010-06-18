@@ -1,0 +1,74 @@
+
+
+
+
+$page.setTitle("Home | $course | Student Management | View Online Registration ")
+
+$page.setBgColor($ui.bgcolor)
+
+
+<br>
+<table  bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+ <td>
+ <font face="$ui.sansSerifFonts" size=3>
+ <b>
+
+	<a href=$link.setPage("call,IndexHome.vm")>?????</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+	<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>????????  ???????</a> |??????  ????  ?????? ???????
+
+ </b></font>
+</td>
+</tr>
+</table>
+<br>
+
+<br>
+<body>
+<form name="frm" method="post" action="$link.setPage("call,OnLine_Rgtn,ViewOnlineRegistrationInstructor.vm").setAction("OnlineRegistration_Instructor")">
+
+<div align=center>
+<br>
+
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+        function AcceptField(frm,field)
+        {
+		 if(frm.deleteFileNames.value != "")
+                {
+			frm.actionName.value=field.name;
+	                frm.submit();
+		}
+		else
+		{
+			alert("Please select the check box");
+                        return;
+                }
+		
+	}
+ 
+        function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        }
+
+
+</SCRIPT>
+

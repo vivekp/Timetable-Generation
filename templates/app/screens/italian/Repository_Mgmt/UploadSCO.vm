@@ -1,0 +1,150 @@
+
+
+$page.setTitle("$brih_upload")
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("UploadSCO")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr><td><b>
+<a href=$link.setPage("call,Repository_Mgmt,Author.vm")>Autore Home </a> | 
+	Carica Contenuto
+</b>
+</td></tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=right>
+<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/ContentUpload.html","newWin");>Aiuto</a>
+</td>
+</tr>
+</table>
+<table width="100%"><tr><td><b>????? ???? ?? ??? ???? (????)  ?? ??</b></td><td align="right"><b>????????  ????    ?? ?? </b></td></tr></table>
+<table border="1" bgcolor="$ui.tableColor">
+        <tr>
+                                        <br>
+                                               </td>
+                </tr>
+</table>
+<script LANGUAGE="JAVASCRIPT">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+	function blurTopicName(frm)
+	{
+		//document.uploadform.topicExisting.value="OLDTOPIC";
+		
+		frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+	}
+	
+	function changeTopic(frm)
+	{
+		if(frm.topicExisting[0].checked)
+		{
+			frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+		}
+		else
+		{
+			frm.contentTopic.focus();
+		}
+	}
+
+	function checkRadio()
+	{
+		if(document.uploadform.topicExisting[0].checked)
+		{
+			document.uploadform.contentTopic.blur();
+		}
+		
+	}
+	function validate(uploadform,field)
+	{
+		var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.contentTopic.value!="")
+                {
+                        var totNamedEntries=uploadform.topicList.length;
+                        for(i=1;i<totNamedEntries;i++)
+                        {
+                                if(tList.options[i].text==cTopic.value)
+                                {
+                                        if(uploadform.topicExisting[1].checked)
+                                        {
+                                                if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+                                                {
+                                                uploadform.actionName.value=field.name;
+                                                uploadform.submit();
+                                                }
+                                                else
+                                                {
+                                                return;
+                                                }
+
+                                        }
+                                }
+                        }
+                        uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+                else
+                {
+                        alert("Topic Name Can not Empty !!");
+                }
+	}
+</script>
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Repository_Mgmt,UploadSCO.vm").setAction("UserAreaAction").addPathInfo("actionName","eventSubmit_doUpload")" >
+  <div align="left">
+    <table align=center bgcolor="$ui.bgcolor" cellpadding="0">
+	 <tr>
+                <img src="$content.getURI("/images/hand.gif")"><font color="red">Assicurati che non hai <b>'+'</ b> caratteri i nomi dei file dei file che stai caricando!</font>
+        </tr>
+<br><br>
+      <tr>
+	<td colspan=4>
+	<input type="RADIO" name=topicExisting checked=true value="OLDTOPIC" onClick=blurTopicName(document.uploadform)>Esistenti  Tema
+	<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+	  <option></option>
+	  	</SELECT>
+	<input type="RADIO" name=topicExisting value="NEWTOPIC" >Nuovo  Tema
+	</td>
+	</tr>
+	
+      <tr>
+  	<td bgcolor="$ui.tableColor">
+  	<b><font face="$ui.sansSerifFonts">Tema nome</font> </b>
+	</td>
+	<td>
+	<input type="text" name=contentTopic onFocus=checkRadio() size=26>
+    	</td>
+      <tr>
+              #fileUpload ("1.&nbsp; Allega file " "file1")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("6.&nbsp; Allega file  &nbsp;" "file6") 
+      </tr>
+      <tr>
+              #fileUpload ("2.&nbsp; Allega file " "file2")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("7.&nbsp; Allega file  &nbsp;" "file7") 
+      </tr>
+      <tr>
+              #fileUpload ("3.&nbsp; Allega file " "file3")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("8.&nbsp; Allega file  &nbsp;" "file8") 
+      </tr>
+      <tr>
+              #fileUpload ("4.&nbsp; Allega file " "file4")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("9.&nbsp; Allega file  &nbsp;" "file9") 
+      </tr>
+      <tr>
+              #fileUpload ("5.&nbsp; Allega file " "file5")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("10.&nbsp; Allega file  &nbsp;" "file10") 
+      </tr>
+
+      <tr>
+	<td colspan=5 align="center" bgcolor="$ui.buttonBoxColor">
+          <font face="$ui.sansSerifFonts">
+        <input type="button" name="eventSubmit_doUpload" value="Carica" onClick="validate(document.uploadform,this);"/>
+	<input type="hidden" name="actionName"value="">
+
+          </font>
+        </td>
+      </tr>
+      
+    </table>
+</div>
+</form>

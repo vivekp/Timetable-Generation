@@ -1,0 +1,89 @@
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+                <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð° </a> | Ð?Ð»Ð°Ñ?Ñ? Ð?Ð°Ñ?Ñ?Ð¾Ñ?ÐºÐ° 
+                </font>
+                </td>
+        </tr>
+</table>
+
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Gradecard.vm").setAction("Quiz_Action")>
+<div align="left">
+
+<br >
+<br>
+				
+	<table align=center bgcolor="$ui.tableColor" border=1 cellpadding="5" width=60% >
+					  <input type="hidden" name="actionName">
+	</table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+        
+	function checkField(frm,field)
+        {
+                if(frm.userList.value !="") {
+			if(isNumberString(frm.DB_subject.value))
+                        {
+			       alert("Max Grade should be an integer value");
+                                                                return false;
+                        }
+
+			frm.actionName.value=field.name;
+                       	frm.submit();
+		}
+                else
+                        alert(" Please select Student name  !!");
+        }
+	function checkField1(frm,field)
+        {
+                if(frm.userList.value !="") {
+
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert(" Please select Student name  !!");
+        }
+
+		
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789@";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+	
+	function addDeleteList(field,frm)
+        {
+        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                frm.DB_subject.value=frm.DB_subject.value+field.value+"@";
+	}
+	
+</script>

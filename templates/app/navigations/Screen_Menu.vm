@@ -1,0 +1,86 @@
+#*
+ * @(#) Screen_Menu.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ * @author<a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ *
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+##$page.setBgColor("#e5e5e5")
+<table width="100%" bgcolor="$ui.menuColor">
+<div class="menu" align="center">
+ <div class="heading">
+<b><i><font color="Brown" size=4>$data.getUser().getTemp("course_name")</font>
+ </div>
+</div>
+
+<hr/>
+#######################################
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+####################################
+ #if($data.getUser().getTemp("role") == "instructor")
+                <tr>
+                        <td align="left">
+                                <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")><img src="$content.getURI("/images/$lang/Coursemanagement.png")"border=0></a><br>                         </td>
+                </tr>
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")><img src="$content.getURI("/images/$lang/s-management.png")"border=0></a><br>                         </td>
+                </tr>
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,Question_Bank,Question_bank.vm")><img src="$content.getURI("/images/$lang/qbank.png")"border=0></a><br>
+                        </td>
+                </tr>
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,UserMgmt_User,UploadMarks.vm")><img src="$content.getURI("/images/$lang/marks1.png")"border=0></a><br>
+                        </td>
+                </tr>
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,Backups,BackupIns.vm")><img src="$content.getURI("/images/$lang/backup.png")"border=0></a><br>
+                        </td>
+                </tr>
+        #end
+        #if($data.getUser().getTemp("role") == "student")
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")><img src="$content.getURI("/images/$lang/coursecontent.png")"border=0></a><br>                         </td>
+                </tr>
+		#if($data.getUser().getUserName() != "guest") ##guest is not login
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,UserMgmt_User,ViewMarks.vm")><img src="$content.getURI("/images/$lang/viewmarks.png")"border=0></a><br>
+                        </td>
+                </tr>
+		#end
+        #end
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")><img src="$content.getURI("/images/$lang/communication.png")"border=0></a><br>
+                        </td>
+                </tr>
+	#if($data.getUser().getUserName() != "guest") ##guest is not login
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")><img src="$content.getURI("/images/$lang/quiz.png")"border=0></a><br>
+                        </td>
+                </tr>
+                <tr>
+                        <td align="left">
+                        <a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","fromcourse")><img src="$content.getURI("/images/$lang/Coursecal.png")"border=0></a><br>
+                        </td>
+                </tr>
+
+                <tr>
+			 <td align="left">
+                        <a href=$link.setPage("call,Wiki,Wiki.vm")><img src="$content.getURI("/images/$lang/wiki.png")"border=0></a><br>
+                        </td>
+                </tr>
+	#end
+## --------------------
+##end
+## ---------------------
+</table>

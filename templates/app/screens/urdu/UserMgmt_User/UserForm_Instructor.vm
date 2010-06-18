@@ -1,0 +1,37 @@
+
+
+$page.setBgColor($ui.bgcolor)
+	$page.setTitle("Home | $course | Student Management | List of Students | Update User")
+ 
+   <table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+      <tr align="right">
+        <td><b>
+        <font face="$ui.sansSerifFonts" size=3>
+	 ?????  ??????   |
+	 <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>????? ????? ??? </a> 	
+	| <a href=$link.setPage("call,UserMgmt_User,StudentList.vm").addPathInfo("mode","All")>???? ?? ????? </a>  
+	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |  
+        <a href=$link.setPage("call,IndexHome.vm")> ????</a> 
+	
+	</td>
+    </tr>
+</table>
+
+<br>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_User,StudentList.vm").setAction("UserAction_Instructor")">
+  <div align="left">
+    <table width=40% border=1 align=center bgcolor="$ui.tableColor" cellpadding="5">
+	<tr>
+		<td align="center" bgcolor="$ui.menuColor"><font size=4>
+			<b>??????  ?? ?????</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% bgcolor="$ui.tableColor" border="1" CellPadding="5">
+			  </table>
+</td>
+</tr>
+</table>
+</div>
+</form>

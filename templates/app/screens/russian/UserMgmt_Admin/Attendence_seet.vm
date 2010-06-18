@@ -1,0 +1,56 @@
+
+
+
+
+<table bgcolor="$ui.tableColor" width=100% align="center">
+    <tr bgcolor="$ui.menuColor"> <td colspan=7>
+        <a href=$link.setPage("index.vm")>Admin's Ð?Ð¾Ð¼</a> |
+        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ</a> | Ð?Ð¾Ñ?ÐµÑ?Ð°ÐµÐ¼Ð¾Ñ?Ñ?Ñ?Ð Ð°Ð¿Ð¾Ñ?Ñ?
+     </td></tr>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">Ð?Ð¾Ð±Ð°Ð²Ñ?Ñ?Ðµ Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ? Ð?Ñ?Ñ?Ñ? Ð¡Ð¿Ð¸Ñ?Ð¾</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>Delete Ð?Ð½Ñ?Ñ?Ñ?Ñ?ÐºÑ?Ð¾Ñ?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>Delete Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>Ð?Ð¾Ð±Ð°Ð²Ñ?Ñ?Ðµ Ð?Ð½Ð¾Ð¶ÐµÑ?Ñ?Ð²ÐµÐ½Ð½Ñ?Ðµ Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ?</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>Ð?Ð²ÐµÑ?Ñ?Ð?Ð°Ð³Ñ?Ñ?Ð·Ð¸Ñ?Ñ? Ð¤Ð¾Ñ?Ð¾</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>Ð?Ð¾Ñ?ÐµÑ?Ð°ÐµÐ¼Ð¾Ñ?Ñ?Ñ?Ð Ð°Ð¿Ð¾Ñ?Ñ?</a></td>
+</tr>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("status","ForallUser")">
+
+
+        <tr bgcolor="$ui.menuColor">
+                                <td align=left colspan=7>
+                        <b>Ð?Ð°Ñ?Ñ? Ð¡Ñ?Ñ?Ñ?Ð½Ð° </b>
+                        <input align=center type="text" name="valueString" value="" >
+                        <input type="button" name="Search" value="Ð?Ð¾Ð¸Ñ?Ðº" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+        </tr>
+
+	<tr>	
+				<td colspan=7 align="left">
+	                <b> Ð?Ð¾Ñ?ÐµÑ?Ð°ÐµÐ¼Ð¾Ñ?Ñ?Ñ?Ð Ð°Ð¿Ð¾Ñ?Ñ? Ð?Ð»Ñ? <font color=green><i> Ð?Ð½Ñ?Ñ?Ñ?Ñ?ÐºÑ?Ð¾Ñ? </i></b></font>
+                </td>
+	</tr> 
+  	<tr>
+		<td colspan=7>
+      								<tr bgcolor="$ui.menuColor">
+				<td colspan=7 align="left"><b>
+					Ð?Ð½Ñ?Ñ?Ñ?Ñ?ÐºÑ?Ð¾Ñ? Ð?Ð¼Ñ?  
+				</td>
+			</tr>
+						</td>
+		</tr>
+</table>
+
+<SCRIPT language="JavaScript">
+        function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

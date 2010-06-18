@@ -1,0 +1,41 @@
+
+$page.setTitle("Home | $cname | Communication | Local Mail")
+<body>
+
+<table bgcolor="$ui.menuColor" width=100%>
+       <tr><td>
+	<font face="$ui.sansSerifFonts"><b>
+	        <a href=$link.setPage("call,IndexHome.vm")>????</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |
+                <a href=$link.setPage("call,Local_Mail,Mail.vm")>??????????</a> | ????? ????
+               </font>
+	</td>
+       </tr>
+</table>
+
+
+
+<form method="GET" action="$link.setPage("call,Local_Mail,MailContent.vm")">
+<table width=100% align=left bgcolor="$ui.tableColor"> 
+<tr>
+			<td><a href=$link.setPage("call,Chat,Chat.vm")>????</a></td>
+		<td><a href=$link.setPage("call,Notice_User,Notices.vm")>??????????</td>
+		<td><a href=$link.setPage("call,Dis_Board,DB.vm")>???????? ??</td>
+		<td><a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status","fromCourse")>?????</td>	
+	
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor"> 
+<tr bgcolor="$ui.menuColor"><td colspan=2 align="left">
+<img src="$content.getURI("/images/newmail1.gif")">
+<blink>
+<font size="3"><b>????? ??????? (<font color="Blue">$unread</font>)</blink>&nbsp&nbsp
+&nbsp&nbsp; ?????? ??????(<font color="blue">$total</font>)</b></font>
+		</td>
+	</tr>
+		<tr bgcolor="$ui.menuColor"><td align="left"><a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","compose")>
+			<img border=0 src="$content.getURI("/images/ml.gif")"><b>???????? ??????</b></a></td></tr>
+	</table>
+
+</body>
+</form>

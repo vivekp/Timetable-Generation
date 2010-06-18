@@ -1,0 +1,131 @@
+
+
+$page.setTitle("Brihaspati Administrator")
+$page.setBgColor("#ffffff")
+
+<font face="$ui.sansSerifFonts">
+<table width=100% bgcolor="$ui.menuColor">
+<tr><td>
+	                <a href=$link.setPage("Index.vm")>ì§?</a> |
+                <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | ì?¤ë¬¸ ì¡°ì?¬ ì?? ì??í?´ $cname
+                </td></tr>
+</table>
+<table width=100%><tr><td>
+	<table width=100% align=left bgcolor="$ui.tableColor">
+	<tr><td width=25%>
+	<a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","adphase")>ì?¤ë¬¸ ì¡°ì?¬</a>
+	        </td>
+	<td width=25%>
+	<a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","sresult")>ì?¤ë¬¸ ì¡°ì?¬ ê²°ê³¼</a>
+        </td>
+        <td width=25%>
+                <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","update")>ì?¤ë¬¸ ì¡°ì?¬ í?¸ì§?</a>
+	        </td>
+	<td width=25%>
+                <a href=$link.setPage("call,EventMgmt_Admin,Academic_Event.vm")>ì??ì¹´ë?°ë¯¹ ì?´ë²¤í?¸</a>
+	        </td>
+        </tr>
+</table>
+                <form name=frm method="post" action="$link.setAction("SurveyAction").setPage("call,EventMgmt_Admin,EventMgmt.vm")">
+<table width=100% align=left bgcolor="$ui.tableColor">
+        <tr><td><b>
+                </td></tr>
+                                                </table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+        
+                        <input type="hidden" name="actionName">
+                        <input type="hidden" name="val">
+                        <input type="hidden" name="mode" value=$mode>
+                        <input type="hidden" name="group" value=$group>
+        </table>
+        </form>
+</td></tr></table>
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckQues(frm,field)
+        {
+                if((frm.group1.value!="") &&(frm.uname.value!=""))
+                {
+                        if((frm.q1.value!="") &&(frm.q2.value!="") && (frm.q3.value!="") && (frm.q4.value!="") &&(frm.q5.value!=""))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        {
+                                alert("Please Fill All The mandatory (*) Fields");
+                        }
+                }
+                else
+                {
+                        alert("Please Select CourseId and InstructorName");
+                }
+        }
+	 function ValueUpdate(frm,field)
+        {
+                if((frm.pdate.value!="") &&(frm.q1.value!="") &&(frm.q2.value!="") && (frm.q3.value!="") && (frm.q4.value!="") &&(frm.q5.value!=""))
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                {
+                        alert("There is no question for updating");
+                }
+        }
+        function CheckMarks(frm,field)
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        function CheckResult(frm,field)
+        {
+                if((frm.group1.value!="") &&(frm.uname.value!=""))
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                {
+                        alert("Please Select CourseId and InstructorName");
+                }
+        }
+	 function checkField(frm,field)
+        {
+                var items;
+                items=frm.deleteFileNames.value;
+                if(items.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert("Please select checkbox  !!");
+        }
+        function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        }
+        function checkoption (frm,field)
+        {
+                frm.val.value=document.frm.group1.value;
+        }
+</SCRIPT>
+           

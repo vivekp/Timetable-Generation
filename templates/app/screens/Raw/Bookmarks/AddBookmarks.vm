@@ -1,0 +1,276 @@
+<html>
+#*
+*@(#)AddBookmarks.vm
+ *  Copyright (c) 2008-09 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | $brih_add $brih_Bookmark
+     </b></td>
+	<td align="right">
+          <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin2("/brihaspati2/docs/Addbookmarks.html","newWin");>$brih_help</a></td>
+	</tr>
+</table> ##table 1 end
+<br>
+<table bgcolor="#e5e5e5" width="100%">
+        <tr>
+                <td align="center"><b>
+                <a href=$link.setPage("call,Bookmarks,AddBookmarks.vm").addPathInfo("mode","addBmarks")>$brih_add $brih_Bookmark</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href=$link.setPage("call,Bookmarks,ManageBookmarks.vm").addPathInfo("stat1","All")>$brih_Manage $brih_Bookmark</a></b>&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+        </tr>
+</table>
+<br>
+<form name="frm" method="post" action=$link.setPage("call,Bookmarks,ManageBookmarks.vm").setAction("Bookmarks").addPathInfo("stat1","All").addPathInfo("Mode","NoBlank")>
+#if($mode =="addBmarks")
+<table bgcolor="#e5e5e5" width=100% > ## table 3 start
+<tr>
+	<td><b>$brih_name:</b></td>
+	<td><input type="text"  size="31" name="name"  value=""/></td>
+</tr>
+<tr>
+	<td><b>$brih_Url/$brih_Location:</b></td>
+	<td><input type="text"  size="31" name="location"  value="http://"/></td>
+</tr>
+<tr>
+        <td><b>$brih_Comment:</b></td>
+        <td><input type="text"  size="50" name="comment"  value=""/></td>
+	<input type="hidden" name="type" value="general">
+        <td><input type="button" name="eventSubmit_doCreateFolder" value="$brih_new $brih_Folder" onClick="SetDirName(document.frm,this);"/></td>
+</tr>
+<tr>
+	#if($Mode=="NoBlank")
+        <td><b>$brih_select $brih_Folder:</b></td>
+	<td>
+                        <select name="foldername" size="1" onChange="Changefolder(document.frm,this);"/>
+                                <option>  - $brih_select - </option>
+                                #foreach($bdname in $dirvalue)
+                                        <option value="$bdname">$bdname
+                                #end
+                                </option>
+                        </select>
+         </td>
+	#else
+	<td><i><b>$brih_Folder $Res_mess1</b></i></td>
+	#end
+
+</tr>
+	<tr><td align="left">
+        	<input type="button" name="eventSubmit_doSave" value="$WikiSave" onClick="checkField(document.frm,this);"/>
+		<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+	</td></tr>
+</table>
+#end
+#if($mode=="Course" ||$mode=="Course_file")
+<table bgcolor="#e5e5e5" width=100% > ## table 3 start
+<tr>
+	#if($mode=="Course")
+	<td><b> $brih_course $brih_name:</b></td>
+	#end
+	#if($mode=="Course_file")
+	<td><b> $brih_title :</b></td>
+	#end
+	<td><input type="text"  size="31" name="name"  value="$name"/></td>
+</tr>
+<tr>
+	#if($mode=="Course")
+	<td><b>$brih_title :</b></td>
+	#end
+	#if($mode=="Course_file")
+	<td><b>$brih_file $brih_name :</b></td>
+	#end
+	<td><input type="text"  size="31" name="location"  value="$location"/></td>
+</tr>
+<tr>
+        <td><b>$brih_Comment:</b></td>
+        <td><input type="text"  size="50" name="comment"  value=""/></td>
+	##<input type="hidden" name="type" value="Course">
+	<input type="hidden" name="type" value="$mode">
+</tr>
+	<tr><td align="left">
+        	<input type="button" name="eventSubmit_doSave" value="$WikiSave" onClick="checkField2(document.frm,this);"/>
+		<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+	</td></tr>
+</table>
+#end
+<br>
+<table  bgcolor="#e5e5e5" width="100%">
+#if($stat=="Move")
+#if($Mode=="NoBlank")
+<tr>
+        <td align="left"><b><i>Select Folder $brih_to $brih_move<font color="green"> $btname </font>Bookmark: </b></i>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="movedir" size="1" onChange="Changedir(document.frm,this);"/>
+                                <option>  - $brih_select - </option>
+                                #foreach($bdname in $dirvalue)
+                                        <option value="$bdname">$bdname
+                                #end
+                                </option>
+                        </select>
+         </td>
+</tr>
+<tr><td align="left">
+
+         <input type="button" name="eventSubmit_doMove" value="$brih_move" onClick="checkselect(document.frm,this);"/>
+ <input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+</td></tr>
+#else
+<td align="center"><b>$brih_Folder $Res_mess1</b></td>
+#end
+#end
+</table>
+<table  bgcolor="#e5e5e5" width="100%">
+#if($stat=="Rename")
+<tr>
+<td align="left"><b><i>$brih_Rename $brih_forthe <font color="green"> $btname </font>$brih_Bookmark:</i></b>
+<input type="text"  size="31" name="bname"  value=""/></td>
+</tr>
+<tr><td align="left">
+         <input type="button" name="eventSubmit_doRename" value="$brih_Rename" onClick="checkselect1(document.frm,this);"/>
+ <input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+</td></tr>
+#end
+</table>
+<table width="100%">
+#if($stat=="view")
+#if($Mode=="NoBlank")
+<tr><td align="left"><font size="5"><b><i>$brih_Bookmark $brih_Of1 <font color="green"> $bturl </font></i></b></font></td></tr>
+		#foreach($file in $dirContent)
+		<tr>
+		<td><a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("topic",$bturl).addPathInfo("dir",$bgroup).addPathInfo("type","Bookmarks").addPathInfo("filename",$!file.getName())","newWin")>$!file.getName()</a>&nbsp;&nbsp;</td>
+		#end
+</td>
+</tr>
+##</table>
+#else
+<td align="center"><b>$brih_Content $brih_arenotexists</b></td>
+#end
+#end
+</table>
+
+
+	<input type="hidden" name="actionName" >
+	<input type="hidden" name="dirname" value="">
+	<input type="hidden" name="valfolder">
+	<input type="hidden" name="dirvalue">
+	<input type="hidden" name="stat" value="stat">
+	<input type="hidden" name="btname" value="$btname">
+	<input type="hidden" name="bturl" value="$bturl">
+	<input type="hidden" name="bgroup" value="$bgroup">
+</form>
+</html>
+<SCRIPT LANGUAGE="javascript">
+function checkselect(frm,field)
+{
+        var items;
+        items=frm.dirvalue.value;
+        if(items.length!=0)
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        alert("Please select option");
+}
+function checkselect1(frm,field)
+{
+        var items;
+        items=frm.bname.value;
+        if(items.length!=0)
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        alert("Please select option");
+}
+function checkField(frm,field)
+{
+	var theurl=document.frm.location.value;
+        var tomatch= /http:\/\/[A-Za-z0-9\.-]{3,}\.[A-Za-z]{3}/
+        if((frm.name.value!="")&&(frm.location.value!="")&&(frm.dirname.value!="")||(frm.comment.value!=""))
+        {
+		if(tomatch.test(theurl))
+        	{
+                frm.actionName.value=field.name;
+                frm.submit();
+		}
+		else
+                	alert("URL invalid. Try again.");
+        }
+        else
+                alert("Please fill the Mandatory(*) Fields !!");
+}
+function checkField2(frm,field)
+{
+        if((frm.name.value!="")&&(frm.location.value!="")&&(frm.dirname.value!="")||(frm.comment.value!=""))
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+                alert("Please fill the Mandatory(*) Fields !!");
+}
+function popupWin(urlName,popupName)
+{
+	 window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+}
+function popupWin2(url,popupName)
+{
+       Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+function SetDirName(frm,field){
+    var done=false;
+    
+    while (!done) {
+      var newdirname=prompt("Enter a name for the new folder!"," ");
+      var bln=true;
+
+      for(var i=0;i<newdirname.length;i++){
+          if(!(newdirname.charCodeAt(i)==32 || newdirname.charCodeAt(i)==95 || (newdirname.charCodeAt(i)>=65 && newdirname.charCodeAt(i)<=90) || (newdirname.charCodeAt(i)>=97 && newdirname.charCodeAt(i)<=122) || (newdirname.charCodeAt(i)>=48 && newdirname.charCodeAt(i)<=57))){
+              bln=false;
+          }
+      }
+
+      if(bln==false){
+          alert("Invalid Characters!");
+      }
+
+      newdirname=newdirname.replace(/^\s*/, '').replace(/\s*$/, '')
+      if(newdirname==""){
+          alert("No Blanks!");
+          bln=false;
+      }
+      if(bln!=false){
+          if(newdirname!=null){
+              document.frm.dirname.value=newdirname;
+		frm.actionName.value=field.name;
+                frm.submit();
+
+              done = true;
+          }
+      }
+    }
+}
+function Changefolder(frm,field)
+        {
+                frm.valfolder.value=document.frm.foldername.value;
+
+        }
+function Changedir(frm,field)
+        {
+                frm.dirvalue.value=document.frm.movedir.value;
+
+        }
+</script>
+
+

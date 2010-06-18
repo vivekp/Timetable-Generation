@@ -1,0 +1,97 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<body>
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+
+
+        <tr align="right" >
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			                </td>
+        </tr>
+</table>
+
+
+<table width=100%>
+        <tr>
+                <td align="left">
+		<a href=javascript:popupWin("/brihaspati/docs/acdcal.html","newWin");>??? </a> <img src="$content.getURI("/images/Lefthand.gif")">
+                </td>
+	<td align=center><i>????? ?? ???? ??? ?? ??? ?????? ?? ??? ?? ??? ??? "#" ????? ???? ?? ? </i></td>
+        </tr>
+</table>
+</body>
+
+<br>
+<form name=frm method="post" action="$link.setAction("AcademicAction").setPage("call,EventMgmt_Admin,Academic_Event.vm").addPathInfo("mode","edit")">
+
+  <table align=center bgcolor="$ui.menuColor" border=1 width=50% >
+	<tr>
+		        	<td align=center> <b><i>???? ????  ???? (??????) ?????</i></b></td>
+			</tr>
+	</table>
+
+  <table align=center bgcolor="$ui.tableColor" border=1 width=50%>
+			<tr>
+        	<td align=center colspan=2 bgcolor="$ui.menuColor">
+        	<font face="$ui.sanSerifFonts">
+				<input type=button name="eventSubmit_doUpdate" value=????? onClick="checkList(document.frm,this);"/>
+				<input type="hidden" name="actionName">
+		<input type="hidden" name="val">
+		<input type="hidden" name="mode" value="edit">
+        	</font>
+        	</td>
+        </tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	 function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=200,width=300,align=center");
+        }
+
+        function checkEvent(frm,field)
+        {
+          	if((frm.event.value!="") && (frm.etype.value!=""))
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+        	else 
+        	{
+        		alert("Please Write the events");
+        	}
+	}
+        function checkList(frm,field)
+        {
+          	if(frm.detail.value!="") 
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+        	else 
+        	{
+        		alert("Please Write the events");
+        	}
+	}
+
+        function checkData(frm,field)
+        {
+          	if((frm.Start_mon.value!="") && (frm.Start_year.value!="") && (frm.etype.value!=""))
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+	}
+	function checkoption (frm,field)
+	{
+        	frm.val.value=document.frm.etype.value;
+	}
+
+</SCRIPT>

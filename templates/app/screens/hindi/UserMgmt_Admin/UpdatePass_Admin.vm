@@ -1,0 +1,59 @@
+
+
+$page.setBgColor($ui.tableColor)
+
+$page.setTitle("call,List Management | User List | Change Password")
+
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr><td><font face="$ui.sansSerifFonts" size=3>
+<a href=$link.setPage("call,Admin.vm")>?????  ?? ?????</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm")>????  ???????</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>???  ????????????  ?? ????</a> | ???????  ????? $username
+</td></tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+	<td><a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">View All Course</a></td>
+        <td><a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">View All User</td>
+</tr>
+</table>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin")">
+<table align="left" width="100%" bgcolor="$ui.menuColor" >
+		<tr><td>???????  ????? $username</td></tr>
+	</table>
+<table align="left" width="100%" bgcolor="$ui.tableColor" >
+	<tr>
+	#formPasswordCell("???????  <font color=Red>*</font>" "newpass" "")
+	</tr>
+</table>
+<table align="left" width="100%" bgcolor="$ui.menuColor" >
+	<tr><td>
+        <input type="button" name="eventSubmit_doUpdatePass" value="???????" onClick="checkpass(document.frm,this);"/>
+        <input type="reset" name="clear" value="???????" onClick="clearValues(document.frm,this);"/>
+        <input type="hidden" name="username" value=$username />
+        <input type="hidden" name="actionName"/>
+        <input type="hidden" name="mode" value="All"/>
+     	</td></tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkpass(frm,field,v)
+ {
+ if(frm.newpass.value!="")
+     {
+      frm.actionName.value=field.name;
+      frm.submit();
+     }
+ else
+    {
+        alert("Password can not be null!");
+    }
+ }
+
+function clearValues(frm,field)
+{
+	frm.newpass.value="";
+}
+</SCRIPT>

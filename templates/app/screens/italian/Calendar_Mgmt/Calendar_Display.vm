@@ -1,0 +1,113 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+		<font><b>
+	 				<a href=$link.setPage("Index.vm")>Home page</a> |
+		$page.setTitle("Course Calendar ")
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		 Calendario for $course 		</font>
+	</td>
+</tr>
+</table>
+
+<table width="100%" bgcolor="$ui.tableColor">
+<tr><td><I>* Indica vi èn evento di tale data</I></td><td><font color="green"><I>Vacanze</I></font></td>
+<td><font color="magenta"><I>Eventi accademico</I></font></td><td><font color="green"><I>(R)Indica limitata vacanze</I></font></td> 
+<td><font color="Gray"><I>Data corrente</font></I></td></tr>
+</table>
+
+
+<table align="center" width="100%">
+<tr><td align="center" valign="top">
+	<table align="left" bgcolor="$ui.tableColor" width="100">
+		</table>
+</td>
+<td align="center" >
+
+<table align="center" bgcolor="$ui.menuColor" cellspacing="1" width="80%">
+<tr>
+	<td align=center>
+		<font size=2><b><I>Data & Tempo</b></I></font>
+	</td>
+	<td align=center>
+		<font color="blue" size=2><b><I>$date</I></b></font>
+	</td>
+</tr>
+</table>
+<table align=center bgcolor="$ui.menuColor" width="80%">
+<tr>
+	<td>
+		<font face="$ui.sansSerifFonts" size=1><b>
+		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","previous").addPathInfo("path",$path)><I>Precedente Mese</I></a>
+          	</font>
+	</td>
+	<td align=center bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFont" size=1>
+		<b>$M - $year1</b>
+		</font>
+	</td>
+	<td align=right bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFonts" size=1><b>
+        	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","next").addPathInfo("path",$path)><I>Successivo Mese</I></a>
+		</font>
+	</td>
+</tr>
+</table>
+    	
+<form name="frm" method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm")">
+		   <table align="center" bgcolor="$ui.tableColor" width="80%">
+		<tr bgcolor="$ui.tableColor"><td align="center">
+						<font size=1>	
+			<select name="month">
+       			<option value="$M">$M
+																																																																																										</option>
+	       		</select>
+       			<select name="year">
+		       <option value="$year1">$year1
+			       			</option>
+			</select>
+		</font>
+		<input type ="submit" value="Go">
+		<input type="hidden" name="status" value="current">
+		<input type="hidden" name="path" value="$path">
+	       </td>
+       </tr></table>
+        <table align=center bgcolor="$ui.tableColor" cellspacing="0" cellpadding="2" width=80%>
+                <tr>
+		              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> SUN </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> MON </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> TUE </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> WED </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> THR </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> FRI </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> SAT </font>
+		</td>
+              	        </tr>
+	<tr>
+															
+																																																																																																																																																																							</tr>
+       </table>
+</td>
+<td align="left" Valign="top">
+	</td>
+</tr>
+</table>
+</form>

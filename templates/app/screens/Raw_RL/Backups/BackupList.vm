@@ -1,0 +1,61 @@
+#*
+ * @(#) BackupList.vm
+ * Copyright(c)2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksingh@brihaspatisolutions.co.in">Nagendra Kumar Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<font face="$ui.sansSerifFonts">
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	#if($st == "ins")
+	$brih_backup |<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$data.getUser().getTemp("course_name" ).toString() </a> |  <a href=$link.setPage("call,IndexHome.vm")>$brih_home </a> 
+	#else
+        <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home </a> | <a href=$link.setPage("call,Backups,Backups.vm")> $brih_backup </a> | $brih_backup $brih_list
+	#end
+        </td>
+</tr>
+</table>
+<br>
+#if(!($list=="navil"))
+<table border="1" align="center">
+	<tr bgcolor= "$ui.menuColor">
+		<td colspan="4" align=center><b> $QuestionBank_available $brih_backup  $brih_Of $brih_list </b></id>
+	</tr>
+	<tr bgcolor="$ui.tableColor" align="center">
+		<td>$brih_availableAction</td>
+		<td> $brih_backup $brih_file $brih_Of1 $brih_name </td>
+		#if($st != "ins")
+		<td>$brih_serialNo</td>
+		#end
+	</tr>
+	#set ($i=1)
+	#foreach($lst in $list)
+		#if($st=="ins")
+			#if($lst.getName().startsWith($data.getUser().getTemp("course_id" ).toString()))
+				<tr>
+					
+			               ## <td>$i</td>
+			                <td><a href="$link.setPage("call,Backups,getZipfile.vm").addPathInfo("fName",$lst.getName())">$brih_download</a></td>
+			                <td>$lst.getName()</td>
+			        </tr>
+			#end
+		#else
+			<tr bgcolor= "$ui.tableColor">
+				<td><a href="$link.setAction("BackupAction").addPathInfo("actionName","eventSubmit_doDeletebackup").addPathInfo("fName",$lst.getName())">$brih_delete</a>
+				 &nbsp;&nbsp; <a href="$link.setPage("call,Backups,getZipfile.vm").addPathInfo("fName",$lst.getName())">$brih_download</a> </td>
+				<td>$lst.getName()</td>
+				<td>$i</td>
+			</tr>
+		#end
+	#set ($i=$i+1)
+	#end
+</table>
+#end

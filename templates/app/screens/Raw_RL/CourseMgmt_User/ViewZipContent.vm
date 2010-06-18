@@ -1,0 +1,149 @@
+#*
+ * @(#) ViewZipContent.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:madhavi_mungole@yahoo.co.in">Madhavi Mungole</a>
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Zip File View")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>$brih_course $brih_mgmt</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>$brih_course $brih_content</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,PublishModule.vm").addPathInfo("topic",$topic)>$brih_publish $brih_content</a> | $brih_zipExtraction
+	</font>
+</td>
+</tr>
+</table>
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setAction("ExtractAction").setPage("call,CourseMgmt_User,PublishModule.vm").addPathInfo("topic",$topic)">
+  	<div align="center">
+	<CENTER><H2><u>$topic</u></H2></CENTER>
+  	<table>
+    	<tr>
+	<td>
+    		<table bgcolor="$ui.bgcolor" cellpadding="5">
+        
+      		#if ($errorTemplate)
+      		<tr>
+        	<td colspan="4">
+          		<table bgcolor="$ui.bgcolor">
+            		<tr>
+              		<td>
+                		<img src="$ui.image($ui.alertImage,$data)">
+              		</td>
+              		<td>
+                		#parse ($errorTemplate)
+              		</td>
+            	</tr>
+          	</table>
+        	</td>
+      		</tr>
+      		#end
+
+      		<tr>	
+			<H3><u>$brih_attachment</u></H3>
+			<center><input type="button" name="eventSubmit_doExtract" value="$brih_submit" onClick="confirmSubmit(document.frm,this);">
+			<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel">
+			#set ( $count=1 )
+
+			<table border=1 cellpadding=0 cellspacing=0 bgcolor="$ui.tableColor">
+			<tr bgcolor="$ui.menuColor">
+  	  			<th width=10%><br>$brih_serialNo<br></th> 
+	  			<th><br>$brih_file<br></th> 
+	  			<th width=20%><br>$brih_file $brih_size<br></th> 
+	  			<th width=10%><br>$brih_extract<br></th> 
+			</tr>
+			<tr align="center">
+			<td colspan=3><br></td>
+			<td>$brih_selAll<br><input type="checkbox" name="selectAll" onClick=checkAll(document.frm,this); value="all"></td>
+			</tr>
+	
+
+			#set ( $unpublished = "" )
+			#set ( $count=1 )
+			#foreach($file in $zipFileView)
+			<tr align="center">		     	
+	     		<td>$count </td>
+		
+				#set ( $fileAbsParentPath = $file.getParent() )
+				#set ( $tuu = "$topic/Unpublished/$data.getUser().UserName" )
+		
+				#set ( $startIndex = $fileAbsParentPath.indexOf($tuu) + $tuu.length() +1 )
+		
+				#if( $startIndex < $fileAbsParentPath.length() )
+					#set ( $relPPath = "$fileAbsParentPath.substring($startIndex)/" )
+				#else
+					#set ( $relPPath = "" )
+				#end
+
+	     		<td align="left">$relPPath$file.Name</td> 
+	     		<td align="right">$file.length()</td>
+	     		<td><input type="checkbox" value="$relPPath/$file.Name" name="extract$count"></td>
+			</tr>
+			#set ( $count= $count+1)
+			#end
+			#set ( $totalfiles = $count )
+			</table>
+		</tr>
+		<tr>
+		<td colspan=4 align="center">
+			<input type="button" name="eventSubmit_doExtract" value="$brih_submit" onClick="confirmSubmit(document.frm,this);">
+			<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel">
+			<input type="hidden" name=actionName value="">
+			<input type="hidden" name="totalfiles" value="$totalfiles">
+			<input type="hidden" name=topic value="$topic">
+		</td>
+      		</tr>
+    		</table>
+    </td>
+    </tr>
+  </table>	
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+
+	function confirmSubmit(frm,field)
+	{
+		var boolFileToExtract=false;
+		for (var i=1;i < $count;i++)
+        	{
+			if(frm.elements["extract"+i+""].checked)
+			{
+				boolFileToExtract=true;
+				break;
+			}
+		}
+		if(boolFileToExtract)
+		{
+			if(confirm("The selected files will be copied to Unpublished section.\n\t(provided there is no duplicasy in names)"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+		}
+	}
+	
+
+
+	function checkAll(frm,chk)
+	{
+		for (var i=1;i < $count;i++)
+        	{
+				frm.elements["extract"+i+""].checked=chk.checked;
+	       	}
+		
+	}
+
+
+</SCRIPT>

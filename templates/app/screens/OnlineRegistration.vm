@@ -1,0 +1,7 @@
+#*
+ * @(#) OnlineRegistration.vm
+ * Copyright (c) 2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+#parse("screens/${lang}/OnlineRegistration.vm")

@@ -1,0 +1,88 @@
+
+ 
+$page.setTitle(" $Repo_Repo1")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr><td><b>
+        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")>Autore Home</a>| 
+        <a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm")>Repository</a> | Permesso
+        </b></td>
+	</tr>
+</table>
+<br>
+<br>
+<table width="100%">
+<tr>
+<td width="100%" bgcolor="$ui.tableColor">
+ 	<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+                                       <b>Si prega di selezionare la prima opzione uno dato il permesso</b>
+                                        </marquee>
+</td>
+</tr>
+</table>
+<br>
+		
+		<form  name=frm method="post" action=$link.setPage("call,Repository_Mgmt,Permission.vm").setAction("Repo_Permission")>
+		<div align="center">
+		<table align="center" border=1 bgcolor="$ui.tableColor" cellspacing=1 cellpadding=5>
+		<tr>
+       		<td><b>Tema nome</b></td>
+		<td>$contentlist</td>
+      		</tr>
+		<tr>
+		<td>
+		<b>Nome utente </font><font color=red>*</font></b>
+		</td>
+		<td>
+		<input type="text" name="UNAME"  value="" style="" size=30 onKeyUp="if (this.disabled) this.value=''"/>
+		</td>
+      		</tr>
+		<tr>
+		<td><b>Course ID </font><font color=red>*</font></td></b>
+                <td><input type="text" name="CNAME" disabled value="" size=30 onKeyUp="if (this.disabled) this.value=''"/></td>
+      		</tr>
+		<tr>
+                <td  colspan=2 align=center>
+                <b>
+                Selezionare<font color=RED>*</font>
+                </b>
+                <input type="radio" checked="true" name="group1" value="Author" onClick="this.form.UNAME.disabled=false;this.form.CNAME.disabled=true;this.form.UNAME.focus();" />Autore 
+                <input type="radio" name="group1" value="Instructor" onClick="this.form.UNAME.disabled=false;this.form.CNAME.disabled=true;this.form.UNAME.focus();" />Istruttore 
+                <input type="radio" name="group1" value="Courses" onClick="this.form.UNAME.disabled=true;this.form.CNAME.disabled=false;this.form.CNAME.focus();" />Course
+                </td>
+                </tr>
+
+		<tr>
+		<td colspan=2 align=center bgcolor="$ui.menuColor">		
+		<input type="hidden" name="actionName" >
+		<input type="hidden" name="status" value=$status>
+		<input type="hidden" name="statvalue" value="PermissionRecieve">
+		<input type="hidden" name="stats" value="permission" >
+		<input type="hidden" name="tname" value=$contentlist>
+        	<input type="button" name="eventSubmit_doPermission" value="Permesso Dato" onClick="checkField(document.frm,this);"/>
+		</td>
+		</tr>
+</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	document.frm.UNAME.disabled=false; 
+	document.frm.CNAME.disabled=true;  
+
+        function checkField(frm,field)
+        {
+                if((frm.UNAME.value!="")||(frm.CNAME.value!==""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !!");
+                }
+        }
+
+</SCRIPT>

@@ -1,0 +1,178 @@
+#*
+ * @(#) AssView.vm 
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:arvindjss17@yahoo.co.in ">Arvind Pal</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | </b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment  </a>|</b>
+	<a href=$link.setPage("call,Assignment,AssView.vm")> </a> $brih_post $brih_assignment  </b>
+        </td></tr>
+</table> ##table 1 end
+
+
+<table width=100%>
+<tr>
+<td align=right>
+                #if($user_role == "instructor")
+			<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Ass.html","newWin");>$brih_help</a>
+                #else
+			<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Ass.html","newWin");>$brih_help</a>
+                #end
+</td>
+</tr>
+</table>
+$!data.getMessage()  
+
+<br>
+	<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,AssView.vm").setAction("Assignments")>
+	<br>
+	#set($month=["01","02","03","04","05","06","07","08","09","10","11","12"])
+	#set($day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+       	<table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor" width="70%">
+		<tr bgcolor="$ui.menuColor">    
+ 		        <td>
+			<b><font face="$ui.sansSerifFonts"> $brih_topic $brih_name </font><font color=Red>*</font> </b>                
+			</td>
+            		<td>
+				<input type="text" name="contentTopic"  size=26 onChange="validate1(this)"  /> &nbsp;
+				<input type="button" name="dosubmitView" value="$QuestionBank_available" onClick="checkBlank1(document.uploadform,this);"/>
+			</td>    
+                </tr>
+		<tr>
+		        <td>
+                		<b>$brih_due $brih_Da</b>
+                        </td>
+			<td>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     	<select id="arvind" name="Start_year"  >
+                  		<option value="$cyear" >$cyear
+                  			#foreach($year in $year_list)
+                    				#if($cyear != $year)
+                      				<option value="$year">$year
+                    				#end
+                  			#end
+                		</select>
+				&nbsp <b><font size=+1>-</font></b>&nbsp
+          			<select id="arvind1" name="Start_mon"  >
+            				<option value="$cmonth">$cmonth
+            				#foreach($mon in $month)
+            					#if($mon != $cmonth)
+            					<option value="$mon">$mon
+            					#end
+            				#end
+            			</select>
+			        &nbsp<b><font size=+1>-</font></b>&nbsp
+        		        <select id="arvind2" name="Start_day"  >
+                  			<option value="$cdays">$cdays
+                  			#foreach($d in $day)
+                    				#if($d!=$cdays)
+                        			<option value="$d">$d
+                    				#end
+                  			#end
+                		</select>
+				
+				<br>
+
+				</br>
+                	</td>
+		</tr>
+	        <tr>	<td><b> $brih_instruction  <font color=RED> * </font></b></td>
+			<td><textarea name="message" wrap="physical" rows=7 cols=50 >  </textarea></td>
+                </tr>
+                <tr>
+                        <td> <b> $brih_max $brih_marks </b> <b><font color=RED> * </font></b> </b></td>
+			<td> <input type="text" size=3 name="grade" value="10" ></td>
+                </tr>
+                <tr> 
+			#fileUpload ("$brih_at_file <font color=RED> * </font></b> " "file")
+		</tr>
+		<tr bgcolor="$ui.menuColor">
+                        <td align=center colspan=2>
+			<font face="$ui sanSerif fonts">
+  	               	<input type="button" name="brih_upload" value="$brih_upload" onClick="checkBlank(document.uploadform,this);" />
+		  	<input type="hidden" name="actionName">
+		        </font>                               
+                        </td>
+		</tr>
+	</table>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+ 
+	function checkBlank1(uploadform,field)
+        {
+			uploadform.actionName.value=field.name;
+			uploadform.submit();
+	}
+
+	function checkBlank(uploadform,field)
+	{
+		if( (uploadform.contentTopic.value!="")  && (uploadform.message.value!="")  && (uploadform.grade.value!="") && uploadform.file.value!="")
+                {
+			if(isNumberString(uploadform.grade.value))
+                        {
+                                alert("Max Grade should be an positive value");
+                                frm.grade.focus();
+                                return false;
+                        }
+			
+			var temp=uploadform.message.value+uploadform.contentTopic.value;
+			if(isString(temp))
+                        {
+				
+                                alert("Please check the special character !!");
+                                ##frm.noofques.focus();
+                                return false;
+                        }
+	
+			uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+                else
+			alert("Please fill all mandatory  fields !!");
+        }
+
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789&.";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+	function isString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+           	var RefString="~`!&";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)>0)
+                        {
+				return true;
+                        }
+                }
+                return false;
+        }
+</script>

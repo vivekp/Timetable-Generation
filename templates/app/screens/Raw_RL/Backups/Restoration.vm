@@ -1,0 +1,56 @@
+ #*
+ * @(#) Restor.vm
+ * Copyright(c)2004 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:mann_singh2004@yahoo.com">Mnavendra Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+$page.setTitle("Brihaspati Administrator")
+$page.setBgColor("$ui.bgcolor")
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> | $brih_restore
+	</td>
+</tr>
+</table>
+
+
+ 
+<ul>
+$!data.getMessage()
+
+<table width=20% align=center bgcolor="$ui.menuColor" cellpadding=10>
+<tr><td align=center>
+	<table>
+
+		<tr>
+		<td>
+    			<a href=$link.setPage("call,Backups,AdminRestore.vm")>	
+			<img src="$content.getURI("/images/$lang/restore.jpg")" border="0"></a><br>
+		</td>
+		</tr>
+
+
+		<tr>
+		<td>
+    			<a href=$link.setPage("call,Backups,AdminRestore.vm").addPathInfo("st","db")>	
+			<img src="$content.getURI("/images/$lang/completesystemrestore.jpg")" border="0"></a><br>
+		</td>
+		</tr>
+		<tr>
+		<td>
+    			<a href=$link.setPage("call,Backups,AdminRestore.vm").addPathInfo("st","glsry")>	
+			<img src="$content.getURI("/images/$lang/glsaryrestore.jpg")" border="0"></a><br>
+		</td>
+		</tr>
+
+	</table>
+</td></tr>
+</table>

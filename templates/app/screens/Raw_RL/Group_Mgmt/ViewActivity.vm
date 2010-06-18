@@ -1,0 +1,117 @@
+#*
+ * @(#) ViewActivity.vm
+ *  Copyright (c) 2006-07 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 13-05-09
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+	<tr align="right"><td><b>
+        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")> $brih_mgmt $brih_grp </a> |
+	$brih_activity $brih_Of1 $brih_view</b>
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>|
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+     </td></tr>
+</table> ##table 1 end
+ 
+<table width=100% > ##table 2 start
+	<tr>
+		<td>
+		<a href=javascript:popupWin("/brihaspati2/docs/joingroupactivity.html","newWin");>$brih_help</a>
+		<img src="$content.getURI("/images/Lefthand.gif")">
+		</td>
+	</tr>
+</table> ## table 2 end
+
+<form name="frm">
+#if($Mode == "noempty")
+
+<table width=80% border=0 align=center cellpadding=0 cellspacing=0> ##(table 2memlist)
+<tr bgcolor="$ui.menuColor">
+        <td colspan="5" align=center>
+        <font size=5>
+                <I><font color=blue>$username</font> $brih_Of1 $brih_grp $brih_detail</I>
+        </font>
+        </td>
+</tr>
+#set($headings=["$brih_grp $brih_Of2 $brih_member","$brih_grp $brih_Of1 $brih_type","$brih_grp $brih_Of1 $brih_name"])
+<tr>
+        #foreach($heading in $headings)
+                <td align="center" bgcolor="$ui.menuColor">
+                <b>$heading</b>
+                </td>
+        #end
+</tr>
+	<tr bgcolor="$ui.tableColor" align="right">
+	<td align="center">
+	$mblist
+	</td>
+	<td align="center">
+	      $type
+	</td>
+	<td align="center">
+	      $grpname
+	</td>
+</tr>
+
+<tr bgcolor="$ui.tableColor" align="center"><br>
+        <td align="left" colspan="4">
+	#if($groupdesc!="")
+	&nbsp;&nbsp;&nbsp;<input type="button" name="test" value="$brih_go" onClick="go(document.frm,this);"/>
+       	<select name="activity" size="1" onChange="Changeactivity(document.frm,this);"/>
+	#if($act0=="Discussion Board")
+       	<option value="call,Dis_Board,DBContent.vm/mode/All/$courseid">$DiscussionBoard
+       	</option>
+	#end
+	#if($act1=="Notice")
+        <option value="call,Notice_User,NoticeContent.vm/flag/FromNotices">$brih_Notices
+        </option>
+	#end
+	#if($act2=="Chat")
+       	<option value="call,Chat,Chat.vm">$brih_chat</a>
+        </option>
+	#end
+	#if($act3=="Local Mail")
+       	<option value="call,Local_Mail,MailContent.vm/mode/All">$brih_local $LocalMail_mail</a>
+        </option>
+	#end
+        </select>
+	#else
+	<b><font size="3"><font color="blue"><center>$brih_activity $brih_available1........</center></font></font></b>
+	#end
+        ##<td align="center">
+        <b> : $QuestionBank_available $brih_activity </b></td>
+        </td>
+</tr>
+#else
+<b><font size="4"><font color="blue"><center>$brih_grpmsg14</center></font></font></b>
+#end
+</table> ##(table 2memlist )
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function Changeactivity(frm,field)
+	{
+		frm.actvy.value=document.frm.activity.value;
+		//alert(frm.actvy.value);	
+	}
+	function go(frm,field)
+	{
+			location=document.frm.activity.options[document.frm.activity.selectedIndex].value
+			//alert(location=document.frm.activity);
+	}
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</script>

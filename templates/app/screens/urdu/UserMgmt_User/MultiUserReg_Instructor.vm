@@ -1,0 +1,87 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | $course | Student Management | Add Multiple Users ")
+
+<br>
+<table bgcolor="$ui.tableColor"  width=100% cellspacing=0>
+<tr align="right">
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>????? ????? ??? </a> | ????? ?????? ???? ???? 
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+         <a href=$link.setPage("call,IndexHome.vm")>????</a> 
+        </td>
+	</b>
+</tr>
+</table>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_User,MultiUserReg_Instructor.vm").setAction("UserAction_Instructor")">
+<div align="left">
+<br>
+<table><tr align="left"><td>
+<b>???? ???? ???? ??? ??? ?? ?? </b>
+<font face="$ui.sansSerifFonts" size=3>
+<a href="/brihaspati2/docs/Userdoc.html">????</a>
+??? ????
+<img src="$content.getURI("/images/Lefthand.gif")"> 
+</font></td></tr></table>
+<br>
+<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+            	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>????? ???? ????? ??????? ?? ??????? ?? ?? ???? ???? ????<b></font>
+	</td>
+	</tr>
+	<tr align="right">
+     	<td>
+		$course		
+	</td>
+	<td bgcolor="$ui.tableColor">
+	 	 <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	???? ?? ???
+	  	</b>
+	</td>
+    	</tr>
+  	</tr>
+   	<tr align="right">
+        			<td align="left">
+		<input type="file" size="35" name="file">
+		</td>
+		<td>
+		<b> <font color=RED>*</font> ???? ?????  
+		</b>
+		</td>
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.buttonBoxColor">
+          
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUpload" value="???? ???? " onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+</SCRIPT>

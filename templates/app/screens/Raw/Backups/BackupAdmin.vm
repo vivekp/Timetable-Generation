@@ -1,0 +1,85 @@
+#*
+ * @(#) BackupAdmin.vm
+ * Copyright (c) 2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:mann_singh@yahoo.com">Manvendra Singh</a>
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Backup")
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+$!data.getMessage()
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home </a> | <a href=$link.setPage("call,Backups,Backups.vm")> $brih_backup </a> | #if ($lang=="hindi") $brih_course $brih_Of1 $brih_backup #else $brih_course Wise $brih_backup #end
+        </td>
+</tr>
+</table>
+<br>
+<center>
+<blink><font color="red"><b>$brih_backup6</b></font></blink>
+</center>
+
+<br>
+<form name=frm method="post" action="$link.setAction("BackupAction").setPage("call,Backups,BackupAdmin.vm")">
+##<form name=frm method="post" enctype="multipart/form-data" action="$link.setAction("BackupAction").setPage("call,Backups,BackupAdmin.vm")">
+
+	<div align="center">
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" >
+        
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+
+		<tr><td colspan="3" align="center" >
+			<font size=4><b>$brih_backup7</b></font>
+		</td></tr>
+		<tr><td bgcolor="$ui.tableColor">
+			<select name="courses">
+				<option value="Courses">$Notice_All $brih_courses</option>
+			#foreach($group in $courseList)
+				#if(($group.Name !="global") && ($group.Name !="author"))
+					
+					<option value="$group.Name">$group.Name</option>
+				#end
+			#end
+			</select>		
+		</td>
+		<td bgcolor="$ui.tableColor">
+          		<font face="$ui.sansSerifFonts">
+	        	<input type="button" name="eventSubmit_doCourseBackup" value="$brih_content  $brih_backup" onClick="checkField(document.frm,this);"/>
+          		<input type="button" name="eventSubmit_doStudent_db_backup" value="$brih_database $brih_backup" onClick="checkField(document.frm,this);"/>
+			<input type="hidden" name="actionName">
+          		</font>
+		</td></tr>
+		     
+	</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }
+</SCRIPT>

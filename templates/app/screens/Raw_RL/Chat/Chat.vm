@@ -1,0 +1,53 @@
+#*
+ * @(#) Chat.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+*#
+
+$page.setTitle("Chat")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+#if ($lang == "urdu")
+        #set($lang="urd")
+#end
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr align="right">
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $brih_chat
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+		</font>
+		</td>
+	</tr>
+<td>
+</tr>
+</table>
+
+<br>
+<br>
+<table align="center">
+<tr><td> 
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink> 
+		$brih_chatMsg2 	<a href="/brihaspati/docs/saveChat.html">$brih_here</a>
+</td></tr>
+<tr>
+<td>    <blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+	$brih_chatMsg1
+	<a href=$link.setPage("call,UserMgmt_User,changePassword.vm")>$brih_changePassword</a>
+</td>
+</table>
+<applet archive="babylon.jar" code="babylon.babylonApplet.class" codebase=$codeBase width="0" height="0">
+	<param name="chatroom" value=$chatRoom>
+	<param name="lang" value=$lang>
+	<param name="username" value=$username>
+	<param name="password" value=$password>
+	<param name="servername" value=$serverName>
+	<param name="autoconnect" value="yes">
+	<param name="locksettings" value="yes">
+	<param name="embed" value="no">
+</applet>

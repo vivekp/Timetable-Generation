@@ -1,0 +1,36 @@
+
+
+$page.setBgColor($ui.bgcolor)
+			$page.setTitle("Admin Home | List Management | View All Users | Remove User")
+	
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+<a href=$link.setPage("call,Admin.vm")>Admin's ì§?</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,ListManagement.vm")>ëª©ë¡? ê´?ë¦¬ </a> |
+<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>ëª¨ë?  ì?¬ì?©ì??ì?? ëª©ë¡?</a> |
+			ì ?ê±° ì?¬ì?©ì??
+	</td></tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+	<td><a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">View All Course</a></td>
+        <td><a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">View All User</td>
+</tr>
+</table>
+<form method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin")">
+<table width=100% align="left" bgcolor="$ui.menuColor">
+<tr><td> ì?¬ì?©ì?? ì?¸ë¶? ì?¬í?­</td></tr>
+</table>
+<table width=100% bgcolor="$ui.tableColor" align="left">
+                    
+      <tr>
+        <td align="left" bgcolor="$ui.tableColor">
+          
+                </td>
+    </tr>
+    </table>
+</form>
+
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+        </table>

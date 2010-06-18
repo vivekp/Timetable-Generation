@@ -1,0 +1,228 @@
+
+#*
+ * @(#)DisBoard.vm
+ * Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *@author <a href="mailto:sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ *@author <a href="mailto:rekha_20july@yahoo.co.in">Rekha Pal</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ *#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#if($mode=="compose")
+	$page.setTitle("$brih_home | $DiscussionBoard |$LocalMail_MailContent_msg1")
+#else
+	$page.setTitle("$brih_home | $course |$brih_communication | $DiscussionBoard |$LocalMail_Reply")
+#end
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr align="right"><td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,Dis_Board,DB.vm")>$DiscussionBoard</a> |
+		#if($check!="first") 
+			<a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All")>$LocalMail_show $brih_all $brih_msg2</a> |
+		#end
+		#if($mode=="compose")
+	               $LocalMail_MailContent_msg1	
+		#else
+		       $LocalMail_Reply
+		#end
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+		<a href=$link.setPage("Index.vm")>$brih_home</a> 
+		</font>
+		</td></tr>
+</table>
+
+<br>
+<script LANGUAGE="JAVASCRIPT">
+	function blurTopicName(frm)
+	{
+		document.uploadform.topicExisting.value="OLDTOPIC";
+		frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+	}
+	function changeTopic(frm)
+	{
+		if(frm.topicExisting[0].checked)
+		{
+			frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+		}
+		else
+		{
+			frm.contentTopic.focus();
+		}
+	}
+	function checkRadio()
+	{
+		if(document.uploadform.topicExisting[0].checked)
+		{
+			document.uploadform.contentTopic.blur();
+		}
+	}
+  	function validate(uploadform,field)
+        {	
+		var tList=uploadform.topicList;
+	 	var cTopic=uploadform.contentTopic;
+		if(uploadform.contentTopic.value!="")
+		{
+			var totNamedEntries=uploadform.topicList.length;
+			for(i=1;i<totNamedEntries;i++)
+			{
+				if(tList.options[i].text==cTopic.value)
+				{
+					if(uploadform.topicExisting[1].checked)
+					{
+						if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+						{
+							uploadform.actionName.value=field.name;
+							uploadform.submit();
+						}
+					       	else
+					       	{
+					       	return;
+					        }
+					}
+                             	}
+                         }
+                         uploadform.actionName.value=field.name;
+                         uploadform.submit();
+            	}
+            	else
+            	{
+	        	alert("Topic Name Can not Empty !!");
+	     	}
+  	}
+	function checkBlank(uploadform,field)
+	{
+		if((uploadform.contentTopic.value!="") && (uploadform.message.value!=""))
+		{
+			if(uploadform.status[0].checked)
+			{
+			
+				if((uploadform.expiry.value>=1) && (uploadform.expiry.value<=365))
+	    			{
+	    				uploadform.actionName.value=field.name;
+	    				uploadform.submit();
+	    			}
+	    			else
+	    				alert("Deletion Time should not be less than 1 day and greater than 365 days");
+			}
+			else
+			{
+				uploadform.actionName.value=field.name;
+                                uploadform.submit();
+			}
+		}
+	  	else
+	        	alert("Please fill all mandatory  fields");
+	}
+	function insertminus(uploadform)	
+	{
+		 if(uploadform.status[1].checked)
+	 	{
+	       		uploadform.expiry.value="-1";
+			uploadform.expstatus.value=uploadform.expiry.value;
+	       		makeDisable();
+	 	}
+         	else
+	 	{
+			uploadform.expiry.value="30";
+			makeEnable();
+		}
+	}
+	function makeDisable()
+	{
+        	var x=document.getElementById("exp_id")
+		x.disabled=true
+	}
+	function makeEnable()
+	{
+		var x=document.getElementById("exp_id")
+		x.disabled=false
+	}
+
+</script>
+#set($Repid=0)
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Dis_Board,DB.vm").setAction("SendDB")">
+	<div align="left">
+		<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5">
+		<tr><td align="center" colspan=2>
+			<b><u><font color="Green" size=3>$cid</font> <font size=4>: $brih_course $brih_Of1 $brih_ID</font></u>&nbsp</font></b>
+		</td></tr>
+		#if($mode!="reply")
+			<tr align="right">
+				<td colspan=2 >
+				<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+				<option></option>
+				#foreach($topic in $allTopics)
+					<option>$topic</option>
+				#end
+				</SELECT>
+				<b>$brih_Exist $brih_topic</b> &nbsp
+				<input type="RADIO" name=topicExisting checked=true value="OLDTOPIC" onClick=blurTopicName(document.uploadform)>
+				<br>
+				<b>$brih_new $brih_topic</b>&nbsp <input type="RADIO" name=topicExisting value="NEWTOPIC" > </td> 
+
+			</tr>
+			<tr>
+				<td><input type="text" name=contentTopic onFocus=checkRadio() size=30></td>
+				<td bgcolor="$ui.tableColor" align="right"> 
+				<font color=Red>*</font> <b><font face="$ui.sansSerifFonts">$brih_topic $brih_Of1 $brih_name</font> </b>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<font face="$ui.sansSerifFonts" size=4>
+				<textarea name="message" rows=10 cols=55 wrap=physical></textarea></font>
+				</td>
+				<td bgcolor="$ui.tableColor" align="right">
+				<b><font color=Red>*</font> <font face="$ui.sansSerifFonts">$brih_msg2 </font></b>
+				</td>
+				<td><input type="hidden" name="Repid" value=$Repid></td>
+			</tr>
+		#else
+			<tr>
+				<td><input type=txt size="30%" name="contentTopic" value="$!topic" ></td>
+				<td align="right"><b> $brih_topic $brih_Of1 $brih_name </b></td>
+			</tr>
+			<tr>
+				<td>
+				<font face="$ui.sansSerifFonts" size=4><textarea name="message" rows=10 cols=55 wrap=physical>$!rep_msg</textarea></font>
+				</td>
+				<td bgcolor="$ui.tableColor" align="right">
+				<b><font face="$ui.sansSerifFonts">$brih_msg2 </font> </b>
+				</td>
+			</tr>
+                        <input type="hidden" name="Repid" value="$msg_id">				
+		#end
+		<tr>
+		<td align="left"> <input type="file" size="30%" name="" value=""> </td>
+		<td align="right"> <b> $brih_at_file </b></td>
+		</tr>
+		<tr>
+			<td><input id="exp_id" type="text" name="expiry" value="30" size="30%" enabled=true></td>
+			<td align="right"><b><font face="$ui.sansSerifFonts">$brih_expiry</b></td>
+		</tr>
+		<tr>
+			<td colspan="4" align="center"> 
+			<b> $DisBoard_DBmsg8 </b> &nbsp&nbsp <input type="RADIO" name="status" checked=true value="Enable" onClick="insertminus(document.uploadform);" >
+			&nbsp&nbsp<b> $DisBoard_DBmsg7</b> &nbsp&nbsp <input type="RADIO" name="status"  value="Disable" onClick="insertminus(document.uploadform);" >
+			</td>
+		
+		</tr>
+		<tr align="$ui.buttonAlignment">
+			<td align="center" colspan=2>
+	        	<font face="$ui.sansSerifFonts">
+			<input type="hidden" name="mode" value="All">
+			<input type="hidden" name="courseid" value="$cid">
+			<input type="hidden" name="actionName">
+                        <input type="hidden" name="expstatus">		
+			<input type="button" name="eventSubmit_doSend" value="$Notice_Send" onClick="checkBlank(document.uploadform,this);"/>&nbsp&nbsp	
+			<input type="reset" value="$brih_clear" onClick="makeEnable();">
+			</font>
+			</td>
+		</tr>
+		</table>
+	</div>
+</form>

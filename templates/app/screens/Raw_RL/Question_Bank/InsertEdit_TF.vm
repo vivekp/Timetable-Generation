@@ -1,0 +1,106 @@
+#*
+ * @(#) InsertEdit_TF.vm
+ * Copyright(c)2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:tarankhan1@yahoo.com">Tarannum Khan</a>
+ * @author <a href="mailto:manju_14feb@yahoo.com">Mithelesh Parihar</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Question True False")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Question_Bank,Question_bank.vm")>$brih_queBank</a> |
+	#if($mode=="Insert")
+	<a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")>$WikiCreate $Repo_Repo1</a> | $brih_insert $brih_true $brih_false $brih_qus
+	#else
+	<a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>$brih_all $brih_queBank</a> |
+	<a href=$link.setPage("call,Question_Bank,Question_List.vm").addPathInfo("modulename","$modulename").addPathInfo("Ques_Type","$Ques_Type")>$brih_all $brih_qus1 $modulename </a> | $brih_edit $brih_true $brih_false $brih_qus
+	#end 
+        </td>
+</tr>
+</table>
+
+<br>
+$!data.getMessage()
+<form name="frm" method="post" action="$link.setAction("Question_Bank")">
+
+<table border=1 align="center" width="60%" bgcolor="$ui.tableColor" cellpadding="2">  
+  <tr>
+   <td width=30% align="centre" bgcolor="$ui.tableColor">
+     <b><font face="$ui.sansSerifFonts">$brih_qus</font></b>
+   </td>
+   <td	width=70% align="left" bgcolor="$ui.tableColor">
+     <font face="$ui.sansSerifFonts">
+      <textarea name="Question" rows=3 cols=50>$!question</textarea >
+     </td>
+ </tr>
+  <tr> 
+  	<td width=30% align="centre" bgcolor="$ui.tableColor">
+    	<b><font face="$ui.sansSerifFonts">$brih_answer</font></b>
+   	</td>
+   	<td width=70% align="left" bgcolor="$ui.tableColor">
+    	<font face="$ui.sansSerifFonts">
+	#set($Ques_Ans=["TRUE","FALSE"])
+      	<select name="Answer" size=1>
+		#if($mode=="Insert")
+			#foreach($quesAns in $Ques_Ans)
+			<option value="$quesAns">$quesAns
+			#end
+		#else
+			<option value=$!ans>$!ans
+			#foreach($quesAns in $Ques_Ans)
+				#if($quesAns != $!ans)
+				<option value="$quesAns">$quesAns
+				#end
+			#end
+		#end
+      	</select> 
+   	</td>
+ </tr> 
+  <tr> 
+	#formCell("$brih_hint" "hint" "$!hint")
+ </tr> 
+<tr>
+<td align=center colspan=2>  
+<font face ="$ui.sansserifFonts">
+  <input type="reset" value="Reset"> 
+	#if($mode=="Insert")
+  		<input type="button" name="eventSubmit_doSaveQuestion" value="$WikiSave & $brih_add $brih_more" onClick="checkValue(document.frm,this);"> 
+  		<input type="button" name="eventSubmit_doFinishQuestion" value="$WikiSave & $brih_finish" onClick="checkValue(document.frm,this);"> 
+	#else
+		<input type="button" name="eventSubmit_doEditQuestion" value="$brih_edit" onClick="checkValue(document.frm,this);">
+  		<input type="hidden" name="qid" value=$qid>
+	#end
+  <input type="hidden" name="modulename" value=$modulename> 
+  <input type="hidden" name="actionName" value="">
+  <input type="hidden" name="mode" value=$mode>
+  <input type="hidden" name="FromPath" value=$FromPath>
+  <input type="hidden" name="Ques_Type" value="TF">
+</font>
+</td>
+</tr>
+</table>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+        function checkValue(frm,field)
+        {
+                if(frm.Question.value!="")
+                {
+                       	frm.actionName.value=field.name;
+                       	frm.submit();
+                }
+                else
+                {
+                        alert("Please write Question !!");
+                        frm.Question.focus();
+                }
+        }
+</script>

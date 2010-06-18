@@ -1,0 +1,96 @@
+
+
+
+$page.setTitle("Course Home Page")
+
+<body>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+	<tr>
+	    <td>
+		<font face="$ui.sansSerifFonts" size=3><b>
+	     		<a href=$link.setPage("call,IndexHome.vm")>ì§?</a> | $cName
+		</td>
+	</tr>
+</table>
+
+<table width=100%>
+	<tr>
+				<td align="center">
+                                        </td>
+				<td align=right>
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/CourseHome.html","newWin");>ë??ì??</a>
+		</td>
+	</tr>
+</table>
+
+
+<table border=1 width="100%" valign="top">
+		<tr>
+				<td width="70%">
+ 						<table border=0 width="100%" cellpadding=10 bgcolor="$ui.tableColor" cellspacing=0 valign="top">
+		  								<tr>
+										<td align="center" valign="top">
+						<table border=0 valign="top">
+							<tr><td align="center" valign="top">
+								 	<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+									<img border=0 src="$content.getURI("/images/book.gif")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+									<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>ê³¼ì ?  ë?´ì?© </a><br>
+							</td></tr>
+						</table>
+					</td>
+															<td align=center>
+						<table border=0 valign="top">
+							<tr><td align=center>
+  				   				<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")><img border=0 src="$content.getURI("/images/opnclass.jpg")"></a>
+							</td></tr>
+							<tr><td align=center>
+								<font face="$ui.sansSerifFonts">
+     								<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>ì»¤ë®¤ë??ì¼?ì?´ì??</a><br>
+							</td></tr>
+						</table>
+					</td>
+									</tr>
+						 			
+				</table>
+							</td>
+									<td width="30%" valign="top">
+				                                                 
+				<table border="1" cellspacing="4" cellpadding="2" align="center" width="100%">
+					<tr><td>
+						<table width="100%"  bgcolor="$ui.tableColor">
+							<tr><td align="center">
+								<font face="$ui.sansSerifFonts">
+									<b>ë?´ì?¤ í?¤ë?? ë?¼ì?¸ </b>
+								</font>
+							</td></tr>
+						</table>
+																				ì??ë?? ë?´ì?¤ ì?¤ë??ì?? ë? ì§? ì??ë?¤ì?´ë?¼
+											</td></tr>
+					                			<tr><td>
+			                <table width="100%">
+				                <tr><td bgcolor="$ui.tableColor" align="center">
+				                <font face="$ui.sansSerifFonts">
+				                <b>ì?¤ë?? í??ì?¬ </b>
+				                </font>
+				                </tr></td>
+				                </table>
+				                <table width="100%">
+					                					                				                </table>	
+			                </td></tr>
+		                </table>
+
+			</td>
+			</tr>
+	</table>
+</body>    
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

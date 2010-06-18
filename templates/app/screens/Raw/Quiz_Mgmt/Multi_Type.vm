@@ -1,0 +1,391 @@
+#*
+ * @(#)Multi_Type.vm 
+ * Copyright(c)2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Enter the Question")
+$page.setBgColor($ui.bgcolor)
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+                <font face="$ui.sansSerifFonts"><b>
+        	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+		<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz </a> | 
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm")>$brih_quiz $brih_detail</a>  
+		#if($allTopics1 != " ")
+                	#if($allTopics1 == "Multiple")
+                        	<option value="Multiple">| $brih_multiple1 $brih_qus</option>
+                        #elseif($allTopics1 == "TF")
+                        	<option value="TF">| $brih_true / $brih_false $brih_qus</option>
+                        #elseif($allTopics1 == "Short")
+                        	<option value="Short">| $brih_shortType $brih_qus</option>
+	                #end
+        	#end
+		</font>
+
+        	</font>
+	</td>
+</tr>
+</table>
+
+<br>
+$!data.getMessage()<br>
+	#if($mode != "edit")
+	<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Multi_Type.vm").setAction("Quiz_Action")>
+	#else
+	<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm").setAction("Quiz_Action")>
+	#end
+<table border=1 align="center" width="60%" bgcolor="$ui.tableColor" cellpadding="3">
+<tr bgcolor="$ui.menuColor" >
+	<td width=30% align="centre">
+      		<b><font face="$ui.sansSerifFonts"> $brih_type $brih_of $brih_qus </font></b>
+   	</td>
+   	<td  width=70% align="left"  >
+        	<font face="$ui.sansSerifFonts">
+		<SELECT name=typeList onFocus=changeTopic(document.frm) onChange=changeTopic(document.frm)>
+			#if($allTopics1 != " ")
+				#if($allTopics1 == "Multiple")
+				<option value="Multiple">$brih_multiple1 $brih_qus</option>
+				#elseif($allTopics1 == "TF")
+                                <option value="TF">$brih_true / $brih_false $brih_qus</option>
+				#elseif($allTopics1 == "Short")
+                                <option value="Short">$brih_shortType $brih_qus</option>
+				#end
+			#else
+				<option>  </option>
+			#end
+				<option value="Multiple">$brih_multiple1 $brih_qus</option>
+        			<option value="TF">$brih_true / $brih_false $brih_qus</option>
+			        <option value="Short">$brih_shortType $brih_qus</option>
+		</SELECT> &nbsp;
+		<input type="button" name="Go" value="$brih_search" onClick="checkValue1(document.frm,this);">
+		   &nbsp;&nbsp;&nbsp;<b> $!quizid </b>
+		<input type="hidden" name="quizid" value=$!quizid > 
+	</td>
+</tr>
+	#if($mode != "edit")
+	#if( $initial != "initialnull")
+	<tr>
+	<td width=30% align="centre" >
+      		<b><font face="$ui.sansSerifFonts">$brih_qus $brih_number </font></td><td>$noq </b>	</td>
+	</tr>
+	<tr>
+		<td width=30% align="centre" >
+     			<b><font face="$ui.sansSerifFonts">$brih_qus*</font></b>
+	   	</td>
+   		<td  width=70% align="left" >
+	     		<font face="$ui.sansSerifFonts">
+	      		<textarea name="question" rows=3 cols=50></textarea >
+   		</td>
+	</tr>
+	#if($typeList == "Multiple")
+	<tr>	
+		#formCell("$brih_option $brih_a" "op1" "")
+	</tr>
+	<tr>
+      		#formCell("$brih_option $brih_b" "op2" "")
+	</tr>
+	<tr>
+ 		#formCell("$brih_option $brih_c" "op3" "")
+	</tr>
+	<tr>
+       		#formCell("$brih_option $brih_d" "op4" "")
+	</tr>
+	<tr>
+		
+                <td width=30% align="centre" >
+                        <b>$brih_answer($brih_option)*</b>
+		</td>
+                <td >
+                <input type="text" size="30" name="ans" value="">
+		<a href=javascript:popupWin("/brihaspati2/docs/multitype.html","newWin");>$brih_hint</a> 
+                </td>
+        </tr>
+	#end
+	
+	#if($typeList == "TF")
+	<tr>
+		<td width=30% align="centre" >
+			<b>$brih_option $brih_a	</b>
+		</td>
+		<td  width=70% align="left" >
+		<b> true   </b>	
+		</td>
+	</tr>
+	<tr>
+		<td width=30% align="centre" >
+        		<b> $brih_option $brih_b  </b>
+		</td>
+        	<td  width=70% align="left" >
+			<b> false </b>
+		</td>
+	</tr>
+	<tr>
+		<td width=30% align="centre" >
+        		<b> $brih_answer($brih_option)*  </b>
+		</td>
+		<td >
+		<input type="text" size="30"  name="ans" value="">
+		<a href=javascript:popupWin("/brihaspati2/docs/tfalse.html","newWin");>$brih_hint</a> 
+		</td>
+	</tr>
+	#end
+		
+	#if($typeList == "Short")
+	<tr>
+                <td width=30% align="centre" >
+                        <b>  $brih_answer*  
+			</b>
+		</td>
+                <td >
+                <input type="text" size="30"  name="ans" value="">
+                </td>
+        </tr>
+	#end	
+	<tr>
+	       	#formCell("$brih_marks  <font color=red>*</font> " "marks" "$!marks")
+	</tr>
+	<tr bgcolor="$ui.menuColor" ><td align=center colspan=2><font face ="$ui.sansserifFonts">
+		#if($xmlsize == $noofquestion )
+			<input type="button" name="eventSubmit_doSaveQuestion" value="$brih_finish" onClick="checkValue(document.frm,this);">
+		#else
+                	<input type="button" name="eventSubmit_doSaveQuestion" value="$WikiSave & $brih_add $brih_more" onClick="checkValue(document.frm,this);">
+		#end
+                       	<input type="reset" value="$brih_reset">
+	</font></td></tr>	
+		
+	#end
+#else
+#if( $initial != "initialnull")
+	
+	<tr>
+		<td width=30% align="centre" >
+     			<b><font face="$ui.sansSerifFonts">$brih_qus*</font></b>
+	   	</td>
+   		<td  width=70% align="left" >
+	     		<font face="$ui.sansSerifFonts">
+	      		<textarea name="question" rows=3 cols=50> $!question </textarea >
+	      	</td>
+	</tr>
+		
+	#if($typeList == "Multiple")
+	<tr>	
+		#formCell("$brih_option $brih_a" "op1" "$!op1")
+	</tr>
+	<tr>
+      		#formCell("$brih_option $brih_b" "op2" "$!op2")
+	</tr>
+	<tr>
+ 		#formCell("$brih_option $brih_c" "op3" "$!op3")
+	</tr>
+	<tr>
+       		#formCell("$brih_option $brih_d" "op4" "$!op4")
+	</tr>
+	<tr>
+		
+                <td width=30% align="centre" >
+                        <b>$brih_answer($brih_option)*</b>
+		</td>
+                <td >
+                <input type="text" size="30" name="ans" value=$!ans>
+                ##<input type="text" size="30" name="ans" value="">
+		<a href=javascript:popupWin("/brihaspati2/docs/multitype.html","newWin");>$brih_hint</a> 
+                </td>
+        </tr>
+	#end
+	
+	#if($typeList == "TF")
+	<tr>
+		<td width=30% align="centre" >
+			<b>$brih_option $brih_a	</b>
+		</td>
+		<td  width=70% align="left" >
+		<b> true   </b>	
+		</td>
+	</tr>
+	<tr>
+		<td width=30% align="centre" >
+        		<b> $brih_option $brih_b  </b>
+		</td>
+        	<td  width=70% align="left" >
+			<b> false </b>
+		</td>
+	</tr>
+	<tr>
+		<td width=30% align="centre" >
+        		<b> $brih_answer($brih_option)*  </b>
+		</td>
+		<td >
+		<input type="text" size="30"  name="ans" value=$!ans>
+		<a href=javascript:popupWin("/brihaspati2/docs/tfalse.html","newWin");>$brih_hint</a> 
+		</td>
+	</tr>
+	#end
+		
+	#if($typeList == "Short")
+	<tr>
+                <td width=30% align="centre" >
+                        <b>  $brih_answer*  
+			</b>
+		</td>
+                <td >
+                <input type="text" size="30"  name="ans" value=$!ans>
+                ##<input type="text" size="30"  name="ans" value="">
+                </td>
+        </tr>
+	#end	
+	<tr>
+	       	#formCell("$brih_marks  <font color=red>*</font> " "marks" "$!marks")
+	</tr>
+#end		
+	<tr bgcolor="$ui.menuColor" >
+		<td align=center colspan=2>
+       		<font face ="$ui.sansserifFonts">
+                <input type="button" name="eventSubmit_doSaveQuestion" value="Update" onClick="checkValue(document.frm,this);">
+                <input type="reset" value="$brih_reset">
+#end	
+		<input type="hidden" name="mode" value=$mode >
+                <input type="hidden" name="quizid" value=$quizid >
+		<input type="hidden" name="noofquestion" value=$noofquestion >
+                </font>
+	</td>
+	</tr>	
+		
+		<input type="hidden" name="xmlsize" value=$xmlsize >
+		<input type="hidden" name="questionsid" value=$questionsid >
+		<input type="hidden" name="actionName" value="">
+
+</table>
+
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=200,width=300,align=center");
+        }
+
+	function checkValue1(frm,field)
+        {
+		if(frm.typeList.value !="") {
+			frm.actionName.value=field.name;
+                	frm.submit();
+		}
+		else
+			alert("Please Select the Type of list !!");
+	}
+
+		var spl="";
+	function checkValue(frm,field)
+        {
+		
+		var btype=new Boolean(true);
+		if(frm.typeList.value =="True False Question")
+		{
+			btype=false;
+			var anscheck=frm.ans.value;
+			var noval="ABab";
+			if(anscheck.length==1)
+			{
+				 for(k=0;k<noval.length;k++)
+                		{	
+                        		for (n = 0; n < anscheck.length; n++)
+                        		{
+                                		if(noval.charAt(k) == anscheck.charAt(n))
+                                        	{	btype=true;
+							break;
+						}
+			                }
+		                }
+			}
+			else
+			{	alert("Answer should be a or b "); return; }
+		}
+		
+		if(frm.typeList.value =="Multiple")
+                {
+			if((frm.op1.value=="") || (frm.op2.value=="") || (frm.op3.value=="") || (frm.op4.value==""))
+                        {
+                                alert("Please Fill All The mandatory (*) Fields");
+                                return;
+                        }
+
+			var temp=frm.ans.value+frm.op1.value+frm.op2.value+frm.op3.value+frm.op4.value;
+			if(isString(temp))
+                        {
+
+                                alert("Please check the special character !! "+spl);
+                                ##frm.noofques.focus();
+                                return false;
+                        }
+		}
+		if(frm.typeList.value =="Short"){
+			if(isString(frm.ans.value))
+                        {
+
+                                alert("Please check the special character in answer field !!"+spl);
+                                ##frm.noofques.focus();
+                                return false;
+                        }
+		}
+		
+	
+		if(btype == true)
+		{
+			if((frm.question.value !="")&&(frm.ans.value != "")&&(frm.marks.value !="")){
+				
+                        	if(isString(frm.question.value))
+	                        {
+        	                        alert("Please check the special character in Question field !!"+spl);
+                	                return false;
+                        	}
+
+
+				frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else
+				alert("Please Fill All The mandatory (*) Fields");	
+        	}
+		else
+			alert("Please check Answer should be a , b , c or d ");
+	}
+
+	function isString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+	        var RefString="/\$|#|~|`|\^|\[|\]|\[|\}|\{|\&|\|\||\\|\!|\$|\/";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)>0)
+                        {
+				spl=tempChar;
+                                return true;
+				
+                        }
+                }
+                return false;
+        }
+
+
+	function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.typeList.options[frm.typeList.selectedIndex].text;
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+
+                }
+        }
+</script>

@@ -1,0 +1,67 @@
+#*
+ * @(#) StudentManagement.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+
+$page.setTitle("$brih_home | $brih_course | $brih_student $brih_mgmt")
+
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+
+<font face="$ui.sansSerifFonts">
+<body>
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | $brih_student $brih_mgmt
+</font>
+</tr>
+</table>
+<br>
+#if($user_role == "instructor")
+	<table align=center bgcolor="$ui.menuColor" width=20% cellpadding=10>
+	<tr>
+	<td align=center>
+ 	<table cellspacing=10>
+ 	<tr>
+	<td>
+    	<a href=$link.setPage("call,UserMgmt_User,addStudent.vm")>
+	<img src="$content.getURI("/images/$lang/addstudent.jpg")"border=0></a><br>
+	</td>
+ 	</tr>
+ 	<tr>
+	<td>
+    	<a href=$link.setPage("call,UserMgmt_User,RemoveStudents.vm")>
+	<img src="$content.getURI("/images/$lang/DeleteStudent.jpg")"border=0></a><br>
+	</td>
+ 	</tr>
+ 	<tr>
+	<td>
+    	<a href=$link.setPage("call,UserMgmt_User,MultiUserReg_Instructor.vm")>
+	<img src="$content.getURI("/images/$lang/addmultiplestudents.jpg")"border=0></a><br>
+	</td>
+ 	</tr>
+ 	<tr>
+	<td>
+    	<a href=$link.setPage("call,UserMgmt_User,StudentList.vm").addPathInfo("mode","All")>
+	<img src="$content.getURI("/images/$lang/Viewlistofstudents.jpg")"border=0></a><br>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<a href=$link.setPage("call,OnLine_Rgtn,ViewOnlineRegistrationInstructor.vm")>
+        <img src="$content.getURI("/images/$lang/onlineRegView.jpg")"border=0></a><br>
+	</td>
+ </tr>
+ </table>
+</td>
+</tr>
+</table>
+  #end
+</font>
+</body>

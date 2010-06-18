@@ -1,0 +1,70 @@
+
+
+$page.setTitle("Quiz Management")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor"=$ui.tableColor" width=100%>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |	
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |  
+        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>Ð?Ð¸ÐºÑ?Ð¾Ñ?Ð¸Ð½Ð° </a> | Ð?Ð°Ð»Ð» Ð?Ð°Ñ?Ñ?Ð¾Ñ?ÐºÐ°  
+        </font>
+        </td>
+</tr>
+</table><br>
+
+
+<br>
+<form name=frm method="post" action="$link.setPage("call,Quiz_Mgmt,Quiz_Score.vm").setAction("Quiz_Action")">
+	<table bgcolor="$ui.tableColor" align=center border=1 width="40%">
+	<tr bgcolor="$ui.menuColor" >
+		<td align="center" colspan=5><b><i> Ð?Ð°Ð»Ð» Ð?Ð°Ñ?Ñ?Ð¾Ñ?ÐºÐ°  Ð?Ð»Ñ?  </i></b></td></tr>
+	<tr bgcolor="$ui.menuColor" ><td colspan=2>
+		<table border=0 width="100%" bgcolor="$ui.tableColor" ><tr>		
+		<td align=center >
+                	<SELECT name="Quizid" onFocus=changeTopic(document.frm) onChange=changeTopic(document.frm)>
+		       	                	        </SELECT>
+			<input type="button" name="Go" value="Ð?Ñ?Ð¿Ñ?Ð°Ð²Ð¸Ñ?Ñ?" onClick="checkField(document.frm,this);"/>
+                        <input type="hidden" name="Quizid" value=$Quizid >
+		
+		</td>
+				</tr>
+		</table>
+	</td>
+	</tr>	
+	        	<input type="hidden" name="actionName">
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+
+ 	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+	function checkField(frm,field){
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	function detailedquiz(frm,field){
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	 function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.Quizid.options[frm.Quizid.selectedIndex].text;
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+
+                }
+	}	
+
+</SCRIPT>

@@ -1,0 +1,81 @@
+#**
+
+Display the details of a user.
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxUserForm.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("User Administration")
+
+<form method="post" action="$link.setPage("user,FluxUserList.vm").setAction("user.FluxUserAction")">
+  <div align="left">
+    <table bgcolor="#ffffff" cellpadding="5">
+
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="2">
+          <table bgcolor="#ffffff">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+
+#set ( $user = $flux.User )
+      <tr>
+        #formCell ("Username" "username" "$!user.UserName" )
+      </tr>
+      <tr>
+        #formPasswordCell ("Password" "password" "")
+      </tr>
+      <tr>
+        #formCell ("First Name" "firstname" "$!user.FirstName" )
+      </tr>
+      <tr>
+        #formCell ("Last Name" "lastname" "$!user.LastName" )
+      </tr>
+      <tr>
+        #formCell ("Email" "email" "$!user.Email" )
+      </tr>
+      <tr>
+        #formCheckBox("Password Expires" "pass_expire" "$user.DoesPasswordExpire" )
+      </tr>
+
+      <tr>
+        <td align="$ui.buttonAlignment" bgcolor="$ui.buttonColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+            
+          <font face="$ui.sansSerifFonts">
+
+          #if ($flux.Mode == "modify")
+            <input type="submit" name="eventSubmit_doUpdate" value="Update User"/>
+          #elseif ($flux.Mode == "delete")
+            <input type="submit" name="eventSubmit_doDelete" value="Confirm Deletion"/>
+          #else
+            <input type="submit" name="eventSubmit_doInsert" value="Add User"/>
+          #end
+
+          </font>
+      </td>
+    </tr>
+  </table>
+    
+  #if ($showEmbeddedMenu)
+    <hr size="1" noshade>
+    #parse ("screens/FluxEmbeddedMenu.vm")
+  #end
+</div>
+</form>

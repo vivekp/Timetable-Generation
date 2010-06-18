@@ -1,0 +1,43 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Course Content")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td colspan=2>
+	<font face="$ui.sansSerifFonts"><b>
+	                        ???? ?? ???????
+		 | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | <a href=$link.setPage("call,IndexHome.vm")>????</a>
+		</font>
+</td>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=left> <blink>
+	</blink> </td>
+</tr>
+<form method="post" enctype="multipart/form-data" >
+  <div align="left">
+            <tr align="right">
+		<td bgcolor="$ui.menuColor" colspan=3>
+	<font size=4><b>?????? ??????? 
+	</td>
+	<td bgcolor="$ui.menuColor">
+	<font size=4><b>
+		????? ?? ???
+	</td>
+	<td bgcolor="$ui.menuColor">&nbsp;&nbsp;</td>
+	</tr>
+			              			         </div>
+</form>
+</table>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

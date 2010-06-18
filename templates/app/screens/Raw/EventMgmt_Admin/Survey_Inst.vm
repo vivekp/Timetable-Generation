@@ -1,0 +1,390 @@
+
+#*
+ * @(#) Survey_Inst.vm
+ * Copyright (c) 2006-2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author  <a href="nagendrakumarpal@yahoo.co.in">Nagendra kumar singh</a>
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">Jaivir Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+$page.setBgColor($ui.bgcolor)
+<body>
+## Representation of TOP BAR
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+				$page.setTitle("Survey")
+				#if($mode=="adphase")
+					<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+					#if($lang=="hindi")
+					<a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm")>$brih_emgmt</a> | $brih_ins $brih_for $brih_survey $brih_create & $brih_post
+					#else
+					<a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm")>$brih_emgmt</a> | Create & Post $brih_survey $brih_for $brih_ins 
+					#end
+				#elseif($mode=="sresult") 
+					<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | 
+					<a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm")>$brih_emgmt</a> | $brih_survey $brih_result
+
+				#elseif($mode=="update") 
+					<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | 
+					<a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm")>$brih_emgmt</a> | $brih_survey $brih_update
+				#else
+					<a href=$link.setPage("call,IndexHome.vm")> $brih_home</a> | 
+					#if($lang=="hindi")
+						<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | $cname $brih_for $brih_survey  
+					#else
+						<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | $brih_survey $brih_for $cname 
+					#end
+				#end
+		</b></font>
+                </td>
+        </tr>
+</table>
+
+$!data.getMessage()
+<table width=100%>
+        <tr>
+                <td align=right>
+		#if(($mode=="adphase")||($mode=="sresult")||($mode=="update"))
+                <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Survey.html","newWin");>$brih_help</a>
+		#else
+                <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/SurveyStud.html","newWin");>$brih_help</a>
+		#end
+                </td>
+        </tr>
+</table>
+#macro(ls)
+	
+	<option value=1>$brih_very $brih_poor</option>
+	<option value=2>$brih_poor</option>
+	<option value=3>$brih_normal</option>
+	<option value=4>$brih_good</option>
+	<option value=5>$brih_very $brih_good</option>
+
+#end
+#set($month=["01","02","03","04","05","06","07","08","09","10","11","12"])
+#set($day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+<form name=frm method="post" action="$link.setAction("SurveyAction").setPage("call,EventMgmt_Admin,Survey_Inst.vm")">
+<table border=1 align=center bgcolor="$ui.tableColor" width=50%>
+	<tr><td  width=100% align="center" bgcolor="$ui.menuColor"> <font color="#000000 "><I><b>
+	#if($mode=="adphase")	
+		$brih_survey $brih_for:-
+	#elseif($mode=="stphase")
+		#if($lang=="hindi") $cname :- $brih_for $brih_survey #else $brih_survey $brih_for:-$cname #end
+	#elseif($mode=="sresult")
+	#if($lang=="hindi") $brih_survey $brih_Of2 $brih_result $brih_for:-	#else $brih_survey $brih_result $brih_for:- #end
+	#elseif($mode=="update")
+		$brih_survey $brih_update
+	#end
+	</b></I></td></tr>
+		#if(($mode=="adphase")||($mode=="sresult") ||($mode=="update"))	
+		<tr><td width=100% align="center">
+			<select name="group1" onChange="checkoption(document.frm,this)";>
+				<option>$brih_select</option>
+					#foreach($gname in $glist)
+						#if(($gname.getName()!="author") && ($gname.getName()!="global"))
+							<option value="$!gname.getName()"">$!gname.getName()	</option>
+						#end
+					#end
+			</select>
+			<input type="submit" name="eventSubmit_doSearch" value="$brih_search"/>
+			<select name="uname">
+			#foreach($n in $ul)
+				#foreach($u in $n)
+					<option value=$!u.UserName>$!u.UserName</option>
+				#end
+			#end
+			</select>
+			<select name="g">
+				<option value="$!value">$!value	</option>
+			</select>
+		</td></tr>
+		#end
+		#if($mode=="sresult")
+		<tr><td width=100% align="center" bgcolor="$ui.menuColor">
+			<input type=button  name="eventSubmit_doGetrank" value=$brih_result onClick="CheckResult(document.frm,this);"/>
+		</td></tr>
+		#end
+		#if($mode=="update")
+		<tr><td width=100% align="center" bgcolor="$ui.menuColor">
+			<input type=button name="eventSubmit_doGet" value=$brih_get onClick="CheckResult(document.frm,this);"/>
+		</td></tr>
+		#end
+</table>
+
+<table border=1 align=center bgcolor="$ui.tableColor" width=50%>
+	#if($mode == "adphase")
+		<tr>
+			<td bgcolor="$ui.tableColor"> <b>$brih_publish $brih_Da</b></td>
+			<td colspan=2><select name="Start_year">
+                	<option value="$cyear">$cyear
+                	#foreach($year in $year_list)
+				#if($cyear != $year)
+				<option value="$year">$year
+				#end
+                  	#end
+                	</select>
+			&nbsp<b><font size=+1>-</font></b>&nbsp
+			<select name="Start_month">
+			<option value="$cmonth">$cmonth
+			#foreach($mon in $month)
+				#if($mon != $cmonth)
+				<option value="$mon">$mon
+				#end
+			#end
+			</select>
+                	&nbsp;<b><font size=+1>-</font></b>&nbsp;
+                	<select name="Start_day">
+                	<option value="$cdays">$cdays
+                	#foreach($d in $day)
+				#if($d!=$cdays)
+                        	<option value="$d">$d
+				#end
+			#end
+			</select>
+			</td>
+		</tr>
+		<tr>
+			#formCell("$brih_ques1*" "q1" "")
+		</tr>
+		<tr>
+			#formCell("$brih_ques2*" "q2" "")
+		</tr>
+		<tr>
+			#formCell("$brih_ques3*" "q3" "")
+		</tr>
+		<tr>
+			#formCell("$brih_ques4*" "q4" "")
+		</tr>
+		<tr>
+			#formCell("$brih_ques5*" "q5" "")
+		</tr>
+		<tr>
+                        <td align=center colspan=3 bgcolor="$ui.menuColor">
+                        <font face="$ui.sanSerifFonts">
+
+                	<input type=button name="eventSubmit_doInsert" value=$brih_submit onClick="CheckQues(document.frm,this);"/>
+                	</font>
+		</td></tr>
+	#elseif($mode=="stphase") 
+			#foreach($detail in $sdetail)
+			<tr>
+				#formCell("$brih_ques1" "" "$sdetail.get(0).getQues1()")
+				<td><select name="marks1">
+					#ls()
+				</select></td>		
+			</tr>
+			<tr>
+				#formCell("$brih_ques2" "" "$sdetail.get(0).getQues2()")
+				<td><select name="marks2">
+					#ls()
+				</select></td>		
+			</tr>
+			<tr>
+				#formCell("$brih_ques3" "" "$sdetail.get(0).getQues3()")
+				<td><select name="marks3">
+					#ls()
+				</select></td>		
+			</tr>
+			<tr>
+				#formCell("$brih_ques4" "" "$sdetail.get(0).getQues4()")
+				<td><select name="marks4">
+					#ls()
+				</select></td>		
+			</tr>
+			<tr>
+				#formCell("$brih_ques5" "" "$sdetail.get(0).getQues5()")
+				<td><select name="marks5">
+					#ls()
+				</select></td>
+			</tr>
+		##check iname is required or not
+                	<input type="hidden" name="iname" value=$sdetail.get(0).getInstId()>
+                        <input type="hidden" name="sid" value=$sdetail.get(0).getSurveyId()>
+                	<input type="hidden" name="cid" value=$sdetail.get(0).getCid()>
+			#end
+			<tr>
+                        <td align=center colspan=3 bgcolor="$ui.menuColor">
+                        <font face="$ui.sanSerifFonts">
+
+				#if($rank>0)
+					<input type=button name="eventSubmit_doSend" value=$brih_post disabled="true"/>
+				#else
+					<input type=button name="eventSubmit_doSend" value=$brih_post onClick="CheckMarks(document.frm,this);"/>
+				#end
+                	</font>
+			</td></tr>
+	#elseif($mode=="update")
+			#foreach($detail in $list)
+			<tr>
+				#formCell("$brih_publish $brih_Da" "pdate" "$list.get(0).getPdate()")
+			</tr>
+			<tr>
+				#formCell("$brih_ques1" "q1" "$list.get(0).getQues1()")
+			</tr>
+			<tr>
+				#formCell("$brih_ques2" "q2" "$list.get(0).getQues2()")
+			</tr>
+			<tr>
+				#formCell("$brih_ques3" "q3" "$list.get(0).getQues3()")
+			</tr>
+			<tr>
+				#formCell("$brih_ques4" "q4" "$list.get(0).getQues4()")
+			</tr>
+			<tr>
+				#formCell("$brih_ques5" "q5" "$list.get(0).getQues5()")
+			</tr>
+
+			<tr>
+                        <td align=center colspan=3 bgcolor="$ui.menuColor">
+                        <font face="$ui.sanSerifFonts">
+			<input type=button name="eventSubmit_doUpdate" value=$brih_update onClick="ValueUpdate(document.frm,this);"/>
+                	</font>
+			</td></tr>
+                	<input type="hidden" name="iname" value=$list.get(0).getInstId()>
+                        <input type="hidden" name="sid" value=$list.get(0).getSurveyId()>
+                	<input type="hidden" name="cid" value=$list.get(0).getCid()>
+			#end
+	#elseif($mode=="sresult")
+
+		#if($lang == "hindi") #set($headings = ["$brih_course $brih_Of1 $brih_name","$brih_grade"]) #else	#set($headings = ["$brih_course $brih_name","$brih_grade"]) #end
+		#if($lst.size() !=0)
+			<tr>
+                	<td bgcolor="$ui.menuColor">
+                                $brih_select 
+                	</td>
+                   		#foreach ($heading in $headings)
+                                	<font> #headerCell ($heading)</font>
+				#end
+			</tr>	
+		#end
+		#set ( $count=1 )
+		#foreach($detail in $lst)
+		#set ( $seqno= $count - 1 )
+                        <input type="hidden" name="$detail.getSurveyId()" value=$seqno>
+			<tr>
+				<td bgcolor="$ui.menuColor"><input type="checkbox" name="$detail.getSurveyId()" onClick="addDeleteList(this,document.frm);"></td>
+			#set ($cnt=1)
+			#foreach ($cn in $clist)
+				#if($cnt==$count)
+				<td>$cn</td>
+				#end
+			#set($cnt= $cnt+1)
+			#end
+				<td>$detail.getGrade()</td>
+			</tr>
+		#set($count=$count+1)	
+		#end
+		#if($lst.size() !=0)
+		<tr>
+                	<td align=center colspan=3 bgcolor="$ui.menuColor">
+                        <font face="$ui.sanSerifFonts">
+
+                                <input type=button name="eventSubmit_doDelete" value=$brih_delete onClick="checkField(document.frm,this);"/>
+                		<input type="hidden" name="deleteFileNames" value="">
+                	</font>
+			</td>
+		</tr>
+               #end
+	#end
+		 	
+                	<input type="hidden" name="actionName">
+                	<input type="hidden" name="val">
+                	<input type="hidden" name="mode" value=$mode>
+                	<input type="hidden" name="group" value=$group>
+	</table>
+	</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckQues(frm,field)
+        {
+		if((frm.group1.value!="") &&(frm.uname.value!=""))
+		{ 
+          		if((frm.q1.value!="") &&(frm.q2.value!="") && (frm.q3.value!="") && (frm.q4.value!="") &&(frm.q5.value!="")) 
+			{
+                		frm.actionName.value=field.name;
+                        	frm.submit();
+                	}
+                	else
+               	 	{
+                        	alert("Please Fill All The mandatory (*) Fields");
+                	}
+		}
+		else
+		{
+                        alert("Please Select CourseId and InstructorName");
+                }
+        }
+        function ValueUpdate(frm,field)
+        {
+		if((frm.pdate.value!="") &&(frm.q1.value!="") &&(frm.q2.value!="") && (frm.q3.value!="") && (frm.q4.value!="") &&(frm.q5.value!=""))
+		{ 
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+                else
+                {
+                        alert("There is no question for updating");
+                }
+        }
+        function CheckMarks(frm,field)
+        {
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+        function CheckResult(frm,field)
+        {
+		if((frm.group1.value!="") &&(frm.uname.value!=""))
+		{ 
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+		else
+		{
+                        alert("Please Select CourseId and InstructorName");
+                }
+	}
+	function checkField(frm,field)
+        {
+		var items;
+		items=frm.deleteFileNames.value;
+                if(items.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert("Please select checkbox  !!");
+        }
+        function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        }
+	function checkoption (frm,field)
+	{
+		frm.val.value=document.frm.group1.value;
+	}
+</SCRIPT>

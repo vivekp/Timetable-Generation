@@ -1,0 +1,101 @@
+
+$page.setTitle("Res Repo Page")
+$page.setBgColor("bgcolor")
+
+<table bgcolor="#d9e3ec" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts">
+	<a href=$link.setPage("Index.vm")><b>????</a> | 
+	???????? ????????? ????
+	</font>
+</td>
+</table>
+<table  bgcolor="#d9e3ec" width=100%>
+<tr>
+<td align=right>
+	<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/ResearchRepository.html","newWin");>??????</a>
+</td>
+</tr>
+</table>
+<br>
+<form name="frm" method="post" enctype="multipart/form-data" action=$link.setPage("call,ResearchRepository,ResearchRepo.vm").setAction("ResearchRepo_Action")>
+<table align="center" bgcolor="#e5e5e5" width="100%">
+	<tr>
+		<td align="center"><b>
+		    		<a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm")>???????? ????????? ?????? </a></b>&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+	</tr>
+</table>
+<br>
+<table align="center" border="0" bgcolor="#d9e3ec" width="80%" > <tr bgcolor="#e5e5e5"><td align ="center" vlaign="top">
+<table  border="0" bgcolor="#d9e3ec" width="100%"> 		</table>
+<tr>
+        <td align="left">&nbsp;&nbsp; 				        </td>
+</tr>
+</td></tr>
+         <input type="hidden" name="actionName" >
+        <input type="hidden" name="deleteFileNames" value="">
+        <input type="hidden" name="stat" value="Search">
+        <input type="hidden" name="tname" value="$tname"> 
+
+</table> </form>
+<SCRIPT LANGUAGE="javascript">
+function checkField(frm,field)
+{
+	if(frm.topicname.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+                alert("Please fill the Mandatory(*) Fields !!");
+}
+function deleteConfirm(frm,field)
+{
+	var delfiles;
+        delfiles=frm.deleteFileNames.value;
+        if(delfiles.length!=0)
+        {
+        	if(confirm("Selected Group will be Deleted"))
+                {
+                	frm.actionName.value=field.name;
+                        frm.submit();
+                }
+        }
+        else
+        	alert("Please Select check box  !!");
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked)
+        {
+        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else
+        {
+        	var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                preString=actualString.substring(0,index);
+                postString=actualString.substring(index+field.name.length+1);
+                actualString=preString+postString;
+                frm.deleteFileNames.value=actualString;
+        }
+
+}
+function popupWin(url,popupName)
+{
+	Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+function checkNull(frm,field)
+{
+	if(frm.valueString.value!="")
+	{
+		frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        	alert("The 'Match String' text box can not be NULL");
+}
+</SCRIPT>

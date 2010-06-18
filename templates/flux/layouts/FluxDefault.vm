@@ -1,0 +1,30 @@
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="2" align="left">
+      $navigation.setTemplate("/FluxTop.vm")
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr noshade size="1">
+    </td>                
+  </tr>
+  <tr>
+    <td width="10%" valign="top" align="left">
+      $navigation.setTemplate("/FluxMenu.vm")
+    </td>
+    <td width="*" valign="center">
+      $screen_placeholder
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr noshade size="1">
+    </td>                
+  </tr>
+  <tr>
+    <td colspan="2">
+      $navigation.setTemplate("/FluxBottom.vm")
+    </td>
+  </tr>
+</table>

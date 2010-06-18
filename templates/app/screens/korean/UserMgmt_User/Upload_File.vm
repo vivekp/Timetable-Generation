@@ -1,0 +1,142 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("$brih_file $brih_upload")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>ì§?</a> |
+ 	<a href=$link.setPage("call,UserMgmt_User,PersonalArea.vm")>ê°?ì?¸ ì§?ì?­ </a> | 
+	ì??ë¡?ë?? ë?´ì?© 
+	</font>
+</td>
+</tr>
+</table>
+<table width="100%"><tr><td><b>  MB</b></td><td align="right"><b>ì??ë¡?ë??ë¥¼ì??í?? ê³µê°?    MB </b></td></tr></table>
+<table border="1" bgcolor="$ui.tableColor">
+	<tr>
+                                        <br>
+                                                </td>
+        	</tr>
+</table>
+
+<script LANGUAGE="JAVASCRIPT">
+	function blurTopicName(frm)
+	{
+		frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+	}
+	
+	function changeTopic(frm)
+	{
+		if(frm.topicExisting[0].checked)
+		{
+			frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+		}
+		else
+		{
+			frm.contentTopic.focus();
+		}
+	}
+
+	function checkRadio()
+	{
+		if(document.uploadform.topicExisting[0].checked)
+		{
+			document.uploadform.contentTopic.blur();
+		}
+		
+	}
+	function validate(uploadform,field)
+	{	
+		var tList=uploadform.topicList;
+		var cTopic=uploadform.contentTopic;
+		if(uploadform.contentTopic.value!="")
+		{
+			var totNamedEntries=uploadform.topicList.length;
+			for(i=1;i<totNamedEntries;i++)
+			{
+				if(tList.options[i].text==cTopic.value)
+				{
+					if(uploadform.topicExisting[1].checked)
+					{
+						if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+						{
+						uploadform.actionName.value=field.name;
+                                		uploadform.submit();
+						}
+						else
+						{
+						return;
+						}
+	
+					}
+				}
+			}
+			uploadform.actionName.value=field.name;
+                        uploadform.submit();
+		}
+		else
+		{
+			alert("Topic Name Can not Empty !!");
+		}
+	}
+</script>
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_User,Upload_File.vm").setAction("UserAreaAction").addPathInfo("mode","uarea")">
+  <div align="left">
+    <table align=center bgcolor="$ui.bgcolor" cellpadding="0">
+      	<tr>
+		<img src="$content.getURI("/images/hand.gif")"><font color="red">ì ?ë°? ë?¹ì? ì?? <b> ì??ë¡?ë??í??ë?? í??ì?¼ì?? í??ì?¼ ì?´ë¦?ì?? '+'</ b> ë¬¸ì??ê°?ë??ì§? ì??ë??ì§? í??ì?¸í??ì?­ì??ì?¤!!</font>
+	</tr>
+<br><br>
+      <tr>
+      <td colspan=4>
+	<b><input type="RADIO" name=topicExisting checked=true value="OLDTOPIC" onClick=blurTopicName(document.uploadform)>ì¡´ì?¬ ì£¼ì ?
+	<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+	  <option></option>
+	  	</SELECT>
+	</td></tr>
+	<tr><td>
+	<input type="RADIO" name=topicExisting value="NEWTOPIC" ><b>ì??ë¡?ì?´ ì£¼ì ?</b>
+	</td>
+	</tr>
+      <tr>
+	  	<td bgcolor="$ui.tableColor">
+  	<b><font face="$ui.sansSerifFonts">ì£¼ì ? ì?´ë¦?</font> </b>
+	</td>
+	<td>
+	<input type="text" name=contentTopic onFocus=checkRadio() size=50>
+    	</td>
+      <tr>
+              #fileUpload ("1. &nbsp; ì²¨ë¶?í?©ë??ë?¤  í??ì?¼  " "file1")</td> 
+      </tr>
+      <tr>
+              #fileUpload ("2. &nbsp; ì²¨ë¶?í?©ë??ë?¤  í??ì?¼  " "file2")</td> 
+      </tr>
+      <tr>
+              #fileUpload ("3. &nbsp; ì²¨ë¶?í?©ë??ë?¤  í??ì?¼  " "file3")</td> 
+      </tr>
+      <tr>
+              #fileUpload ("4. &nbsp; ì²¨ë¶?í?©ë??ë?¤  í??ì?¼  " "file4")</td> 
+      </tr>
+      <tr>
+              #fileUpload ("5. &nbsp; ì²¨ë¶?í?©ë??ë?¤  í??ì?¼  " "file5")</td> 
+      </tr>
+
+      <tr>
+        <td colspan=5 align="center" bgcolor="$ui.buttonBoxColor">
+
+          <font face="$ui.sansSerifFonts">
+
+          <input type="button" name="eventSubmit_doUpload" value="ì??ë¡?ë??" onClick="validate(document.uploadform,this);"/>
+	<input type="hidden" name="actionName">
+    
+          </font>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</form>

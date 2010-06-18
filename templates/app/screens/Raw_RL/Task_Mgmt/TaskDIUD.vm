@@ -1,0 +1,277 @@
+#*
+ * @(#)TaskDIUD.vm
+ * Copyright (c) 2005-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * @author  <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr align="right">
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			<a href=$link.setPage("Index.vm")>$brih_home</a> | $brih_mng $LocalMail_Task  
+                      
+                </td>
+        </tr>
+</table>
+#set($lang=$data.getUser().getTemp("lang" ).toString())
+
+<br>
+#set($month=["01","02","03","04","05","06","07","08","09","10","11","12"])
+#set($day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+<table align="center">
+<tr align="right">
+        <td align="right">
+                <b><font color="red">$brih_red $brih_color </font></b> -> $LocalMail_Task $brih_task2 &nbsp;&nbsp;&nbsp;
+                <b>*$brih_black $brih_color </b> -> $LocalMail_Task  $brih_task3 &nbsp;&nbsp;&nbsp;
+                <b>*<font color="blue">$brih_blue $brih_color </font></b> -> $LocalMail_Task $brih_task4 <br>
+
+        </td>
+</tr>
+<tr>
+        <td align="right">
+                	<b><u>$brih_delete </u></b> ->$sp_task $brih_delete   &nbsp;&nbsp;&nbsp;
+	                <b>*<u>$brih_edit </u></b> -> $sp_task $brih_update  &nbsp;&nbsp;&nbsp;
+        	        <b>*<u>$brih_move </u></b> -> $brih_task1  "<b><u>$brih_todayTask </u></b>" $brih_in $brih_move 
+        </td>
+</tr>
+</table>
+<br>
+#macro(result)
+	#set($date=$tlist.get($i).getStartDate())
+	#set($endd=$tlist.get($i).getEndDate())
+	#if($date >  $cdate)
+		<font color=BLACK>$tlist.get($i).getTitle()</font>
+        #elseif ($endd  <  $cdate)
+        	<font color=RED>$tlist.get($i).getTitle()</font>
+        #elseif (($date <= $cdate) && ($endd >= $cdate))
+       		<font color=BLUE>$tlist.get($i).getTitle()</font>
+        #end
+	
+        ##set($s=$tlist.get($i).getStatus())
+        #if($tlist.get($i).getStatus() >= 1)
+        ##if($s >= 1)
+        	<blink><font color="Green" size="5"><b>*</b></font>&nbsp;</blink>
+	#end
+        </td><td>
+		<a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("id",$tlist.get($i).getTask_Id()).addPathInfo("actionName","eventSubmit_doDelete").setAction("Task_Action")> $brih_delete </a>&nbsp;&nbsp;
+                <a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("id",$tlist.get($i).getTask_Id()).addPathInfo("mode","update")> $brih_edit </a>&nbsp;&nbsp;
+		<a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm").setAction("Task_Action").addPathInfo("id",$tlist.get($i).getTask_Id()).addPathInfo("mode","move").addPathInfo("actionName","eventSubmit_doMove")>$brih_move</a>&nbsp;&nbsp;
+#end
+
+#macro(Y $year)
+	<option value="$year">$year
+        #foreach($year1 in $ylist)
+        	#if($year != $year1)
+                	<option value="$year1">$year1
+                #end
+        #end
+        </option>
+
+#end
+
+#macro(M $mont )
+	<option value="$mont">$mont
+	#foreach($mon in $month)
+                #if($mon != $mont)
+                	<option value="$mon">$mon
+		#end
+	#end
+	</option>
+#end
+
+#macro(D $da)
+	<option value="$da">$da
+        #foreach($d in $day)
+        	#if($d != $da)
+                	<option value="$d">$d
+                #end
+        #end
+	</option>
+
+#end
+
+<table cellpadding=0 cellspacing=1 align=center bgcolor="$ui.tableColor" border="1">
+	<tr><td bgcolor="$ui.menuColor" align="center" colspan="2"><font size=4><b><I>$LocalMail_Task </I></b></font></td></tr>
+	<tr><td>
+		<table>
+			<tr><td>
+			#set($row_counter=1)
+				<table border=1 cellspacing=0 align=center bgcolor="$ui.tableColor">
+				#set($i=0)
+				#foreach($list in $tlist)
+					#if($row_counter % 2 == 0)
+                	      		<tr bgcolor="$ui.buttonBoxColor"><td>
+						#result()
+	                     		</td></tr>
+	        	                #set($row_counter=$row_counter+1)
+        	        	        #else
+                	        	<tr bgcolor="$ui.tableColor"><td>
+  						#result()
+	                        	</td></tr>
+	        	                #set($row_counter=$row_counter+1)
+        	        	        #end
+				#set($i=$i+1)
+				#end
+				</table>
+			</td></tr>
+			<tr><td>
+				<tr><td><center> <a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("mode","insert")> $LocalMail_Task $brih_add </a>
+				</td></tr>
+			</td></tr>
+		</table>
+	</td>
+	#if($mode == "insert")
+	<td>
+	<form name=frm method="post" action="$link.setAction("Task_Action").setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("mode","insert")">
+		<table Cellpadding=0 Cell spacing=0 align=center bgcolor="$ui.tableColor" border=0">
+                        <tr align="right">
+                                <td>
+                               	<textarea name="title" cols=40 rows=5  wrap=physical align=left ></textarea>
+                        	</td>
+                        	<td><b>$brih_title <font color=RED size="5">*</font></b> </td>
+			</tr>
+                        <tr align="right">
+                        	<td>
+                                 <select name="Start_year"> #Y($cyear) </select>
+                                                &nbsp<b><font size=+1>-</font></b>&nbsp
+                                 <select name="Start_mon"> #M($cmonth) </select>
+                                                &nbsp;<b><font size=+1>-</font></b>&nbsp;
+                                 <select name="Start_day"> #D($cday)    </select>
+                        	</td>
+				<td> <b>$brih_start $brih_Da </b> </td>
+			</tr>
+                        <tr align="right">
+				<td> 
+					<select name="End_year"> #Y($nyear) </select>
+                                         	&nbsp<b><font size=+1>-</font></b>&nbsp
+                                 	<select name="End_mon"> #M($nmonth) </select>
+                                                &nbsp;<b><font size=+1>-</font></b>&nbsp;
+                                 	<select name="End_day"> #D($nday)    </select>
+                        	</td>
+				<td><b>$brih_end $brih_Da </b></td>
+			<tr align="right">
+                                <td><input type="text" size=3 name="et" value="7"></td>
+                                <td><b>$brih_expiry<font color=RED> *</font></b></td>
+                        </tr>
+			<tr><td align=center colspan=2 bgcolor="$ui.menuColor"><font face="$ui sanSerif fonts">
+                        	<input type=button name="eventSubmit_doInsert" value=$brih_submit onClick="addtask(document.frm,this);"/>
+                             	<input type=button name="reset" value=$brih_reset >
+                             	<input type="hidden" name="actionName">
+                                </font>
+		</td></tr>
+	        </table>
+	</form>
+	</td>
+	#end
+	#if($mode == "update")
+	<td>
+	<form name=frm method="post" action="$link.setAction("Task_Action").setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("mode","update")">
+		<table Cellpadding=0 Cell spacing=0 align=center bgcolor="$ui.tableColor" border=0">
+                        <tr align="right">
+                                <td> <textarea name="title" cols=40 rows=5  wrap=physical align=left >$ulist.get(0).getTitle() </textarea> </td>
+                        	<td><b>$brih_title <font color=RED size="5">*</font></b> </td>
+                        </tr>
+                        <tr align="right">
+                                <td align="right">
+	                                <select name="Start_year"> #Y($usdate.get(0)) </select>
+                                                &nbsp<b><font size=+1>-</font></b>&nbsp
+                                	<select name="Start_mon"> #M($usdate.get(1))  </select>
+                                                &nbsp;<b><font size=+1>-</font></b>&nbsp;
+                                	<select name="Start_day"> #D($usdate.get(2))  </select>
+                        	</td>
+                        	<td> <b>$brih_start $brih_Da </b> </td>
+			</tr>
+                        <tr align="right">
+                                <td align="right">
+                                	<select name="End_year"> #Y($uedate.get(0))   </select>
+                                                &nbsp<b><font size=+1>-</font></b>&nbsp
+                                	<select name="End_mon"> #M($uedate.get(1))    </select>
+                                                &nbsp;<b><font size=+1>-</font></b>&nbsp;
+                                	<select name="End_day"> #D($uedate.get(2))    </select>
+				</td>
+                        	<td><b>$brih_end $brih_Da </b> </td>
+                       </tr>
+			<tr align="right">
+                                <td><input type="text" size=3 name="et" value="$ulist.get(0).getExpiry()"></td>
+                                <td><b>$brih_expiry<font color=RED> *</font></b></td>
+                       </tr>
+			#if($ulist.get(0).getStatus()>=1)
+                        <tr align="right">
+                                <td><input type="text" size=3 name="dday" value="$ulist.get(0).getDueDays()"></td>
+                                <td><b>$brih_tcf<font color=RED> </font></b></td>
+                       </tr>
+                        #end
+
+			<tr>
+
+		     <td align=center colspan=2 bgcolor="$ui.buttonBoxColor"><font face="$ui sanSerif fonts">
+			 #if($ulist.get(0).getStatus()>=1)
+			          <input type=button name="eventSubmit_doUpdate" value=$brih_submit onClick="checktask(document.frm,this);"/>
+                        #else
+		                    <input type=button name="eventSubmit_doUpdate" value=$brih_submit onClick="addtask(document.frm,this);"/>
+                        #end
+                             	<input type=button name="reset" value=$brih_reset >
+                             	<input type="hidden" name="actionName">
+				<input type="hidden" name="id" value="$id">
+                             </font></td>
+        	</tr>
+        	</table>
+	</form>
+	</td>
+	#end
+	</tr>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+function addtask(frm,field)
+        {
+                if((frm.title.value!="") && (frm.et.value!=""))
+                {
+                        if(frm.et.value>=1 && frm.et.value<=30)
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        {
+                                alert("The Expiry time Should be between 1 to 30 days");
+                        }
+                }
+                else
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+	function checktask(frm,field)
+        {
+          if((frm.title.value!="") && (frm.et.value!=""))
+                {
+                        if(frm.et.value<31 && frm.et.value>=1)
+                        {
+                                if(frm.dday.value>=1 && frm.dday.value<=7)
+                                {
+                                        frm.actionName.value=field.name;
+                                        frm.submit();
+                                }
+                                else
+                                {
+                                        alert("Task Conf days should not be more than 7 days");
+                                }
+                        }
+                        else
+                        {
+                                alert("The Expiry time Should be between 1 to 30 days");
+                        }
+                }
+                else
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+</SCRIPT>

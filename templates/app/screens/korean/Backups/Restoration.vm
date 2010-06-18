@@ -1,0 +1,69 @@
+ 
+
+
+$page.setTitle("Brihaspati Administrator")
+$page.setBgColor("$ui.bgcolor")
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+     	     	<a href=$link.setPage("Index.vm")>Admin's ì§?</a> | 
+		Glossary Restore
+		</td>
+</tr>
+</table>
+
+<table width=100% align=left bgcolor="$ui.menuColor">
+<tr><td>
+<table width=100% align=left bgcolor="$ui.tableColor">    
+<tr align=left width=33%>
+		<td>
+    			<a href=$link.setPage("call,Backups,Restoration.vm")>ë³µì??</a>
+				</td>
+		<td>
+    			<a href=$link.setPage("call,Backups,Restoration.vm").addPathInfo("st","db")>System ë³µì??</a>
+				</td>
+		<td>
+    			<a href=$link.setPage("call,Backups,Restoration.vm").addPathInfo("st","glsry")>ì?©ì?´  ë³µì??</a>	
+				</td>
+</tr>
+</table></td></tr>
+<tr><td>
+<form name=uploadform  method="post" enctype="multipart/form-data" action="$link.setPage("call,Backups,Restoration.vm").setAction("AdminRestoreAction")" >
+  <div align="left">
+        <table width="100%" align="left">
+      
+      <tr>
+        #fileUpload ("í??ì?¼" "file")
+      </tr>
+	<tr>
+        <td align="left" colspan="2">
+
+          <font face="$ui.sansSerifFonts">
+                  <input type="button" name="eventSubmit_doRestoreContent" value="ë³µì??" onClick="checkValues(document.uploadform,this);"/>
+                 <input type="hidden" name="actionName">
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+</td></tr>
+</table>
+<SCRIPT LANGUAGE="javascript">
+        function checkValues(uploadform,field)
+        {
+                if(uploadform.file.value!="")
+                {
+                                uploadform.actionName.value=field.name;
+                                uploadform.submit();
+                }
+                else
+                {
+                        alert("Please browse and select the file !!");
+                }
+        }
+
+</SCRIPT>
+
+
+

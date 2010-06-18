@@ -1,0 +1,81 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.menuColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+				</font>
+		</td>
+	</tr>
+</table>
+<table width=100%>
+        <tr bgcolor="$ui.tableColor">
+                <td align=right colspan="10">
+		<img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati2/docs/Quota.html","newWin");>Hilfe </a>
+                </td>
+        </tr>
+<tr bgcolor="$ui.menuColor">
+	<td width=50%>
+	<a href=$link.setPage("call,Quota_Mgmt,Quota.vm").addPathInfo("mode","uquota")>Benutzer  </a>
+	</td>
+	<td colspan=5>
+        <a href=$link.setPage("call,Quota_Mgmt,Quota.vm").addPathInfo("mode","cquota")>Kurs  </a>
+        </td>
+
+</tr>
+<form name="frm" action="$link.setPage("call,Quota_Mgmt,Quota.vm").setAction("QuotaAction")"> 
+                <input type="hidden" name="actionName">
+                <input type="hidden" name="mode" value=$mode>
+
+</form>
+</table> 
+<SCRIPT LANGUAGE="javascript">
+	function checkfield(frm,field)
+	{
+		if(frm.quota.value!="")
+		{	
+			if(isNumberString(frm.quota.value))
+			{
+     				frm.actionName.value=field.name;
+     				frm.submit();
+			}
+    		}
+	}
+	function Updatefield(frm,field)
+	{
+		if(frm.cquota.value!="")
+		{
+			if(isNumberString(frm.cquota.value))
+			{
+     				frm.actionName.value=field.name;
+     				frm.submit();
+			}
+    		}
+	}
+	 function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                return false;
+                var RefString="0123456789";
+                for(count=0;count<chString.length;count++)
+                {
+                        tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+				alert("Value should be numeric")
+                                return false;
+                        }
+                }
+                        return true;
+        }
+
+</SCRIPT>
+

@@ -1,0 +1,243 @@
+
+#*
+ * @(#) ViewAss.vm 
+ * Copyright (c) 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href=" mailto:arvindjss17@gmail.com "> Arvind Pal </a>
+ * @modify <a href ="mailto:shaistashekh@hotmail.com"> Shaista</a>
+ * @date 22-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr align="right"> 
+		<td>
+        		<a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment  </a>|
+	        	<a href=$link.setPage("call,Assignment,AssView.vm")> </a> $brih_view $brih_assignment</b>
+	        	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> |
+			<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+        	</td>
+	</tr>
+</table> ##table 1 end
+
+$!data.getMessage()
+<table width=100%>
+	<tr>
+		<td>
+        	#if($user_role == "instructor")
+			<a href=javascript:popupWin("/brihaspati2/docs/ViewAss.html","newWin");>$brih_help</a>
+                	<img src="$content.getURI("/images/Lefthand.gif")">
+ 		#end
+		</td>
+	</tr>
+</table>
+<br>
+	<Form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,ViewAss.vm").setAction("Assignments")>   
+	<table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor" width="85%">
+	<tr bgcolor="$ui.menuColor" align="right">   
+		<td align=center >
+                	<input type="button" name="dosubmitView" value="$brih_search" onClick="checkBlank(document.uploadform,this);"  /> 
+		</td>
+		##	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<td align=center >
+                	##<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+                	<SELECT name=topicList>
+				<option value="" ></option>
+				#foreach($topic in $allTopics)
+					<option value="$topic" > $topic </option>
+                        	#end
+                	</SELECT> 
+		</td>
+			##&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<td align=center >
+			<b> $brih_topic $brih_Of1 $brih_name   </b> &nbsp;
+		</td>
+			#if($user_role == "instructor")
+				<td align=center >
+					<input type="text" name="GetUser"  size=26 onChange="validate1(this)"  /> &nbsp;
+				</td> 
+				<td align=center >
+					<b> $brih_usr $brih_Of1 $brih_name</b>
+				</td>
+			#end
+                       	<input type="hidden" name="actionName">
+                ##</td>
+        </tr>
+	</table>
+	<table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor" width="85%">
+#if($startpage !=  0 )
+	<tr align="right">
+	#if($user_role ==  "student") 
+        	#if($gradecheck == "ok")
+	        <td align="center">  <b> $brih_marks  </b> </td>
+        	<td align="center">  <b> $brih_feedback  </b> </td>
+		#end
+        	<td  align="Center"> <b> $brih_assignment $brih_Of $brih_Da  </b> </td>
+	        <td  align="Center"> <b> $brih_marks $brih_Of  $brih_max </b> </td>
+        	#if($datecheck == "ok")
+        	<td align="center">  <b> $brih_post $brih_Of $brih_Da </b> </td>
+        	#end
+        	#if($studentfilecheck == "ok")
+        	<td align="center">  <b> $brih_view $brih_answer </b> </td>
+        	#end
+        	#if($anscheck == "ok")
+        	<td align="center">  <b> $brih_answer $brih_Of $brih_file  </b> </td>
+        	#end
+        	<td align="center">  <b> $brih_assignment $brih_Of $brih_file  </b> </td>
+		<td align="center"> <b> $brih_usr $brih_Of1 $brih_name</b> </td>
+	#end	
+	#if($user_role ==  "instructor")
+		#if($studentfilecheck == "ok")
+                	<td align="center">  <b> $brih_given  $brih_marks </b> </td>
+                #end
+		#if($gradecheck == "ok")
+		<td align="center">  <b> $brih_feedback  </b> </td>
+		<td align="center">  <b> $brih_marks  </b> </td>
+		#end
+		<td  align="Center"> <b> $brih_max $brih_marks </b> </td>
+		<td  align="Center"> <b> $brih_assignment $brih_Of $brih_Da  </b> </td>
+		#if($datecheck == "ok")
+		<td align="center">  <b> $brih_post $brih_Of $brih_Da </b> </id>
+		#end
+		#if($studentfilecheck == "ok")
+		<td align="center">  <b> $brih_view $brih_answer </b> </td>
+		#end
+		#if($anscheck == "ok")
+		<td align="center">  <b> $brih_answer $brih_file  </b> </td>
+		#end
+		<td align="center">  <b> $brih_assignment $brih_Of $brih_file  </b> </td>
+		<td align="center"> <b> $brih_usr $brih_Of1 $brih_name</b> </td>
+
+	#end
+	</tr>	
+	#if($user_role ==  "instructor")
+	#foreach($e in $Assignmentlist )
+	<tr align="right">
+		#if($studentfilecheck == "ok")
+                        <td width="10%" align="Center">
+				#if($!e.getStudentfile() != "")
+					<a href=$link.setPage("call,Assignment,PostGrade.vm").addPathInfo("qname",$topicList).addPathInfo("studentsname",$!e.getStudentname())> $brih_marks </a>				
+				#end
+			</td>	
+		#end
+		#if($gradecheck == "ok")
+			<td width="10%" align="Center">
+			#if($!e.getgrade() != "")
+				$!e.getfeedback()
+			#end
+			</td>
+			<td width="10%" align="Center">	
+			#if($!e.getgrade() != "")
+				$!e.getgrade()  ## given grade
+			#end
+			</td>
+		#end	
+		<td width="10%" align="Center"> $!e.getmaxgrade() </td> ## max grade
+		<td width="10%" align="Center"> $!e.getAssignmentDuedate() </td>  ## Duedate
+		#if($datecheck == "ok")
+  		<td width="20%" align="Center">
+			#if( $!e.getDuedate() != "" )
+			$!e.getDuedate()  ##postdate
+			#end
+		</td>
+		#end
+		#if($studentfilecheck == "ok")
+		<td width="10%" align="center"> ##Student file
+			#if($!e.getStudentfile() != "")
+				<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","content").addPathInfo("type","Assignment").addPathInfo("msgid",$str1).addPathInfo("filename",$!e.getStudentfile())","newWin");>$brih_view</a>
+			#end
+		</td>
+		#end 
+		#if($anscheck == "ok")
+		<td width="10%" align="center"> ## Answer file  
+			#if($!e.getanswerfile() != "")
+			<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","content").addPathInfo("type","Assignment").addPathInfo("msgid",$str1).addPathInfo("filename",$!e.getanswerfile())","newWin");>$brih_answer </a>
+			#end
+		</td>
+		#end
+		<td width="10%" align="center">   ##  Assignment file
+			<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","content").addPathInfo("type","Assignment").addPathInfo("msgid",$str1).addPathInfo("filename",$!e.getAssignmentfile())","newWin");>$brih_assignment </a>
+		</td>
+		<td width="10%" align="Center"> $!e.getStudentname()  </td>  ##student name
+	</tr>
+        #end
+	#end  
+
+	#if($user_role ==  "student")
+	#foreach($e in $Assignmentlist )
+	<tr align="right">
+
+		#if($gradecheck == "ok")
+                        <td width="10%" align="Center">
+                        #if($!e.getgrade() != "")
+                                $!e.getgrade()  ## given grade
+                        #end
+                        </td>
+                        <td width="10%" align="Center">
+                        #if($!e.getgrade() != "")
+                                $!e.getfeedback()
+                        #end
+                        </td>
+                #end
+########################
+		<td width="10%" align="Center"> $!e.getAssignmentDuedate() </td>  ## Duedate
+                <td width="10%" align="Center"> $!e.getmaxgrade() </td> ## max grade
+                #if($datecheck == "ok")
+                <td width="20%" align="Center">
+                        #if( $!e.getDuedate() != "" )
+                        $!e.getDuedate()  ##postdate
+                        #end
+                </td>
+                #end
+                #if($studentfilecheck == "ok")
+                <td width="10%" align="center"> ##Student file
+                        #if($!e.getStudentfile() != "")
+	                      <a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","content").addPathInfo("type","Assignment").addPathInfo("msgid",$str1).addPathInfo("filename",$!e.getStudentfile())","newWin");>$brih_view</a>
+                        #end
+                </td>
+                #end
+                #if($anscheck == "ok")
+                <td width="10%" align="center"> ## Answer file
+                        #if($!e.getanswerfile() != "")
+				<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","content").addPathInfo("type","Assignment").addPathInfo("msgid",$str1).addPathInfo("filename",$!e.getanswerfile())","newWin");>$brih_answer </a>
+                        #end
+                </td>
+                #end
+                <td width="10%" align="center">   ##  Assignment file
+			<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","content").addPathInfo("type","Assignment").addPathInfo("msgid",$str1).addPathInfo("filename",$!e.getAssignmentfile())","newWin");>$brih_assignment </a>
+                </td>
+                <td width="10%" align="Center"> $!e.getStudentname()  </td>  ##student name
+        </tr>
+	#end
+	#end
+#end	
+</table>
+</form>
+<script language="javascript">
+        
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+        function checkBlank(uploadform,field)
+        {
+               	if(uploadform.topicList.value!="" )
+               	{
+			uploadform.actionName.value=field.name;
+			uploadform.submit();
+                }
+                else{
+			alert("Topic Name Can not Empty !! "+uploadform.topicList.value);
+		}
+
+        }
+	
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+</script>
+
+

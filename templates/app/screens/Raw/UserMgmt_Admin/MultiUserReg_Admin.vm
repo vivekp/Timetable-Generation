@@ -1,0 +1,166 @@
+
+#*
+ * @(#) MultiUserReg_Admin.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Add Multiple Users ")
+$!data.getMessage()
+
+#set($lang = $data.getUser().getTemp("lang").toString())
+
+<br>
+##<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+#*  
+      <a href=$link.setPage("Admin.vm").addPathInfo("lang",$lang)>Admin Home</a> |
+        <a href=$link.setPage("UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("lang",$lang)>User Management</a> | Add Multiple Users
+*#
+      <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_usr $brih_mgmt</a> | $brih_multi_usr
+
+        </td>
+
+	</b>
+</tr>
+</table>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+                <font size=4 color=red><b>$brih_upload_msg5</b></font>
+        </marquee>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,MultiUserReg_Admin.vm").setAction("UserAction_Admin")">
+<div align="left">
+<br>
+<table width="100%"><tr><td align="right"><img src="$content.getURI("/images/hand.gif")"><b>
+	<font face="$ui.sansSerifFonts" size=3><a href=javascript:popupWin("/brihaspati2/docs/Userdoc.html","newWin");>$brih_help</a></font></td></tr>
+</table>
+<br>
+<table width=50% bgcolor="$ui.menuColor" cellpadding="2" align="center" border=1>
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <tableibgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+      	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		## <font size=4><b>File Upload for automatic multiple user registration</b></font>
+		<font size=4><b>$brih_upload_msg1</b></font>
+	</td>
+	</tr>
+	<tr>
+	<td bgcolor="$ui.tableColor">
+	 	 <b>
+	  	<font face="$ui.sansSerifFonts">
+	  	## Select a course <font color=RED>*</font> 
+	  	$brih_sel_course <font color=RED>*</font> 
+	  	</font>
+	  	</b>
+	</td>
+     	<td>
+    		<select name="GroupName" size=1>
+		#foreach($name in $courseList)
+          	#if(($name.getName()!="global") && ($name.getName()!="author"))
+          		<option value="$name.getName()">$name.getName()
+           	#end
+           	#end
+	   	</option>
+	  	</select>
+	</td>
+    	</tr>
+     	<tr>
+	  <td bgcolor="$ui.tableColor">
+	  	<b>
+	  	<font face="$ui.sansSerifFonts">
+	  	## Select a role <font color=RED>*</font>
+	  	$brih_sel_Role <font color=RED>*</font>
+	  	</font>
+	  	</b>
+	  	</td>
+     	  <td>
+    	  	<select name="role" size=1>
+	  	<option value="student">$brih_student
+	 	<option value="instructor">$brih_Instructor
+	  	</option>
+	  	</select>
+	 </td>
+  	</tr>
+   	<tr>
+        	## #fileUpload ("Attach File <font color=RED>*</font>" "file")
+
+        	#fileUpload ("$brih_at_file <font color=RED>*</font>" "file")
+
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.buttonBoxColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadadmin" value="$brih_upload" onClick="CheckFields(document.frm,this);"/>
+          	##<input type="button" name="eventSubmit_doUploadadmin" value="$brih_upload" onClick="CheckFields(document.frm,this,'$brih_mandatoryAlert');"/>
+          	<input type="hidden" name="actionName" value=""/>
+     ##     	<input type="hidden" name="file" value="$file"/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#foreach( $e in $Msg )
+        <tr bgcolor="$ui.tableColor">
+        <td align=center>
+        <font face="$ui.sansSerifFonts">Entry <font color="brown">"$e.getErr_User()"</font>
+        </font>
+        </td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        </tr>
+#end
+</table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        ##function CheckFields(frm,field,v)
+        function CheckFields(frm,field)
+        {
+                if((frm.GroupName.value!="") && (frm.role.value!="")  && (frm.file.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+			##alert(v);
+                }
+        }
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+</SCRIPT>

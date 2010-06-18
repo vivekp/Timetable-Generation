@@ -1,0 +1,72 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxUserRoleForm.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+$page.setTitle("User Administration")
+$page.setBgColor($ui.bgcolor)
+
+#set ($user = $flux.User)
+#set ($acl = $flux.ACL)
+
+<font face="$ui.sansSerifFonts">
+
+Roles for $user.FirstName $user.LastName
+
+</font>
+
+<table cellpadding="$ui.tableCellPadding" "cellspacing="$ui.tableCellSpacing">
+  <tr>
+    <td>
+        &nbsp;
+    </td>
+      
+    #foreach ($role in $flux.Roles)
+        #formLabel($role.Name)
+    #end
+  
+  </tr>
+
+  <form method="post" action="$link.setAction("user.FluxUserAction").setPage("user,FluxUserList.vm")">
+
+  #foreach ($group in $flux.Groups)
+  <tr>
+    #formLabel($group.Name)
+
+    #foreach ($role in $flux.Roles)
+    #if ($acl.hasRole($role, $group))
+      #set ($checked = "checked")
+    #else
+      #set ($checked = "")
+    #end
+    
+    <td align="center" bgcolor="$ui.dataColor">
+      <input type="checkbox" name="${group.Name}${role.Name}" $checked>
+      <input type="hidden" name="username" value="$flux.User.UserName">
+    </td>
+    #end
+    
+  </tr>
+  #end
+  
+  <tr>
+    <td>
+      <font face="$ui.sansSerifFonts">
+        <input type="submit" name="eventSubmit_doRoles" value="Update Roles">
+      </font>
+    </td>
+  </tr>
+  
+  #if ($showEmbeddedMenu)
+  <tr>
+    <td>
+      <hr size="1" noshade>
+      #parse ("screens/FluxEmbeddedMenu.vm")
+    </td>
+  </tr>
+  #end
+  </form>
+
+</table>

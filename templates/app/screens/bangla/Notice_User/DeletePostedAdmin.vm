@@ -1,0 +1,41 @@
+
+
+$page.setTitle("Admin Home | Communication | Delete Posted Notice")
+
+<table bgcolor="$ui.menuColor" width=100%>
+	<tr><td>
+	<a href=$link.setPage("Index.vm")>??????? ????? ??????</a> | 
+	<a href=$link.setPage("call,Notice_User,Notices.vm")>????????</a> | ??????? ??????? ?? ?????? ?????
+	</td></tr>
+</table>
+<form name="frm" method="Post" action="$link.setPage("call,Notice_User,DeletePostedAdmin.vm").setAction("Notice_Send_Delete")">
+</form>
+<SCRIPT LANGUAGE="javascript">
+function CheckValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        {
+                alert("Please select checkbox for deletion !!");
+        }
+}
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+</SCRIPT>

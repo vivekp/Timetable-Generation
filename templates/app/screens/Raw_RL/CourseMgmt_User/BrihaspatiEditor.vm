@@ -1,0 +1,49 @@
+<html>
+#*
+ * @(#) BrihaspatiEditor.vm
+ *  Copyright (c) 2007 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+
+*#
+$page.setTitle("Home | $course | Course Content | View Content")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+
+<table bgcolor="$ui.tableColor" width=100% valign="top">
+<tr align="right"><td>
+	<font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>$brih_mgmt $brih_course</a> | $brih_scorm $brih_packager |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$Cname</a> | 
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+</td></tr>
+</table>
+<br>
+<br>
+<table width="100%" > ##table 2 start
+        <tr><td>
+		<a href=javascript:popupWin("/brihaspati2/docs/jnlp.html","newWin");>$brih_jnlp (jnlp) </a> <img src="$content.getURI("/images/Lefthand.gif")">
+        </td></tr>
+         <tr><td>
+		<a href=javascript:popupWin("/brihaspati2/docs/BrihaspatiEditor_v1_3_manual.pdf","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+        </td></tr>
+</table> ## table 2 end
+	<table align="center" valign="top">
+		<tr valign="top"><td>
+			#foreach($content in $contentvalue)
+			<td align="center"><a href="$link.setPage("call,ViewFileContent.vm").addPathInfo("contents",$username).addPathInfo("type","reload").addPathInfo("filename",$content)"><b> (Packager Application) $brih_Launch $brih_packager $brih_Application </b></a></td>
+			#end
+			</td></tr>
+		</table>
+</html>
+
+<script LANGUAGE="JAVASCRIPT">
+ function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+
+</script>

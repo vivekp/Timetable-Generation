@@ -1,0 +1,215 @@
+
+#*
+ * @(#)Wiki.vm
+ * Copyright(c)2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:manav_cv@yahoo.co.in">Manvendra Baghel</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+$page.setTitle(" $brih_home | $course | $brih_Wiki")
+$page.setBgColor("$ui.bgcolor")
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | $brih_Wiki
+        </font>
+</td>
+</tr>
+</table>
+
+
+## Representation of HELP link
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href="/brihaspati2/docs/Wikiusermanual.html">$brih_help</a>
+                </td>
+        </tr>
+</table>
+
+<br>
+$!data.getMessage()
+<table border="0" align="center" bgcolor="$ui.menuColor" cellspacing="5" width=100%>
+	<tr>
+     		<td align="center" width="25%">
+			<h4><a href=$link.setPage("call,Wiki,Editwiki.vm")>
+			#if($lang == "hindi")
+			$WikiPage $WikiCreate
+			#else
+			$WikiCreate $WikiPage
+			#end
+			</a></h4>
+		</td>
+
+		#if($role=="instructor")
+		<td align="center" width="25%">
+			<h4 ><a href=$link.setPage("call,Wiki,Adminwiki.vm")>${Wikimain5}</a></h4>
+		</td>
+		#end
+		<td align="center" width="50%">
+
+			<FORM  name=frm method="POST" action="$link.setPage("call,Wiki,Wiki.vm").setAction("Wikieditaction")">
+			<b>$Wikimain4 </b><br /><INPUT type="text" name="query" size="15">
+			<input type="hidden" name="actionName" >
+			<input type="submit" name="eventSubmit_doFind" value="${Wikimain6}" onClick="return checkSearchName(document.frm,this);" /> ##
+			<input type="submit" name="eventSubmit_doFindPage" value="${Wikimain7}" onClick="return checkSearchName(document.frm,this);" />
+			</FORM>
+		</td>
+	</tr>
+</table>			
+
+#if($search=="true")
+	<h3><u>${Wikimain1} </u></h3>&nbsp;
+#end
+
+			#################################################
+			##  Code below displays search results        ##
+			##                                            ##
+			################################################
+
+                #**
+                * Put the result of page Name search
+                *#
+#if($second.size() !=0)
+<table  cellpadding=0 cellspacing=5 bgcolor="$ui.tableColor" width =100% >
+        <tr>
+                #foreach($t in $second)
+                        #if($velocityCount % 8 != 0)
+                                <td align=center><a href="$link.setPage("call,Wiki,Editwiki.vm").addPathInfo("filename",$t).addPathInfo("quer
+y",$query).addPathInfo("searchtype","page")">$t</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        #else
+                                </tr><tr>
+                        #end
+                #end
+        </tr>
+</table>
+#end
+
+                #**
+                * Put the result  of  pattern search
+                *#
+#if($first.size() !=0)
+<table cellpadding=0 cellspacing=5 bgcolor="$ui.tableColor" width=100% >
+        <tr>
+                #foreach($file in $first)
+                        #if($velocityCount % 8 != 0)
+                                <td align=center><a href="$link.setPage("call,Wiki,Editwiki.vm").addPathInfo("filename",$file.getName()).addPathInfo("query",$query).addPathInfo("searchtype","pattern")">$file.getName()</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        #else
+                                </tr><tr>
+                        #end
+                #end
+</tr>
+</table>
+#end
+
+	                #################################################
+                        ##   displays search results  ends here       ##
+                        ##                                            ##
+                        ################################################
+
+#set ( $a = $mypage.size())
+#if($a > 0)
+	<H3><u>${Wikimain2}</u></H3>&nbsp
+#end
+
+#set ( $count=1 )
+<table align="center" cellpadding=0 cellspacing=5 bgcolor="$ui.tableColor" width=100% >
+	#foreach($file in $mypage)
+		<tr>
+			<td>
+				$count 
+			</td>
+
+			#set ( $aliasval = $file.getName())
+			#set ( $date = $file.lastModified())
+			#set ( $at = $file.getPath())
+			<td>
+				<a href="$link.setPage("call,Wiki,Editwiki.vm").addPathInfo("filename",$file.getName())">$aliasval</a>
+			</td>
+			<td>
+				$Util.getAuthor($at)</a>	
+			</td>
+
+
+			<td>
+				<script type = "text/javascript">
+					var d= new Date($date)
+					document.write(d.toUTCString())
+				</script>
+				</td>
+	
+			<td>
+				<a href="$link.setPage("call,Wiki,Logwiki.vm").addPathInfo("filename",$file.getName())">
+				#if($lang == "hindi")
+				 	$aliasval &nbsp; ${Wikimain8} 
+				#else
+					${Wikimain8}  &nbsp; $aliasval
+				#end
+				</a>
+			</td>
+			
+		</tr>
+		#set ( $count= $count+1)
+	#end
+</table>
+
+#set ( $b= $dirContent.size())
+#if($b>0)	
+	<br><H3><u>${Wikimain3} </u></H3>&nbsp
+#end
+#set ( $count=1 )
+
+<table align="center" cellpadding="0" cellspacing="5" bgcolor="$ui.tableColor" width="100%" >
+	#foreach($file in $dirContent)
+	<tr>
+		<td>
+			$count 
+		</td>
+		#set ( $aliasval = $file.getName())
+		#set ( $date = $file.lastModified())
+		#set ( $at = $file.getPath())
+		<td>
+			<a href="$link.setPage("call,Wiki,Editwiki.vm").addPathInfo("filename",$file.getName())">$aliasval</a>
+		</td>
+		<td>
+			$Util.getAuthor($at)</a>
+		</td>
+		<td>
+			<script type = "text/javascript">
+			var d= new Date($date)
+			document.write(d.toUTCString())
+			</script>
+		</td>
+		<td>
+			<a href="$link.setPage("call,Wiki,Logwiki.vm").addPathInfo("filename",$file.getName())">
+			#if($lang == "hindi")
+                                        $aliasval &nbsp; ${Wikimain8}
+                                #else
+                                        ${Wikimain8}  &nbsp; $aliasval
+                                #end </a>
+			##	View Log details of &nbsp; $aliasval</a>
+		</td>
+	</tr>
+	#set ( $count= $count+1)
+	#end
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+function checkSearchName(frm,field)
+        {
+                if(frm.query.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill Search  Field");
+			return false;
+                }
+        }
+</SCRIPT>

@@ -1,0 +1,58 @@
+#*
+ * @(#)Adminusertime_display.vm 
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a> 
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a> 
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | List Management | List of All User | Usage Details")
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+##<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr>
+	<td><font face="$ui.sansSerifFonts" size=3>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | 
+	<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm")>$brih_list_mgmt</a> | 
+	<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>$brih_listUsr</a> | $brih_usageDetail
+	</font></td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+        <tr width=50%><td>
+               <a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">View All Course</a>
+        </td>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">View All User</a>
+        </td>
+        </tr>
+ </table>
+#if($status=="NoBlank")
+<table width=100% align="left" bgcolor="$ui.menuColor">
+<tr>
+	<td colspan=2>
+	<font face="$ui.sansSerifFonts">
+	#if($lang == "hindi")
+	<b>$username $brih_usageDetail1</b> 
+	#else
+	<b>$brih_usageDetail1 $username</b>
+	#end
+	</td>
+</tr>
+#foreach ($entry in $usage)
+##<tr>
+	#if($velocityCount%2==0)
+	<tr bgcolor="$ui.menuColor">
+	#else  
+	<tr bgcolor="$ui.tableColor">
+	#end
+	<td>$velocityCount</td>
+	<td>$entry.getLoginTime()</td> 
+	</tr>
+#end
+</table>
+#end

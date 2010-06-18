@@ -1,0 +1,2 @@
+#set($Brihaspatilanguage = $data.getUser().getTemp("lang" ).toString()) 
+#parse("screens/$Brihaspatilanguage/UserMgmt_Admin/Attendence_seet.vm") 

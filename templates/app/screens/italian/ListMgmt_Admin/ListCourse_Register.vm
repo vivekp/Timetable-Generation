@@ -1,0 +1,78 @@
+
+
+
+$page.setTitle("Admin Home | Registration Management | CoursesList ")
+$page.setBgColor("$ui.bgcolor")
+
+
+
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href="$link.setPage("call,Admin.vm")">Admin's Home page</a> |
+	
+	<a href="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")">Registrazione  Gestione</a> | 
+
+				        			Visualizza tutti i corsi Per secondaria istruttore di registrazione
+		
+	</td>
+
+	<td width="30%" align="right">
+		</td>
+</tr>
+</table>
+
+<br>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm")">
+<table border=1 align=center bgcolor="$ui.tableColor" cellpadding=1 cellspacing=1>
+        <tr>
+                <td align=center><b>Ricerca</b></td>
+                
+		<td align=left>
+                        <select name="queryList">
+                                <option value=CourseId>Course ID</option>
+                                <option value="Course Name">Course nome</option>
+                                <option value=Dept>Dipartimento</option>
+                        </select>
+                </td>
+                
+		<td align=center><b>Partita Stringa	</b></td>
+                
+		<td align=left>
+                        <input align=center type="text" name="valueString" value="">
+                </td>
+                <td>
+                        <input type="button" name="Search" value="Ricerca" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+                <td>
+                        
+                        <b><a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("mode","All")">Elenco di tutti i corsi</a></b>
+                <td>
+        </tr>
+</table>
+
+</form>
+
+<br>
+<table width=60% border=1 bgcolor="$ui.menuColor" align=center>
+        </table>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+	function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

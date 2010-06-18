@@ -1,0 +1,70 @@
+
+
+$page.setTitle("$brih_home | $brih_course | $brih_student $brih_mgmt | $brih_student $brih_reg")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>Home</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+				<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>Student Management</a> | Student Registration
+		</font>
+		</td>
+	</tr>
+</table>
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<form name="frm" method="post" action="$link.setPage("call,UserMgmt_User,addStudent.vm").setAction("UserAction_Instructor")">
+  <div align="left">
+    <table align=center bgcolor="$ui.bgcolor" border=2 cellpadding="5">
+      	<tr>
+	<td align=center colspan=2 bgcolor="$ui.menuColor">
+		<font size=4><b>Student Registration</b></font>
+	</td>
+	</tr>
+	<tr>
+        	#formCell ("User Name <font color=red>*</font>" "UNAME" "")
+      	</tr>
+      	<tr>
+        	#formPasswordCell ("Password" "PASSWD" "")
+      	</tr>
+	<tr>
+	  	#formCell ("First Name" "FNAME" "")
+	</tr>
+	<tr>
+		#formCell("Last Name" "LNAME" "")
+	</tr>
+	<tr>
+		#formCell("Email  ID" "EMAIL" "")
+	</tr>
+	<tr>
+	<td align="center" colspan=2 bgcolor="$ui.menuColor">	
+    		<input type="hidden" name="actionName">
+    		<input type="button" name="eventSubmit_doRegister" value="Registration" onClick="checkField(document.frm,this);"/>
+    		<input type="reset" name="Reset" value="Clear"/>
+	</td>
+	</tr>
+    </table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                if(frm.UNAME.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !!");
+                }
+        }
+</SCRIPT>

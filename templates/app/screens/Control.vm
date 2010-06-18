@@ -1,0 +1,355 @@
+#*
+ * @(#) Control.vm
+ * Copyright(c)2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @autor <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:shaistashekh@gmail.com">Shaista</a>
+ * @author <a href="mailto:manav_cv@yahoo.co.in">Manvendra Baghel</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * Last Modified on 26 September 2005 
+*#
+
+#*
+* This is the control template for our Brihaspati templates
+* In this we have to set control context according to language eg hindi
+* Following are guide-lines  to be followed before running ant:: 
+* (1)No templates file should have method generator.parse.
+* (2)No templates file should have context variables defined in this file ie Control.vm 
+*     So we have prefix Control_ added to the varibles.
+* (3)No templates should use any  context variable defined in any property file
+* (4)Other templates should not have any error 
+*#
+
+#*
+*  Get the template Path
+*#
+
+#set($Control_Temppath= $generator.getTemplatePath()) 
+
+#*
+*  Set the Raw directory Path
+*#
+
+#set ($Control_RawDir = ["/Raw_RL", "/Raw"])
+
+#foreach($Control_RawDir_1 in  $Control_RawDir )
+
+	#set ($Control_Rawpath = $strings.concat([$Control_Temppath, "$Control_RawDir_1"]))
+
+#*
+* Set the file object for Raw directory
+*#
+
+	#set($Control_fileObject=$files.file($Control_Rawpath))
+
+
+#*
+* Set language specific path element  
+* last element call is actually directory where all vm will be called
+*#
+
+#* 
+* Get the languages  from property file build.properties
+* We have assumed that build.properties will be in WEB-INF/build
+* Convert that String to String array $Control_languagefile
+*#
+
+	#set ($Control_Buildpath = $strings.concat([$Control_Temppath, "/../../../WEB-INF/build/build.properties"]))
+
+	#set($Control_prop = $properties.load("${Control_Buildpath}"))
+
+#*
+* if Raw than read Multilingual.Lang else Multilingual.LangRL
+*#
+
+	#if($Control_RawDir_1 == "/Raw")
+		#set($Control_value= $Control_prop.get("Multilingual.Lang"))
+	#else
+		#set($Control_value= $Control_prop.get("Multilingual.LangRL"))
+	#end
+
+
+
+	#set($Control_DvpPath= $Control_prop.get("Multilingual.DevelopingPath"))
+
+#*
+* Add call to String as we need following elements in array
+* set ($Control_languagefile = ["hindi", "english","call"])
+*#
+
+#*
+* make call directory only once
+*#
+	#if($Control_RawDir_1 == "/Raw")
+		#set($Control_value= "${Control_value} call")
+	#end
+
+
+	#set ($Control_languagefile =$Control_value.split(" "))
+
+#*
+* If DevelopingPath is not equal to "" than traverse through the path 
+*#
+
+	#if($Control_DvpPath !="")
+
+		#set($Control_Devlpath = $strings.concat([$Control_Rawpath, "/${Control_DvpPath}"]))
+		#set($Control_fileDvb=$files.file($Control_Devlpath))
+		#if($Control_fileDvb.exists())
+			#set($Control_RawfileList = [${Control_fileDvb}])
+		#else
+			#set($Control_RawfileList = $Control_fileObject.listFiles())
+		#end
+	#else
+#*
+*Get the list of files in RawfileList array of directory " /tdk/webapps/brihaspati/templates/app/screens/Raw"
+*#
+		#set($Control_RawfileList = $Control_fileObject.listFiles())
+	#end
+
+
+
+#*
+* Set the file object for Screens directory
+*#
+
+	#set($Control_fileScreen=$files.file($Control_Temppath))
+
+#*
+* Now we will traverse through the all language array 
+* Create first Language directory eg Hindi
+* and for each directory  in file  list array  create new sub-directory in Language folder eg Hindi/Wiki/
+*#
+
+	#foreach ($Control_Brih_Lang in $Control_languagefile)
+	
+	#**
+	* Set language specific path element ; here Brih_Lang is language variable  to the
+        * path of language diectory in templates .                              
+	*#
+
+		#set($Control_file="/${Control_Brih_Lang}/") 
+		#set($Control_dir="${Control_Brih_Lang}/")
+
+
+ 	#*
+	* Here we specify  language properties files 
+	*#
+		#set($Control_propfile="Var_${Control_Brih_Lang}.properties")
+
+
+	#*
+	* Getting Object after loading the property file &
+        * Putting language properties file's key/value to context
+        *#
+
+ 	        #set($Control_prop = $properties.load($Control_propfile))
+        	#set($Control_setpropKey = $Control_prop.keySet())
+
+	        #foreach($Control_p in $Control_setpropKey)
+        		#set($Control_value= $Control_prop.get($Control_p))
+                	$generator.parse("Putcontext.control", "Putcontext.control", $Control_p, $Control_value)
+			$generator.parse("Putcontext.control", "Putcontext.control", $Control_Brih_Lang, $Control_Brih_Lang)
+        	#end
+
+
+
+
+	#*
+	* Here we are specifying language path eg screens/Hindi 
+	*#
+
+		#set ($Control_outputFileTempLangPath = $strings.concat([$Control_Temppath, $Control_file]))
+	
+
+
+	#*
+	* Create  Subdirectories
+	*#
+
+		$files.mkdir($Control_outputFileTempLangPath)
+
+	#*
+	* In this loop we are creating directory as of Raw directory 
+	* in newly created Hindi(language specific) directory
+	* We are also generating files according to language
+	*#	
+
+		#foreach($Control_f in $Control_RawfileList)
+		
+		#*
+		* Here we are specifying directory/file path eg screens/Hindi/Error.vm
+		*#
+	
+			#set ($Control_outputFile2 = $strings.concat([$Control_outputFileTempLangPath, $Control_f.getName()]))
+		
+		#*
+		* Check if Raw directory has any directory in it
+		*#
+
+##-----------------PARSE FOR DIRECTORY WITHIN RAW  STARTS  ---------------------------
+##-----------------THIS WILL HAVE CVS DIRCTORY ALSO ----------------------------------
+##---------------------------------------------------------------------------------
+			#if($Control_f.isDirectory())
+
+
+		#*
+		* --------------- To Keep out CVS ----------------------
+		*#
+
+				#if($Control_f.getName() != "CVS")
+			
+	
+			#*
+			* Create sub directory eg screens/Hindi/Wiki/
+			*#
+
+        				$files.mkdir($Control_outputFile2)
+				
+			#*
+                        * We are creating files in Language Folder /Hindi/Wiki/Wiki.vm here
+                        * because files.mkdir() is static and will run only through
+                        * files object not filescreen object and also last file object path is set in path
+                        *#
+				
+				
+			#*
+			* Set the file object for this directory eg screens/Hindi/Wiki/
+			*#
+
+					#set ($Control_Objectpath = $strings.concat([$Control_Rawpath, "/"]))
+
+					#set ($Control_Objectpath2 = $strings.concat([$Control_Objectpath, $Control_f.getName()]))
+					#set($Control_fileObject=$files.file($Control_Objectpath2))
+
+			#*
+			* Get the list of files in file array of directory 
+			*#
+
+					#set($Control_ObjectfileList = $Control_fileObject.listFiles())
+
+			#*
+			* For each file we have to parse context  
+			*#
+				
+					#foreach($Control_fo in $Control_ObjectfileList)
+				
+				#**
+				* Check if language is /call or not
+				*#
+##-------------------------------------------------------------------------------------			
+##--------------------------------PARSE FOR   DIRECTORY INSIDE RAW -DIR -DIR  STARTS --
+##-------------------------------------------------------------------------------------
+
+						#if($Control_file != "/call/")
+
+##------------------------------------------ PARSE FOR NON -CALL DIRECTORY STARTS -------------
+			
+					
+					#*
+					* Parse the subdirectory file by setting its variable eg
+					* Generator.Parse("Raw/UserMgmt_Admin/AddUser.vm" ,"hindi/UserMgmt_Admin/AddUser.vm")
+					*#
+
+							#set ($Control_path1 = $strings.concat([$Control_dir, $Control_f.getName()]))
+							#set ($Control_path2 = $strings.concat([$Control_path1, "/" ])	)
+							#set ($Control_path3 = $strings.concat([$Control_path2, $Control_fo.getName()]))
+				
+							#set ($Control_path4 = $strings.concat(["${Control_RawDir_1}/", $Control_f.getName()]))
+
+							#set ($Control_path5 = $strings.concat([$Control_path4, "/" ]))
+							#set ($Control_path6 = $strings.concat([$Control_path5, $Control_fo.getName()]))
+
+	
+					#*
+					* This check removes CVS directory from getting parsed
+					*#
+		
+							#if($Control_fo.isFile())
+     		                   				$generator.parse($Control_path6 ,$Control_path3)
+							#end
+
+##------------------------------------------ PARSE FOR NON -CALL DIRECTORY ENDS -------------
+
+						#else
+##------------------------------------------ PARSE FOR CALL DIRECTORY STARTS -------------
+					#*
+					* Here we are passing only one element to context  
+					* that has value parse(screens/$file_name)
+					* Actually this will be only  line in vm
+					* of /call directory 
+					*#
+					
+							#set($Control_outline = "parse(")
+     	 	  	                   	        #set($Control_outline3 =  "screens/$Brihaspatilanguage/")
+      	 	         	                	#set($Control_outline0 = "$Control_fileObject.getName()/$Control_fo.getName()")
+         	 	              	    	    	#set($Control_outline1 = "set($Brihaspatilanguage = $data.getUser().getTemp")
+          	 	                     		#set($Control_outline2 = ").toString())")
+	
+							#set($Control_outdir1 = "call/$Control_fileObject.getName()/$Control_fo.getName()")
+			
+							#if($Control_fo.isFile())
+
+
+	
+								$generator.parse("HtmlTemplate.control", "empty.control", "line3", "$Control_outline3")
+  	 		                             		$generator.parse("HtmlTemplate.control", "empty.control", "line0", "$Control_outline0")
+      			                          		$generator.parse("HtmlTemplate.control", "empty.control", "line1", "$Control_outline1")
+         			                       		$generator.parse("HtmlTemplate.control", "empty.control", "line2", "$Control_outline2")
+
+								$generator.parse("HtmlTemplate.control", $Control_outdir1, "line", $Control_outline)
+
+
+
+
+							#end
+
+						#end
+##------------------------------------------ PARSE FOR CALL DIRECTORY ENDS -------------
+
+					#end
+##-------------------------------------------------------------------------------------			
+##--------------------------------PARSE FOR   DIRECTORY INSIDE RAW -DIR -DIR  ENDS ----
+##-------------------------------------------------------------------------------------
+	
+##------------------------------------------- DIRECTORY ENDS ---------------------			
+
+      	      		   	#end			
+
+			#else
+##------------------------------------------ FILE STARTS -------------------------
+				#if($Control_file != "/call/")
+		
+				#*
+				* If the file in file array is not directory
+				* Set language and file eg
+				* Generator.Parse("Raw/BrihaspatiLogin.vm" ,"hindi/Brihaspatilogin.vm")
+				*#
+		
+					#set ($Control_outputFile4 = $strings.concat([$Control_dir, $Control_f.getName()]))
+					#set ($Control_outputFile5 = $strings.concat(["${Control_RawDir_1}/", $Control_f.getName()]))
+					$generator.parse($Control_outputFile5 ,$Control_outputFile4)
+
+				#else
+				
+					#set($Control_outline = "parse(")
+					#set($Control_outline3 =  "screens/$Brihaspatilanguage/")
+					#set($Control_outline0 = "$Control_f.getName()")
+					#set($Control_outline1 = "set($Brihaspatilanguage = $data.getUser().getTemp")
+					#set($Control_outline2 = ").toString())")
+                                	#set($Control_outdir = "call/$Control_f.getName()")
+				
+                        	        $generator.parse("HtmlTemplate.control", "empty.control", "line3", "$Control_outline3")
+                                	$generator.parse("HtmlTemplate.control", "empty.control", "line0", "$Control_outline0")
+                              		$generator.parse("HtmlTemplate.control", "empty.control", "line1", "$Control_outline1")
+                              		$generator.parse("HtmlTemplate.control", "empty.control", "line2", "$Control_outline2")
+                                	$generator.parse("HtmlTemplate.control", $Control_outdir, "line", $Control_outline)
+				
+				#end
+##------------------------------------------- FILE ENDS ----------------
+			#end
+		#end
+	$generator.shutdown()	
+	#end
+
+#end

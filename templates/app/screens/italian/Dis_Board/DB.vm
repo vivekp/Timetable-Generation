@@ -1,0 +1,49 @@
+
+
+$page.setTitle("$brih_home |$DiscussionBoard")
+
+<body>
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr><td>
+       		<font face="$ui.sansSerifFonts"><b>
+        	<a href=$link.setPage("call,IndexHome.vm")>Home page</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>Comunicazione </a> | DiscussionBoard
+       		</font>
+       </td></tr>
+</table>
+
+<br>
+	<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Dis_Board,DB.vm").setAction("SendDB")">
+	 	<table border=1 width=40% align=center bgcolor="$ui.tableColor" cellpadding=4> 
+ 		<tr align=center bgcolor="$ui.menuColor">
+ 		<td colspan=2><b><font size=4><u>Gruppo di lavoro:</u></font>&nbsp&nbsp<font color=green size=4>$courseid</font></b>
+ 		</td>
+ 		</tr>
+	</table>
+<br>
+	<table align="center">
+	<tr><td colspan=2 align="center">
+			<blink>
+		<font size="3" face="$ui.sansSerifFonts"><b>Unread  Messaggi(<font color="Blue">$unread</font>)</blink>&nbsp&nbsp
+		Totale Messaggio(<font color="blue">$total</font>)</b></font>
+	<tr>	
+			<td>
+			<INPUT TYPE="button" NAME="eventSubmit_doShowArchive" VALUE="Visualizza Archivio" onClick="checkValue(document.frm,this);">
+			<input type="hidden" name="course_id" value=$courseid>
+	 		<INPUT TYPE="hidden" NAME="actionName">
+                </td>
+	</tr>	
+	</td></tr>
+ 	</table>
+<br>
+</body>
+
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+	frm.actionName.value=field.name;
+        frm.submit();
+}
+</SCRIPT>
+

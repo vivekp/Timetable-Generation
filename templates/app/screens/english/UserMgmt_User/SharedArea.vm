@@ -1,0 +1,38 @@
+
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("$brih_home |$personal $area |$shared $area")
+
+
+<br>
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr><td>
+		<font face="$ui.sansSerifFonts"><b>
+	        <a href=$link.setPage("call,IndexHome.vm")>Home</a> |
+		<a href=$link.setPage("call,UserMgmt_User,PersonalArea.vm")>Personal Area</a> | Shared Area  
+		</font>
+	</td></tr>
+</table>
+<form name="frm" method="post" action="$link.setPage("call,UserMgmt_User,SharedArea.vm").setAction("UserAreaAction").addPathInfo("seq",$seqno).addPathInfo("actionName","eventSubmit_doMove")">
+	<table align="center" width=80% cellpadding="1" cellspacing="1" bgcolor="$ui.tableColor" border="1">
+			<tr><td colspan="10" align="center" bgcolor="$ui.menuColor"><b>List of All User</b></td></tr><br>
+			<tr>
+									</tr>
+		
+	</table>
+	<br>
+	<table align="center" bgcolor="$ui.menuColor" cellpadding="3" border="1">
+			</table>
+<br>
+	<table align="center" bgcolor="$ui.tableColor">
+		</table>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+
+</script>

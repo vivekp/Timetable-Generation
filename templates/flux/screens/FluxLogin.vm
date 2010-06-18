@@ -1,0 +1,28 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxLogin.vm,v 1.1 2004/11/16 09:33:28 ynsingh Exp $
+
+*#
+
+$page.setTitle("Please Login")
+$page.setBgColor($ui.bgcolor)
+
+<form method="post" action="$link.setAction("FluxLogin").setPage("FluxIndex.vm")">
+  <table>
+    <tr>
+      #formCell ("User" "username" "")
+    </tr>
+    <tr>
+       #formPasswordCell ("Password" "password" "")
+    </tr>
+    <tr>
+      <td>
+        <font face="$ui.sansSerifFonts">
+          <input type="submit" value="Login">
+        </font>
+      </td>
+    </tr>
+  </table>
+</form>
+

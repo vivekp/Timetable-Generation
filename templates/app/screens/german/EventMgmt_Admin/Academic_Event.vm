@@ -1,0 +1,104 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<body>
+<table bgcolor="$ui.menuColor" width=100%>
+        <tr><td>
+			       </td></tr>
+</table>
+<table width=100%><tr><td>
+        <table width=100% align=left bgcolor="$ui.tableColor">
+        <tr><td width=25%>
+        <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","adphase")>Ã?ersicht</a>
+        </td>
+        <td width=25%>
+        <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","sresult")>Ã?ersicht Resultat</a>
+        </td>
+        <td width=25%>
+                <a href=$link.setPage("call,EventMgmt_Admin,EventMgmt.vm").addPathInfo("mode","update")>Ã?ersicht editieren</a>
+        </td>
+        <td width=25%>
+                <a href=$link.setPage("call,EventMgmt_Admin,Academic_Event.vm")>Akademische Veranstaltungen</a>
+        </td>
+        </tr>
+</table>
+
+
+<table width=100% align=left bgcolor="$ui.menuColor">
+        <tr>
+	<td><i>Im Event Bereich muss es "#" zwischen Tag-und eventname </i></td>
+                <td align=right>
+<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati/docs/acdcal.html","newWin");>Hilfe </a>
+                </td>
+        </tr>
+</table>
+</body>
+<form name=frm method="post" action="$link.setAction("AcademicAction").setPage("call,EventMgmt_Admin,Academic_Event.vm").addPathInfo("mode","edit")">
+
+  <table align=left bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		        	<td><b><i>FÃ¼ie hinzu   Akademische Veranstaltungen</i></b></td>
+			</tr>
+	</table>
+
+  <table align=left bgcolor="$ui.tableColor" width=100%>
+			<tr>
+        	<td align=left colspan=2>
+        	<font face="$ui.sanSerifFonts">
+				<input type=button name="eventSubmit_doUpdate" value=update onClick="checkList(document.frm,this);"/>
+				<input type="hidden" name="actionName">
+		<input type="hidden" name="val">
+		<input type="hidden" name="mode" value="edit">
+        	</font>
+        	</td>
+        </tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	 function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=200,width=300,align=center");
+        }
+
+        function checkEvent(frm,field)
+        {
+          	if((frm.event.value!="") && (frm.etype.value!=""))
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+        	else 
+        	{
+        		alert("Please Write the events");
+        	}
+	}
+        function checkList(frm,field)
+        {
+          	if(frm.detail.value!="") 
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+        	else 
+        	{
+        		alert("Please Write the events");
+        	}
+	}
+
+        function checkData(frm,field)
+        {
+          	if((frm.Start_mon.value!="") && (frm.Start_year.value!="") && (frm.etype.value!=""))
+          	{
+          		frm.actionName.value=field.name;
+                	frm.submit();
+		}
+	}
+	function checkoption (frm,field)
+	{
+        	frm.val.value=document.frm.etype.value;
+	}
+
+</SCRIPT>

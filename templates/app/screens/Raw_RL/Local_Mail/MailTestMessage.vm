@@ -1,0 +1,149 @@
+#*
+ * @(#)MailTestMessage.vm
+ *  Copyright (c) 2006-2007, 2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+ #*
+  * @author  <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+  * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+  *  @modify 12-05-09
+  *#
+
+$page.setTitle("Home | $cname | Communication | Local Mail | Compose Message")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	 #if($mode1 == "grpmgmt")
+                <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")><b>$brih_grp $brih_mgmt</a> |
+        #else
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")> $brih_communication </a> | 
+		<a href=$link.setPage("call,Local_Mail,Mail.vm")> $brih_local $LocalMail_mail </a> |
+		<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")> $Notice_All $Notice_Mails </a> |
+		#if($status!="reply") 
+			$LocalMail_MailContent_msg1
+		#else
+		$LocalMail_Reply
+		#end 	
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |
+        	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+	#end 
+</tr>
+</table>
+<br>
+$!data.getmessage()
+<form name ="frm" method = "post" enctype="multipart/form-data" action="$link.setAction("MailSendMessage").setPage("call,Local_Mail,Mail.vm")">
+<table align="center" border=1 cellpadding=3>  
+#if(($status!="reply")&& ($mode1!="grpmgmt"))
+<tr align= "right">
+<td bgcolor="$ui.menuColor" colspan=2> <b>
+	#if($stat1=="")
+	<a href="$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("stat1","insertcc")">$LocalMail_CC $brih_add</a>
+	<a href="$link.setPage("call,Local_Mail,viewall.vm").addPathInfo("mode","NotAll")">$brih_adb  </a>
+	#else
+	<a href="$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("stat1","")">$LocalMail_CC $brih_remove</a>
+	#end
+</b></td>
+</tr>
+#end
+<tr> 
+	#if($mode1 == "grpmgmt")
+                ##formCell("$LocalMail_MailTestMessage_To<font color=Red>*</font>" "addressNames" "$!val")
+		<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="addressNames" value="$!val" ></td>
+		<td> <font color=Red> * </font> $LocalMail_MailTestMessage_To </td>
+        #else
+                #if($checkVector == "AddressBook")
+			<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="addressNames" value="$!userVector" ></td>
+			<td> <font color=Red> * </font> $LocalMail_MailTestMessage_To </td>
+                #else
+			<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="addressNames" value="$!toAddress" ></td>
+			<td> <font color=Red> * </font> $LocalMail_MailTestMessage_To </td>
+                #end
+        #end
+
+</tr>
+#if($stat1=="insertcc")
+<tr> 
+	<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="addressNames1" value="" ></td>
+	<td  align="center" bgcolor="$ui.tableColor"> <b> $LocalMail_CC </b> </td>
+</tr>
+#end
+<tr> 
+	<td  bgcolor="$ui.tableColor"> <input type=txt size="40" name="subject" value="$!subject" ></td>
+	<td  align="center" bgcolor="$ui.tableColor"> <b>$Notice_Subject </b> </td>
+</tr>
+<input type="hidden" name="hexaStr" value="">
+<tr>
+<td align="left" bgcolor="$ui.tableColor">
+	<font face="$ui.sansSerifFonts">
+      	<textarea  name="wpTextbox1" rows=8 cols=50>$!message</textarea >
+</td>
+<td align="center" bgcolor="$ui.tableColor">
+	<b><font face="$ui.sansSerifFonts">$brih_msg2</font></b>
+</td>
+<tr>
+	<td  bgcolor="$ui.tableColor" > <input type=file size="35" name="file" ></td>
+	<td  align="center" bgcolor="$ui.tableColor"> <b> $brih_at_file </b></td>
+</tr>
+<tr>
+<td align="center" bgcolor="$ui.menuColor" colspan=2>
+<font face="$ui.sansserifFonts">
+  <input type="button" name="eventSubmit_doSend" value="$Notice_Send"  onClick="checkValue(document.frm,this);"/>
+  #if($status!="reply")
+  	<input type="reset" value="$brih_clear"> 
+  #end
+  <input type="hidden" name="actionName">
+  <input type="hidden" name="RepMsg_Id" value=$RepMsg_id>
+</font>
+</td>
+</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+ function checkValue(frm,field)
+  {
+   if(frm.addressNames.value!="") 
+    {
+   	if(frm.subject.value=="")
+    	{
+     		alert("Fill the Subject Field");
+     		frm.subject.focus();
+    	}
+	else{
+   	if(frm.wpTextbox1.value.value=="") 
+    	{
+		if(confirm("Your message is empty !!"))
+		{
+                        frm.hexaStr.value = frm.wpTextbox1.value;
+                        if(frm.repStat.value == "reply")
+                                frm.hexaStr.value = frm.sentMessage.value + frm.hexaStr.value;
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                {
+                        return;
+                }
+        }
+        else
+        {
+                frm.actionName.value=field.name;
+                frm.hexaStr.value = frm.wpTextbox1.value;
+                frm.submit();
+        }
+        }
+
+    }
+   else
+    {
+     	alert("Fill the Address Field");
+     	frm.addressNames.focus();
+    }
+  }
+
+</SCRIPT>

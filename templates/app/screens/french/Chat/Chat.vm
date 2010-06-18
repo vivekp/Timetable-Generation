@@ -1,0 +1,48 @@
+
+
+$page.setTitle("Chat")
+$page.setBgColor($ui.bgcolor)
+
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>Maison</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>Communication </a> | Causerie 
+		</font>
+		</td>
+	</tr>
+<td>
+</tr>
+</table>
+<br>
+
+<br>
+<table align="center">
+<tr><td>
+        <blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+                To save chat and whiteBoard, you need to make some changes in java policy file. To help for it, Please click here.  <a href="/brihaspati/docs/saveChat.html">Ici </a><br>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+		<a href=http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=8&PartDetailId=jre-6u5-oth-JPR&SiteId=JSC&TransactionId=noreg> Download Java SE Runtime Environment</a>
+</td></tr>
+
+<tr>
+<td>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+	Si la conversation applet ne peut pas raccorder, changer le mot de passe une fois, créer le compte de la conversation
+	<a href=$link.setPage("call,UserMgmt_User,changePassword.vm")>Changer le mot de passe </a>
+</td>
+</table>
+<applet archive="babylon.jar" code="babylon.babylonApplet.class" codebase=$codeBase width="0" height="0">
+	<param name="chatroom" value=$chatRoom>
+	<param name="username" value=$username>
+	<param name="password" value=$password>
+	<param name="servername" value=$serverName>
+	<param name="autoconnect" value="yes">
+	<param name="locksettings" value="yes">
+	<param name="embed" value="no">
+	<param name="lang" value=$lang>
+</applet>

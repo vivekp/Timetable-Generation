@@ -1,0 +1,142 @@
+
+
+<table bgcolor="$ui.tableColor" width=100% >         <tr> <td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>???</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | </b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> ???? ?????? ???  </a>|</b>
+        <a href=$link.setPage("call,Assignment,AssView.vm")> </a>??? ??????? ???????   </b>
+        </td></tr>
+</table> 
+		
+	<table width=100%>
+	<tr>
+<td align=right>
+                                <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/RePostPermission.html","newWin");>???</a>
+                </td>
+</tr>
+</table>
+
+
+        <form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,RePermission.vm").setAction("Assignments")>
+
+<br>		
+<table Cell padding="20" Cell spacing="1" align="center" bgcolor="$ui.tableColor" border="1" width="75%" >
+<tr >
+
+		<tr bgcolor="$ui.menuColor" >
+			<td align="center"> <b>????????? ??? </b> </td>
+			<td align="center"> <b> ???? ??? </b> </td>  
+			<td align="center"> <b> ???? ?????? ???  ?????</b> </td>
+		</tr>
+	<tr>
+        	<td width="15%" align="center"> 
+		<SELECT id="std_name" name=topicList1 onFocus=changeTopic1(document.uploadform) onChange=changeTopic1(document.uploadform)>
+                        <option> All  </option>
+                                	</SELECT>			
+	        </td>
+		
+		<td width="1%" align="center">
+		<SELECT  name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+                
+                        		</SELECT>			
+		</td>
+
+		<td  width="35%" align="center">
+		<select  name="Start_year" >
+	                <option value="$cyear">$cyear
+        	                         </select>
+      		&nbsp<b><font size=+1>-</font></b>&nbsp
+          	<select  name="Start_mon" >
+          		<option value="$cmonth">$cmonth
+            		            			            		            			            		            			            		            			            		            			            		            			            		            			            		            			            		            			            		            			            		            			            		            			            		          	</select>
+                &nbsp;<b><font size=+1>-</font></b>&nbsp;
+                <select  name="Start_day" >
+                	<option value="$cdays">$cdays
+                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  	                    		                  			</select>	        
+		</td> 
+               </tr>
+	<tr>
+     		<td colspan=3 align="center" bgcolor="$ui.menuColor" >
+                <font face="$ui.sansSerifFonts">
+		<input type="button" name="Repermission" value="??????? ??????? ????" onClick="checkBlank(document.uploadform,this);"  />
+		<input type="button" name="Reset" value="????? " onClick="checkBlank1(document.uploadform,this);"  />
+		<input type="hidden" name="actionName"> 
+
+	        </font>
+
+		</td>
+	</tr>
+</table>
+
+
+<script LANGUAGE="JAVASCRIPT">
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+
+
+	function checkBlank1(uploadform,field)
+        {
+                if(confirm(" If you are agree then press OK "))
+                {
+                        uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+        }
+
+        function checkBlank(uploadform,field)
+        {
+		if(confirm(" If you are agree then press OK "))
+		{
+                	uploadform.actionName.value=field.name;
+                	uploadform.submit();
+		}
+        }
+        function changeTopic1(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        uploadform.contentTopic.value=uploadform.topicList1.options[uploadform.topicList1.selectedIndex].text;
+                }
+                if(uploadform.group.value=="author")
+                {
+ 
+                }
+                else
+                {
+                        uploadform.contentTopic.focus();
+                } 
+        }
+
+	function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        uploadform.contentTopic.value=uploadform.topicList.options[uploadform.topicList.selectedIndex].text;
+                }
+                if(uploadform.group.value=="author")
+                {
+ 
+                }
+                else
+                {
+                        uploadform.contentTopic.focus();
+                }
+        }
+
+	function makeDisable()
+        {
+                var x=document.getElementById("std_name")
+                x.disabled=false
+ 
+        }
+        function makeEnable()
+        {
+                var x=document.getElementById("std_name")
+                x.disabled=true
+        }
+
+</script>

@@ -1,0 +1,22 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("$personal $area")
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing="1" cellpadding="1" border="0">
+	<tr><td>
+		<font face="$ui.sansSerifFonts"><b>
+				<a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |  <a href=$link.setPage("call,UserMgmt_User,PersonalArea.vm")>Ð?Ð¸Ñ?Ð½Ð¾Ðµ Ð?Ð»Ð¾Ñ?Ð°Ð´Ñ?</a> | Ð§Ð°Ñ?Ñ?Ð½Ñ?Ðµ Ð?Ð»Ð¾Ñ?Ð°Ð´Ñ?
+		 		</font>
+	</td></tr>
+</table>
+$message
+
+<script LANGUAGE="JAVASCRIPT">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+
+</script>

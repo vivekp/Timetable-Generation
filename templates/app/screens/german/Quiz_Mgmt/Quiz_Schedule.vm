@@ -1,0 +1,157 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,IndexHome.vm")>Heim</a> |
+                <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>Quiz </a> | 
+					 Quiz Zeitplan 
+		                </font>
+                </td>
+        </tr>
+</table>
+
+<br>
+
+
+
+
+
+
+			<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Quiz_Schedule.vm").setAction("Quiz_Action")>
+	  <table Cell padding=20 Cell spacing=0 align=center bgcolor="$ui.tableColor" border=1 width=50% >
+        <tr bgcolor="$ui.menuColor" >
+                <td align=center colspan=4 >
+			<b> Quiz Zeitplan  </b>			                
+                </td>
+        </tr>
+		<tr>
+		<td><b> Quiz ID <font color=RED> *</font></b> </td>
+		<td> <input type="text" size=8 name="qid" value="" "readonly"></td>
+	</tr>
+	<tr>
+		<td><b> Quiz Titel <font color=RED> *</font></b> </td>
+                <td><input type="text" size=8 name="title" value=""></td>
+	</tr>
+	        <tr>
+                <td>
+                	<b> Quiz Datum  </b>
+            	</td>
+		<td>
+                  <select name="Start_year">
+			                  		<option value="$year">$year
+								  </select>
+		  &nbsp<b><font size=+1>-</font></b>&nbsp
+		  <select name="Start_mon">
+            		<option value="$cmonth">$cmonth
+					</select>
+  		&nbsp;<b><font size=+1>-</font></b>&nbsp;
+                <select name="Start_day">
+			<option value="$cdays">$cdays
+					</select>
+	        </td>
+	</tr>	
+	<tr>
+		<td>
+                        <b> Anfang Titel </b>
+                </td>
+                <td>
+                  <select name="Start_hr">
+                  		                </select>
+	
+		&nbsp<b><font size=+1>-</font></b>&nbsp
+	
+		<select name="Start_min">
+				            	</select>
+ 		</td>
+	</tr>
+
+	<tr>
+                <td>
+                        <b> Ende Titel </b>
+                </td>
+                <td>
+
+                <select name="Last_hr">
+			                			</select>
+		&nbsp<b><font size=+1>-</font></b>&nbsp
+		<select name="Last_min">
+								</select>
+
+		</td>
+        </tr>
+	<tr>
+        	<td><b> Max Markierungen, Ã?dern  <font color=RED> *</font></b></td>
+				<td><input type="text" size=8 name="marks" value=""></td>
+			</tr>
+        <tr bgcolor="$ui.menuColor" >
+	<td align=center colspan=2>
+        	<font face="$ui sanSerif fonts">
+						     <input type=button name="eventSubmit_doSchedule" value=unterbreiten onClick="checkQuez(document.frm,this);"/>
+						     <input type=button name="reset" value="ZurÃ¼llen" >
+			     <input type="hidden" name="actionName">
+                                </font>
+		</td>
+	</tr>
+   	</td>
+        </tr>
+                </table>
+                </td>
+        </tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+        function checkQuez(frm,field)
+        {
+		if(frm.title.value !="" && frm.marks.value !="" )
+		{
+			var value=frm.title.value;
+			var temp="~`!@#%^&*()-+={[}]|\\:;'<,>./?\f\n\r\t\v";
+			var btype=new Boolean(true);	
+			for(k=0;k<temp.length;k++)
+	                {
+                        	for (n = 0; n < value.length; n++)
+                        	{
+                                	if(temp.charAt(k) == value.charAt(n))
+                                        	btype=false;
+						
+	                        }
+        	        }
+			if(!btype)
+				alert("Please ckeck the Special cherector !!");	
+			if(btype)
+			{
+				if((frm.marks.value>=10) && (frm.marks.value<=100))
+                        	{
+                                	frm.actionName.value=field.name;
+                                	frm.submit();
+                        	}
+	                        else
+        	                {
+                	                alert("The max marks of quiz should be between 10 to 100");
+                        	}
+			}
+			
+
+		}
+		else
+			alert("Please Fill All (*) Fields");	
+        }
+        function checkfield(frm,field)
+        {
+        	frm.actionName.value=field.name;
+                frm.submit();
+	}
+
+</script>

@@ -1,0 +1,150 @@
+#*
+ * @(#) RepositoryList.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("$Repo_Repo1")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% align="center">
+    <tr> <td><b>
+        <a href=$link.setPage("call,Repository_Mgmt,Author.vm")>$brih_authorHome </a>| $Repo_Repo1</b>
+     </td></tr>
+
+</table>
+<table width=100% >
+<tr>
+	<td align="right">
+	<img src="$content.getURI("/images/hand.gif")"><a href="/brihaspati2/docs/ViewContent.html">$brih_help</a>
+</td>
+</tr>
+</table>
+<table align="center" bgcolor="$ui.tableColor" border=1 cellpadding=4 width="70%">
+		<tr bgcolor="$ui.menuColor">
+			<td colspan=2 align="center"><font size=4>
+			<b>$brih_author $brih_name:
+      			<font size=5 color=green><i>
+			$authorname</i></b></font>
+			</td>
+		</tr>
+		<tr>
+		<td align="center" width="50%">	
+		  	<b><a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("status","fromDirectory").addPathInfo("name",$authorname)>$brih_content</a></b>
+		</td> 
+		<td align ="center" width="50%">
+			<b><a href=$link.setPage("call,Repository_Mgmt,PermissionReceive.vm").addPathInfo("status","permissionreceive").addPathInfo("status","permissiongiven").addPathInfo("mode","fromauthor").addPathInfo("mode1","permRec")>$brih_view & $brih_delete $brih_Of $Repo_Perm1</a></b>	
+		</td></tr>
+</table> 
+<br>
+<table align="center" width=70%> 
+  <tr>
+	#if($status == "fromDirectory" || $status == "fromSubDirectory" ||$mode1 == "Move")
+	<td bgcolor="$ui.tableColor" valign=top width="40%">
+      		<table bgcolor="$ui.tableColor" width="100%"> 
+			<tr bgcolor="$ui.menuColor">
+			<td colspan=3 align="center"><b>
+			#if($lang == "hindi")	
+				$contentlist $brih_contentOf
+			#else
+				$brih_contentOf $contentlist
+			#end
+	         	</b>
+			</td></tr>
+        		#foreach ($RepoFiles in $contentvalue)
+         		<tr>
+				#if($contentlist == $authorname)
+ 				<td>
+					<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("name",$contentlist).addPathInfo("status","fromSubDirectory").addPathInfo("topic",$RepoFiles)>$RepoFiles</a>&nbsp;&nbsp;&nbsp;
+				</td>
+				<td>
+					<a href=$link.setPage("call,Repository_Mgmt,Permission.vm").addPathInfo("status","fromDirectory").addPathInfo("name",$contentlist).addPathInfo("topic",$RepoFiles).addPathInfo("stat","permission").addPathInfo("statvalue","PermissionRecieve")>$Repo_Perm</a>
+				</td>
+				<td>
+				<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").setAction("RepositoryAction").addPathInfo("mode","DirRemoval").addPathInfo("status","fromDirectory").addPathInfo("name",$contentlist).addPathInfo("topic",$RepoFiles).addPathInfo("actionName","eventSubmit_doDelete")>$brih_delete</a></td>
+				#else
+				<td>
+					<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("name",$contentlist).addPathInfo("status","fromSubDirectory").addPathInfo("topic",$RepoFiles)>$RepoFiles</a></td>
+				#end
+			</tr>
+			#end
+		</table> 
+	</td>
+	#end
+	#if($status == "fromSubDirectory")
+		<td  bgcolor="$ui.menuColor" width="60%" valign=top>
+			<table bgcolor="$ui.menuColor" width="100%">
+        			<tr><td bgcolor="$ui.menuColor" colspan=3 align="center"><b>
+        				 $brih_file1 $topic
+					</b>
+        			 </td> </tr>
+				#set($counter=0)
+				#foreach ($AllFiles in $FFfiles)
+         			<tr> 
+					#if($contentlist == $authorname)
+					<td align=left>
+				  		<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("contents",$authorname).addPathInfo("TotalFiles",$topic).addPathInfo("type","repo").addPathInfo("filename",$!AllFiles.getName())","newWin")>$!AllFiles.getName()</a>&nbsp;&nbsp;</td>
+					<td>
+						<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("name",$contentlist).addPathInfo("status","fromSubDirectory").addPathInfo("topic",$topic).addPathInfo("FileName",$!AllFiles.getName()).addPathInfo("seq",$counter).addPathInfo("mode1","Move")>$brih_move</a>&nbsp;&nbsp;
+					</td> 
+					<td>
+						<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").setAction("RepositoryAction").addPathInfo("mode","fileRemoval").addPathInfo("status","fromSubDirectory").addPathInfo("name",$contentlist).addPathInfo("topic",$topic).addPathInfo("FileName",$!AllFiles.getName()).addPathInfo("seq",$counter).addPathInfo("actionName","eventSubmit_doDelete")>$brih_delete</a></td>
+					#else
+					<td><a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm")>$AllFiles</a></td>
+					#end
+        			</tr>
+				#set($counter=$counter+1)
+        			#end  
+			</table>
+		</td>
+	#end
+	</tr>
+	</table>
+<br>
+	<form name="frm" action="$link.setPage("call,Repository_Mgmt,RepositoryList.vm").setAction("RepositoryAction").addPathInfo("filename",$filename).addPathInfo("seq",$seq).addPathInfo("actionName","eventSubmit_doMove")">
+        <table  border=1 bgcolor="$ui.tableColor" align="center" width=50%>
+	#if($mode1=="Move")
+	<tr>
+        <td bgcolor="$ui.tableColor">
+        <b><font face="$ui.sansSerifFonts">
+        $brih_sel_the   $brih_topic   $brih_name  <font color=RED>*</font>
+        </font></b>
+        </td>
+	<td>$filename
+	</td>
+        <td>
+        <select name="Total" size=1 onChange="ChangeDir(document.frm,this);")>
+        #foreach($files1 in $contentvalue1)
+        <option value="$files1">$files1
+        #end
+	</option>
+        </select>
+	</space>
+	<input type="Submit" name="Submit" value= "$brih_move">
+	<input type="hidden" name="Total" value="dir_author">
+	<input type="hidden" name="name" value="$contentlist">
+	<input type="hidden" name="topic" value="$topic">
+	<input type="hidden" name="FileName" value="$filename">
+	</td>
+	</td>
+	</tr>
+	#end
+	</table>
+	</form>
+
+<script LANGUAGE="JAVASCRIPT">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+	function ChangeDir(frm,field)
+        {
+        	frm.dir_author.value=frm.Total.value;
+        }
+
+</script>

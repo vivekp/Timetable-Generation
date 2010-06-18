@@ -1,0 +1,117 @@
+ #*
+  * @(#)Profile.vm
+  * Copyright (c) 2006,2009 ETRG,IIT Kanpur.
+  * All Rights Reserved
+  * @author <a href="mailto:singhnk@iitk.ac.in ">Nagendra Kumar Singh</a>
+  * @author <a href="mailto:satyapal@iitk.ac.in ">Satyapal Singh</a>
+  * @author <a href="mailto:ynsingh@iitk.ac.in ">Yatindra Nath Singh</a>
+  * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+  * Contributors: Members of ETRG, I.I.T. Kanpur
+  *#
+
+$page.setTitle("Change Profile")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr><td>
+
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("Index.vm")>$brih_home</a> | $Profile_user
+</font></td>
+</tr></table>
+$!data.getMessage()
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("Index.vm").setAction("ProfileUser")">
+<br>
+        <table border=5 cellpadding=4 align="center">
+	 <tr>
+	 <td align=center colspan=2  bgcolor="$ui.menuColor">
+	 <font face="$ui.sansSerifFonts" size=4><b>$brih_profile1 </b></font>
+	 </td>
+	 </tr>
+	   #foreach($ud in $udetl)
+	 <tr>
+           #formCell("$brih_first $brih_name" "FName" "$!ud.getFirstName()")
+         </tr>
+	 <tr>
+           #formCell("$brih_last $brih_name" "LName" "$!ud.getLastName()")
+         </tr>
+         <tr>
+	   #formCell("$brih_email" "EMAIL" "$!ud.getEmail()")
+	 </tr>
+	   #end
+	 <tr>
+	   #fileUpload("$brih_photo" "PHOTO")
+	 </tr>
+	 <tr>
+	   #formCell("$List_config" "Conf" "$!conf")
+         </tr>
+	   <td bgcolor="$ui.tableColor">
+              <b>
+               <font face="$ui.sansSerifFonts">
+                #if($lang=="hindi") $brih_qus $brih_select #else $brih_select $brih_qus #end
+               </font>
+              </b>
+            </td>
+	    <td>
+		 <select name="que" size=1 onChange="clearAnswer(document.frm,this);"/>
+                 <option value=$!qid> #foreach($q in $qname) $q.getQuestionName() #end
+                 #foreach($questions in $question)
+                        <option value="$questions.getQuestionId()">$questions.getQuestionName()
+                 #end
+                 </option>
+              </select>
+            </td>
+                <tr>
+                #formCell("$Profile_Ans:" "ANSWER" "$!ans")
+                </tr>
+		<tr>
+                #formCell("$brih_tcf" "TaskConf" "$!TaskConf")
+                </tr>
+
+		<tr bgcolor="$ui.menuColor">
+                <td align="center" colspan=2>
+                 <input type="button" name="eventSubmit_doUpdate" value="$brih_submit" onClick="checkAnswer(document.frm,this);"/>                 
+		 <input type="reset"  value="$brih_reset"/>
+		 <input type="hidden" name="actionName"/>
+                </td>
+          </tr>
+     </table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkAnswer(frm,field)
+        {
+                if((frm.Conf.value!="" )&&(frm.ANSWER.value!="")) 
+                {
+			if(frm.Conf.value > 100 || frm.Conf.value < 1 )
+                        {
+                                alert("Maximum  No. of Student in list view should be between 1 to 100 !!");
+                        }
+			else if (frm.TaskConf.value >7 || frm.TaskConf.value < 1)
+                        {
+                                alert(" Task Configuration  value should be between 1 to 7 !!");
+                        }
+                        else
+                        //if( (frm.Conf.value>=1 && frm.Conf.value<=100) && (frm.TaskConf.value>=1 && frm.TaskConf.value<=7))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                }
+                else
+		{
+			if(frm.ANSWER.value =="")
+			{
+	                        alert("The answer should not be null !!");
+			}
+			else if(frm.Conf.value =="" )	
+				 alert("Maximum  No. of Student in list view should not be null !!");
+                	else
+			{
+	                        alert("The task configuration value should not be null !!");
+			}
+		}
+        }
+</SCRIPT>

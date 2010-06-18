@@ -1,0 +1,51 @@
+<html>
+
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% > <tr>
+	<td><b>
+		<a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> |
+        	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>| 
+        	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>Ð?Ñ?Ñ?Ð¿Ð¿Ð° Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ </a> |
+				Ð?Ñ?Ñ?Ð¿Ð¿Ð° Ð¸Ð· Ð?Ð·Ð¼ÐµÐ½Ð¸Ñ?Ñ?</b>
+		     	</td>
+	<td align=right>
+                        </td>
+</tr>
+</table> <table width=100% > 	<tr><td align ="right">
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/edit-removemembers.html","newWin");>Ð?Ð¾Ð¼Ð¾Ñ?Ñ?</a>
+	</td></tr>
+</table> <form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Editgroup.vm").setAction("Groupmanagement")>
+	<table align="center" border=1 bgcolor="$ui.tableColor" width=85% > 		<tr bgcolor="$ui.menuColor"><td align ="center"colspan=5 vlaign="top">         	<b><font size=4<I>Ð?Ñ?Ñ?Ð¿Ð¿Ð° Ð¸Ð· Ð?Ñ?Ñ?Ñ? </I><font color="blue">$courseid</font></font></b>
+		</td></tr>
+					</td></tr> 	<input type="hidden" name="actionName" >
+	<input type="hidden" name="Status" value="$Status">
+	<input type="hidden" name="grpname" value="$grpname">
+	<input type="hidden" name="type" value="$type">
+	<input type="hidden" name="studentno" value="$studentno">
+	
+	
+</form>
+</table> </html>
+<SCRIPT LANGUAGE="javascript">
+	function checkfield(frm,field)
+        {
+		if(frm.groupname.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !!");
+                }
+
+        }
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+</script>

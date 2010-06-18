@@ -1,0 +1,126 @@
+
+$page.setTitle("Admin Home | Change Parameters")
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr bgcolor="$ui.menuColor">
+	<td colspan="2">
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("Index.vm")>Admin's ì§?</a> | ë³?í?? ë?¨ë©´ë??
+	</td>
+</tr>
+<form name="frm" method="post" action="$link.setPage("call,AdminProfile,AdminParam.vm").setAction("changeAParam")">
+    <tr width="100" bgcolor="$ui.tableColor"><td colspan=2><font size=4><b>ê´?ë¦¬ì??ì?? í??ë¡?í??</b></font></td></tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> ì²«ì§¸ë¡? ì?´ë¦? </font></td> 
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AFName" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> ë§?ì§?ë§? ì?´ë¦? </td>   
+	<td width="50"> <font face="$ui.sansSerifFonts"><input type="text" size="30" name="ALName" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">ëª©ë¡?ì?? êµ¬ì?±í?©ë??ë?¤. ê°? </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AdminConf" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> ê³¼ì ? ë§?ê¸° ì??ê°? (ì?¼) </font></td>	
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AdminCrsExp" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">  Mail Server ì?´ë¦?  </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailServ" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> Mail Da </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts">  <input type="text" size="30" name="mailFrom" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">   ë¡?ì»¬ Dominio ì?´ë¦?  </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailDomain" value=""> </font> </td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">   Mail ì?¬ì?©ì?? ì?´ë¦?  </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="muName" value=""> </font> </td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">  Mail ë¹?ë°? ë²?í?¸ </font></td>	
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="password" size="30" name="mPass" value=""> </font></td>
+    </tr>
+<tr bgcolor="$ui.tableColor">
+	<td width=30><font face="$ui.sansSerifFonts">ê³¼ì ? í? ë?¹ë?? (ì?¸ë??ì? ë?? MB)</td>	
+	<td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="cquota" value=""></font></td>
+</tr>
+<tr bgcolor="$ui.menuColor">
+	<td width=30><font face="$ui.sansSerifFonts">ì?¬ì?©ì?? í? ë?¹ë?? (ì?¸ë??ì? ë?? MB)</td>	
+	<td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="uquota" value=""></font></td>
+    </tr>
+
+<tr bgcolor="$ui.tableColor">
+	<td width=30><font face="$ui.sansSerifFonts">ì§? ë??ë ?í? ë¦¬ </td>	
+	<td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="hdir" value=""></font></td>
+</tr>
+    <tr bgcolor="$ui.menuColor">
+      <td colspan=2 bgcolor="$ui.menuColor">	
+	  <input type="hidden" name="actionName">
+          <input type="button" name="eventSubmit_doUpdate" value="ì ?ì¶?í??ë?¤" onClick="checkValues(document.frm,this);"/>
+	  <input type="reset" name="reset" value="ì?¬ì?¤ì ?" onClick="checkClear(document.frm,this);"/>
+      </td>
+    </tr>
+</form>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValues(frm,field)
+{
+	if((frm.AFName.value!="") && (frm.ALName.value!="") && (frm.AdminConf.value!=""))
+        {
+		if(frm.AdminConf.value>=1 && frm.AdminConf.value<=100)
+		{
+			if(isNumberString(frm.AdminCrsExp.value))
+                        {
+				if(isNumberString(frm.cquota.value))
+                        	{
+					if(isNumberString(frm.uquota.value))
+		                        {
+                		               	frm.actionName.value=field.name;
+                                		frm.submit();
+                        		}
+                        	}
+			}
+		}	
+		else
+		{
+			alert("List Config. Value should be between 1 to 100");
+		}
+	}
+        else
+        {
+		alert("None of the fields can be empty !!");
+	}
+}
+
+function checkClear(frm,field)
+{
+	frm.AFName.value="";
+        frm.ALName.value="";
+}
+function isNumberString(chString)
+{
+	if(chString.length==0)
+        return false;
+        var RefString="0123456789";
+        for(count=0;count<chString.length;count++)
+        {
+        	tempChar=chString.charAt(count);
+                	if(RefString.indexOf(tempChar)==-1)
+                        {
+                                alert("Value should be numeric")
+                                return false;
+                        }
+        }
+        return true;
+}
+</SCRIPT>

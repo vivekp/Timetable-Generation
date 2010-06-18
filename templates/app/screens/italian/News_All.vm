@@ -1,0 +1,26 @@
+
+
+$page.setTitle("Login Page | General News")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+         <tr>
+             <td>
+                <font face="$ui.sansSerifFonts"><b>
+        	        <a href=$link.setPage("BrihaspatiLogin.vm").addPathInfo("lang",$lang)>Accesso Home page</a> | Tutti   General News
+                </font>
+              </td>
+        </tr>
+</table>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+</SCRIPT>
+<br>
+
+<form name="frm" method="post">
+<blink><b>Nessuna News Till data odierna ....</b></blink>
+</form>

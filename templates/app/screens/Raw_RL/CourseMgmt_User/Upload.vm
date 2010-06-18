@@ -1,0 +1,278 @@
+#*
+ * @(#) CourseManagement.vm
+ * Copyright (c) 2006-2007,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 12-05-09
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("File Upload")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align=right>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>$brih_course $brih_mgmt</a> |
+                $brih_content $brih_upload
+        </font> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+</td>
+</tr>
+</table>
+<table width=100%>
+<tr><blink>
+<td align=left>
+##<blink>
+<a href="/brihaspati/docs/Upload.html">$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+</td></blink>
+</tr>
+</table>
+<table width="100%">
+<tr>
+	<td><b>$brih_usedspace   $!TUSize $quota_sze </b></td>
+	<td align="right"><b>$brih_space $!aSize $quota_sze</b></td>
+</tr>
+<table>
+<table border="1" bgcolor="$ui.menuColor">
+#if($errorMess!="")
+     <tr>
+           <td><b>$brih_uploadingError </b>$!errorMess </td>
+     </tr>
+#else
+        <tr>
+        #if($uploadStatus=="full")
+                <td>
+                #if($pub=="Publish")
+                                $brih_uploadSucessfully  &  $brih_publish
+                #else
+                $brih_uploadSucessfully
+                #end
+                </td>
+        #else
+                #if($uploadStatus=="partial")
+                        <td>
+                       ## Some of the files have been uploaded
+                        $brih_uploadSomeFile  <br>
+
+                       ## Following files already existed, so were not uploaded :
+                        $brih_uploadFileExist :<br>
+
+                #elseif($totalFilesEntries.Count>0)
+ <td>
+                        ##None of the files were Uploaded <br>
+                        ##All of the following  Existed at Server :
+                        $brih_uploadNonefile <br>
+                        $brih_uploadFileOnServer <br>
+                #elseif($uploadStatus!="")
+                        <td>
+                        ##There is nothing to Upload
+                        $brih_uploadNothin <br>
+                #end
+                <br>
+                #set($count=1)
+                #foreach($File in $failedFiles)
+                        <tr>
+                       <td> $count.  $File</td>
+                        </tr>
+                        #set($count=$count+1)
+                #end
+                </td>
+        #end
+        </tr>
+#end
+</table>
+<script LANGUAGE="JAVASCRIPT">
+        function blurTopicName(frm)
+        {
+                frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+        }
+function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+                }
+        }
+
+        function checkRadio()
+        {
+                if(document.uploadform.topicExisting[0].checked)
+                {
+                        document.uploadform.contentTopic.blur();
+                }
+
+        }
+        function validate(uploadform,field)
+        {
+                var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.contentTopic.value!="")
+                {
+                        var totNamedEntries=uploadform.topicList.length;
+                        for(i=1;i<totNamedEntries;i++)
+  {
+                                if(tList.options[i].text==cTopic.value)
+                                {
+                                        if(uploadform.topicExisting[1].checked)
+                                        {
+                                                if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+                                                {
+                                                uploadform.actionName.value=field.name;
+                                                uploadform.submit();
+                                                }
+                                                else
+                                                {
+                                                return;
+                                                }
+
+                                        }
+                                }
+                        }
+                        uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+                else
+                {
+                        alert("Topic Name Can not Empty !!");
+                }
+        }
+</script>
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_User,Upload.vm").setAction("UploadAction")">
+  ##<div align="left">
+    <table align=center bgcolor="$ui.bgcolor" cellpadding="0">
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+         ## <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          ##</table>
+        </td>
+      </tr>
+      #end
+        <div align="right">
+        <tr align="left">
+                 <font color="red">$brih_UploadMsg</font>
+                <blink>
+                <img src="$content.getURI("/images/Lefthand.gif")">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </blink>
+        </tr>
+## <br><br>
+      <tr align="right">
+  <td colspan=4 align="right">
+        $brih_Exist $brih_topic
+        <td colspan=4>
+        <input type="RADIO" name=topicExisting checked=true value="OLDTOPIC" onClick=blurTopicName(document.uploadform)>
+        <SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+          <option></option>
+          #foreach($topic in $allTopics)
+                <option>$topic</option>
+          #end
+        </SELECT>
+        $brih_new $brih_topic <input type="RADIO" name=topicExisting value="NEWTOPIC" >
+        </td>
+        </td>
+     </tr>
+        <tr align="right">
+        <td colspan=6 align="right">
+        <b>$brih_publish</b>
+        <INPUT TYPE="CHECKBOX" name="publish" value="Publish">
+        </td>
+        </tr>
+      <tr align="right">
+        ##formCell ("Topic Name" "contentTopic" "")
+        <td colspan=4>
+        <input type="text" name=contentTopic onFocus=checkRadio() size=30>
+        </td>
+        <td bgcolor="$ui.tableColor" colspan=4>
+ <b><font face="$ui.sansSerifFonts">$brih_topic $brih_Of1 $brih_name</font> </b>
+        </td>
+      <tr>
+              ##fileUpload ("1. &nbsp; $brih_at_file " "file1")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("6.&nbsp; $brih_at_file  &nbsp;" "file6")
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file6"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .6 </td></b>&nbsp;
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file1"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .1 </td></b></td>
+      </tr>
+      <tr>
+              ## #fileUpload ("2. &nbsp; $brih_at_file " "file2")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("7.&nbsp; $brih_at_file  &nbsp;" "file7")
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file7"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .7 </td></b>&nbsp;
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file2"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .2 </td></b></td>
+      </tr>
+      <tr>
+              ## #fileUpload ("3. &nbsp; $brih_at_file " "file3")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("8.&nbsp; $brih_at_file  &nbsp;" "file8")
+ <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file8"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .8 </td></b>&nbsp;
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file3"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .3 </td></b></td>
+      </tr>
+      <tr>
+              ## #fileUpload ("4. &nbsp; $brih_at_file " "file4")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("9.&nbsp; $brih_at_file  &nbsp;" "file9")
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file9"> </td>
+                <td  align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td
+bgcolor="$ui.tableColor" size=10%> .9 </td></b>&nbsp;
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file4"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .4 </td></b></td>
+      </tr>
+      <tr>
+              ## #fileUpload ("5. &nbsp; $brih_at_file " "file5")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("10.&nbsp; $brih_at_file  &nbsp;" "file10")
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file10"> </td>
+                <td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .10 </td></b>&nbsp;
+                <td bgcolor="$ui.tableColor"> <input type="file" size="25" name="file5"> </td>
+<td align=right bgcolor="$ui.tableColor"><b> $brih_at_file &nbsp;</td><td bgcolor="$ui.tableColor" size=10%> .5 </td></b></td>
+      </tr>
+
+#*      <tr>
+        <td bgcolor="$ui.tableColor">
+        <b><font face="$ui.sansSerifFonts">$brih_topic $brih_desc </font> </b>
+        </td>
+        <td>
+        <font face="$ui.sansSerifFonts"><textarea name="topicDescription" rows=5 cols=60></textarea></font>
+        </td>
+      </tr>
+*#
+#*    <tr>
+        <td bgcolor="$ui.tableColor">
+        <b><font face="$ui.sansSerifFonts">$brih_file $brih_info </font> </b>
+        </td>
+        <td>
+        <font face="$ui.sansSerifFonts"><textarea name="fileDescription" rows=5 cols=60></textarea></font>
+        </td>
+      </tr>
+*#
+      <tr>
+        <td colspan=6 align="center" bgcolor="$ui.buttonColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+ *#
+
+          <font face="$ui.sansSerifFonts">
+
+          <input type="button" name="eventSubmit_doUpload" value="$brih_upload" onClick="validate(document.uploadform,this);"/>&nbsp;
+        <input type="hidden" name="actionName"value="">
+
+          </font>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</form>

@@ -1,0 +1,104 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			<a href=$link.setPage("Index.vm")>Heim</a> | Aufgabe	 Manager 
+                      
+                </td>
+        </tr>
+</table>
+
+<br>
+<table align="center">
+<tr>
+        <td align="center">
+                <b>*<font color="red">Rot Farbe </font></b> -> Aufgabe	 ist üchuld &nbsp;&nbsp;&nbsp;
+                <b>*Schwarzes Farbe </b> -> Aufgabe	  zurüüist &nbsp;&nbsp;&nbsp;
+                <b>*<font color="blue">Blau Farbe </font></b> -> Aufgabe	 tut z.Z. <br>
+
+        </td>
+</tr>
+<tr>
+        <td align="center">
+		                	<b>*<u>Löschen  </u></b> -> Löschen  spezifische Aufgabe  &nbsp;&nbsp;&nbsp;
+	                <b>*<u>editieren </u></b> -> Update spezifische Aufgabe  &nbsp;&nbsp;&nbsp;
+         	       <b>*<u>Umzug </u></b> -> Umzug Aufgabe auf Indexseite darunter  "<b><u>HEUTIGE AUFGABE </u></b>"
+		
+        </td>
+</tr>
+</table>
+<br>
+
+
+
+
+<table cellpadding=0 cellspacing=1 align=center bgcolor="$ui.tableColor" border="1">
+	<tr><td bgcolor="$ui.menuColor" align="center" colspan="2"><font size=4><b><I>Aufgabe	 </I></b></font></td></tr>
+	<tr><td>
+		<table>
+			<tr><td>
+							<table border=1 cellspacing=0 align=center bgcolor="$ui.tableColor">
+												</table>
+			</td></tr>
+			<tr><td>
+							<tr><td><center> <a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("mode","insert")>  Füie hinzu   Aufgabe	 </a>
+				</td></tr>
+						</td></tr>
+		</table>
+	</td>
+			</tr>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+	function addtask(frm,field)
+        {
+                if((frm.title.value!="") && (frm.et.value!=""))
+                {
+                        if(frm.et.value>=1 && frm.et.value<=30)
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        {
+                                alert("The Expiry time Should be between 1 to 30 days");
+                        }
+                }
+                else
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+	function checktask(frm,field)
+        {
+          if((frm.title.value!="") && (frm.et.value!=""))
+                {
+                        if(frm.et.value<31 && frm.et.value>=1)
+                        {
+                                if(frm.dday.value>=1 && frm.dday.value<=7)
+                                {
+                                        frm.actionName.value=field.name;
+                                        frm.submit();
+                                }
+                                else
+                                {
+                                        alert("Task Conf days should not be more than 7 days");
+                                }
+                        }
+                        else
+                        {
+                                alert("The Expiry time Should be between 1 to 30 days");
+                        }
+                }
+                else
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+
+</SCRIPT>

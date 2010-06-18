@@ -1,0 +1,16 @@
+## -----------------------------------------------------------------------
+## Menu.vm
+##
+## Main menu for the Turbine administration application.
+## -----------------------------------------------------------------------
+<font size="-1" face="$ui.sansSerifFonts">
+  <a href="$link.setPage("user,FluxUserList.vm")">Users</a>
+  <br>
+  <a href="$link.setPage("group,FluxGroupList.vm")">Groups</a>
+  <br>
+  <a href="$link.setPage("role,FluxRoleList.vm")">Roles</a>
+  <br>
+  <a href="$link.setPage("permission,FluxPermissionList.vm")">Permissions</a>
+  <p>
+  <a href="$link.setAction("FluxLogout").setPage("FluxLogin.vm")">Logout</a>
+</font>

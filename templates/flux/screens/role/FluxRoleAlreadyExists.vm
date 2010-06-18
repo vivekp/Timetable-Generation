@@ -1,0 +1,16 @@
+#**
+
+Display this template when the administrator
+tries to add a user with a username that is
+already being used by the security system.
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxRoleAlreadyExists.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+<font face="verdana,geneva,helvetica">
+The role name <b>$name</b> is currently in use. Role names
+must be unique, please choose another role name.
+</font>
+

@@ -1,0 +1,93 @@
+#*
+ * @(#)UserForm_Instructor.vm
+ * Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+#if ($stat=="remove")
+	$page.setTitle("Home | $course | Student Management | List of Students | Remove User")
+#else
+	$page.setTitle("Home | $course | Student Management | List of Students | Update User")
+#end
+ 
+   <table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+      <tr align="right">
+        <td><b>
+        <font face="$ui.sansSerifFonts" size=3>
+	#if ($stat=="remove") $brih_usr $brih_remove #else $brih_update  $brih_usr #end |
+	 <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_mgmt $brih_student </a> 	
+	| <a href=$link.setPage("call,UserMgmt_User,StudentList.vm").addPathInfo("mode","All")>$brih_listOfStudent</a>  
+	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |  
+        <a href=$link.setPage("call,IndexHome.vm")> $brih_home</a> 
+	
+	</td>
+    </tr>
+</table>
+
+<br>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_User,StudentList.vm").setAction("UserAction_Instructor")">
+  <div align="left">
+    <table width=40% border=1 align=center bgcolor="$ui.tableColor" cellpadding="5">
+	<tr>
+		<td align="center" bgcolor="$ui.menuColor"><font size=4>
+			<b>$brih_usr $brih_Of $brih_detail</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% bgcolor="$ui.tableColor" border="1" CellPadding="5">
+			#foreach($user in $user_details)
+			<tr align="right">
+				<td>$!user.UserName</td><td><b><font size=4> $brih_usr $brih_Of1 $brih_name  </font></b></td>
+			</tr>
+			#if($stat=="update")
+				<tr align="right"> <b>
+				<td> <b> <input type="text" size="30" name="firstname" value=$!user.FirstName> </b></td>
+				<td> <b> $brih_first $brih_name </b> </td>
+				</tr>
+				<tr align="right"> <td> <b> <input type="text" size="30" name="lastname" value=$!user.LastName> </b> </td>
+				<td> <b> $brih_last $brih_name </b> </td>  
+				</tr>
+				<tr align="right"> 
+				<td> <b><input type="text" size="30" name="email" value=$!user.Email></b></td>
+				<td><b> $brih_email $brih_ID </b></td> 
+				</tr>
+			#else
+				<tr align="right">
+					<td>$!user.FirstName</td>
+					<td width=30%><b><font size=4>$brih_first$brih_name</font></b></td>
+				</tr>
+	        		<tr align="right">
+					<td>$!user.LastName</td>
+					<td width=30%><b><font size=4>$brih_last$brih_name</font></b></td>
+				</tr>
+	        		<tr align="right">
+					<td>$!user.Email</td>
+					<td width=30%><b><font size=4>$brih_email $brih_ID</font></b></td>
+				</tr>
+			#end
+					<input type="hidden" name="username" value="$!user.UserName"/>  
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" bgcolor="$ui.tableColor">
+			#if ($stat== "update")
+				<input type="submit" name="eventSubmit_doUpdate" value="$brih_update"/>
+			#elseif ($stat == "remove")
+				<input type="submit" name="eventSubmit_doDelete" value="$brih_remove"/>
+			#end
+			<input type=hidden name="mode" value="All">
+		</td>
+	</tr>
+	#end
+  </table>
+</td>
+</tr>
+</table>
+</div>
+</form>

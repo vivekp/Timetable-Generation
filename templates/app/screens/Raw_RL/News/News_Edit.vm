@@ -1,0 +1,146 @@
+#*
+ * @(#) News_Edit.vm
+ * Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">jaivir singh</a>
+ * @author <a href="mailto:awadhesh_trivedi.yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+  <tr align=right>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                #if($status=="fromIndex")
+		$page.setTitle("| General News")
+		$brih_genNews
+		#else
+		$page.setTitle("| $course | Communication | News")
+    		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $brih_course $brih_Of $brih_news
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $course</a> |
+                #end
+			#if($data.getUser().getUserName() == "admin")
+                	$page.setTitle("Admin Home ")
+		        <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> 
+                        #elseif($data.getUser().getTemp("role") != "")
+			$page.setTitle("Home ")
+                        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+			#else
+			$page.setTitle("Home ")
+                        <a href=$link.setPage("Index.vm")>$brih_home</a> 
+                        #end
+		</font>
+                </td>
+        </tr>
+</table>
+
+<br>
+<form name="frm" action="$link.setPage("call,News,News_Edit.vm").setAction("NewsAction")">
+#if($desc=="true")
+<table  border=1 width=80%  bgcolor="$ui.tableColor" cellpadding="2" align=center>
+#else
+<table  border=1 width=60%  bgcolor="$ui.tableColor" cellpadding="2" align=center>
+#end
+<tr>
+<td width="70%">
+<table width="100%">
+<tr bgcolor="$ui.menuColor">
+<td colspan=3 align=center><b><font size=4>
+<I>
+#if($status=="fromIndex")
+$brih_genNews
+#else
+$brih_course $brih_Of $brih_news
+#end
+</font></b>
+</td>
+</tr>
+#if($mode!="NoNews")
+              #foreach ($entry in $entries)
+               <tr>        
+                        <font face="$ui.sansSerifFonts">
+			#if(("$entry.getUserId()" == "$currentUserId") || ("$currentUserId"=="1"))
+				<td width=3% align="center"><input type="checkbox" name="$entry.getNewsId()" onClick="addDeleteList(this,document.frm);"></td>
+			#else
+				<td width=3% align="center"><input type="checkbox" disabled="true"></td>
+			#end
+			<td align="center"><a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("Id",$entry.getNewsId()).addPathInfo("status",$status).addPathInfo("desc","true")>$entry.getNewsTitle()</a>
+			#if("$News_Id" == "$entry.getNewsId()")
+				<img src="$content.getURI("/images/star_off_2.gif")">
+			#end
+			</td>
+			#if(("$entry.getUserId()" == "$currentUserId") || ("$currentUserId"=="1"))
+                        	<td width=20%><a href=$link.setPage("call,News,News_Update.vm").addPathInfo("Id",$entry.getNewsId()).addPathInfo("mode","Update").addPathInfo("status",$status)>$brih_update</a></td>
+			#else
+				<td><font color="white"><u>$brih_update</u></font></td>
+			#end
+                        </font>
+		</tr>
+	      #end
+#else
+<tr align=right><td colspan=3>$brih_newsNo</td></tr>
+#end
+		<tr bgcolor="$ui.menuColor">
+		<td width=3%>
+		#if($mode!="NoNews")
+		<input type="button" name="eventSubmit_doDelete" Value=$brih_delete onClick="checkField(document.frm,this);">
+		<input type="hidden" name="actionName">
+		<input type="hidden" name="deleteFileNames">
+		<input type="hidden" name="status" value=$status>
+		#end
+		</td>
+			<td colspan=2 align="center"><b><a href=$link.setPage("call,News,News_Add.vm").addPathInfo("status",$status)> $brih_news $brih_add</a></b></td>
+</tr>
+</td>
+</table>
+</td>
+#if($desc=="true")
+<td>
+<table>
+		<tr>
+                <td align="center" bgcolor="$ui.menuColor">
+                        <b>$brih_news1 $brih_Of  $brih_desc </b>
+                </td>
+        	</tr>
+                <tr>
+                        <td><textarea rows=6 cols=30 wrap="physical">$News_Des</textarea></td>
+                   </tr>
+</table>
+</td>
+#end
+</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+  function checkField(frm,field)
+   {
+    if(frm.deleteFileNames.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+
+</SCRIPT>

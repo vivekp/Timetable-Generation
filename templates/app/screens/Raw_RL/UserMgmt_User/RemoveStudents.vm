@@ -1,0 +1,193 @@
+#*
+ * @(#)RemoveStudents.vm
+ * Copyright (c) 2007-2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Shekh</a>
+ *
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+$page.setTitle("$brih_home | $course | $brih_student $brih_mgmt | $brih_remove $brih_student")
+$page.setBgColor($ui.bgcolor)
+
+$!data.getMessage()
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right"> <b>
+	<td>
+	 #if( $total_size!=0 )
+		#if( $endIndex < $total_size )
+			#if( $endIndex < $userConf )
+			[$k - $total_size] $brih_all $total_size $brih_inFrom 
+			#elseif($k == $j)
+			[$k - $total_size] $brih_all $total_size $brih_inFrom
+		        #else
+			[$k - $endIndex] $brih_all $total_size $brih_inFrom
+			#end
+		#else
+		 [$k - $total_size] $brih_all $total_size $brih_inFrom
+		#end
+	#end
+	</td> </b>
+        <td> <font face="$ui.sansSerifFonts"> <b>
+        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")> $brih_mgmt $brih_student </a> | $brih_remove $brih_student | 
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+        </font> </b> </td>
+</b></tr>
+</table>
+<br>
+	#set ( $headings = ["$brih_email","$brih_last $brih_name","$brih_first $brih_name","$brih_usr  $brih_Of1 $brih_name"] )
+
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").setAction("UserAction_Instructor")">
+
+#if($status=="notempty")
+<table border=1 bgcolor="$ui.tableColor" align=center>
+	<tr>
+		<td align=center>
+                <table border=1 cellspacing=1 cellpadding=5>
+                <tr>
+                        #foreach ($heading in $headings)
+                                #headerCell ($heading)
+                        #end
+                        <td align=center bgcolor="$ui.menuColor" >
+                        <font face="$ui.sansSerifFonts"><b>$brih_select</b>
+                        <input type="CHECKBOX" name="checkAll" onClick=selectAll(this);>
+                        </td> 
+                </tr>
+		#set( $count = "" )
+		#foreach($users in $userdetail)
+		#foreach($user in $users)
+		<tr>
+	                <td>$!user.Email</td>
+                	<td>$!user.LastName</td>
+        	        <td>$!user.FirstName</td>
+	                <td>$!user.UserName</td>
+                	<td align="right"><INPUT TYPE="CHECKBOX" NAME=$!user.UserName onClick="addDeleteList(this,document.frm);"></td>
+        	</tr>
+			 #set ( $count = "$count$!user.UserName^"  )
+	        #end
+		#end
+		</table>
+	</tr>
+	<tr>
+		<td align=center bgcolor="$ui.menuColor">
+			<INPUT TYPE="button" NAME="eventSubmit_doRemove" VALUE="$brih_remove" onClick="checkValue(document.frm,this);">
+			<INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+			<INPUT TYPE="hidden" NAME="actionName" VALUE="">
+		</td>
+	</tr>
+
+<tr>
+<td align=center bgcolor="$ui.menuColor">
+	#if($total_size <= $userConf)
+	<u><font color="white">$brih_first</font></u> &nbsp;
+	<u><font color="white">$brih_pre</font></u> &nbsp;
+	<u><font color="white">$brih_nxt</font></u> &nbsp;
+	<u><font color="white">$brih_last</font></u> &nbsp;
+
+	#elseif($startIndex == $userConf_string)
+	<u><font color="white">$brih_first</font></u> &nbsp;
+        <u><font color="white">$brih_pre</font></u> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$startIndex)">$brih_nxt</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+
+	#elseif($endIndex == $total_size || $endIndex > $total_size)
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$check_first)">$brih_first</a> &ibsp;
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+	<u><font color="white">$brih_nxt</font></u> &nbsp;
+	<u><font color="white">$brih_last</font></u> &nbsp;
+
+	#else
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$check_first)">$brih_first</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">$brih_nxt</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+	#end
+	</td>
+	</tr>
+</table>
+
+#end	
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+	if(frm.deleteFileNames.value!="")
+	{
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	else
+	{
+		alert("Please Select check box for deletion !!");
+	}
+}
+function addDeleteList(field,frm)
+{
+if(field.checked)
+{
+frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+}
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+}
+
+
+ function selectAll(field)
+{
+        if(field.checked)
+        {
+                var rmFile,index,actualString,pre=0,next=0;
+                actualString=document.frm.deleteFileNames.value="$count";
+                while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                        rmFile=document.frm.elements[temp].checked=true;
+
+
+                         }
+
+        }
+        else
+        {
+                    var rmFile,index,actualString,pre=0,next=0;
+                             actualString=document.frm.deleteFileNames.value="$count";
+
+                  while( ( pre=actualString.indexOf("^",next) ) >=0 )
+
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                         rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+           }
+}
+</SCRIPT>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#foreach( $e in $error_user )
+        <tr bgcolor="WHITE">
+        <td align=center>
+        <font face="$ui.sansSerifFonts">User Name <font color="brown">"$e.getErr_User()"</font>
+        </font>
+        </td>
+        <td align=center>
+        <font face="$ui.sansSerifFonts">$e.getErr_Type()</font>
+        </td>
+        </tr>
+#end
+</table>
+

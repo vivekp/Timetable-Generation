@@ -1,0 +1,117 @@
+
+
+
+
+
+</head>
+$page.setTitle("Home | $cname | Communication | Local Mail | Compose Message")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")>????? ??????</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |
+			<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")> ???????? </a> | 
+		<a href=$link.setPage("call,Local_Mail,Mail.vm")> ????  Mail </a> |
+		<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")> ????? ??? </a> |
+				???? ???
+	</tr>
+</table>
+<br>
+
+
+<body>
+	 <div id="bodyContent">
+	<form id="editform" name="editform" method="post" enctype="multipart/form-data" action="$link.setAction("MailSendMessage").setPage("call,Local_Mail,Mail.vm")">
+<table align="center" border=1 cellpadding=3>  
+<tr> 
+						#formCell("??<font color=Red>*</font>" "addressNames" "")
+			</tr>
+<tr> 
+	#formCell("??????" "subject" "")
+</tr>
+<input type="hidden" name="hexaStr" value="">
+<tr>
+<td align="centre" bgcolor="$ui.tableColor">
+	<b><font face="$ui.sansSerifFonts">?????</font></b>
+</td>
+	<td align="left" bgcolor="$ui.tableColor">
+	<font face="$ui.sansSerifFonts">
+			<textarea tabindex="1" accesskey="," name="wpTextbox1" id="wpTextbox1" rows="8" cols="50"></textarea>
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+	</td>
+	</tr>
+<tr>
+	#fileUpload("???? ?? ???????" "file")
+</tr>
+<tr>
+<td align="center" bgcolor="$ui.menuColor" colspan=2>
+<font face="$ui.sansserifFonts">
+  <input type="button" name="eventSubmit_doSend" value="?????"  onClick="checkValue(document.editform,this);"/>
+  
+<br>	
+        <input type="hidden" name="mode1" value="$mode1">
+	<input type="hidden" name="val" value="$val">
+	<input type="hidden" name="actionName">
+	<input type="hidden" name="RepMsg_Id" value=$RepMsg_id>
+	<input type="hidden" name="repStat" value="$status">
+	<input type="hidden" name="lang" value="$lang">
+	<Input type="hidden" name="sentMessage" value="">
+</font>
+</td>
+</tr>
+</table>
+</form>
+ </body>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(editform,field){
+   	if(editform.addressNames.value!="") 
+    	{
+   		if(editform.subject.value=="")
+    		{
+     			alert("Fill the Subject Field");
+     			editform.subject.focus();
+    		}
+		else{
+			if(editform.wpTextbox1.value == "")	
+			{
+				if(confirm("Your message is empty !!"))
+				{
+					if (editform.lang.value == "english")
+						editform.hexaStr.value = editform.wpTextbox1.value;
+					if(editform.repStat.value == "reply")
+						editform.hexaStr.value = editform.sentMessage.value + editform.hexaStr.value;
+					//alert("sentMessage.value....."+editform.sentMessage.value);
+					//alert("hexastr.value....."+editform.hexaStr.value);
+  	   				editform.actionName.value=field.name;
+     					editform.submit();
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				if (editform.lang.value == "english")
+					editform.hexaStr.value = editform.wpTextbox1.value;
+				if(editform.repStat.value == "reply")
+					editform.hexaStr.value = editform.sentMessage.value + editform.hexaStr.value;
+				//alert("sentMessage.value....."+editform.sentMessage.value);
+				//alert("hexastr.value....."+editform.hexaStr.value);
+				editform.actionName.value=field.name;
+     				editform.submit();
+			}
+		}
+    	}
+   	else
+    	{
+     		alert("Fill the Address Field");
+     		editform.addressNames.focus();
+    	}
+}
+</SCRIPT>
+

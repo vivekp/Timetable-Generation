@@ -1,0 +1,70 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+  <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+						$page.setTitle("Home ")
+                        <a href=$link.setPage("Index.vm")>Home</a> |
+                                        		$page.setTitle("| $course | Communication | News")
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $course</a> |
+    		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>Communication</a> | Course 
+		 News
+                		</font>
+                </td>
+        </tr>
+</table>
+<form name="frm" action="$link.setPage("call,News,News_Edit.vm").setAction("NewsAction")">
+<table width=100%  bgcolor="$ui.tableColor" align=left>
+<tr>
+<td width="100%">
+<table width="100%">
+<tr bgcolor="$ui.tableColor">
+<td><b><I>
+Course  News
+</b>
+</td>
+</tr>
+<tr><td colspan=3>No News Till Today's Date.... </td></tr>
+		<tr bgcolor="$ui.menuColor">
+		<td width=3%>
+				</td>
+						<td colspan=2 align="center"><b><a href=$link.setPage("call,News,News_Add.vm").addPathInfo("status",$status)>Add News</a></b></td>
+		</tr>
+</td>
+</table>
+</td>
+</tr>
+</table>
+</form>
+<SCRIPT LANGUAGE="javascript">
+  function checkField(frm,field)
+   {
+    if(frm.deleteFileNames.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+
+</SCRIPT>

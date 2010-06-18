@@ -1,0 +1,35 @@
+<html>
+
+$page.setTitle("Home | $course | Course Content | View Content")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% valign="top">
+<tr><td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>Home page</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$Cname</a> | 
+        <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>Course Gestione</a> | Scorm Packager
+</td></tr>
+</table>
+<br>
+<br>
+<table width="100%" >         <tr><td align ="right">
+          <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/jnlp.html","newWin");>Jnlp configurazione, istruzioni per Windows / download</a>
+        </td></tr>
+         <tr><td align ="right">
+          <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/BrihaspatiEditor_v1_3_manual.pdf","newWin");>Aiuto</a>
+        </td></tr>
+</table> 	<table align="center" valign="top">
+		<tr valign="top"><td>
+						</td></tr>
+		</table>
+</html>
+
+<script LANGUAGE="JAVASCRIPT">
+ function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+
+</script>

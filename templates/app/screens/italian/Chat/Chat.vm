@@ -1,0 +1,48 @@
+
+
+$page.setTitle("Chat")
+$page.setBgColor($ui.bgcolor)
+
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>Home page</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>Comunicazione </a> | Chiacchierata
+		</font>
+		</td>
+	</tr>
+<td>
+</tr>
+</table>
+<br>
+
+<br>
+<table align="center">
+<tr><td>
+        <blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+                Per salvare la chat e la lavagna bianca, èecessario apportare alcune modifiche al file java politica. Per aiutare per quanto lo riguarda, clicca qui.  <a href="/brihaspati/docs/saveChat.html">Qui</a><br>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+		<a href=http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=8&PartDetailId=jre-6u5-oth-JPR&SiteId=JSC&TransactionId=noreg> Download Java SE Runtime Environment</a>
+</td></tr>
+
+<tr>
+<td>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+	Se la chat applet non riesce a connettersi, cambiare la password una volta a creare account per la chat.
+	<a href=$link.setPage("call,UserMgmt_User,changePassword.vm")>Cambia password</a>
+</td>
+</table>
+<applet archive="babylon.jar" code="babylon.babylonApplet.class" codebase=$codeBase width="0" height="0">
+	<param name="chatroom" value=$chatRoom>
+	<param name="username" value=$username>
+	<param name="password" value=$password>
+	<param name="servername" value=$serverName>
+	<param name="autoconnect" value="yes">
+	<param name="locksettings" value="yes">
+	<param name="embed" value="no">
+	<param name="lang" value=$lang>
+</applet>

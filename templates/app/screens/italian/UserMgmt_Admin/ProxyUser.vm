@@ -1,0 +1,48 @@
+
+
+$page.setTitle("Admin Home | User Management | Proxy User")
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td><a href=$link.setPage("Index.vm")>Admin's Home page</a> | Proxy utente</td>
+</tr>
+</table>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,ProxyUser.vm").setAction("AddProxyUser")">
+<table align=left bgcolor="$ui.tableColor" width=100%>
+<tr>
+	<td colspan="2">
+	<font size=4><b>
+					Enter Proxy utente Particolari 
+			</b></font>
+	</td>
+</tr>
+<tr bgcolor="$ui.menuColor">
+	#formCell ("Proxy utente nome <font color=red>*</font>" "UNAME" "")
+</tr>
+			<tr>
+				#formPasswordCell ("Password" "PASSWD" "")
+			</tr>
+			<tr bgcolor="$ui.menuColor"><td width=100%>
+				<input type="hidden" name="actionName">
+				<input type="button" name="eventSubmit_doRegister" value="Register  " onClick="checkField(document.frm,this);"/> 
+			</td></tr>
+		</table>
+	</div>
+</form>
+
+
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+	{
+		if(frm.UNAME.value!="") 
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill the Mandatory(*) Fields !!");
+		}
+	}
+</SCRIPT>

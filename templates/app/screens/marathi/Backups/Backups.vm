@@ -1,0 +1,45 @@
+
+
+
+$page.setTitle("Backups")
+$page.setBgColor("#ffffff")
+
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+	<tr><td>
+		<font face="$ui.sansSerifFonts" size=3>
+				<a href=$link.setPage("Index.vm")>?????????? ???</a> | 
+		<a href=$link.setPage("call,Backups,Backups.vm")>?????</a> |
+						</font>
+	</td></tr>
+</table>
+<table width=100% bgcolor="$ui.tableColor">
+<tr><td>
+<table width=100% align=left bgcolor="$ui.tableColor">
+
+	<tr><td width=25%>
+    		<a href=$link.setPage("call,Backups,Backups.vm")>????? ??????</a>	
+	</td>
+	<td width=25%>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doCompleteBackup")">System ?????</a>
+	</td>
+	<td width=25%>
+    		<a href=$link.setPage("call,Backups,Backups.vm").addPathInfo("mode","blist")>????? ????</a>	
+    			</td>
+	<td width=25%>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doGlossaryBackup")">????  ?????  ??? ?????
+	</td></tr>
+</table></td></tr>
+<tr><td>
+<table width=100% align=left bgColor="$ui.tableColor">
+</table></td></tr>
+<tr><td>
+</td></tr></table>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+        {
+		frm.actionName.value=field.name;
+                frm.submit();
+        }
+</SCRIPT>

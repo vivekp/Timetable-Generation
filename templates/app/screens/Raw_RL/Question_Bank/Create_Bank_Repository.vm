@@ -1,0 +1,165 @@
+#*
+  @(#) Create_Bank_Repository.vm
+ * Copyright(c)2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("File Upload")
+
+<script LANGUAGE="JAVASCRIPT">
+ 	function checkValue(frm,field)
+  	{
+   		//if((frm.contentTopic.value!="") && (frm.MName.value!="") && (frm.FName.value!=""))
+   		if(frm.contentTopic.value!="")
+    		{
+	 		frm.actionName.value=field.name;
+     	 		frm.submit();
+ 
+    		}
+		else
+		{
+    	 		alert("Please insert the value");
+		}
+    	}
+	function blurTopicName(frm)
+	{
+		//document.uploadform.topicExisting.value="OLDTOPIC";
+		frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+	}
+	
+	function changeTopic(frm)
+	{
+		if(frm.topicExisting[0].checked)
+		{
+			frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+		}
+		else
+		{
+			frm.contentTopic.focus();
+		}
+	}
+
+	function checkRadio()
+	{
+		if(document.uploadform.topicExisting[0].checked)
+		{
+			document.uploadform.contentTopic.blur();
+		}
+		
+	}
+	function validate(uploadform,field)
+        {
+                var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.contentTopic.value!="")
+                {
+                        var totNamedEntries=uploadform.topicList.length;
+                        for(i=1;i<totNamedEntries;i++)
+                        {
+                                if(tList.options[i].text==cTopic.value)
+                                {
+                                        if(uploadform.topicExisting[1].checked)
+                                        {
+                                                if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+                                                {
+                                                	uploadform.actionName.value=field.name;
+                                                	uploadform.submit();
+                                                }
+                                                else
+                                                {
+                                                	return;
+                                                }
+
+                                        }
+                                }
+                        }
+                        uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+                else
+                {
+                        alert("Topic Name Can not Empty !!");
+                }
+        }
+
+</script>
+
+<table bgcolor="$ui.tableColor"  width=100%>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	| <a href=$link.setPage("call,Question_Bank,Question_bank.vm")>$brih_qus $brih_bank</a> | $Repo_Repo1 $WikiCreate
+###else $WikiCreate $Repo_Repo1 #end
+	</b></font>
+	</td>
+</tr>
+</table>
+<br>
+$!data.getMessage()     
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Question_Bank,Create_Bank_Repository.vm").setAction("Question_Bank")">
+<table border=1 align="center" bgcolor="$ui.tableColor" cellpadding=5>
+	<tr>
+	          <td colspan=4 align="center"> <b><a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>$brih_view $brih_all $brih_quses $brih_bank</a></td>
+	###end
+	</tr>
+	<tr align="right">
+		<td colspan=4 align="right">
+		<SELECT name="topicList" onFocus="changeTopic(document.uploadform)" onChange="changeTopic(document.uploadform)">
+		<option></option>
+	  	#foreach($topic in $allTopics)
+			<option>$topic</option>
+	  	#end
+		</SELECT>
+		$brih_Exist $brih_topic
+		<input type="RADIO" name=topicExisting checked=true value="OLDTOPIC" onClick=blurTopicName(document.uploadform)>
+		</td>
+	<tr align="right">
+		<td colspan=4 align="right">
+		$brih_new $brih_topic <input type="RADIO" name=topicExisting value="NEWTOPIC" >
+		</td>
+	</tr>
+      	<tr align="right">   
+		<td>
+			<input type="text" name="contentTopic" onFocus=checkRadio() size=26>
+    		</td>
+	  	<td bgcolor="$ui.tableColor">
+		<b><font face="$ui.sansSerifFonts">$brih_topic $brih_Of1 $brih_name</font></b>
+		###if($lang=="hindi") $brih_Of1 #end $brih_name</font></b> 
+		</td>
+	</tr>
+      	<tr>
+	  <td align=center colspan=2>
+          <font face="$ui.sansSerifFonts">
+	  <input type="button" name="eventSubmit_doSubmit" value="$brih_submit" onClick="validate(document.uploadform,this);"/>
+ 	  <input type="hidden" name="actionName" value="">
+  	  <input type="reset" value="$brih_reset">
+    
+          </font>
+        </td>
+      </tr>
+    </table>
+	#if($M_Create=="Module_create")
+	<table width="30%" align="center" bgcolor="$ui.menuColor">
+	<tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,InsertEdit_Multiple.vm").addPathInfo("modulename",$mName).addPathInfo("mode","Insert")>$brih_multiple1 $brih_type</a>
+                </td></tr>
+                <tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,InsertEdit_TF.vm").addPathInfo("modulename",$mName).addPathInfo("mode","Insert")>$brih_true / $brih_false $brih_type</a>
+                </td></tr>
+                <tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,InsertEdit_Short.vm").addPathInfo("modulename",$mName).addPathInfo("mode","Insert")>$brih_shortType $brih_type</a>
+                </td></tr>
+                <tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,Insert_Match.vm").addPathInfo("rName",$rName).addPathInfo("mName",$mName).addPathInfo("file",$fName)></a>$brih_matchType $brih_type
+                </td></tr>
+#*              <tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,UploadQuestions.vm").addPathInfo("rName",$rName).addPathInfo("mName",$mName)>$brih_uploadQuesType</a>
+                </td></tr>  *#
+</table>
+#end
+  </div>
+</form>

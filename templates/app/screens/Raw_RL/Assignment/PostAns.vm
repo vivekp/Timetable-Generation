@@ -1,0 +1,143 @@
+
+#*
+ * @(#) PostAns.vm 
+ * Copyright (c) 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:arvindjss17@yahoo.co.in ">Arvind Pal</a>
+ * @modify <a href="mailto:shaistashekh@hotmail.com "> Shaista </a>
+ * @date 18-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+
+        <tr align="right"> <td><b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment  </a> |
+        <a href=$link.setPage("call,Assignment,AssView.vm")> </a> $brih_post $brih_answer  
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | 
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+        </b></td></tr>
+</table> ##table 1 end
+
+	$!data.getMessage()
+	<br>
+
+	<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,PostAns.vm").setAction("Assignments")>
+	<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+<tr bgcolor="$ui.menuColor" align="right">
+	#if($user_role ==  "student") 	
+	<td >
+        	<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+         	<option value="" ></option>
+		#foreach($topic in $allTopics1)
+			<option value="$topic" >$topic</option>
+		#end
+		</SELECT>
+	</td>
+	<td>	<b> $brih_topic $brih_Of1 $brih_name  </td>
+	#else
+
+	<td>
+		<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+                
+		#if($answerfilecheck == "notchecked")
+			<option value="$topicList" >$topicList</option>	
+		#else
+			<option value=""></option>
+		#end
+                #foreach($topic in $allTopics)
+        	        <option value="$topic">$topic</option>
+                #end
+                </SELECT>	
+		<input type="button" name="Go" value="Go" onClick="checkBlank1(document.uploadform,this);" />
+	</td>	
+	<td>	<b>$brih_topic $brih_Of1 $brih_name  </td>
+	#end
+	
+</tr>   
+#if($user_role ==  "student")
+<tr align="right">
+                ###fileUpload ("$brih_at_file <font color=RED>*</font>" "file")
+		<td> <input type="file" name="file" > </td>
+		<td> <font color=RED>*</font> $brih_at_file </td>
+
+</tr>
+<tr align="right">
+        <td colspan=2 align="center" bgcolor="$ui.buttonColor">
+        <font face="$ui.sansSerifFonts">
+        <input type="button" name="dosubmit" value="$brih_upload" onClick="checkBlank(document.uploadform,this);"  />
+        </font>
+        </td>
+</tr>
+#else
+	#if($answerfilecheck ==  "notchecked")	      
+	<tr align="right">
+		###fileUpload ("$brih_at_file <font color=RED>*</font>" "file")
+		<td> <input type="file" name="file" > </td>
+		<td> <font color=RED>*</font> $brih_at_file </td>
+	</tr>
+	<tr bgcolor="$ui.menuColor" >
+		<td colspan=2 align="center"">
+		<font face="$ui.sansSerifFonts">
+		#if($answerfile1 ==  "no")	
+		<input type="button" name="dosubmit" value="$brih_upload" onClick="checkBlank(document.uploadform,this);"/>
+		#else
+		<input type="button" name="RePostAns" value="$brih_reload" onClick="checkBlank(document.uploadform,this);"/>
+		#end
+		</font>
+		</td>
+        </tr>
+	#end
+#end
+<input type="hidden" name="actionName">             
+</table>
+</form>
+<script LANGUAGE="JAVASCRIPT">    
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+	function checkBlank1(uploadform,field)
+        {       
+		if(uploadform.topicList.value!="")
+                {
+			uploadform.actionName.value=field.name;
+        	        uploadform.submit();
+		} else
+			alert("Selected Topic Name should not be empty !!");		
+        }
+ 
+        function checkBlank(uploadform,field)
+        {	var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.topicList.value!="")
+                {
+			if(uploadform.file.value!="")
+			{	
+		               	uploadform.actionName.value=field.name;
+                                uploadform.submit();
+                	}
+			else
+				alert("Attach file can not empty !!"); 
+                }
+                else
+                	alert("Selected Topic Name should not be empty !!");
+
+        }
+        function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+                }
+                if(frm.group.value=="author")
+                {
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+               }
+        }
+</script>

@@ -1,0 +1,218 @@
+
+ * @(#)Edit.vm
+ * Copyright (c) 2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *@author <a href="mailto:sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ *@author <a href="mailto:rekha_20july@yahoo.co.in">Rekha Pal</a>
+ *#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Edit")
+#set($lang=$data.getUser().getTemp("lang").toString())
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr><td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $cname</a> | 
+		<a href=$link.setPage("call,Dis_Board,DB.vm")>$DiscussionBoard</a> |
+		 #if($lang == "hindi")
+                <a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All")>$LocalMail_MailContent_msg3</a> | $brih_msg2 $brih_edit
+		#else			
+                <a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All")>$LocalMail_MailContent_msg3</a> |$brih_edit $brih_msg2
+		#end
+		</font>
+		</td></tr>
+</table>
+<br>
+mgid=== $mgid ==== msgid === $msg_id
+#if($data.getUser().getUserName() != "$sender")
+##<form  name="frm" method="post" action=$link.setPage("call,Dis_Board,Edit.vm").setAction("SendDB").addPathInfo("course_id",$cid).addPathInfo("Mid",$mgid).addPathInfo("topic",$topic)>
+<form  name="frm" method="post" action=$link.setPage("call,Dis_Board,Edit.vm").setAction("SendDB").addPathInfo("course_id",$cid)>
+
+	<table border=2 align=center width=80% bgcolor="$ui.tableColor" cellpadding=1 cellspacing=1>
+	        <tr>
+			<td align=center ><b> $DisBoard_DBEditmsg17 </b></td>
+			<td colspan="1" align="center">
+			#if($permit == "1")
+				<input type="radio" name="perm" checked value="1"><b>$Repo_Permgiv</b>
+				<input type="radio" name="perm" value="0"><b>$DisBoard_DBEditmsg18</b>
+			#else
+		       		<input type="radio" name="perm" value="1"><b>$Repo_Permgiv </b>
+		       		<input type="radio" name="perm" checked value="0"><b>$DisBoard_DBEditmsg18</b>
+			#end
+			</td>
+		</tr>
+		<tr align="$ui.buttonAlignment">
+		<td align="center" colspan=2 bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFonts">
+		<input type="button" name="eventSubmit_doPermission" value="$Repo_Perm" onClick="check(document.frm,this);"/>
+		<input type="hidden" name="perm" value="$perm">
+		<input type="hidden" name="actionName">
+	        <input type="hidden" name="msgid" value="$mgid">
+                <input type="hidden" name="topic" value="$topic">
+               	<input type="hidden" name="StatusEdit" value="$EditStatus">
+		</font>
+		</td>
+		</tr>
+      </table>
+</form>
+#end
+
+<SCRIPT LANGUAGE="javascript">
+	function check(frm,field)
+	{
+		var bool = frm.perm[0].checked;
+		var bool1 = frm.perm[1].checked;
+		if(bool || bool1)
+		{
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+	}
+</SCRIPT>
+<br>
+#set($Repid=0)
+##<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Dis_Board,DBContent.vm").setAction("SendDB").addPathInfo("course_id",$course_id).addPathInfo("mgid",$mgid).addPathInfo("topic",$topic)">
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Dis_Board,DBContent.vm").setAction("SendDB").addPathInfo("course_id",$course_id).addPathInfo("topic",$topic)">
+	<div align="left">
+		<table align="center"width=80% border=1 bgcolor="$ui.tableColor" cellpadding="5">
+			<tr><td align="center" colspan=2>
+			<b><u><font size=4>$DisBoard_WorkGroup:</font></u>&nbsp</font><font color="Green" size=3>$cid</font></b>
+			</td></tr>
+			<tr>
+				<td bgcolor="$ui.tableColor">
+		       		<b><font face="$ui.sansSerifFonts">$brih_topic $brih_name</font> </b>
+		        	</td>
+		        	<td><input type="text" name="contentTopic" value=$topic onFocus=checkRadio() size=26></td>
+			</tr>
+			<tr>
+				<td bgcolor="$ui.tableColor">
+				<b><font face="$ui.sansSerifFonts">$brih_msg2 </font> </b>
+				</td>
+			  	<td>
+			  	<font face="$ui.sansSerifFonts" size=4>
+				<textarea name="message"  rows=10 cols=55 wrap=physical /> $message</textarea></font>
+		          	</td>
+		       	</tr>
+			#set($count=1)
+ 				<tr><td colspan=2><b><u>$brih_attachment :</u></b></tr>
+				#foreach($file in $dirContent)
+  				<tr>
+ 				<td colspan=2>
+    				#set($countfield=0)
+  				&nbsp;&nbsp;&nbsp;&nbsp;<image src="$content.getURI("/images/star_off_2.gif")" height=10 width=10> &nbsp; 
+   				#foreach($var in $file)
+   					#if($countfield==0)
+					<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("topic",$topic).addPathInfo("view","content").addPathInfo("type","DB").addPathInfo("msgid",$mgid).addPathInfo("filename",$var)","newWin");>$var</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   					#else
+ 					<b>$DisBoard_DBView_msg22 $var</b></td>
+   					#end
+   				#set($countfield=1)
+  				#end
+				</tr>
+  			#set ( $count= $count+1)
+			#end
+			<tr>
+			#fileUpload (" Attach File" "file")
+			</tr>
+			<tr>
+				<td><b><font face="$ui.sansSerifFonts">$DisBoard_DBmsg6</b></td>
+				#if($expirytime == "-1")
+				<td><input id="exp_id" type="text" name="expiry" value="$expirytime" size="26" disabled="true"></td>
+				#else
+				<td><input id="exp_id" type="text" name="expiry" value="$expirytime" size="26" enabled="true" onClick="checkvalue();" ></td>
+				#end
+			</tr>
+			<tr>
+				#if($expirytime == "-1")
+				<td colspan="2" align="center"> <input type="RADIO" name=status value="Enable" onClick="insertminus(document.uploadform);">&nbsp<b>$DisBoard_DBmsg7</b>
+			        <input type="RADIO" name=status checked value="Disable" onClick="insertminus(document.uploadform)";/>&nbsp<b>$DisBoard_DBmsg8 </b>
+				#else
+				<td colspan="2" align="center"> <input type="RADIO" name=status checked value="Enable" onClick="insertminus(document.uploadform);">&nbsp<b>$DisBoard_DBmsg7</b>
+				
+			        <input type="RADIO" name=status value="Disable " onClick="insertminus(document.uploadform)";/>&nbsp<b>$DisBoard_DBmsg8 </b>
+				#end
+				</td>
+
+			</tr>
+			<tr align="ui.buttonAlignment">
+				<td align="center" colspan=2>
+				<font face="$ui.sansSerifFonts">
+				<input type="hidden" name="mode" value="All">
+				<input type="hidden" name="Repid" value="$Repid">
+				<input type="hidden" name="mgid" value="$mgid">
+                                <input type="hidden" name="Repid" value="$mgid">
+                                ##<input type="hidden" name="Repid" value="$msg_id">
+				<input type="hidden" name="expstatus">
+				<input type="hidden" name="actionName">
+				<input type="button" name="eventSubmit_doUpdate" value="$brih_update" onClick="checkBlank(document.uploadform,this);"/>&nbsp&nbsp
+				#if($expirytime == "-1")
+				<input type="reset" value="$brih_clear" onClick="makeDisable();">
+				#else
+				<input type="reset" value="$brih_clear" onClick="makeEnable();">
+				#end
+				</font>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+<script LANGUAGE="JAVASCRIPT">
+function checkRadio()
+{
+	if(document.uploadform.topicExisting[0].checked)
+	{
+		document.uploadform.contentTopic.blur();
+	}
+}
+function checkBlank(uploadform,field)
+{
+	if((uploadform.contentTopic.value!="") && (uploadform.message.value!="")&&(uploadform.status[0].checked))
+        {
+        	if((uploadform.expiry.value>=1) && (uploadform.expiry.value<=365))
+            	{
+            		uploadform.actionName.value=field.name;
+            		uploadform.submit();
+            	}
+            	else
+            	alert("Deletion Time should not be less than 1 day and greater than 365 days");
+        }
+        else
+        {
+		uploadform.expstatus.value=uploadform.expiry.value;
+		uploadform.actionName.value=field.name;
+            	uploadform.submit();
+        }
+}
+function insertminus(uploadform)
+{
+	if(uploadform.status[1].checked)
+        {
+        	uploadform.expiry.value="-1";
+                uploadform.expstatus.value=uploadform.expiry.value;
+                makeDisable();
+        }
+        else
+        {
+        	uploadform.expiry.value="$expirytime";
+                makeEnable();
+        }
+}
+function makeDisable()
+{
+	var x=document.getElementById("exp_id")
+        x.disabled=true
+}
+function makeEnable()
+{
+	var x=document.getElementById("exp_id")
+        x.disabled=false
+}
+function popupWin(urlName,popupName)
+{
+	window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+}
+</SCRIPT>

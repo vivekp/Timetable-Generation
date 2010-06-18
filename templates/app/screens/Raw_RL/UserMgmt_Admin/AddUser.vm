@@ -1,0 +1,178 @@
+#*
+ * @(#) AddUser.vm
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | User Management | Add User")
+$!data.getMessage()
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+	<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_mgmt $brih_usr </a> | $brih_usr $brih_add
+	</td>
+</tr>
+</table>
+<br>
+<br>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,AddUser.vm").setAction("AddUser")">
+  <div align="center">
+    <table align=center bgcolor="$ui.bgcolor" border=2 cellpadding="5">
+      <tr>
+	<td colspan=2 face="$ui.sansSerifFonts" bgcolor="$ui.menuColor" align=center>
+        <font size=4><b> $brih_usr$brih_Of $brih_detail $brih_add </b></font>
+	</td>
+      </tr>
+      <tr  align ="right" bgcolor="$ui.tableColor">
+	<td><input type="txt" name="UNAME" value= "" size="30%"></td>
+	<td><b>$brih_usr $brih_Of1 $brih_name </b></td>
+      </tr>
+      <tr  align ="right" bgcolor="$ui.tableColor">
+	<td><input type="pasword" name="PASSWD" value= "" size="30%"></td>
+	<td><b>$brih_pwd </b></td>
+      </tr>
+      <tr  align ="right" bgcolor="$ui.tableColor">
+	<td><input type="txt" name="FNAME" value= "" size="30%"></td>
+	<td><b>$brih_first $brih_name </b> </td>
+     </tr>
+     <tr  align ="right" bgcolor="$ui.tableColor">
+	<td><input type="txt" name="LNAME" value= "" size="30%"></td>
+	<td><b> $brih_last $brih_name </b></td>
+
+     </tr>
+     <tr  align ="right" bgcolor="$ui.tableColor">
+	<td><input type="txt" name="EMAIL" value= "" size="30%"></td>
+	<td><b> $brih_email $brih_ID </b></td>
+	  </tr>
+	  
+	  <tr align ="right" bgcolor="$ui.tableColor">
+     <td>
+    	<select id="group_id" name="group" size=1 onChange="ChangeRole(document.frm,this);"/>
+	  <option>
+	  #foreach($name in $courseList)
+	  #if($name.getName()!="global")
+	  <option value="$name.getName()">$name.getName()
+	   #end
+	   #end
+	   </option>
+	  </select>
+	 </td>
+	  <td bgcolor="$ui.tableColor">
+	  <b>
+	  <font face="$ui.sansSerifFonts"><font color=RED>* </font> $brih_course $brih_select </font>
+	  </font>
+	  </b>
+	  </td>
+	 </tr>
+
+ <tr align ="right" bgcolor="$ui.tableColor">
+     <td>
+    <select id="role_id" name="role" size=1 onChange="ChangeGroup(document.frm,this);"/>
+	  <option>
+	  <option value="instructor">$brih_instructor
+	  <option value="student">$brih_student
+	  <option value="group_admin">$brih_group $brih_ad
+	  <option value="author">$brih_author (Author)
+	  </option>
+	  </select>
+	</td>
+	  <td bgcolor="$ui.tableColor">
+	  <b>
+	  <font face="$ui.sansSerifFonts"><font color="Red">*</font> $brih_role $brih_select </font>
+	  </font>
+	  </b>
+	  </td>
+	</tr>
+	<tr>
+	<td colspan=2 align="center" bgcolor="$ui.menuColor">
+	<input type="hidden" name="actionName">
+    	<input type="hidden" name="group_author">
+    	<input type="hidden" name="role_author">
+	<input type="Reset" name="Reset" Value="$brih_clear"/>
+    	<input type="button" name="eventSubmit_doRegister" value="$brih_reg" onClick="checkField(document.frm,this);"/> 
+	</td>
+	</tr>
+        </table>
+	<br>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+	##function checkField(frm,field,b)
+	function checkField(frm,field)
+	{
+		if((frm.UNAME.value!="") &&(frm.group.value!="") && (frm.role.value!=""))
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill the Mandatory(*) Fields !");
+			##alert(b);
+		}
+	}
+	function ChangeRole(frm,field)
+	        {
+			if(frm.group.value=="author")
+			{
+			       frm.role.value="author";
+			       frm.role_author.value=frm.role.value;
+			       makeDisable();
+			}
+			else
+			{
+			       if(frm.role.value=="author")
+			       {
+			       frm.role.value="";
+			       }
+			       makeEnable();
+			}
+		}
+	function ChangeGroup(frm,field)
+	        {
+			if(frm.role.value=="author")
+			{
+			       frm.group.value="author";
+			       frm.group_author.value=frm.group.value;
+			       makeDisable_group();
+			}
+			else
+			{
+			       if(frm.group.value=="author")
+			       {
+			       frm.group.value="";
+			       }
+			       makeEnable_group();
+			}
+		}
+	function makeDisable_group()
+	{
+	var x=document.getElementById("group_id")
+	x.disabled=true
+	}
+	function makeEnable_group()
+	{
+	var x=document.getElementById("group_id")
+	x.disabled=false
+	}
+	function makeDisable()
+	{
+	var x=document.getElementById("role_id")
+	x.disabled=true
+	}
+	function makeEnable()
+	{
+	var x=document.getElementById("role_id")
+	x.disabled=false
+	}
+</SCRIPT>

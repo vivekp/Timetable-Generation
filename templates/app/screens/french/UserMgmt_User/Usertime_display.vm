@@ -1,0 +1,18 @@
+
+
+$page.setTitle("Home | $course | Student Management | List of All Students | Usage Details")
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,IndexHome.vm")>Maison</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+	<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>�?tudiant  Gestion </a> | 
+	<a href=$link.setPage("call,UserMgmt_User,StudentList.vm").addPathInfo("mode","All")>Liste d'étudiants </a> | Détails d'utilisation 
+	</td>
+</tr>
+</table>
+<br>

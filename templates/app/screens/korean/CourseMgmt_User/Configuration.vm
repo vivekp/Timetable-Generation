@@ -1,0 +1,340 @@
+
+
+$page.setTitle("Home | $course | Course Management |  Course Configuration for Guest")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr><td><font face="$ui.sansSerifFonts"><b>
+		  <a href=$link.setPage("call,IndexHome.vm")>ì§?</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>ê³¼ì ? ê´?ë¦¬</a> |  ê³¼ì ?  êµ¬ì?±
+        </font></td></tr>
+</table>
+
+<table width=100%>
+        <tr><td align=right><img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/RemoteCourses.html","newWin");>ë??ì??</a></td></tr>
+</table>
+
+<table border=1 align="center" bgcolor="$ui.menuColor"> <form method="post" action="$link.setPage("call,CourseMgmt_User,Configuration.vm").setAction("Guest")">
+         <tr><td align="center">
+                <font size=4> <b>ì½?ì?¤ êµ¬ì?± ê²?ì?¤í?¸ì?? ë??í?? </b></font>
+         </td></tr>
+         <tr><td bgcolor="$ui.tableColor" >
+                <table border=0 width=100%>
+                        <tr><td align="center">
+            	    	                	        <font color="Red"><b>ê²?ì?¤í?¸ ë¡?ê·¸ì?¸  ë¶?ê°?!  ë?¹ì? ì?´ ì??í??ë?? ë§?   ê·¸ê²?ì?? í??ì?±í??ë??ì?´ ì??ì?´ì?¼í?©ë??ë?¤</b></font>
+                	                        </td><td align="center">
+                                <input type="submit"  value="ì??">
+                                <input type="hidden"  name="cname" value="$course"> &nbsp;&nbsp;
+                         </td></tr>
+                </table>
+         </td></tr>
+         <tr><td  bgcolor="$ui.tableColor" align="center" border="1"> ê²?ì?¤í?¸ ë¡?ê·¸ ê°?ë©´ ë?¹ì? ë?¤ì?´ì?´ ê³¼ì ?ì?? ì½?í??ì¸ ë¥¼ ê²?ì??í?  ì?? ì??ë??ë¡? í?  ì??ì??ë?? ì??ì?¤ì??ë??ë?¤. ê²?ì?¤í?¸ ì?¬ì?©ì?? IDì?? ë¹?ë°? ë²?í?¸ë?? ì??ë??ì?´ë?¤. ì?´ ì??ì?¤ì?? ì ?ì?© í??ì? ì?? ì?¡ì?¸ì?¤í??ê¸°ì??í?? êµ?ì?¬ì?´ë©°, ë©?ì?¼,ì²?ë?¼, í? ë¡  ê²?ì??í?? ë?± ë?¤ë¥¸ ì±?í?? ë??êµ¬ë¥¼ ì?¬ì?© ë¬¼ë¡  ì??ë??ì?? í??ì?±í??í??ì§? ì??ì?µë??ë?¤ </td></tr>
+</form>
+</td></tr>
+<style type="text/css"> input{ width:130px; } </style>
+<p align="center"><font size="3" color="blue"></font></p>
+<br />
+
+
+<tr><td>
+<form name=frm method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_User,Configuration.vm").setAction("RemoteCoursesAction")">
+<table border=0 bgcolor ="$ui.tableColor" width=100% >
+	<tr><td  align="center">
+		<font size=4> <b>ì??ê²© ê³¼ì ? êµ¬ì?±</b></font>
+	</td></tr>
+	<tr><td  >
+		<font color=Red>* ëª¨ë?  í??ë??ë?? í??ì??ì??ë??ë?¤</font>
+	</td></tr>
+	<tr><td>
+		<table align="center" border=1>
+						<tr>
+    				#formCell("ê³¼ì ? ì??ì?´ë?¤í?¸" "cid" "")
+			</tr>
+			<tr>
+    				#formCell("ì§?ë??ì?? ì?´ë¦?" "riname" "")
+			</tr>
+			<tr>
+				#formCell("Institute I.P ì£¼ì??" "iip" "")
+			</tr>    
+			<tr>
+    				#formCell("Institute ì?´ë¦?" "inm" "")
+			</tr>
+			<tr>
+   				#formPasswordCell("ë¹?ë°? í?¤" "sec_key" "")
+			</tr>
+			<tr>
+				<td bgcolor="$ui.tableColor" >
+                                        <b><font face="$ui.sansSerifFonts"> í?¸ë??ì?­ì?? </font></b>
+				</td>
+				<td bgcolor="$ui.tableColor">
+					<select name="order">
+						 
+						<option value="Purchase"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ì?½ë??ë?¤ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<option value="Sell"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ì?¸ê¸° ì??í?? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+                		<td bgcolor="$ui.tableColor">
+                                        <b><font face="$ui.sansSerifFonts">ë§?ê¸° ë? ì§?</font></b>
+                		</td>
+                		<td bgcolor="$ui.tableColor">
+                  			<select name="Start_year">
+                  			<option value="$cyear">$cyear
+                  			                			</select>
+          				<select name="Start_mon">
+            				<option value="$cmonth">$cmonth
+            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            					            				            				</select>
+                  			<select name="Start_day">
+                  			<option value="$cdays">$cdays
+                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			                    				                  			            				</select>
+                  		</td>
+   			</tr>
+		</table>
+				<table align="center">
+			<tr><td align="center" >
+
+								<input type="submit"  name="eventSubmit_doInsert" value="ì ?ì¶?í??ë?¤" onClick="return checkForm(document.frm,this);"/>
+								<input type="reset" name="clear" value="ì?¬ì?¤ì ?" onClick="checkClear(document.frm,this);"/>
+				<INPUT TYPE="hidden" NAME="updatestartIndex" value="$updatestartIndex">
+				<INPUT TYPE="hidden" NAME="serial" value="$serial">
+
+
+			</td></tr>
+		</table>
+	</td></tr>
+	<tr><td>
+	</td></tr>
+	<tr><td>
+	</td></tr>
+
+</table>
+</form>
+</td></tr> 
+</table> 
+<br/> <table border="0" align="center" bgcolor="$ui.tableColor" cellspacing="5" width=100%>
+        <tr>
+                <td align="center" >
+			<h4><a href=$link.setPage("call,CourseMgmt_User,ViewRemote.vm").addPathInfo("status","0")>  ë³´ê¸°  ì?½ë??ë?¤ ì??ê²© ê³¼ì ? </a></h4>
+                </td>
+                <td align="center" >
+			<h4><a href=$link.setPage("call,CourseMgmt_User,ViewRemote.vm").addPathInfo("status","1")>  ë³´ê¸° ì?¸ê¸° ì??í?? ì??ê²© ê³¼ì ? </a></h4>
+                </td>
+        </tr>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+	
+	function checkForm(frm,field)
+	{
+		if((frm.cid.value!="") && (frm.riname.value!="")  && (frm.iip.value!="") &&  (frm.inm.value!="")  &&  (frm.sec_key.value!=""))
+		{
+		 	 if(testValue(frm.cid.value))
+			 {
+			 	alert("Course ID is not correct");
+				frm.cid.focus();
+				return false;
+			 }		 
+		
+			 if(isString(frm.riname.value))
+			 {
+			 	alert("Not a Correct Instructor Name");
+				frm.riname.focus();
+				return false;
+			 }
+			 
+			 if(!checkIp(frm.iip.value))
+			{
+                                frm.iip.focus();
+                                return false;
+			}			
+		 
+			 if(checkSpecialCharacter(frm.inm.value))
+			 {
+			 	alert("Not a Correct Institute Name");
+				frm.inm.focus();
+				return false;
+			 }
+		         
+			 var string=frm.sec_key.value; 	
+			 var len=string.length;
+			 if((len>33) || (len<4))
+			 {
+			 	alert("Secret Key must contain   minimum 4 characters and maximum 32 characters ");
+				frm.sec_key.focus();
+				return false;
+			 }
+	        return true;
+		}
+		else
+		{
+			alert("Fill All Mandatory Fields");
+			return false;
+		}
+	}
+	function checkIp (IPvalue) 
+	{
+		ipName = " IP Address ";
+		var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+		
+		/*
+		* Match returns exact word when found match else returns null
+		*/
+		var ipArray = IPvalue.match(ipPattern); 
+		
+		err_msg	 =  'is a special IP address is  not routed on the Internet and cannot be used here.';
+		err_msg1 = ' is a special IP address and cannot be used here.';
+		err_msg2 = ' is not a valid IP address.Write as 172.28.44.20';
+		err_msg3 = "";
+
+		if (IPvalue == "0.0.0.0")
+			err_msg3 = err_msg3 + ipName + ': '+IPvalue + err_msg1;
+		else if (IPvalue == "255.255.255.255")
+			err_msg3 = err_msg3 + ipName + ': '+IPvalue + err_msg1;
+		else if (IPvalue == "127.0.0.0")
+			err_msg3 = err_msg3 + ipName + ': '+ IPvalue + err_msg1;
+		else if (IPvalue == "127.0.0.1")
+			err_msg3 = err_msg3 + ipName + ': '+ IPvalue + err_msg1;
+		if (ipArray == null)
+			err_msg3 = err_msg3 + ipName + ': '+IPvalue+err_msg2;
+		else 
+		{
+			/**
+			* there are 5 elements in ipArray
+			*/
+			for (i = 0; i < 5; i++) 
+			{
+				thisSegment = ipArray[i];
+				
+
+				if (thisSegment > 255) 
+				{
+					err_msg3 = err_msg3 + ipName + ': '+IPvalue+err_msg2;
+					/*
+					 * break can be used here but break immediately breaks statements
+					 * if we specify the last value than also the for loop breaks 
+					 * but after execution of full loop 
+					 */
+					i = 4;
+				}
+
+   			}//for
+
+
+		}//else
+		if (err_msg3 == "")
+		{
+			// 10.0.0.0 through 10.255.255.255
+			if(ipArray[1]==10)
+			{
+                        	err_msg3 = err_msg3 + ipName + ': '+IPvalue + err_msg;
+			}
+
+			// 172.16.0.0 through 172.31.0.0
+			// means 172.16.0.0 through 172.30.255.255 
+/*
+			if(ipArray[1]==172 && ipArray[2] > 15 && ipArray[2] < 31 )
+			{
+                        	err_msg3 = err_msg3 + ipName + ': '+IPvalue+err_msg;
+			}
+			//at 172.31.0.0
+
+			if(ipArray[1]==172 && ipArray[2] == 31 && ipArray[3] == 0 && ipArray[4] == 0 )
+			{
+                        	err_msg3 = err_msg3 + ipName + ': '+IPvalue+err_msg;
+			}
+
+*/
+			// 192.168.0.0 through 192.168.255.0
+			// 192.168.0.0 through 192.168.254.255
+			if(ipArray[1]==192 && ipArray[2]==168 && ipArray[3] < 255)
+			{
+                        	err_msg3 = err_msg3 + ipName + ': '+IPvalue+err_msg;
+			}
+			
+			// at 192.168.255.0
+		
+			if(ipArray[1]==192 && ipArray[2]==168 && ipArray[3] == 255 && ipArray[4]==0)
+			{
+                        	err_msg3 = err_msg3 + ipName + ': '+IPvalue+err_msg;
+			}
+			
+
+			if (err_msg3 == "")
+			return true;
+			else
+			alert (err_msg3);
+			return false;
+		}
+		else
+		{
+			alert (err_msg3);
+			return false;
+		}
+	}//function
+	// note this function keeps away '*' also from Ip address
+	function isNumberString(chString)
+	{
+		if(chString.length==0)
+		return false;
+		var RefString="0123456789.";
+		for(count=0;count<chString.length;count++)
+		{
+			tempChar=chString.charAt(count);
+			if(RefString.indexOf(tempChar)==-1)
+			{
+				return false;
+			}
+		}
+			return true;
+	}
+	
+	function isString(strString)
+	{
+		if(strString.length==0)
+		return false;
+		var invalidch=/[^a-z_]/i;
+		var invalid=(invalidch.test(strString));			
+		return invalid;
+	}
+		
+	function testValue(testStr)
+	{
+		if(testStr.length==0)
+		return false;
+		var invalidch1=/[^a-z\d_\-]/i;
+		var invalid1=(invalidch1.test(testStr));
+		return invalid1;
+	}
+	function checkClear(frm,field)
+	{
+		frm.cid.value="";
+		frm.csell.value="";
+		frm.cpurch.value="";
+		frm.iip.value="";
+		frm.inm.value="";
+		frm.sec_key="";
+	}
+
+	function checkSpecialCharacter(strString)
+	{
+		var iChars = "!@#%^&*()+=-[]\\\';,/{}|\":<>?";
+
+ 	 	for (var i = 0; i < strString.length; i++) 
+		{
+  			if (iChars.indexOf(strString.charAt(i)) != -1) 
+			{
+  				return true;
+  			}
+  		}
+		return false;
+	}
+	
+</SCRIPT>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

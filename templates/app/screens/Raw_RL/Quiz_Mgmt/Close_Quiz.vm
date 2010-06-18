@@ -1,0 +1,234 @@
+#*
+ * @(#)Close_Quiz.vm
+ * Copyright (c) 2007-2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *   @author  <a href="nksingh@yahoo.co.in">Nagendra Kimar Singh</a>
+ *   @author  <a href="singh_jaivir@rediffmail.com">Jaivir Singh</a>
+ *   @author  <a href="arvindjss17@yahoo.co.in">Arvind Pal</a>
+ *   @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("")
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+
+			<table>
+			#if($startQuiz == false)
+			<tr><td>$brih_over </td></tr>
+			#end
+			</table>
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr align="right">
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+        	<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz</a> | $brih_quiz $brih_start
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+                | <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+                </font>
+                </td>
+        </tr>
+</table>
+$!data.getMessage()
+<table width=100%>
+        <tr>
+                <td>
+		<a href=javascript:popupWin("/brihaspati2/docs/stquiz.html","newWin");>$brih_help</a><img src="$content.getURI("/images/Lefthand.gif")">
+                </td>
+        </tr>
+</table>
+<br>
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm").setAction("Quiz_Action")>
+<div align="left">
+	<table align=center bgcolor="$ui.tableColor" border=1 cellpadding="5" width=70% >
+        <tr bgcolor="$ui.menuColor" >
+        	<td align=center colspan=4 >
+        		##<font size=4> <b>$brih_quiz $brih_Of1 $brih_name </b> <i> $!quiztitle  </i></font>
+        		<font size=4> <i> $!quiztitle  </i> <b>$brih_quiz $brih_Of1 $brih_name </b> </font>
+                </td>
+        </tr>
+	#if($questionscreations != "questionnotcreated")
+	<tr>
+	    	<td align=center >	
+			## <font size=2><b><i> $brih_pass $brih_marks :</i></b> $!passmarks  </font>
+			<font size=2> $!passmarks  <b><i> : $brih_pass $brih_marks </i></b> $!passmarks </font>
+	    	</td>
+	    	<td align=center>
+			## <font size=2><b><i> $brih_total $brih_qus :</i></b> $!noofquestion </font>
+			<font size=2>  $!noofquestion <b><i> : $brih_total $brih_qus </i></b> </font>
+	    	</td>			
+	    	<td align=center >
+			##<font size=2><b><i> $brih_Left  $brih_time : </i> $totaltime <i> min </i> </b></font>		
+			<font size=2><b> $totaltime <i> min </i> <i> : $brih_Left  $brih_time </i> </b></font>		
+		</td>
+		<td align=center >
+                	## <font size=2><b> <i> brih_total $brih_marks : </i> </b>  $!totalmarks </font>
+                	<font size=2> $!totalmarks <b><i>: $brih_total $brih_marks </i> </b> </font>
+            	</td>
+	</tr>
+	
+	<tr>
+	#foreach($e in $contentvalue)
+	<tr align="right">
+		<td align=left colspan=3>
+			<b>$!e.getQuestion()</b>
+		</td>
+		<td align=center colspan=1 >
+			<font size=4> <b><i> $brih_qus </i></b>  </b></font>
+		</td>
+	</tr>
+	<tr align="right">
+	        <td align=center colspan=3 >
+			<table align=center border=0 width=100% >
+				#if($e.getQuiztype() == "Multiple")
+	                        <tr> 
+				      	<td align=left > <b> $brih_a </b>
+					<INPUT TYPE="CHECKBOX" NAME="A" VALUE = "" onClick="addDeleteList(this,document.frm);">
+					$!e.getoptionA()	
+	              	        	</td>
+					<td align=left  ><b> $brih_b </b>
+						<INPUT TYPE="CHECKBOX" NAME="B" VALUE = "" onClick="addDeleteList(this,document.frm);">
+						$!e.getoptionB()
+					</td>
+				</tr>
+				<tr>	
+					<td align=left > <b> $brih_c </b>
+                               		<INPUT TYPE="CHECKBOX" NAME="C" VALUE ="" onClick="addDeleteList(this,document.frm);">
+                                               	$!e.getoptionC()
+                                       	</td>
+                                	<td align=left > <b> $brih_d </b>
+                               			<INPUT TYPE="CHECKBOX" NAME="D" VALUE ="" onClick="addDeleteList(this,document.frm);">  
+						$!e.getoptionD()
+                                        </td>
+				</tr>
+				#end
+				#if($e.getQuiztype() == "TF")
+				<tr>
+					<td align=center >
+			<input type="radio" name="A"  onClick="radio_button_checker(this,document.frm)"; onChange="this.form.A.checked=true;this.form.B.checked=false;">
+					$!e.getoptionA()	
+					</td>
+					<td align=center >
+<input type="radio" name="B"  onClick="radio_button_checker(this,document.frm)"; onChange="this.form.B.checked=true;this.form.A.checked=false;">
+					$!e.getoptionB()
+					</td>	
+				</tr>
+				#end	
+				#if($e.getQuiztype() == "Short")
+				<tr>
+					<td align=left >
+						<textarea name="message" wrap="physical" rows=2 cols=40></textarea>
+					</td>
+				</tr>	
+				#end
+			</table>
+		</td>
+		<td align=center colspan=1 >
+	                <font size=4> <b><i>  $brih_answer  </i> </b></font>
+                </td>
+	</tr>
+		<input type="hidden" name="typeQuest" value="$e.getQuiztype()">
+		<INPUT TYPE="hidden" NAME="idques" VALUE= "$e.getquestionid() "  >
+	#end
+	<tr bgcolor="$ui.menuColor" >
+		<td align=center colspan=4 >
+		#if($start != $totalentry1)
+				#if($mode!="Search")
+					#if($total_size<= $AdminConf)
+         				<u><font color="white">$brih_skip</font></u> &nbsp;
+         				#elseif($startIndex== $AdminConf_str)
+					<a href="$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode)">$brih_skip</a> &nbsp;
+					#elseif($endIndex == $total_size || $endIndex > $total_size)
+		        		<u><font color="white">$brih_skip</font></u> &nbsp;
+					#else
+					<a href="$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode)">$brih_skip</a> &nbsp;
+					#end
+     				#else
+			        #if($total_size<= $AdminConf)
+					<u><font color="white"> $brih_skip </font></u> &nbsp;
+		        	#elseif($startIndex== $AdminConf_str)
+        				<a href="$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)"> $brih_skip </a> &nbsp;
+			        #elseif($endIndex == $total_size || $endIndex > $total_size)
+					<u><font color="white"> $brih_skip </font></u> &nbsp;
+				#else
+			        	<a href="$link.setPage("call,Quiz_Mgmt,Close_Quiz.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)"> $brih_skip </a> &nbsp;
+        			#end
+			#end
+			<input type="button" name="eventSubmit_doRegister1" value="$brih_submit" onClick="checkValue1(document.frm,this);">
+			<INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+			#if($ViewDraft != "ViewDraftQuiz")
+				<input type="button" name="Draft" value="$brih_draft" onClick="checkValue(document.frm,this);">
+			#end
+			<input type="hidden" name="startIndex" value="$!startIndex">
+			<input type="hidden" name="ViewDraft" value="$!ViewDraft" >
+		#else
+			<input type="button" name="ViewDraft1" value="$brih_view $brih_draft" onClick="checkValue(document.frm,this);">
+	                <input type="hidden" name="ViewDraft" value="ViewDraftQuiz">
+		#end		
+			<input type="button" name="eventSubmit_doStopQuiz" value="$brih_end $brih_quiz" onClick="checkValue(document.frm,this);">	
+			<input type="hidden" name="quiztitle" value="$!quiztitle">
+	                <input type="hidden" name="actionName">
+		</td>	
+	</tr>
+	#end
+	</table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+        function checkValue(frm,field)
+        {
+			frm.actionName.value=field.name;
+                	frm.submit();
+	}
+	
+	function checkValue1(frm,field)
+        {
+			if(frm.deleteFileNames.value!="") {
+                        	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else if( frm.message.value !=""){
+				frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else{
+				alert(" Please select answer options ");
+			}
+        }
+	
+	function addDeleteList(field,frm)
+        {
+                if(field.checked)
+				frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+			
+		else
+                {
+			var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+
+                }
+        }
+	
+	function radio_button_checker(field,frm)
+        {
+			frm.deleteFileNames.value="";
+			frm.deleteFileNames.value=field.name+"^";
+			
+	}
+	
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+	
+
+</script>

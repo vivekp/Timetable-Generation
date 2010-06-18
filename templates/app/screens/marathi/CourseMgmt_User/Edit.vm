@@ -1,0 +1,200 @@
+
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("$brih_home | $course | $brih_course $brih_mgmt | $brih_course $brih_content | $brih_edit $brih_content")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>???</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+ 	<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>???? ????????</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+	???? ?????? </a> | ???? / ????? ?????? 
+	</font>
+</td>
+</tr>
+</table>
+???   ????????   ??????   ????   ????  $topic ??   ???? <b><font color="blue">$course</font></b>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkModify(frm)
+	{
+		if(!frm.modify.checked)
+		{
+			frm.description.blur();
+		}
+
+	}
+	function setOldVal(frmElement)
+	{
+		document.frm.onFocusVal.value=frmElement.value;
+	}
+	function getOldVal(frmElement)
+	{	if(document.frm.doSubmit.value=="false")
+			frmElement.value=document.frm.onFocusVal.value;
+	}
+	function findSPLC(textField,sChar)
+	{
+		var textVal=textField.value;
+		var charAt=textVal.indexOf(sChar,0);
+		if(charAt>=0)
+		{	alert("An alias cannot have &  <  > ;");
+//			document.frm.doSubmit.value="false";
+			textField.value=document.frm.onFocusVal.value;
+			return true;
+		}
+		return false;
+	}
+	function validate(textField)
+	{		
+		if(findSPLC(textField,"&"))
+			return false;
+		if(findSPLC(textField,"<"))
+			return false;
+		if(findSPLC(textField,">"))
+			return false;
+		if(findSPLC(textField,";"))
+			return false;
+		document.frm.doSubmit.value="true";
+		return true;
+	}
+
+	function changeAlias(frm,field)
+	{		
+		if(frm.doSubmit.value=="true")
+		{
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+		else
+		{
+			alert("Please Change Alias !!");
+		}
+	}
+	function deleteTopicConfirm(frm,field)
+	{
+		if(frm.delTopic.checked)
+		{
+			if(confirm("All Data linked to the topic will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+		else
+		{
+			alert("Please Select check box for deletion !!");
+		}
+	}
+	function changeOrder(field,frm,seqno)
+	{
+		frm.changeFileNameOrder.value=field.value;
+		frm.changeFileSeqnoOrder.value=seqno;
+		var delFileNames=frm.deleteFileNames.value;
+		frm.deleteFileNames.value="";
+		if(delFileNames!="")
+		{
+			var currentPos=0,index=0;
+			while( (currentPos=delFileNames.indexOf('^',index))>=0 )
+			{
+				checkboxname=delFileNames.substring(index,currentPos);
+				index=currentPos+1;
+				frm.elements[checkboxname].checked=false;
+			}
+		}
+		
+	}
+	function isOrderChanged(frm,field)
+	{
+		var delfiles;
+		if((frm.changeFileNameOrder.value.length!=0) && (frm.actionType.value!="-1") && (frm.destinationSeqno.value!="-1"))
+		{
+			frm.actionName.value=field.name;
+			frm.submit();	
+				
+		}
+		else
+		{
+			alert("Please Select file,Action and Sequence No. !!!");
+		}
+	}
+	
+	function deleteConfirm(frm,field)
+	{
+		var delfiles;
+		delfiles=frm.deleteFileNames.value;
+		if(delfiles.length!=0)
+		{
+			if(confirm("Selected files will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+	}
+	
+	function Update(frm,field)
+	{
+		if(frm.modify.checked)
+		{
+			if( confirm("The Course Description Will be changed"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();
+			}
+		}
+		else
+		{
+			alert("Please Select check box for modification in Course Description !!");
+		}
+	}
+	
+	function UpdateDelete(frm,field)
+	{
+		var delfiles;
+		delfiles=frm.deleteFileNames.value;
+		if(delfiles.length!=0 && frm.modify.checked)
+		{
+			if(confirm("Selected files will be Deleted and the topic description will be changed"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+	
+	}
+	function addDeleteList(field,frm)
+	{
+		var reorderFile=frm.changeFileNameOrder.value;
+		if($seqno>0)
+		{
+			frm.destinationSeqno.selectedIndex=0;
+			frm.actionType.selectedIndex=0;
+		}
+		if(reorderFile!="")
+		{
+			frm.orderRadio[frm.changeFileSeqnoOrder.value].checked=false;
+			frm.changeFileNameOrder.value="";
+			frm.changeFileSeqnoOrder.value="";
+		}
+		if(field.checked)
+		{
+			frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+		else
+		{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);		
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;	
+		}
+	}
+
+</SCRIPT>

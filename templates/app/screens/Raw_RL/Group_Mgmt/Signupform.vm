@@ -1,0 +1,105 @@
+#*
+ * @(#)Signupform.vm
+ *  Copyright (c) 2006-07 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 13-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+	<tr align="right"><td><b>
+        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>$brih_mgmt $brih_grp </a> |
+	$brih_grp $brih_in  $brih_join</b>
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>|
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+     </td></tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+	<tr>
+		<td>
+		<a href=javascript:popupWin("/brihaspati2/docs/joingroupactivity.html","newWin");>$brih_help</a>
+		<img src="$content.getURI("/images/Lefthand.gif")"> 
+		</td>
+	</tr>
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Signupform.vm").setAction("Groupmanagement")>
+#if($Mode == "NoBlank")
+	<tr bgcolor ="$ui.tableColor"><td align ="center"colspan=5> ## td tr 1 start
+		<font size=5> <I>  $brih_course $brih_Of $brih_grp : </I></font> </b>
+		<b> <font size=4><font color=green><I>$courseid</I></font> </font>
+	</tr></td> ## td tr 1 end
+	<tr><td align="center">
+	<br><b>$brih_grpmsg17</b><br><br>
+                 <table  border="0" bgcolor="$ui.tableColor" width="100%" colspan=5>
+			<tr align="right">
+				<td>
+				<select name="groupname" size="1" onChange="Changegroup(document.frm,this);"/>
+				<option>- $brih_select -</option>
+				#foreach($grpname in $glist)
+				<option value="$grpname">$grpname
+				#end
+				</option>
+				</select>
+				</td>
+				<td><b>
+				: $brih_grp $brih_select 
+				<font color="Red">*</font>
+				</b></td>
+			</tr>
+			<tr align="right">
+                        	<td>
+                                	<textarea name="groupdesc" rows=5 cols=50 disabled>[group description]</textarea>
+                        	</td>
+        			<td>
+					<b> : $brih_grp $brih_Of $brih_desc </b>
+				</td>
+			</tr>
+		</table>
+	</tr></td>
+	<tr bgcolor="$ui.tableColor"><td align="center">
+	<input type="button" name="eventSubmit_doJoinGroup" value="$brih_grp $brih_in $brih_join" onClick="checkField(document.frm,this);"/>
+	<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+	</tr></td>
+	<input type="hidden" name="actionName"> 
+	<input type="hidden" name="val" value="$val">
+	<input type="hidden" name="gpname" value="$gpname">
+	<input type="hidden" name="grouptype" value="$grouptype">
+#elseif($Mode == "noempty")
+<tr> <td>
+<b><font size="4"><font color="blue"><center>$brih_grpmsg15 !!</center></font></font></b> </td></tr>
+#else
+<tr> <td>
+<b><font size="4"><font color="blue"><center>$brih_grpmsg18 !!</center></font></font></b>
+</td> </tr>
+#end
+</table> ## end of table 2 
+</form>
+<SCRIPT LANGUAGE="javascript">
+	function Changegroup(frm,field)
+	{
+		frm.val.value=document.frm.groupname.value;
+		alert(frm.val.value);	
+	}
+	function Changeactivity(frm,field)
+	{
+		frm.actvy.value=document.frm.activity.value;
+		alert(frm.actvy.value);	
+	}
+	function checkField(frm,field)
+	{
+       		frm.actionName.value=field.name;
+      		frm.submit();
+	}
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</script>

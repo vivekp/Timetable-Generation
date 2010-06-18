@@ -1,0 +1,10 @@
+#*
+ * @(#) getZipfile.vm
+ * Copyright (c) 2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ *
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:mann_singh@yahoo.com">Manvendra Singh</a>
+*#
+$data.getMessage()

@@ -1,0 +1,107 @@
+
+
+
+
+</head>
+$page.setTitle("Admin Home | Communication | Local Mail | Compose Message")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.menuColor" width=100% >
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <a href=$link.setPage("Index.vm")>Admin's Heim</a> |
+        <a href=$link.setPage("call,Notice_User,Notices.vm")>Kommunikation</a> |
+        <a href=$link.setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")>Lokale Post</a> | 
+			Antworten
+	</tr>
+</table>
+<body>
+	<div id="bodyContent">
+	<form id="editform" name="editform" method="post" enctype="multipart/form-data" action="$link.setAction("MailSendMessage").setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")">
+<table align="left" width=100% cellpadding=3>
+<tr bgcolor="$ui.menuColor"> 
+	
+					#formCell("Zu<font color=Red>*</font>" "addressNames" "")
+			</tr>
+
+<tr bgcolor="$ui.tableColor"> 
+	#formCell("Subjekt" "subject" "")
+</tr>
+<input type="hidden" name="hexaStr" value="">
+<tr bgcolor="$ui.menuColor">
+<td>Nachricht</td>
+<td>
+	<textarea tabindex="1" accesskey="," name="wpTextbox1" id="wpTextbox1" rows="8" cols="50"></textarea>
+	<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+</td>
+</tr>
+	<tr bgcolor="$ui.tableColor">
+	#fileUpload("Befestigung File " "file")
+</tr>
+<tr bgcolor="$ui.menuColor">
+<td align="left" colspan=2>
+<font face="$ui.sansserifFonts">
+  <input type="button" name="eventSubmit_doSend" value="Senden Sie"  onClick="checkValue(document.editform,this);"/>
+          <input type="hidden" name="mode1" value="$mode1">
+	<input type="hidden" name="val" value="$val">
+	<input type="hidden" name="actionName">
+	<input type="hidden" name="RepMsg_Id" value=$RepMsg_id>
+	<input type="hidden" name="repStat" value="$status">
+	<input type="hidden" name="lang" value="$lang">
+	<Input type="hidden" name="sentMessage" value="">
+</font>
+</td>
+</tr>
+</table>
+</form>
+ </body>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(editform,field){
+   	if(editform.addressNames.value!="") 
+    	{
+   		if(editform.subject.value=="")
+    		{
+     			alert("Fill the Subject Field");
+     			editform.subject.focus();
+    		}
+		else{
+			if(editform.wpTextbox1.value == "")	
+			{
+				if(confirm("Your message is empty !!"))
+				{
+					if (editform.lang.value == "english")
+						editform.hexaStr.value = editform.wpTextbox1.value;
+					if(editform.repStat.value == "reply")
+						editform.hexaStr.value = editform.sentMessage.value + editform.hexaStr.value;
+					//alert("sentMessage.value....."+editform.sentMessage.value);
+					//alert("hexastr.value....."+editform.hexaStr.value);
+  	   				editform.actionName.value=field.name;
+     					editform.submit();
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				if (editform.lang.value == "english")
+					editform.hexaStr.value = editform.wpTextbox1.value;
+				if(editform.repStat.value == "reply")
+					editform.hexaStr.value = editform.sentMessage.value + editform.hexaStr.value;
+				//alert("sentMessage.value....."+editform.sentMessage.value);
+				//alert("hexastr.value....."+editform.hexaStr.value);
+				editform.actionName.value=field.name;
+     				editform.submit();
+			}
+		}
+    	}
+   	else
+    	{
+     		alert("Fill the Address Field");
+     		editform.addressNames.focus();
+    	}
+}
+</SCRIPT>
+

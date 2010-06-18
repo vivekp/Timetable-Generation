@@ -1,0 +1,107 @@
+#*
+ * @(#)Glossary_Delete_Edit_Word.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+#*
+ * @author <a href="mailto:sharad23nov@yahoo.com">Sharad Singh</a>
+ *
+*#
+
+$page.setBgColor($ui.bgcolor)
+#if($data.getUser().getUserName()=="admin")
+$page.setTitle("Admin Home | Glossary | Delete & Edit Word")
+#else
+$page.setTitle("Home | Glossary | Delete & Edit Word")
+#end
+
+ <table bgcolor="$ui.tableColor" width=100%>
+    <tr> 
+        <td><font face="$ui.sansSerifFonts"><b>
+	     #if($data.getUser().getUserName()=="admin")
+             <a href="$link.setPage("call,Admin.vm")">$brih_ad $brih_home</a> |
+	     #else
+             <a href="$link.setPage("Index.vm")">$brih_home</a> |
+	     #end
+             <a href="$link.setPage("call,Glossary,Glossary.vm")">$Glossary</a> | 
+             #if(( $data.getUser().getTemp("lang" ).toString())=="hindi")
+			$brih_word $brih_delete/ $brih_edit 
+	    #else
+			$brih_delete/ $brih_edit $brih_word
+
+	    #end
+            </font>
+        </td>
+    </tr>
+ </table>
+
+$!data.getMessage()
+<br>
+<center>
+  <table bgcolor="$ui.tableColor" cellpadding="5" width="5" height="5">
+     <tr>
+        ##set($Alphabate=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"])
+	#set($Alphabate=["$brih_a","$brih_b","$brih_c","$brih_d","$brih_e","$brih_f","$brih_g","$brih_h","$brih_i","$brih_j","$brih_k","$brih_l","$brih_m","$brih_n","$brih_o","$brih_p","$brih_q","$brih_r","$brih_s","$brih_t","$brih_u","$brih_v","$brih_w","$brih_x","$brih_y","$brih_z"])
+
+           #foreach($alphabate in $Alphabate)
+             <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>$alphabate </b></a>
+             </td>
+           #end
+     </tr>
+  </table>
+<br>
+</center>
+
+<br>
+#if($stat=="Noblank")
+<form enctype="multipart/form-data" name="frm" method="post" action="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").setAction("Glossary_Action").addPathInfo("alpha",$alpha).addPathInfo("status","Noblank")">
+	<div align=center>
+
+	<table border=3 bgcolor="$ui.tableColor" cellspacing=1 cellpadding=1>
+		<tr>
+		<td bgcolor="$ui.menuColor"><b>$brih_select</b></td>
+		<td bgcolor="$ui.menuColor" colspan=3 align="center"><b>$brih_word</b></td>
+		</tr>
+					#set($i=0)
+					#foreach($record in $v)
+					<tr> <td>
+						#if($currentuid == "$v.get($i).getUserId()")
+							<INPUT TYPE="CHECKBOX" value="$v.get($i).getWordId()" name="word_list" >
+						#else
+							<INPUT TYPE="CHECKBOX" value="$v.get($i).getWordId()" name="word_list" disabled>
+						#end
+						</td> <td>
+							$v.get($i).getWord()
+						</td>
+						#if($currentuid == "$v.get($i).getUserId()")
+							<td><a href="$link.setPage("call,Glossary,Glossary_Insert_Word.vm").addPathInfo("mode","modify").addPathInfo("wid",$v.get($i).getWordId()).addPathInfo("status",$stat).addPathInfo("alpha",$alpha)">$brih_update $brih_word</a>
+							</td>
+						#else 
+							<td> $brih_update $brih_word </td>
+						#end	
+							<td><a href="$link.setPage("call,Glossary,Glossary_Insert_Word.vm").addPathInfo("mode","alias").addPathInfo("wid",$v.get($i).getWordId()).addPathInfo("status",$stat).addPathInfo("alpha",$alpha)">$Glossary_instAlias</a>
+					 </td> </tr>
+					#set($i = $i+1)
+					#end
+		<tr> <td  colspan=4 align=center bgcolor="$ui.menuColor">
+			<input type="hidden" name="actionName" >
+			<input type="button" name="eventSubmit_doDeleteWord" value="$brih_remove" onClick="checkField(document.frm,this);">
+		</td> </tr>
+	</table> </div>
+</form>
+#end
+ 
+<SCRIPT LANGUAGE="javascript">
+  function checkField(frm,field)
+   {
+    if(frm.word_list.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox");
+   }
+</SCRIPT>

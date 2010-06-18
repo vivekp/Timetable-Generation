@@ -1,0 +1,83 @@
+#*
+ * @(#)SelectHintQuestion.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singhsatyapal@rediffmail.com ">Satyapal Singh</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_select $brih_hint $brih_qus")
+$!data.getMessage()
+#set($lang =$data.getUser().getTemp("lang").toString())
+
+<br>
+  <table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+    <tr align="right">
+      <td>
+        <font face="$ui.sansSerifFonts" size=3>
+           <b> $brih_select $brih_hint $brih_qus</b>
+        </font>
+      </td>
+    </tr>
+  </table>
+
+<br>
+<table align=center bgcolor="$ui.bgcolor" border=1 cellpadding="1" cellspacing=1>
+  <form name=frm method="post" action="$link.setPage("BrihaspatiLogin.vm").setAction("ForgotPassword")">
+    <div align="center">
+      <h3>
+        $brih_select $brih_hint $brih_qus
+      </h3>
+      <td>
+        <tr>
+            <td>
+              	<select name="qid" size=1>
+        	 #foreach($i in $question)	  
+	 	 	<option value="$i.getQuestionId()">$i.getQuestionName()
+		 #end
+		</option>
+	      </select>
+            </td>
+	    <td bgcolor="$ui.tableColor">
+	     <b>
+	      <font face="$ui.sansSerifFonts">
+	        $brih_select $brih_qus
+	      </font>
+	     </b>
+	    </td>
+	</tr>
+        	<tr>
+		 <td> <input type="txt" name="answer" value=" " > </td>
+		 <td> <b> $Profile_Ans </b> </td>
+           	## #formCell("$Profile_Ans" "answer" "")
+          	</tr>
+	<tr>
+        <td colspan=2 align=center>
+	  <align=center bgcolor="$ui.bgcolor" border=2 cellpadding="5">
+	  <input type="hidden" name="actionName">
+	  <input type="hidden" name="uid" value=$uid>
+	  <input type="hidden" name="lang" value="$lang">
+	  <input type="button" name="eventSubmit_doInsertHint" value="$brih_submit" onClick="checkAnswer(document.frm,this);"/>
+	</td>
+	</tr>	 
+</table>
+  </div>
+</form>
+</body>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkAnswer(frm,field)
+	{
+		if(frm.answer.value!="")
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please Fill The Answer!!");
+		}
+	}
+</SCRIPT>

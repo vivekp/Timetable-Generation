@@ -1,0 +1,91 @@
+#*
+ * @(#) Search.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:sunil_gupta20801@rediffmail.com">Sunil Kumar Gupta</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | Search Engine")
+
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+$page.setBgColor("$ui.bgcolor")
+
+#if($val !="")
+$val
+#end
+
+<table bgcolor="$ui.tableColor" width="100%" cellspacing=2>
+	<tr>
+		<td>$page.setTitle("Home ")
+		<b><a href=$link.setPage("Index.vm")>$brih_home </a> | $brih_eng </b>
+		</td>
+	</tr>
+</table>
+
+<br>
+<form name="frm" method="post" action="$link.setPage("call,Search.vm").setAction("SearchEngine")">
+	<table bgcolor="$ui.tableColor" align="left" cellspacing=2>
+	<tr>
+
+		#if($lang == "hindi" )
+    			 #formCell("$brih_bri $brih_inside $brih_search" "WORD" "") 
+		#else
+			#formCell("$brih_search $brih_inside $brih_bri" "WORD" "") 
+		#end
+		<td>
+		<input type="button" name="eventSubmit_doSearch" value="$brih_search" onClick="checkValue(document.frm,this);">
+		<input type="hidden" name="actionName" value="">
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 width="30%">
+			<applet archive="Web.jar" code="Search.class"
+			codebase=$codeBase width="540" height="40">
+			</applet>
+		</td>
+
+	</tr>
+	</table>
+
+<br>
+#if($val!="")
+<table  align="center" width="100" border="2" bgcolor="$ui.tableColor">
+<tr><td>
+		#set($count=1)
+		#set($t=0)
+		#foreach($i in $vec)	
+		#set($one=$out.elementAt($t))
+		#set($t=$t+1)
+		#set($two=$out.elementAt($t))
+		#set($t=$t+1)
+		#set($three=$out.elementAt($t))
+		#set($t=$t+1)
+			<tr><td>$count</td><td> <a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("view","SearchEngine").addPathInfo("dir",$one).addPathInfo("type","fromsearch").addPathInfo("topic",$two).addPathInfo("filename",$three)","newWin");>$i</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+			#set($count=$count+1)
+		#end
+</td></tr>
+</table>
+#end
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+ function checkValue(frm,field)
+   {
+    if(frm.WORD.value!="")
+      {
+		frm.actionName.value=field.name;
+       		frm.submit();
+      }
+    else
+      {
+       alert("Please Insert String for search");
+      }
+   }
+</SCRIPT>

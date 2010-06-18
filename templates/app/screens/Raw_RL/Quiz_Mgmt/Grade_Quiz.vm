@@ -1,0 +1,213 @@
+#*
+ * @(#) Grade_Quiz.vm
+ * Copyright (c) 2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:arvindjss17@yahoo.co.in">Arvind Pal</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_home | $brih_course | $brih_student $brih_mgmt | $brih_student $brih_reg")
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr align="right">
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz </a> |$brih_quiz $brih_grade |
+                <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+                <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+                </font>
+                </td>
+        </tr>
+</table>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+#*<table width=100%>
+<tr>
+	<td align=right>
+        	<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/QuizGrade.html","newWin");>$brih_help</a>
+	</td>
+	</tr>
+</table>*#
+
+$!data.getMessage()
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Grade_Quiz.vm").setAction("Quiz_Action")>
+  <div align="left">
+<br>
+	
+    <table align=center bgcolor="$ui.tableColorc" border=1 cellpadding="5" width="60%" >
+	<tr bgcolor="$ui.menuColor" >
+		<td align=center colspan=3 >
+			#if($slct == "slct")
+				<input type="button" name="$brih_go" value="$brih_search" onClick="checkField(document.frm,this);"/> &nbsp;&nbsp;&nbsp; 
+			#end
+       			#if($totalmarks != "0" )
+				<font size=4><b>$totalmarks : $brih_max $brih_marks </b></font>
+       	               	#end
+	               	<SELECT name=Quizid onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+                      		#if($slct != "slct")
+					<option value="$Quizid1">$Quizid1</option>
+				#else
+					<option value=""></option>
+                       			#foreach($topic in $Quizid2)
+                               		 <option value="$!topic">$!topic</option>
+                               		#end
+				#end
+               		</SELECT>
+			&nbsp;&nbsp;&nbsp;
+	        	<font size=4><b>$brih_usr $brih_Of1 $brih_name  </b></font> &nbsp;&nbsp;&nbsp;
+        		<SELECT name=userList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+			#if($slct != "slct")
+	        		<option value="$userList1">$userList1</option>
+			#else
+				<option value="" ></option>
+				#foreach($topic in $userList2)
+                        		<option value="$!topic.getLoginName()">$!topic.getLoginName()</option>
+				#end
+			#end
+        	        </SELECT>
+			&nbsp;&nbsp;&nbsp;
+			<font size=4><b> $brih_quiz $brih_Of1 $brih_name  </b></font> &nbsp;&nbsp;&nbsp;
+				
+			</td>
+		
+	</tr>
+	#foreach($e in $entry)
+	<tr>	
+       		<td  width=50% align=left >
+			<b>$e.getQuestion()<b>	
+		</td>
+		<td width=20% align="right" >
+		        <b>$brih_qus</b>
+       		</td>
+		<td width=30% align=left >
+				$e.getinsAnswer()
+			<b> : $brih_correct  $brih_answer    </b>
+                </td>
+	</tr>
+	<tr>
+		<td width=50% align=left >
+			$e.getstudentAns()                                                
+		</td>
+		<td width=20% align="centre" >
+	                <b>   $brih_answer  	</b>
+                </td>
+                <td width=30% align= "right" >
+        	     $e.getmarks() <b> : $brih_max .$brih_marks: </b>
+                </td>
+	</tr>
+	<tr>
+		<td align= "right" >
+			<textarea name="message" wrap="physical" rows=2 cols=70 >$!e.getoptionB()</textarea>
+		</td>
+		<td width=20% align="centre" >
+			<b> $brih_feedback  </b>
+		</td>
+		<td width=30% align="right" >
+			<input type="text" size=3  name="minmarks" value=$!e.getoptionA() > : $brih_marks
+                </td>
+	</tr>	
+		<input type="hidden" name="Quiztype" value= "$e.getquestionid()">
+		<input type="hidden" name="MaxGrade" value= "$e.getmarks()">
+	#end
+
+	#if($longtype == false)
+	<tr bgcolor="$ui.tableColor" >
+		<td align=center colspan=3 >
+	        	<input type="button" name="eventSubmit_doGrade" value="$brih_submit" onClick="checkField1(document.frm,this);"/>
+		<input type="hidden" name="check" value=$flg>
+			<input type="hidden" name="long_short" value="$long_short" />
+			<input type="reset" name="Reset" value="$brih_reset" /> 
+			<input type="hidden" name="deleteFileNames" value="">		
+			<input type="hidden" name="message" value="">
+			<input type="hidden" name="startIndex" value= "$startIndex" >
+		</td>
+	</tr>
+	#end
+	<input type="hidden" name="actionName">
+	</table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+	
+	function checkField1(frm,field)
+        {
+		if( frm.minmarks.value!="") {
+			if(isNumberString(frm.minmarks.value))
+                       	{
+				alert(" Marks should be positive !! ");
+                               	frm.noofques.focus();
+                               	return false;
+			}
+			var temp=frm.MaxGrade.value;
+			var temp1=frm.minmarks.value;
+			if( temp >= temp1 ) {
+			      	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else
+				alert("Please check the Max Marks and Marks !!");
+		}
+		else 
+			alert("Marks is not Blank ");
+        }
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+	
+
+        function checkField(frm,field)
+        {
+		if(frm.Quizid.value != ""){
+			if(frm.userList.value !="") {
+				frm.actionName.value=field.name;
+	        	       	frm.submit();
+			}
+			else
+				alert("Please select the User Name !!");
+		}
+		else
+			alert("Please select the Quiz Name !!");
+		
+	}
+	function addDeleteList(field,frm)
+	{
+        	if(field.checked)
+        	{
+                	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+             		frm.message.value=frm.message.value+field.value+"@@@@";
+		}
+        	else
+        	{
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+        	}
+	}	
+</SCRIPT>

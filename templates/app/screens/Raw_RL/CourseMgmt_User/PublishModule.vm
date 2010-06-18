@@ -1,0 +1,353 @@
+
+#*
+ * @(#)PublishModule.vm
+ * Copyright (c) 2006-2007, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * @modified date 04-06-2009
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | $course | Course Management | Course Content | Publishing Module")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+		$brih_course $brih_Of $brih_content</a> |
+		$brih_publish $brih_content
+	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+        </font>  
+	</font>
+</td>
+</tr>
+</table>
+
+<table bgcolor="$ui.menuColor">
+<tr>
+        #if($uploadStatus=="full")
+                <td>
+                       $brih_uploadSucessfully  <u>$brih_extract </u><br>
+                </td>
+        #else
+                #if($uploadStatus=="partial")
+                        <td>
+			$brih_uploadSomeFile $brih_extract .<br> $brih_uploadFileExist $brih_extract<br>
+
+                #elseif($totalFilesEntries.Count>0)
+                        <td>
+			$brih_uploadNonefile $brih_extract<br>
+			$brih_uploadFileOnServer <br>
+                #elseif($uploadStatus!="")
+                        <td>
+			$brih_uploadNothin $brih_extract <br>
+
+                #end
+                <br>
+                #set($count=1)
+                #foreach($File in $failedFiles)
+                        $count.  $File <br>
+                        #set($count=$count+1)
+                #end
+                </td>
+        #end
+</tr>
+</table>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,CourseMgmt_User,PublishModule.vm").addPathInfo("topic",$topic).setAction("PublishAction")">
+<div align="center">
+<CENTER><H2><u> $topic </u></H2></CENTER>
+##<CENTER><input type="checkbox" name=delTopic><b>$brih_topicDelete </b>
+<CENTER> <input type="button" name=eventSubmit_doDeleteTopic value="$brih_delete" onClick="deleteTopicConfirm(document.frm,this);"> 
+<b>$brih_topicDelete </b><input type="checkbox" name=delTopic></CENTER>
+<table>
+     #if ($errorTemplate)
+    <tr>
+        <td colspan="4">
+                <img src="$ui.image($ui.alertImage,$data)">
+	</td>
+        <td>
+        	#parse ($errorTemplate)
+	</td>
+    </tr>
+      #end
+      <tr>	
+	<H3><u>$brih_attachment</u></H3>
+      </tr>
+</table>
+	#set ( $count=1 )
+	<table border=2 width=90% cellpadding=0 cellspacing=0 bgcolor="$ui.tableColor">
+
+	
+	  <tr bgcolor="$ui.menuColor">
+  	  <th><br>$brih_serialNo <br></th> 
+	  <th><br>$brih_file<br></th> 
+	  <th><br>$brih_creation $brih_time<br></th> 
+	  <th><br>$brih_unpublish<br></th> 
+	  <th><br>$brih_access<br></th> 
+	  <th><br>$brih_visible<br>$brih_access<br></th>
+	  <th><br>$brih_delete<br></th>
+	</tr>
+  	<tr><td align="center" colspan=7><br><b>$brih_publishModule</b><br><br></td></tr>
+	<tr align="center">
+                <td colspan=3><br></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(2,0); ></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(2,1); ></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(2,2); checked></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(2,3); ></td>
+        </tr>
+	#set ( $visible = "")
+	#foreach($file in $visibleContent)
+	<tr align="center">		     	
+	     	<td>$count </td>
+
+		<td align="left"><b>$file.Name</b></td> 
+
+		#set ( $seqno= $count - 1 )
+		<input type="hidden" name="$file.Name" value=$seqno>
+
+		<td align="left">$file.PDate</td>
+
+		#set ( $visible = "$visible$file.CheckboxName^")
+		<td><input type="radio" name="$file.CheckboxName" value=1 onClick="addVisibleDeleteList(this,document.frm,this.value);"></td> 
+		<td><input type="radio" name="$file.CheckboxName" value=2 onClick="addVisibleDeleteList(this,document.frm,this.value);"></td> 
+		<td><input type="radio" name="$file.CheckboxName" value=3  checked=true onClick="addVisibleDeleteList(this,document.frm,this.value);"></td> 
+		<td><input type="radio" name="$file.CheckboxName" value=4 onClick="addVisibleDeleteList(this,document.frm,this.value);"></td> 
+
+	</tr>
+	#set ( $count= $count+1)
+	#end
+  	<tr><td align="center" colspan=7><br><b>$brih_access</b><br><br></td></tr>
+	<tr align="center">
+                <td colspan=3><br></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(1,0); ></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(1,1); checked></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(1,2); ></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(1,3); ></td>
+        </tr>
+	#set ( $accessible = "" )
+	#set ( $count=1 )
+	#foreach($file in $accessibleContent)
+	<tr align="center">		     	
+	     <td>$count </td>
+
+	     <td align="left"><b>$file.Name&nbsp;&nbsp;</b></td> 
+
+	     <td align="left">$file.PDate</td>
+
+	     #set ( $accessible = "$accessible$file.CheckboxName^"  )
+
+	     <td><input type="radio" name="$file.CheckboxName" value=1 onClick="addAccessibleDeleteList(this,document.frm,this.value);"></td> 
+	     <td><input type="radio" name="$file.CheckboxName" value=2 checked=true onClick="addAccessibleDeleteList(this,document.frm,this.value);"></td> 
+	     <td><input type="radio" name="$file.CheckboxName" value=3 onClick="addAccessibleDeleteList(this,document.frm,this.value);"></td> 
+	     <td><input type="radio" name="$file.CheckboxName" value=4 onClick="addAccessibleDeleteList(this,document.frm,this.value);"></td> 
+
+	</tr>
+	#set ( $count= $count+1)
+
+	#end
+  	<tr><td align="center" colspan=7><br><b>$brih_unpublish</b><br><br></td></tr>
+	<tr align="center">
+                <td colspan=3><br></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(0,0); checked></id>
+                <td>$brih_all $brih_select  <br><input type="radio" name="checkAll" onClick=selectAll(0,1); ></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(0,2); ></td>
+                <td>$brih_all $brih_select <br><input type="radio" name="checkAll" onClick=selectAll(0,3); ></td>
+        </tr>
+	#set ( $unpublished = "" )
+	#set ( $count=1 )
+	#foreach($file in $unpubContent)
+	<tr align="center">		     	
+	     <td>$count </td>
+
+	     <td align="left"><b>$file.Name&nbsp;&nbsp;</b>
+		#if($file.Name.endsWith(".zip") && $stat!="Repo")
+			<a href=$link.setPage("call,CourseMgmt_User,ViewZipContent.vm").addQueryData("topic",$topic).addQueryData("filename",$file.Name)> -- $brih_extract</a>
+		#end
+  	     </td> 
+	     <td align="left">$file.PDate</td>
+	     #set ( $unpublished = "$unpublished$file.CheckboxName^" )
+	     <td><input type="radio" name="$file.CheckboxName" value=1 checked=true onClick="addUnpubDeleteList(this,document.frm,this.value);"></td>
+	     <td><input type="radio" name="$file.CheckboxName" value=2 onClick="addUnpubDeleteList(this,document.frm,this.value);"></td> 
+	     <td><input type="radio" name="$file.CheckboxName" value=3 onClick="addUnpubDeleteList(this,document.frm,this.value);"></td> 
+	     <td><input type="radio" name="$file.CheckboxName" value=4 onClick="addUnpubDeleteList(this,document.frm,this.value);"></td> 
+
+	</tr>
+	#set ( $count= $count+1)
+	#end
+	<tr>
+	<td colspan=7 align=center bgcolor="$ui.menuColor">
+	<input type="button" name="eventSubmit_doPublish" value="$brih_insert" onClick="deleteConfirm(document.frm,this);">
+	<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel">
+	</td>
+	</tr>
+    </table>
+	<input type="hidden" name=actionName value="">
+
+	<input type="hidden" name=visibleList value="$visible">
+	<input type="hidden" name=accessibleList value="$accessible">
+	<input type="hidden" name=unpublishedList value="$unpublished">
+
+	<input type="hidden" name=deleteVisibleFileNames value="">
+	<input type="hidden" name=deleteAccessibleFileNames value="">
+	<input type="hidden" name=deleteUnpublishedFileNames value="">
+	<input type="hidden" name=topic value="$topic">
+	<input type="hidden" name="stat" value="$stat">
+	<input type="hidden" name="uname" value="$username">
+
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function selectAll(originalAccessType,finalAccessType)
+	{
+			switch(originalAccessType)
+			{
+				//invisible
+				case 0:
+					simpleForLoop(document.frm.unpublishedList.value,finalAccessType);
+					break;
+		
+				//accessible
+				case 1:					
+					simpleForLoop(document.frm.accessibleList.value,finalAccessType);
+					break;
+	
+				//visible
+				case 2:
+					simpleForLoop(document.frm.visibleList.value,finalAccessType);
+					break;
+	
+			}
+
+	}
+
+	
+	function simpleForLoop(sourceList,finalOption)
+	{
+		var ini=0,upto=0;
+
+		while( ( upto=sourceList.indexOf("^",ini) ) >=0 )
+		{
+			var temp=sourceList.substring(ini,upto);
+			ini=upto+1;
+			document.frm.elements[temp][finalOption].checked=true;
+		}
+
+	}
+
+	function deleteConfirm(frm,field)
+	{
+		var delfiles;
+		delfiles=frm.deleteVisibleFileNames.value+frm.deleteAccessibleFileNames.value+frm.deleteUnpublishedFileNames.value;
+		if(delfiles.length!=0)
+		{
+			if(confirm("Selected files will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+		else
+		{
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+	}
+
+	function deleteTopicConfirm(frm,field)
+	{
+		if(frm.delTopic.checked)
+		{
+			if(confirm("All Data linked to the topic will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+		else
+		{
+			alert("Please select check box for deletion !!");
+		}
+	}
+	
+
+	function addVisibleDeleteList(field,frm,radiobuttonValue)
+	{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteVisibleFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			if(radiobuttonValue==4)
+			{
+				if(index==-1)
+				{
+					frm.deleteVisibleFileNames.value=frm.deleteVisibleFileNames.value+field.name+"^";
+				}
+			}
+			else
+			{
+				if(index!=-1)
+				{
+				preString=actualString.substring(0,index);
+				postString=actualString.substring(index+field.name.length+1);		
+				actualString=preString+postString;
+				frm.deleteVisibleFileNames.value=actualString;
+				}	
+			}
+	}
+
+
+	function addAccessibleDeleteList(field,frm,radiobuttonValue)
+	{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteAccessibleFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			if(radiobuttonValue==4)
+			{
+				if(index==-1)
+				{
+					frm.deleteAccessibleFileNames.value=frm.deleteAccessibleFileNames.value+field.name+"^";
+				}
+			}
+			else
+			{
+				if(index!=-1)
+				{
+				preString=actualString.substring(0,index);
+				postString=actualString.substring(index+field.name.length+1);		
+				actualString=preString+postString;
+				frm.deleteAccessibleFileNames.value=actualString;	
+				}
+			}
+	}
+
+
+	function addUnpubDeleteList(field,frm,radiobuttonValue)
+	{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteUnpublishedFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			if(radiobuttonValue==4)
+			{
+				if(index==-1)
+				{
+					frm.deleteUnpublishedFileNames.value=frm.deleteUnpublishedFileNames.value+field.name+"^";
+				}
+			}
+			else
+			{
+				if(index!=-1)
+				{
+				preString=actualString.substring(0,index);
+				postString=actualString.substring(index+field.name.length+1);		
+				actualString=preString+postString;
+				frm.deleteUnpublishedFileNames.value=actualString;	
+				}
+			}
+	}
+</SCRIPT>

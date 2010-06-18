@@ -1,0 +1,108 @@
+<html>
+#*
+ * @(#) Activitygroup.vm
+ *  Copyright (c) 2006-07, 2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 11-05-09
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor("$ui.bgcolor")
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+	<tr align="right"> <td><b>
+        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>$brih_grp $brih_mgmt </a>| $brih_grp $brih_activity </b>
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>| 
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+     </td></tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+	<tr>
+		<td>
+		<a href=javascript:popupWin("/brihaspati2/docs/activity.html","newWin");>$brih_help</a>
+		<img src="$content.getURI("/images/Lefthand.gif")">
+
+		</td>
+	</tr>
+</table> ## table 2 end
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Activitygroup.vm").setAction("Groupmanagement")>
+	<table align="center" border=1 bgcolor="$ui.tableHeaderColor" width=85% > ## table 3 start
+		<tr><td align ="center"colspan=5 vlaign="top"> ## td tr 1 satart
+			<b><font size=4><I>$brih_grp $brih_for $brih_activity $brih_remove $brih_and $brih_insert </I></font></b>
+		</tr></td> ## td tr 1 end
+	<tr align="right" bgcolor="$ui.tableColor">
+		<td>
+        		<select name="groupname" size="1" onChange="Changegroup(document.frm,this);"/>
+       				<option>  - $brih_select - </option>
+				#foreach($grpname in $grplist)
+					<option value="$grpname.Name">$grpname.Name
+				#end
+				</option>
+			</select>
+		</td>
+		<td align="center">
+		<b> : $brih_grp $brih_for $brih_activity $brih_select </b>
+		</td>
+	</tr>
+        <tr align="right" bgcolor="$ui.tableColor">
+        	<td>
+       			<select name="activity" size="1" onChange="Changeactivity(document.frm,this);"/>
+       				<option>  - $brih_select - </option>
+       				<option value="Discussion Board">$DiscussionBoard</option>
+       				<option value="Notice">$brih_Notices</option>
+       				<option value="Local Mail">$brih_local $LocalMail_mail</option>
+        		</select>
+		</td>
+        	<td align="center"><b> : $brih_grp $brih_Of $brih_activity </b></td>
+        </tr>
+	<tr  bgcolor="$ui.tableHeaderColor"> <td colspan="5">
+        	<input type="button" name="eventSubmit_doActivity" value="$brih_activity $brih_insert " onClick="checkselect(document.frm,this);"/>
+        	<input type="button" name="eventSubmit_doResetActivity" value="$brih_activity $brih_remove" onClick="checkselect(document.frm,this);"/>
+	</td></tr>
+	##end ## end if
+	<input type="hidden" name="actionName" >
+	<input type="hidden" name="mode1" value="grpmgmt">
+	<input type="hidden" name="mode" value="$mode">
+	<input type="hidden" name="val">
+	<input type="hidden" name="val1">
+	<input type="hidden" name="course_id" value="$courseid">
+</form>
+</table> ## end of table 3
+</html>
+<SCRIPT LANGUAGE="javascript">
+	function checkselect(frm,field)
+	{
+		var items;
+		var items1;
+		items=frm.val.value;
+		items1=frm.val1.value;
+		if((items.length!=0)&& (items1.length!=0)) 
+                {
+			frm.actionName.value=field.name;
+                       	frm.submit();
+		}
+			else
+			alert("Please select option");
+	}
+	function Changeactivity(frm,field)
+	{
+        	frm.val.value=document.frm.activity.value;
+		
+	}
+	function Changegroup(frm,field)
+	{
+        	frm.val1.value=document.frm.groupname.value;
+		
+	}
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</script>

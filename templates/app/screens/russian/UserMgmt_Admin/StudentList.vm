@@ -1,0 +1,36 @@
+
+
+$page.setTitle("Admin Home | User Management | Search Student | Student Details")
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts" size=3>
+<b><a href=$link.setPage("Index.vm")>Admin's Ð?Ð¾Ð¼</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>Ð?Ð¾Ð¸Ñ?Ðº Ñ?Ñ?Ñ?Ð´ÐµÐ½Ñ?Ð°</a> | Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ?ÐµÑ?ÐºÐ¸Ð¹ Ð?Ð¾Ð´Ñ?Ð¾Ð±Ð½ÐµÐµ
+</td>
+<td align=right>
+</td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+    <tr>
+        		<td><font size=3><b>Login Ð?Ð¼Ñ?</b></font></td>
+        		<td><font size=3><b>Ð¡Ñ?Ñ?Ð´ÐµÐ½Ñ? Ð?Ð¼Ñ?</b></font></td>
+        		<td><font size=3><b>Ð­Ð»ÐµÐºÑ?Ñ?Ð¾Ð½Ð½Ð°Ñ? Ð¿Ð¾Ñ?Ñ?Ð°</b></font></td>
+        		<td><font size=3><b>   </b></font></td>
+            </tr>
+	    </tr>
+<tr>
+	<td bgcolor="$ui.menuColor" colspan=4 align=left>
+ 	
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_first)">Ð?ÐµÑ?Ð²Ñ?Ð¹</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_pre)">Ð?Ñ?ÐµÐ´Ñ?Ð´Ñ?Ñ?Ð°Ñ?</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">Ð¡Ð»ÐµÐ´Ñ?Ñ?Ñ?Ð¸Ð¹</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_last)">Ð?Ð¾Ñ?Ð»ÐµÐ´Ð½Ð¸Ð¹</a> &nbsp;
+	  </td>
+ </tr>
+</table>

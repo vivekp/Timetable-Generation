@@ -1,0 +1,93 @@
+#*
+ * @(#) RegisterSecInstructor.vm
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>  
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+$!data.getMessage()
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	 $page.setTitle("Admin Home | Registeration Management | Register Secondary Instructor | Registeration")
+	 <b>
+	 $brih_in $brih_secInsReg $brih_instructor $brih_Of1 $brih_reg $entry | 
+	 <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+	 <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")>$brih_mgmt $brih_reg </a> |
+	 <a href=$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("mode","All")> $brih_instructor $brih_Of2 $brih_reg $brih_for, $brih_view $brih_all $brih_course </a>  
+	 </td>
+</tr>
+</table>
+<br>
+<form name=frm method="post" action="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").setAction("InstructorRegisteration").addPathInfo("cName",$entry)">
+  <div align="left">
+    <table border=1 align=center bgcolor="$ui.tableColor" cellpadding="5">
+      <tr align="right" bgcolor="$ui.tableColor">  
+
+		<td><b>$entry</b></td>
+		<td><b>$brih_course  $brih_Of1 $brih_ID</b></td>
+      </tr>
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="UNAME" value=" " > </td>
+	<td> <b> <font color=red> * </font> $brih_usr $brih_Of1 $brih_name </b></td>
+      </tr>
+
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="password" size="30%" name="PASSWD" value="" > </td>
+	<td> <b> $brih_pwd </b> </td>
+      </tr>
+
+      <tr  align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="FNAME" value=" " > </td>
+	<td> <b> $brih_first $brih_name </b> </td>
+      </tr>
+
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="LNAME" value=" " > </td>
+	<td> <b> $brih_last $brih_name </b> </td>
+      </tr>
+
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="EMAIL" value=" " > </td>
+	<td> <b>$brih_email $brih_ID </b></td>
+      </tr>
+	<tr>
+	<td colspan=2 align=center>
+
+	    <input type="button" name="eventSubmit_doRegister" value="$brih_reg" onClick="checkField(document.frm,this);"/>
+
+	    <input type="reset" name="Clear" value="$brih_clear"/>
+	</td>
+	</tr>
+    </table>
+    <input type="hidden" name="actionName">
+    <input type="hidden" name="mode" value="$mode">	
+    <input type="hidden" name="cName" value="$entry">	
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                if(frm.UNAME.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !");
+                }
+        }
+</SCRIPT>

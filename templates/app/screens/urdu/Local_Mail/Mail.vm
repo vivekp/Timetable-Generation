@@ -1,0 +1,41 @@
+
+	$page.setTitle("Home | $cname | Communication | Local Mail")
+<body>
+<table bgcolor="$ui.tableColor" width=100%>
+       <tr align="right"><td>
+       <font face="$ui.sansSerifFonts"><b>
+	            <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>???????</a> | ????  ????
+	    | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | 
+            <a href=$link.setPage("call,IndexHome.vm")>????</a>
+	       </font>
+	</td>
+       </tr>
+</table>
+
+
+<br>
+	<form method="GET" action="$link.setPage("call,Local_Mail,MailContent.vm")">
+<table border=0 width=50% align=center bgcolor="$ui.tableColor" cellpadding=4> 
+<tr align="center" bgcolor="$ui.menuColor">
+<td align="center" colspan= 4> <b> <u> <I>
+<font face="$ui.sansSerifFonts"> 
+                
+                        <b>$Uname</b>
+         : ????????
+
+</font>
+</I></u></b> </td>
+</tr>
+<tr><td colspan=2 align="center">
+	<td align="right"> <b><blink> <font size="3"><b>(<font color="Blue">$unread</font>) </b> ???? ???? ????? </blink> </b></td> 
+	<td align="center"> <b>(<font color="blue">$total</font>) ?? ?????  </b>
+	 <img src="$content.getURI("/images/newmail1.gif")">
+	</td>
+	</td></tr>
+	        <tr align="center"><td colspan=4 align="center"><a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","compose")>
+        	<img src="$content.getURI("/images/$lang/DB.jpg")"border="0"> <img border=0 src="$content.getURI("/images/ml.gif")">
+	</a></td></tr>
+</table>
+
+</body>
+</form>

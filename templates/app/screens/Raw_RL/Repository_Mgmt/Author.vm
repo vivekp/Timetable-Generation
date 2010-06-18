@@ -1,0 +1,88 @@
+#*
+ * @(#) Author.vm
+ *  Copyright (c) 2005-2006 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com">Kishore kumar shukla</a>
+ *  @author <a href="mailto:manjaripal@yahoo.co.in">Manjaripal</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("$brih_contentAuthor") 
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table width=100% cellspacing=0>
+<tr>
+	<td align="center" bgcolor="$ui.tableColor" <font size=5><I><b>$brih_author $brih_inter</b><I></font></td>
+</tr>
+<tr>
+<td align=center bgcolor="$ui.bgcolor">
+	<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+<font size=4><b>$brih_welcome
+	#if($firstname!="")
+        	#if($lastname!="")
+                	<b> $firstname $lastname</b>
+                #else
+                        <b> $firstname</b>
+                #end
+        #else
+               <b> $authorname</b>
+        #end
+</font>
+        </td>
+</tr>
+</table>
+<br>
+<table width=100% >
+<tr>
+<td align="right">
+	<img src="$content.getURI("/images/hand.gif")"><a href="/brihaspati2/docs/AuthorManagement.html">$brih_help</a>
+</td>
+</tr>
+</table>
+<table bgcolor="$ui.tableColor" width=20% align="center">
+	#if($check == "disable")
+        <tr><td align="center">
+        	<a href=$link.setPage("call,Repository_Mgmt,UploadSCO.vm")>
+        	<img src="$content.getURI("/images/$lang/uploadcontent.jpg")"></a><br>
+        </td></tr>
+        <tr><td align="center">
+		<a href=$link.setPage("call,Repository_Mgmt,RepositoryList.vm").addPathInfo("status","fromViewContent")>
+        	<img src="$content.getURI("/images/$lang/viewContent.jpg")"></a><br>
+        </td></tr>
+        <tr><td align="center">
+        	<a href=$link.setPage("call,Repository_Mgmt,RepositoryBrowser.vm")>
+        	<img src="$content.getURI("/images/$lang/repositoryBrowser.jpg")"></a>
+        </td></tr>
+       #*<tr><td align="center">
+        	<a href=$link.setPage("call,Repository_Mgmt,Editor.vm")>
+        	<img src="$content.getURI("/images/$lang/repositoryBrowser.jpg")"></a>
+        </td></tr>*#
+        #else
+        <tr>
+        <td align=center>
+        	<font face="$ui.sansSerifFonts" size=3>
+        	<a href="$link.setPage("call,Repository_Mgmt,Author.vm").setAction("RepositoryAction").addPathInfo("actionName","eventSubmit_doCreate_Repo")">$WikiCreate $Repo_Repo1</a> &nbsp;&nbsp;
+		</font>
+        </td>
+        </tr>
+        #end
+</table>
+<br>
+#*<table border=0 align=center>
+
+                <tr>
+                <td colspan=3 align=center bgcolor="$ui.tableColor">
+                <font face="$ui.sansSerifFonts"><b><u>TODAYS EVENT</font>
+                </td>
+                </tr>
+                </table>
+<br>
+<table border=0 align=center >
+<tr>
+        <td colspan=3 align=center bgcolor="$ui.tableColor">
+        <font face="$ui.sansSerifFonts"><b><U>TASK TO BE DONE TODAY</font>
+        </td>
+</tr></table>*#

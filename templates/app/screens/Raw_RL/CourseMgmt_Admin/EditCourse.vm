@@ -1,0 +1,106 @@
+#*
+ * @(#) EditCourse.vm
+ * Copyright (c) 2004-2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * @author  <a href="sweetshaista00@yahoo.com">Shaista Shekh</a>  
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | List Management | View All Courses | Edit Course")
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+	$Courseid :
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+     	<a href=$link.setPage("call,ListMgmt_Admin,ListManagement.vm")>$brih_mgmt $brih_list</a> |
+	<a href=$link.setPage("call,ListMgmt_Admin,ListCourse.vm").addPathInfo("mode","All")>$brih_view $brih_all $brih_course</a> | $brih_course $brih_Of $brih_edit
+	</td>
+</tr>
+</table>
+<br>
+<form name=frm method="post" action="$link.setPage("call,ListMgmt_Admin,ListCourse.vm").setAction("EditCourse")">
+  <div align="left">
+    <table align=center border=2 cellspacing=1 bgcolor="$ui.tableColor" cellpadding="5">
+     #foreach($cd in $CourseDetail)
+     	<tr align="right">
+		###entry1Cell("$brih_course $brih_Of1 $brih_ID" "$cd.getGroupName()")
+		<td> $cd.getGroupName()</td>
+		<td><b>$brih_course $brih_Of1 $brih_ID</b></td>
+     	</tr>
+      	<tr align="right">
+        	###formCell ("$brih_course $brih_Of1 $brih_name" "Cname" "$cd.getCourseName()")
+		<td> <input type="text" name="Cname" size="35%" value="$cd.getCourseName()"></td>
+		<td> <b> $brih_course $brih_Of1 $brih_name </b></td>
+
+      	</tr>
+      	<tr align="right">
+        	###formCell ("$brih_dept" "Department" "$cd.getDept()")
+		<td> <input type="text" name="Department" size="35%" value="$cd.getDept()"></td>
+		<td ><b> $brih_dept </b> </td>
+      	</tr>
+      	<tr align="right">
+	<td>
+  		<font face="$ui.sansSerifFonts"><textarea name="DESCRIPTION" rows=5 cols=40>$cd.getDescription()</textarea></font>
+	</td>
+  	<td bgcolor="$ui.tableColor"><b><font face="$ui.sansSerifFonts">$brih_desc</font></b>	 </td>
+      	</tr>
+      	<tr align="right">
+	<td>
+		#if($cd.getActive() == "1")
+			<input type="radio" name="isactive" checked value="1"><br><br>
+			<input type="radio" name="isactive" value="0">
+		#else
+			<input type="radio" name="isactive" value="1"><br><br>
+			<input type="radio" name="isactive" checked value="0">
+		#end	
+	</td>
+  	<td bgcolor="$ui.tableColor">
+  		<b><font face="$ui.sansSerifFonts">$brih_active </font> <br><br>
+  		<font face="$ui.sansSerifFonts">$brih_inactive</font> </b>
+	</td>
+      	</tr>
+      	<tr>
+	<td bgcolor="$ui.tableColor" colspan=2 align=center>
+		<input type="button" name="eventSubmit_doUpdate" onclick="confirmForUD(document.frm,this.name)" value="$brih_update" />
+		#if($cd.getActive() == "1")
+			<input type="button" name="eventSubmit_doshow" onclick="confirmForUD(document.frm,this.name)" value="$brih_delete" />
+		#else
+			<input type="button" name="eventSubmit_doDelete" onclick="confirmForUD(document.frm,this.name)" value="$brih_delete" />
+		#end
+	</td>
+      	</tr>
+	<input type="hidden" name="gName" value="$Courseid"/>
+	<input type="hidden" name="actionButton">
+	<input type="hidden" name="mode" value="All">
+	#end
+    </table>
+  </div>
+</form>
+
+<script LANGUAGE="javascript">
+  function confirmForUD(frm,val){
+	frm.actionButton.value=val;
+	if(val=="eventSubmit_doDelete")
+	{
+     		if(confirm("The course is going to be removed ! Are you sure ?"))
+		{
+			frm.submit();
+		}
+		return;
+        }
+	else if(val=="eventSubmit_doshow")
+	{
+	alert("This is an active course. Can not be removed !")
+	return;
+	}
+	frm.submit();
+ }
+</script>

@@ -1,0 +1,164 @@
+
+
+$page.setTitle("$brih_home|$course|$brih_Wiki | $Wikimain5")
+$page.setBgColor($ui.bgcolor)
+
+
+<style type="text/css"> input{ width:170px; } </style>
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>ì§?</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,Wiki,Wiki.vm")>ì??í?¤</a> | ì ?ì?´ ì??í?¤
+        </font>
+</td>
+</tr>
+</table>
+
+
+
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati2/docs/Wikiusermanual.html","newWin");>ë??ì??</a>
+                </td>
+        </tr>
+</table>
+
+
+
+
+
+	<div align=left>
+		<table width="80%" align="center">
+			<tr>
+				<td>
+        				<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+        				<b>ë³¼ ì??ì??ë?? ê²½ì?°ë¥¼ í??ì?±í?? / ë¹?í??ì?±í??,ë³´ê¸° í??ì?´ì§?ì??ì?? 'ì??ì ?'ë²?í?¼ì?? í?´ë¦­í??ì?­ì??ì?¤. Diasble í?¸ì§?ì?? í?´ë¦­í??ë©´ í??ì?´ì§?ì?? ë??í?? ì??ì??ì?? ì??ì??í??ë?¤. MergeDoneì?? í?´ë¦­í??ë©´ ë³?í?©ì?? ì??ë£?í??ì?µë??ë?¤. ì ?ê±° ë³?ê²½ì?? í?´ë¦­í??ë?? ê²½ì?°ì??ë§? ëª¨ë?  ë³?ê²½ ì?¬í?­ì?? ë°©ë¬¸í??ë?¤. ì?¬ì?©ì?? í?´ë¦­í??ë©´ í?´ë?¹ í??ì?´ì§?ì??ì?? ì??ì ? ì??ì??ì?? ì??ë£?í??ê³  ë?¤ì?? í??ì?´ì§?ì?? ì?¼í??ë?¬ ê°?ì?¼</b>
+        				</marquee>
+					<br>
+									</td>
+			</tr>
+		</table>
+
+
+
+
+		<FORM  name=frm method="POST" action="$link.setPage("call,Wiki,Adminwiki.vm").setAction("Wikieditaction")">
+		<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5" width="10%" >
+			<tr>
+				<td>
+					<p align=center>
+					<input type="hidden" name="actionName" >
+		 			 	                               						        	        							</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align ="center">
+					í??ì?´ì§? ì?´ë¦? <SELECT  name="fname" >
+															</SELECT>
+					ë²?ì ? ë²?í?¸ <INPUT type="text" name="vname" 
+										size="25">
+					<input type="submit" name="eventSubmit_doShoworiginal" value="ì?¼ í?µë??ë¬´ "  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align =center>
+
+<TEXTAREA  name="text" rows="25"  cols="100" >
+</TEXTAREA>
+					<br><br>
+					</p>	
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align=center>
+		 								
+										        	   								</p>
+		
+				</td>
+			</tr>
+			<tr>
+				<td>
+
+				</td>
+			</tr>
+
+		</table>
+		</FORM>
+   
+
+
+
+
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"scrollbars=1,height=400,width=400");
+        }
+
+        function checkVersion(frm,field)
+        {
+                if(frm.vname.value!="") 
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill Page Version Field");
+                }
+        }
+	function checktextName(frm,field)
+        {
+                if(frm.text.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please write something on the page ");
+                }
+        }
+
+
+      function doAskPage(frm,field)
+        {
+                if(confirm('Are you sure you want to delete?'))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+        }
+
+
+
+      function doAskVersion(frm,field)
+        {
+                if(confirm('Are you sure ,all current versions will be deleted by this?'))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+        }
+
+	 function doAskMerge(frm,field)
+        {
+                if(confirm('Are you sure , you have  clicked on merge now before ?'))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+        }
+
+
+</SCRIPT>

@@ -1,0 +1,148 @@
+#*
+ * @(#)  PostGrade.vm
+ * Copyright (c) 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto: arvindjss17@yahoo.co.in ">Arvind Pal</a>
+ * @author <a href ="mailto: shaistashekh@hotmail.com"> Shaista </a>
+ * @date 21-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr align="right"> <td><b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment  </a>|</b>
+        <a href=$link.setPage("call,Assignment,AssView.vm")> </a> $brih_post $brih_marks </b>
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | </b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+        </td></tr>
+</table> ##table 1 end
+
+$!data.getMessage()  
+
+
+<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,PostGrade.vm").setAction("Assignments")>
+<br>		
+<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border="1"  >
+	<tr bgcolor="$ui.menuColor" >
+		<td colspan=10 align="center">
+		<font face="$ui.sansSerifFonts"> 
+			<b> $brih_Of2 $brih_marks $brih_and $brih_feedback </b><font color=blue> <i> $topicList1</i></font><b> $brih_topic $brih_in</b><font color=green> <i> $topicList</i></font> 
+		</td>
+	</tr>
+
+	<tr align="right">
+             <td width="50%">
+                <input type="text" name="grade"   size=10  onChange="validate(this)"  />
+             </td>
+             <td width="50%" align="Center"> <b>$brih_marks   </b>   </td>
+        </tr>
+        <tr align="right">
+             <td  width="50%">
+                 <textarea name="feedback" rows=4 cols=15 wrap=physical  > </textarea>
+             </td>
+             <td width="50%" align="Center"> <b>$brih_feedback    </b>    </td>
+        </tr>
+ 
+        <tr bgcolor="$ui.menuColor" >
+                <td colspan=2 align="center">
+                        <font face="$ui.sansSerifFonts">
+                        <input type="button" name="PostGrade" value="$brih_upload $brih_marks " onClick="checkBlank(document.uploadform,this);"  />
+                        <input type="button" name="MarkUpload" value="$brih_file$brih_upload" onClick="checkBlank1(document.uploadform,this);"  />
+                        </font>
+		
+			<input type="hidden" name="topicList1" value="$topicList1" >
+			<input type="hidden" name="topicList" value="$topicList" >
+			<input type="hidden" name="actionName"> 
+                </td>
+        <tr>	
+	
+       	
+</table>
+
+<script LANGUAGE="JAVASCRIPT">
+			
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+	function checkBlank(uploadform,field)
+        {
+		if((uploadform.grade.value!="") && (uploadform.feedback.value!=""))
+		{
+			if(isNumberString(uploadform.grade.value))
+			{
+                		alert("Grade should be an integer value");
+                        	frm.noofques.focus();
+                        	return false;
+			}
+			if(isString(uploadform.feedback.value))
+                        {
+				alert("Please check the special character !!");
+                                frm.noofques.focus();
+                                return false;
+                        }
+			
+
+
+    		        uploadform.actionName.value=field.name;
+                	uploadform.submit();
+		}
+		else
+			 alert(" Grade and FeedBack Name can not empty !!");
+        }
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789.";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+
+	function checkBlank1(uploadform,field)
+        {
+	        uploadform.actionName.value=field.name;
+                uploadform.submit();
+        
+        }
+	function validate(obj)
+        {
+                value = obj.value;
+                for (n = 0; n < value.length; n++)
+                if ( ! isDigit(value.charAt(n)))
+                { alert("Field must be numeric !!");
+                      return;
+                }
+        }
+        function isDigit(ch)
+        {
+                if (ch >= '0' && ch <= '9')
+                return true;
+                return false;
+        }
+	function isString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+           var RefString="/\$|,|@|#|~|`|\%|\*|\^|\&|\(|\)|\+|\=|\[|\-|\_|\]|\[|\}|\{|\;|\:|\'|\"|\<|\>|\|\||\\|\!|\$|\./";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)>0)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+
+</script>

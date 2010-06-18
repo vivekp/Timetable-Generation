@@ -1,0 +1,36 @@
+
+
+$page.setTitle("Admin Home | User Management | Search Student | Student Details")
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts" size=3>
+<b><a href=$link.setPage("Index.vm")>Admin's Maison</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>Utilisateur Gestion </a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>Rechercher un étudiant </a> | Détail d'étudiant
+</td>
+<td align=right>
+</td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+    <tr>
+        		<td><font size=3><b>Ouverture Nom</b></font></td>
+        		<td><font size=3><b>�?tudiant  Nom</b></font></td>
+        		<td><font size=3><b>Email </b></font></td>
+        		<td><font size=3><b>   </b></font></td>
+            </tr>
+	    </tr>
+<tr>
+	<td bgcolor="$ui.menuColor" colspan=4 align=left>
+ 	
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_first)">D'abord </a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_pre)">Précédent </a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">Après </a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_last)">Dernier</a> &nbsp;
+	  </td>
+ </tr>
+</table>

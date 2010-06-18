@@ -1,0 +1,123 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<br>
+<table bgcolor="$ui.menuColor" width="100%">
+<tr align=right>
+	<td>
+	<font face="$ui.sansSerifFonts"><b>
+	 		?? ??  ????? $course |
+		$page.setTitle("brih_home | $course | $brih_calendar for $course")
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a>  |
+		<a href=$link.setPage("call,IndexHome.vm")>????</a> 
+		</font>
+	</td>
+</tr>
+</table>
+<table width="100%">
+<tr align=right><td><font color="Gray"><I>?????? ?????</font></I></td>
+<td><font color="green"><I>?? ??????? ???????? ????? ?? ?</I></font></td><td><font color="magenta"><I>???? (??????) ?????</I></font></td>
+<td><font color="green"><I>???????? </I></font></td><td><I>????? ?? ?? ?? ????? ???  ??? ????? ??? *</I></td> </tr>
+</table>
+
+<table align="center" width="100%">
+<tr><td align="center">
+		 <table align=right bgcolor="$ui.tableColor" border=1>
+                <tr><td align=center><font color="green">???????? </font></td></tr>
+                <tr><td align=center><b><I>$M</I></b></td></tr>
+                                        <tr><td><I>
+                                ?? ????? ??? ??? ??? ?????? ??? ??
+                        </I></td></tr>
+                                </table>
+
+</td>
+<td align="center" Valign="top">
+<table align="center" border=1 cellspacing=1 width="100%">
+<tr>
+	<td align=center>
+		<font color="blue" size=3><b><I>$date</I></b></font>
+	</td>
+	<td align=center>
+		<font size=3><b><I>????? & ??? </b></I></font>
+	</td>
+</tr>
+</table>
+<table align=center bgcolor="$ui.tableColor" border=1 width="100%">
+<tr>
+	<td>
+		<font face="$ui.sansSerifFonts" size=2><b>
+		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","previous").addPathInfo("path",$path)><I>????? ?????</I></a>
+          	</font>
+	</td>
+	<td align=center>
+		<font face="$ui.sansSerifFont" size=3>
+		<b>$M - $year1</b>
+		</font>
+	</td>
+	<td align=right>
+		<font face="$ui.sansSerifFonts" size=2><b>
+        	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","next").addPathInfo("path",$path)><I>???? ?????</I></a>
+		</font>
+	</td>
+</tr>
+</table>
+<form name="frm" method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm")">
+		   <table align=center bgcolor="$ui.tableColor" width="100%">
+	<tr bgcolor="$ui.menuColor"><td >
+	<input type ="submit" value="???? !!">
+		<font size=2>	
+		<select name="month">
+       		<option value="$M">$M
+																																																																	</option>
+       		</select>
+       <select name="year">
+       <option value="$year1">$year1
+	       		</option>
+	</select>
+	</font>
+	<input type="hidden" name="status" value="current">
+	<input type="hidden" name="path" value="$path">
+       </td>
+       </tr></table>
+        <table border=1 align=center bgcolor="$ui.tableColor" cellspacing="1" cellpadding="3" width="100%">
+                <tr>
+		              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ?????? </font> </b>
+		</td>
+              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ??? </font> </b>
+		</td>
+              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ???? </font> </b>
+		</td>
+              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ??? </font> </b>
+		</td>
+              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ?????? </font> </b>
+		</td>
+              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ???? </font> </b>
+		</td>
+              	               	<td bgcolor="$ui.menuColor">
+                	<b><font size=2> ???? </font> </b>
+		</td>
+              	        </tr>
+	<tr>
+															
+																																																																																																																																																																							</tr>
+       </table>
+</td>
+<td align="center">
+		<table align="center" bgcolor="$ui.tableColor" border=1 width="100%">
+                <tr><td align=center><font color="magenta">???? (??????) ?????</font></td></tr>
+                <tr><td align=center><b><I>$M</b></I></td></tr>
+                                        <tr><td><I>
+                                ?? ????? ??? ??? ??? ?????  ??? ??
+                        </I></td></tr>
+                                </table>
+</td></tr>
+</table>
+</form>

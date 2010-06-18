@@ -1,0 +1,139 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Edit")
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr><td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>????</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $cname</a> | 
+		<a href=$link.setPage("call,Dis_Board,DB.vm")>???????? ??</a> |
+		                 <a href=$link.setPage("call,Dis_Board,DBContent.vm").addPathInfo("mode","All")>????? ????????? ??????</a> |?????? ??????
+				</font>
+		</td></tr>
+</table>
+<br>
+
+<SCRIPT LANGUAGE="javascript">
+	function check(frm,field)
+	{
+		var bool = frm.perm[0].checked;
+		var bool1 = frm.perm[1].checked;
+		if(bool || bool1)
+		{
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+	}
+</SCRIPT>
+<br>
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Dis_Board,DBContent.vm").setAction("SendDB").addPathInfo("course_id",$course_id).addPathInfo("topic",$topic)">
+	<div align="left">
+		<table align="center" width="80%" border=1 bgcolor="$ui.tableColor" cellpadding="5">
+			<tr bgcolor="$ui.menuColor"><td align="center" colspan=2>
+			<b><u><font size=4>??????? ?????:</font></u>&nbsp</font><font color="Green" size=3>$cid</font></b>
+			</td></tr>
+			<tr>
+				<td>
+		       		<b><font face="$ui.sansSerifFonts">?????? ????</font> </b>
+		        	</td>
+		        	<td><input type="text" name="contentTopic" value=$topic onFocus=checkRadio() size=26></td>
+			</tr>
+			<tr>
+				<td>
+				<b><font face="$ui.sansSerifFonts">?????? </font> </b>
+				</td>
+			  	<td>
+			  	<font face="$ui.sansSerifFonts" size=4>
+				<textarea name="message"  rows=10 cols=55 wrap=physical /> $message</textarea></font>
+		          	</td>
+		       	</tr>
+			 				<tr><td colspan=2><b><u>???????????  :</u></b></tr>
+							<tr>
+			#fileUpload (" ????? ????" "file")
+			</tr>
+			<tr>
+				<td><b><font face="$ui.sansSerifFonts">??????? ????????? ???????? ????? (???????)</b></td>
+								<td><input id="exp_id" type="text" name="expiry" value="$expirytime" size="26" enabled="true" onClick="checkvalue();" ></td>
+							</tr>
+			<tr>
+								<td colspan="2" align="center"> <input type="RADIO" name=status checked value="Enable" onClick="insertminus(document.uploadform);">&nbsp<b>???????</b>
+				
+			        <input type="RADIO" name=status value="Disable " onClick="insertminus(document.uploadform)";/>&nbsp<b>???????? </b>
+								</td>
+
+			</tr>
+			<tr align="ui.buttonAlignment" bgcolor="$ui.menuColor">
+				<td align="center" colspan=2>
+				<font face="$ui.sansSerifFonts">
+				<input type="hidden" name="mode" value="All">
+				<input type="hidden" name="Repid" value="0">
+				<input type="hidden" name="mgid" value="$mgid">
+                                <input type="hidden" name="Repid" value="$mgid">
+                                				<input type="hidden" name="expstatus">
+				<input type="hidden" name="actionName">
+				<input type="button" name="eventSubmit_doUpdate" value="?????? ???????" onClick="checkBlank(document.uploadform,this);"/>&nbsp&nbsp
+								<input type="reset" value="??????" onClick="makeEnable();">
+								</font>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+<script LANGUAGE="JAVASCRIPT">
+function checkRadio()
+{
+	if(document.uploadform.topicExisting[0].checked)
+	{
+		document.uploadform.contentTopic.blur();
+	}
+}
+function checkBlank(uploadform,field)
+{
+	if((uploadform.contentTopic.value!="") && (uploadform.message.value!="")&&(uploadform.status[0].checked))
+        {
+        	if((uploadform.expiry.value>=1) && (uploadform.expiry.value<=365))
+            	{
+            		uploadform.actionName.value=field.name;
+            		uploadform.submit();
+            	}
+            	else
+            	alert("Deletion Time should not be less than 1 day and greater than 365 days");
+        }
+        else
+        {
+		uploadform.expstatus.value=uploadform.expiry.value;
+		uploadform.actionName.value=field.name;
+            	uploadform.submit();
+        }
+}
+function insertminus(uploadform)
+{
+	if(uploadform.status[1].checked)
+        {
+        	uploadform.expiry.value="-1";
+                uploadform.expstatus.value=uploadform.expiry.value;
+                makeDisable();
+        }
+        else
+        {
+        	uploadform.expiry.value="$expirytime";
+                makeEnable();
+        }
+}
+function makeDisable()
+{
+	var x=document.getElementById("exp_id")
+        x.disabled=true
+}
+function makeEnable()
+{
+	var x=document.getElementById("exp_id")
+        x.disabled=false
+}
+function popupWin(urlName,popupName)
+{
+	window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+}
+</SCRIPT>

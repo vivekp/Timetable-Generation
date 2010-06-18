@@ -1,0 +1,82 @@
+#*
+ * @(#)Mail.vm
+ *  Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ *#
+#if($mode=="adminmail")
+	$page.setTitle("Home | Communication | Local Mail")
+#else
+	$page.setTitle("Home | $cname | Communication | Local Mail")
+#end
+<body>
+<table bgcolor="$ui.tableColor" width=100%>
+       <tr align="right"><td>
+       <font face="$ui.sansSerifFonts"><b>
+	#if($mode=="adminmail")
+	        <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+        	<a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_communication</a> |$brih_local $LocalMail_mail 
+        #else
+            <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $brih_local $LocalMail_mail
+	    | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | 
+            <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+	#end 
+       </font>
+	</td>
+       </tr>
+</table>
+#macro(UNAME1)
+
+        #if($Fname!="")
+                <b> $Fname</b>
+        #else
+                <b>$Uname</b>
+        #end
+#end
+
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+<br>
+#if($mode=="adminmail")
+	<form method="GET" action="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("stat","admns")">
+#else
+	<form method="GET" action="$link.setPage("call,Local_Mail,MailContent.vm")">
+#end
+<table border=0 width=50% align=center bgcolor="$ui.tableColor" cellpadding=4> 
+<tr align="center" bgcolor="$ui.menuColor">
+<td align="center" colspan= 4> <b> <u> <I>
+<font face="$ui.sansSerifFonts"> 
+                #UNAME1() : $brih_welcome
+
+</font>
+</I></u></b> </td>
+</tr>
+<tr><td colspan=2 align="center">
+#if($unread=="0")
+	<td align="right"> <font size="3"><b>(<font color="Blue">$unread</font>) </b> $brih_unread  $brih_msg2</td> 
+#else
+	<td align="right"> <b><blink> <font size="3"><b>(<font color="Blue">$unread</font>) </b> $brih_unread $brih_msg2 </blink> </b></td> 
+#end 
+	<td align="center"> <b>(<font color="blue">$total</font>) $LocalMail_Mail_msg1 </b>
+	 <img src="$content.getURI("/images/newmail1.gif")">
+	</td>
+	#if($total!="0")
+	<tr><td colspan=4 align="center">
+	<input type="hidden" name="mode" value="All">
+	<input type="submit" name=submit value="$LocalMail_Mail_msg2">
+	</td></tr>
+	#end
+</td></tr>
+	#if($mode=="adminmail")
+        <tr align="center"><td colspan=4 align="center"><a href=$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("status","compose")>
+        #else
+        <tr align="center"><td colspan=4 align="center"><a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","compose")>
+        #end
+	<img src="$content.getURI("/images/$lang/DB.jpg")"border="0"> <img border=0 src="$content.getURI("/images/ml.gif")">
+	</a></td></tr>
+</table>
+
+</body>
+</form>

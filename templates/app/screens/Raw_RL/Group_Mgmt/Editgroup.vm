@@ -1,0 +1,225 @@
+<html>
+#*
+ * @(#) Editgroup.vm
+ *  Copyright (c) 2006-07, 2009,ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 11-05-09
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+<tr align="right">
+	<td>
+                #if( $total_size!=0 )
+                        #if( $endIndex < $total_size )
+                                #if( $endIndex < $userConf )
+					$total_size $brih_all [$k - $total_size]  $brih_inFrom
+                                #elseif($k == $j)
+					$total_size $brih_all [$k - $total_size]  $brih_inFrom
+                                #else
+					$total_size $brih_all [$k - $endIndex]  $brih_inFrom
+                                #end
+                        #else
+				$total_size $brih_all [$k - $total_size]  $brih_inFrom
+                        #end
+                #end
+        </td>
+	<td><b>
+        	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")> $brih_mgmt $brih_grp  </a> |
+		$brih_grp $brih_Of $brih_edit</b>
+        	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>| 
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+     	</b></td>
+</tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+	<tr><td align ="right">
+		<a href=javascript:popupWin("/brihaspati2/docs/edit-removemembers.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+	</td></tr>
+</table> ## table 2 end
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Editgroup.vm").setAction("Groupmanagement")>
+	<table align="center" border=1 bgcolor="$ui.tableColor" width=85% > ## table 3 start
+		<tr bgcolor="$ui.menuColor"><td align ="center"colspan=5 vlaign="top"> ## td tr 1 satart
+        	<b><font size=4<I>$brih_course $brih_Of $brih_grp </I><font color="blue">$courseid</font></font></b>
+		</td></tr>
+		#if($Status != "Edit")
+		<tr><td align="left" colspan="5"> ##  td tr 2 start
+			#if($Mode=="NoBlank") ## if satar (mode)
+				#set($headings=["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_availableAction","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_creation $brih_Da","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_grp $brih_Of $brih_type","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_grp $brih_Of1 $brih_name",""])
+				<br>
+				<table  border="0" bgcolor="$ui.tableColor" > ## table 5 start
+					<tr bgcolor="$ui.tableColor" align="center" > ## tr 3 start
+                  			#foreach($heading in $headings)
+                        		<td><b>$heading</b></td>
+                  			#end
+					</tr> ## tr 3 end
+					#foreach($Read in $grplist)
+						<tr bgcolor="$ui.menuColor" align ="center"> ## tr 4 start
+						<td align="center">
+						<a href=$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("Status","Edit").addPathInfo("grpname",$Read.Name).addPathInfo("type",$Read.type).addPathInfo("studentno",$Read.studentno)>
+						$brih_grp $brih_Of $brih_edit</a> 
+        					&nbsp;&nbsp;<a href=$link.setPage("call,Group_Mgmt,Addmembers.vm").addPathInfo("Status","Edit").addPathInfo("grpname",$Read.Name).addPathInfo("type",$Read.type)>
+        					$brih_member $brih_remove</a> 
+						</td>
+						<td align ="center"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Read.PDate</td>
+						<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Read.type</td>
+						<td colspan="2" align ="center">$Read.Name</td>
+						</tr> ## tr 4 end
+					#end
+				</table> ## table 5 end
+				#else
+				<align="left"><b><font color="blue"><i>$brih_grpmsg18</i></font></b>
+			#end ## if end of mode
+		#end
+		#if($Status == "Edit")
+			#if($type=="usagegroup")
+			<tr align="right"><td>
+				<br>&nbsp;&nbsp<b><font size=3>$brih_Usage $brih_grp $brih_Of1 $brih_edit</font></b><br><br>
+		             	<table  border="0" bgcolor="$ui.tableColor" width="100%" colspan=5>      
+				<tr align="right">
+					<td><input type="text"  size="30" name="groupname"  value="$grpname"/></td>
+					<td><b>
+					: $brih_name $brih_Of1 $brih_grp
+                                	<font color=red>*</font> </b>
+                        		</td>
+                		</tr>
+				<tr align="right">
+                        	<td><textarea name="groupdesc" rows=5 cols=50 >$!groupdesc</textarea></td>
+					<td><b> : $brih_grp $brih_Of1 $brih_desc</b></td>
+                		</tr>                                                                                                                                       </table>
+			</td></tr>
+		#end
+		#if($type == "Multiplegroup" || $type == "signupgroup" )
+        	<tr align="right"><td>
+        		#if($type == "Multiplegroup")
+        			<br><b>&nbsp;&nbsp;$brih_multiple1 $brih_grp $brih_Of2 $brih_edit :</b><br>
+        		#else
+        			<br><b>&nbsp;&nbsp;$brih_signup $brih_grp $brih_Of2 $brih_edit :</b><br>
+        		#end
+        		&nbsp;&nbsp;$brih_grpmsg5<br>
+        		&nbsp;&nbsp;$brih_grpmsg6<br><br>
+                	#if($type =="Multiplegroup")
+                	<table  border="0" bgcolor="$ui.tableColor" width="100%" colspan=5>
+                		<tr align="right">
+				<td colspan="2" align="right">
+	                		$brih_grpmsg7 $brih_grpmsg19
+				</td>
+				<td>
+	                		<input type="radio"  name="groupmode" value="Mgroup"onClick="this.form.studentno.disabled=true;this.form.studentno.focus();" />
+				</td>
+				</tr>
+				<tr align="right">
+				<td colspan="2" align="right">
+	                		$brih_grpmsg7 $brih_grpmsg8
+				</td>
+				<td>
+	                		<input type="radio" checked="true" name="groupmode" value="MRgroup"onClick="this.form.studentno.disabled=false;this.form.studentno.focus();" />
+				</td>
+                		</tr>
+			</table>
+                	#end
+                	<table  border="0" bgcolor="$ui.tableColor" width="100%" colspan=5>
+                	<tr align="right">
+                        	<td colspan="2">
+                                <input type="text"  size="30" name="groupname"  value="$grpname"/>
+                        	</td>
+                        	<td><b>
+                                : $brih_grp $brih_Of1 $brih_name
+                                <font color=red>*</font>
+				</b>
+                        	</td>
+                	</tr>
+                	<tr align="right">
+                        	<td colspan="2"><textarea name=groupdesc  rows=5 cols=50 >$!groupdesc</textarea></td>
+                        	<td> : &nbsp;<b>$brih_default $brih_desc </b> </td>
+                	</tr>
+                	<tr align="right">
+				<td colspan="2"><input type="text" size="30" name="groupno" value="" onClick="disabled=true;"/></td>
+                        	<td><b>
+				: $brih_grp $brih_Of1 $brih_noOf
+                        	<font color=red>*</font>
+				</b> </td>
+                	</tr>
+                	<tr align="right">
+                        	<td colspan="2"><input type="text" size="30" name="studentno" value="$studentno" onClick="disabled=true;" /></td>
+                        	<td><b>
+                        	: $brih_per $brih_grp $brih_in $brih_student $brih_Of1 $brih_noOf 
+                        	<font color=red>*</font> </b>
+                        	</td>
+                	</tr>
+                	</table>
+        	</tr></td>
+        	#end
+        	<br><br>
+        	## end of multiple group
+		<tr bgcolor="$ui.tableColor"><td align="left"> ## td 5 start
+		<input type="button" name="eventSubmit_doupdategroup" value="$brih_grp $brih_update" onClick="checkfield(document.frm,this);"/>
+		<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel" />
+		</td></tr> ## td 5 end
+	#end
+	</td></tr> ## td tr 2 end
+	<input type="hidden" name="actionName" >
+	<input type="hidden" name="Status" value="$Status">
+	<input type="hidden" name="grpname" value="$grpname">
+	<input type="hidden" name="type" value="$type">
+	<input type="hidden" name="studentno" value="$studentno">
+##----------------------------------------------------------------------------------------------------------------------------
+	#if($Status != "Edit" && $Mode == "NoBlank")
+        <tr>
+	        <td align="center" bgcolor="$ui.menuColor">
+        		#if($total_size <= $userConf)
+                        <u><font color="white">$brih_first</font></u> &nbsp;
+                        <u><font color="white">$brih_pre</font></u> &nbsp;
+                        <u><font color="white">$brih_nxt</font></u> &nbsp;
+                        <u><font color="white">$brih_last</font></u> &nbsp;
+                        #elseif($startIndex == $userConf_string)
+                        <u><font color="white">$brih_first</font></u> &nbsp;
+                        <u><font color="white">$brih_pre</font></u> &nbsp;
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$startIndex)">$brih_nxt</a> &nbsp;
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+                        #elseif($endIndex == $total_size || $endIndex > $total_size)
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$check_first)">$brih_first</a>&nbsp;
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+                        <u><font color="white">$brih_nxt</font></u> &nbsp;
+                        <u><font color="white">$brih_last</font></u> &nbsp;
+                        #else
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$check_first)">$brih_first</a>&nbsp;
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">$brih_nxt</a> &nbsp;
+                        <a href="$link.setPage("call,Group_Mgmt,Editgroup.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+                        #end
+            	</td>
+    	</tr>
+	#end
+##-------------------------------------------------------------------------------------------------------------------------------
+
+	
+</form>
+</table> ## end of table 3
+</html>
+<SCRIPT LANGUAGE="javascript">
+	function checkfield(frm,field)
+        {
+		if(frm.groupname.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !!");
+                }
+
+        }
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+</script>

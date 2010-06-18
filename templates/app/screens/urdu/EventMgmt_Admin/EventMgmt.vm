@@ -1,0 +1,35 @@
+
+
+$page.setTitle("Brihaspati Administrator")
+$page.setBgColor("#ffffff")
+
+<font face="$ui.sansSerifFonts">
+<table width=100%  bgcolor="$ui.tableColor" cellpadding=0>
+<tr align ="right"><td><b><a href=$link.setPage("call,Admin.vm")>????? ?? ????</a>|????? ????? </b></td></tr>
+</table>
+<br>
+	<table width=20% align=center bgcolor="$ui.menuColor">
+	<tr><td align="center">
+	<a href=$link.setPage("call,EventMgmt_Admin,Survey_Inst.vm").addPathInfo("mode","adphase")>
+	<img src="$content.getURI("/images/$lang/survey.jpg")" border="0"></a>
+        </td>
+        </tr>
+	<tr><td align="center">
+	<a href=$link.setPage("call,EventMgmt_Admin,Survey_Inst.vm").addPathInfo("mode","sresult")>
+	<img src="$content.getURI("/images/$lang/surveyresult.jpg")" border="0"></a>
+        </td>
+        </tr>
+        <tr>
+        <td align="center">
+                <a href=$link.setPage("call,EventMgmt_Admin,Survey_Inst.vm").addPathInfo("mode","update")>
+		<img src="$content.getURI("/images/$lang/surveyedit.jpg")" border="0"></a>
+        </td>
+        </tr>
+	<tr>
+	<td align="center">
+		<a href=$link.setPage("call,EventMgmt_Admin,Academic_Event.vm")>
+                <img src="$content.getURI("/images/$lang/academicevent.jpg")" border="0"></a>
+
+        </td>
+        </tr>
+	</table>

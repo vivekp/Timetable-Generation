@@ -1,0 +1,104 @@
+#*
+ * @(#) AdminRestore.vm
+ * Copyright(c)2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksingh@brihaspatisolutions.co.in">Nagendra Kumar Singh</a>
+ * Contributors: Members of Brihaspati Solutions Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+$page.setBgColor($ui.bgcolor)
+#if($st=="db")
+	$page.setTitle(" System Restore")
+#elseif($st=="glsry")
+	$page.setTitle(" Glossary Restore")
+#else
+	$page.setTitle(" Content Restore")
+#end
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | 
+	#if($st == "glsry")
+        	 <a href=$link.setPage("call,Glossary,Glossary.vm")>$Glossary </a> |  $Glossary $brih_restore 
+	#else
+		<a href=$link.setPage("call,Backups,Restoration.vm")>$brih_restore </a> |  
+		#if($st == "db")
+			 $brih_database $brih_restore
+		#else
+			$brih_content $brih_restore
+		#end
+	#end
+        </td>
+</tr>
+</table>
+<br>
+
+#if($st == "glsry")
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Glossary,Glossary.vm").setAction("AdminRestoreAction")" >
+#else
+<form name=uploadform  method="post" enctype="multipart/form-data" action="$link.setPage("call,Backups,Restoration.vm").setAction("AdminRestoreAction")" >
+#end
+  <div align="center">
+
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" width="40%">
+        
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+	
+      <tr>
+        #fileUpload ("$brih_file" "file")
+      </tr>
+
+
+      <tr>
+        <td align="center" bgcolor="$ui.buttonBoxColor" colspan="2">
+
+          <font face="$ui.sansSerifFonts">
+	#if($st == "db")
+          <input type="button" name="eventSubmit_doRestoreDatabase" value="$brih_restore" onClick="checkValues(document.uploadform,this);"/>
+	#elseif($st=="glsry")
+          <input type="button" name="eventSubmit_doRestoreGlossary" value="$brih_restore" onClick="checkValues(document.uploadform,this);"/>
+	#else
+          <input type="button" name="eventSubmit_doRestoreContent" value="$brih_restore" onClick="checkValues(document.uploadform,this);"/>
+	#end
+	 <input type="hidden" name="actionName">
+        </td>
+      </tr>
+      
+    </table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+        function checkValues(uploadform,field)
+        {
+                if(uploadform.file.value!="") 
+                {
+                                uploadform.actionName.value=field.name;
+                                uploadform.submit();
+                }
+                else
+                {
+                        alert("Please browse and select the file !!");
+                }
+        }
+
+</SCRIPT>

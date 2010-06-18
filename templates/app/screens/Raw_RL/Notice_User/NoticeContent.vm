@@ -1,0 +1,183 @@
+#*
+ * @(#)NoticeContent.vm
+ *  Copyright (c) 2006-2007, 2009 ETRG,IIT Kanpur.
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista </a>
+ *  @modify 15-04-09
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+#*
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ *#
+
+$page.setTitle("Home | $CName | Communication | Local Mail | Mails")
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr align="right">
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		#if($flag=="FromHome")
+                        #set($path = 1)
+		 	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+                        $Notice_NoticeContent_msg1
+                #elseif($flag=="FromCourseHome")
+                        #set($path = 2)
+                         $Notice_NoticeContent_msg1 | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+                #elseif($user_role=="instructor")
+                        #set($path = 3)
+                        <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> |
+                        <a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_Notices</a> | $Notice_All $brih_Notices
+                        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+                #elseif($user_role=="student")
+                        #set($path = 3)
+                        <a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $Notice_NoticeContent_msg1 $brih_Notices
+                        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> |
+                #end
+		#if($flag !="FromHome")
+		 	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>  
+		#end
+		</font>
+		</td>
+	</tr>
+</table>
+$!data.getMessage()
+
+<br>
+<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Notice_User,NoticeContent.vm").setAction("Notice_Send_Delete")">
+#if($Rec_size!="0")
+<table align=center>
+<tr bgcolor="$ui.menuColor">
+#if($desc=="Notice_Des")
+<td>
+	<table>
+	<tr>
+	<td bgcolor="$ui.tableColor" align="center">
+		<font size=4><I><b>$Notice_sub</b></I></font>
+	</td>
+	</tr>
+	<tr>
+	<td>
+		<textarea name=description rows=10 cols=50 wrap=physical onFocus="this.blur();">$message</textarea>
+	</td>
+	</tr>
+	</table>
+</td>
+#end
+<td width=70%>
+	<table width=100% border=0 align=center cellpadding=0 cellspacing=0>
+ 	<tr bgcolor="$ui.buttonBoxColor">
+  	<td colspan=5 align=center>
+  	<font size=5>
+	     		<I>$Notice_NoticeContent_msg3<font color="$ui.fontColorBlue"> #UNAME() </font></I>
+  	</font>
+  	</td>
+ 	</tr>
+	#set($headings=["$brih_status","$brih_Da","$Notice_Subject","$Notice_Sender"])
+	<tr bgcolor="$ui.tableColor">
+	#foreach($heading in $headings)
+		<td align="center">
+		<b>$heading</b>
+		</td>
+	#end
+		<td align="right">
+		</td> <td> </td>
+	</tr>
+	#foreach ($SeRe in $notice_Sent_Rec)
+        	#if($flag=="FromNotices")
+                	#if($SeRe.getReadFlag() == "0")
+				<tr bgcolor="$ui.buttonBoxColor">
+                        #elseif($e.getRole_Id()=="7")
+                               <tr bgcolor="$ui.fontColorPink">
+
+			#else
+				<tr bgcolor="$ui.tableColor">
+			#end
+				#if( $SeRe.getReadFlag() == "0")
+                                        <td align=center>
+                                        <font face="$ui.sansSerifFonts" color="$ui.fontColorRed">
+                                        $brih_unread
+                                        </td>
+                                #else
+                                        <td align=center>
+                                        <font face="$ui.sansSerifFonts">
+                                        $Notice_Read
+                                        </td>
+                                #end
+			<td align="Center">$SeRe.getPostTime()</td>
+			<td align="Center">
+				<a href="$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("notice_id",$SeRe.getMsgId()).addPathInfo("flag",$flag).addPathInfo("desc","Notice_Des")">$SeRe.getMsgSubject()</a>
+			</td>
+			<td align="Center">$SeRe.getUserName()</td>
+			<td align="Center">
+        			<INPUT TYPE="CHECKBOX" NAME="$SeRe.getMsgId()" onClick="addDeleteList(this,document.frm);">
+			</td>
+		#else
+                	#if($SeRe.getReadFlag() == "0")
+			 <tr bgcolor="$ui.buttonBoxColor">
+                        <td align=center>
+                                <font color="Red" face="$ui.sansSerifFonts">
+                                $brih_new
+                                </font>
+                        </td>
+			<td align="Center">$SeRe.getPostTime()</td>
+                        <td align="Center">
+                                <a href="$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("notice_id",$SeRe.getMsgId()).addPathInfo("flag",$flag).addPathInfo("desc","Notice_Des").addPathInfo("courseId",$courseId)">$SeRe.getMsgSubject()</a>
+                        </td>
+                        <td align="Center">$SeRe.getUserName()</td>
+                        <td align="Center">
+                                <INPUT TYPE="CHECKBOX" NAME="$SeRe.getMsgId()" onClick="addDeleteList(this,document.frm);">
+                        </td>
+                        #end
+		#end
+		</tr>
+	#end
+	<tr bgcolor="$ui.menuColor">
+	<td> </td>
+	<td align=center>
+		<INPUT TYPE="button" NAME="eventSubmit_doDelete" VALUE="$brih_delete" onClick="checkValue(document.frm,this);">
+        	<INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+        	<INPUT TYPE="hidden" NAME="actionName" VALUE="">
+        	<INPUT TYPE="hidden" NAME="flag" VALUE="$flag">
+        	<INPUT TYPE="hidden" NAME="courseId" VALUE="$courseId">
+	</td>
+	<td colspan=4>
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+#end
+
+<form>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+	{
+		frm.actionName.value=field.name;
+        	frm.submit();
+	}
+	else
+	{
+		alert("Please select checkbox for deletion !!");
+	}
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+       	}
+}
+
+</SCRIPT>

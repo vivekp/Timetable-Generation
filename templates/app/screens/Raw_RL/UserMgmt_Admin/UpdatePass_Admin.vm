@@ -1,0 +1,79 @@
+#*
+ * @(#)UpdatePass_Admin.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a>  
+ *#
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+<td>
+<font face="$ui.sansSerifFonts" size=3>
+<b><a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,ListManagement.vm")>$brih_mgmt $brih_list</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>$brih_usr $brih_list</a> | $brih_pwd $brih_Change
+$page.setTitle("call,List Management | User List | Change Password")
+</b>
+</td>
+</tr>
+</table>
+$!data.getMessage()
+<br>
+<br>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin")">
+        <table border=1 align="center" bgcolor="$ui.tableColor" cellpadding=5>
+          <tr>
+	  <td bgcolor="$ui.menuColor" align="center">
+	  <font size=4><b>$brih_changePassword1 '$username'</b></font>
+	  </td>
+	  </tr>
+	  <tr>
+	  <td>
+          <table cellpadding=5>
+	  <tr align="right">
+	      ###formPasswordCell("$brih_pwd  <font color=Red>*</font>" "newpass" "")
+		<td> <input type="password" size="30" name="newpass" value=""> </td>
+		<td><b> <font color=Red>*</font>$brih_pwd </b></td> 
+	  </tr>
+	  </table>
+	  </td>
+	  </tr>
+	  <tr>
+             <td align="center">
+
+               <font face="$ui.sansSerifFonts">
+                 <input type="button" name="eventSubmit_doUpdatePass" value="$brih_update" onClick="checkpass(document.frm,this);"/>
+                 <input type="reset" name="clear" value="$brih_clear" onClick="clearValues(document.frm,this);"/>
+                 <input type="hidden" name="username" value=$username />
+                 <input type="hidden" name="actionName"/>
+                 <input type="hidden" name="mode" value="All"/>
+               </font>
+     </td>
+     </tr>
+     </table>
+     <br>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkpass(frm,field,v)
+ {
+ if(frm.newpass.value!="")
+     {
+      frm.actionName.value=field.name;
+      frm.submit();
+     }
+ else
+    {
+        alert("Password can not be null!");
+    }
+ }
+
+function clearValues(frm,field)
+{
+	frm.newpass.value="";
+}
+</SCRIPT>

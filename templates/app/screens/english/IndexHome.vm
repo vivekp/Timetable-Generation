@@ -1,0 +1,142 @@
+
+
+$page.setTitle("Login | Index | IndexHome")
+$page.setBgColor("bgcolor")
+
+<body>
+
+
+
+<table bgcolor="$ui.tableColor" width=100% CellPadding=0 align=center>
+<tr bgcolor="$ui.bgcolor">
+	<td align="center" bgcolor="$ui.tableColor">
+						        <font size=4 face="$ui.sansSerifFonts"><b>Welcome
+			        
+	  	<b>$username</b>
+				        </font>
+				</td>
+</tr>
+</table>
+<br>
+<table width=100% align=center> 	<tr>
+			
+	<td valign="top" align="center">
+				<table border=0 width=100%>
+			<tr><td>
+				<table border=1 width=100% align=left valign="top">
+					<tr><td colspan=4 align=center bgcolor="$ui.menuColor">
+					<font face="$ui.sansSerifFonts"><b><u>REGISTERED COURSES</font>
+					</td></tr>
+				</table>
+			<tr><td bgcolor="$ui.menuColor">
+				<table border=1 width="100%" valign="top" align="left">
+									<tr>	
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>Course  Name</font>
+					</td>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>Instructor Name</font>
+					</td>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>Message</font>
+					</td>
+					</tr>
+																		</table>
+			</td></tr>
+
+			</td> </tr>
+
+			<tr> <td>
+				<table width="100%" border="0">
+					<tr>
+					                	                </tr>
+                        	</table>
+                	</td></tr>
+
+		</table>
+		</div>
+	</td>
+
+	</tr>
+</table>
+			<tr>
+			<ul>	
+				<td border=1><b><a href="$link.setPage("call,IndexHome.vm")" onmouseover="mopen('m1')" onmouseout="mclosetime()">My Bookmarks</a></b>
+				<div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+				<b><li><a href="$link.setPage("call,Bookmarks,ManageBookmarks.vm").addPathInfo("stat1","All")">ShowAll</a></li></b>
+								</div>
+				</ul>
+				</td>
+				</tr>
+				<div style="clear:both"></div>
+</body>
+<SCRIPT LANGUAGE="javascript">
+var timeout	= 500;
+var closetimer	= 0;
+var ddmenuitem	= 0;
+
+// open hidden layer
+function mopen(id)
+{	
+	// cancel close timer
+	mcancelclosetime();
+
+	// close old layer
+	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+	// get new layer and show it
+	ddmenuitem = document.getElementById(id);
+	ddmenuitem.style.visibility = 'visible';
+
+}
+// close showed layer
+function mclose()
+{
+	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+}
+
+// go close timer
+function mclosetime()
+{
+	closetimer = window.setTimeout(mclose, timeout);
+}
+
+// cancel close timer
+function mcancelclosetime()
+{
+	if(closetimer)
+	{
+		window.clearTimeout(closetimer);
+		closetimer = null;
+	}
+}
+
+// close layer when click-out
+document.onclick = mclose;
+function popupWin1(urlName,popupName)
+{
+         window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+}
+function open_mywin1(url,height,width) {
+window.open(url,height,width)
+}
+
+function popupWin(popupName) {
+                var x = document.getElementsByTagName('input');
+                for (var i=0;i<x.length;i++) {
+                        if (x[i].getAttribute('name') == 'allTask') {
+                                var temp =x[i].value
+                                break;
+                        }
+                }
+                //alert("allTask="+temp);
+                Win1=window.open('',popupName,"scrollbars=1,resizable,height=200,width=400");
+                var tmp = Win1.document;
+                tmp.write('<html><head><title>popup</title>');
+                tmp.write('</head><body><p>'+temp+'<p>');
+                tmp.write('<p><a href="javascript:self.print()">Print</a> all task of popup.</p>');
+                tmp.write('<p><a href="javascript:self.close()">Close</a> the popup.</p>');
+                tmp.write('</body></html>');
+        }
+
+</script>

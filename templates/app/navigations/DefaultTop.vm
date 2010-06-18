@@ -1,0 +1,10 @@
+$page.setBgColor("#ffffff")
+#set ($cid=$data.getUser().getTemp("course_id") )
+#set ($istat=$data.getUser().getTemp("istat") )
+
+#if($cid!="" && $istat) 
+        <img src="$content.getURI("images/Header/$cid")" width="100%" height="120px">
+#else
+        <img src="$content.getURI("images/brihaspati2.png")">
+#end
+<hr>

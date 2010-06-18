@@ -1,0 +1,59 @@
+
+
+$page.setTitle("Admin Home | User Management | Search Student")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+ <tr align="right">
+  <td>
+  <font face="$ui.sansSerifFonts" size=3>
+   <b><a href=$link.setPage("call,Admin.vm")>????? ?? ????</a> |
+    <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>????? ?????? </a> | ??????? ????? ???
+     </b>
+     </td>
+  </tr>
+</table>
+	<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("status","ForallStudent")">
+
+<br>
+<table border=1 align=center width=40% bgcolor="$ui.tableColor" cellpadding=1 cellspacing=1>
+	<tr align="right">
+		<td width=60% >
+			<select name="queryList">
+				<option value="User Name">??????  ?? ???</option>
+				<option value="First Name">???? ???</option>
+				<option value="Last Name">???? ???</option>
+				<option value="Email">?????</option>
+
+			</select>
+		</td>
+		<td width=40% align=center><b>??????? ????</b></td>
+	</tr>
+	<tr align="right">
+		<td width=60% align=left>
+			<input align=center type="text" name="value" value="">
+		</td>
+		<td width=40% align=center><b>?????? ?? ?? ????? ????? </b></td>
+	</tr>
+	<tr>
+		<td bgcolor="$ui.menuColor" align=center colspan=2>
+			<input type="button" name="Search" value="??????" onClick="checkNull(document.frm,this);">
+		</td>
+	</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkNull(frm,field){
+		if(frm.value.value!=""){
+			frm.submit();
+		}
+		else{
+			alert("The 'Match String' text box can not be NULL !");
+		}
+	}
+</SCRIPT>
+
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+        </table>

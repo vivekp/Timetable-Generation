@@ -1,0 +1,49 @@
+#*
+ * @(#)	Usertime_display.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Home | $course | Student Management | List of All Students | Usage Details")
+$!data.getMessage()
+#set ($lang=$data.getUser().getTemp("lang" ).toString())
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+	<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_student $brih_mgmt</a> | 
+	<a href=$link.setPage("call,UserMgmt_User,StudentList.vm").addPathInfo("mode","All")>$brih_listOfStudent</a> | $brih_usageDetail
+	</td>
+</tr>
+</table>
+<br>
+#if($status=="NoBlank")
+<table width=40%  border=1 align="center" bgcolor="$ui.tableColor">
+<tr>
+       <td colspan=2 align=center bgcolor="$ui.menuColor">
+        <font face="$ui.sansSerifFonts">
+	#if($lang=="hindi")
+	<b>$username $brih_usageDetail1 </b>
+	#else
+        <b>$brih_usageDetail1 $username</b>
+	#end
+        </td>
+</tr>
+#foreach ($entry in $usage)
+<tr>
+        <td align=center>
+        <b><font face="$ui.sansSerifFonts"> $velocityCount</font>
+        </td>
+        <td align=center>
+        <b><font face="$ui.sansSerifFonts">$entry.getLoginTime()</font>
+        </td>
+</tr>
+#end
+</table>
+#end

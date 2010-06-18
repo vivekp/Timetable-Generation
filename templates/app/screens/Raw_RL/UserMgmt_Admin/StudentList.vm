@@ -1,0 +1,92 @@
+#*
+ * @(#)StudentList.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a> 
+ *#
+
+$page.setTitle("Admin Home | User Management | Search Student | Student Details")
+$!data.getMessage()
+$page.setBgColor($ui.bgcolor)
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right"> 
+<td align="left">
+#if( $total_size!=0 )
+ 	#if( $endIndex < $total_size )
+  		#if( $endIndex < $AdminConf )
+		[$k - $total_size] $brih_all $total_size $brih_inFrom  
+    		#else
+		[$k - $endIndex] $brih_all $total_size $brih_inFrom 
+      		#end
+       #else
+		[$k - $total_size] $brih_all $total_size $brih_inFrom 
+       #end
+#end
+</td>
+<td>
+<td>
+<font face="$ui.sansSerifFonts" size=3>
+<b><a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_mgmt $brih_usr</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,SelectUser.vm")>$brih_ser_student</a> | $brih_student_detail
+</b>
+</td>
+</tr>
+</table>
+<br>
+#set ( $headings = ["  ","$brih_email","$brih_student $brih_Of1 $brih_name","$brih_login $brih_name"] )
+<table width=70% align=center border=1 cellspacing=2 cellpadding=3 bgcolor="$ui.tableColor">
+    <tr>
+        #foreach ($heading in $headings)
+		<td bgcolor="$ui.menuColor"><font size=3><b>$heading</b></font></td>
+        #end
+    </tr>
+	#foreach($list in $ListUser)
+    <tr>
+        <td>
+            <font face="$ui.sansSerifFonts">
+            <a href="$link.setPage("call,UserMgmt_Admin,StudentCourselist.vm").addPathInfo("username",$list.getLoginName())">$brih_course $brih_list</a> &nbsp;
+            </font>
+        </td>
+        #entryCell ("<a href=mailto:$!list.getEmail()>$!list.getEmail()</a>")
+	#entryCell ($!list.getUserName())
+	#entryCell ($!list.getLoginName())
+	#end
+    </tr>
+<tr>
+	<td bgcolor="$ui.menuColor" colspan=4 align=center>
+ 	#if($total_size<= $AdminConf)
+	
+	<u><font color="white">$brih_first</font></u> &nbsp;
+   	<u><font color="white">$brih_nxt</font></u> &nbsp;
+    	<u><font color="white">$brih_pre</font></u> &nbsp;
+     	<u><font color="white">$brih_last</font></u> &nbsp;
+
+      	#elseif($startIndex== $AdminConf_str)
+      	
+	<u><font color="white">$brih_first</font></u> &nbsp;
+      	<u><font color="white">$brih_pre</font></u> &nbsp;
+       	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$startIndex)">$brih_nxt</a> &nbsp;
+       	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+
+      	#elseif($endIndex == $total_size || $endIndex > $total_size)
+
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_first)">$brih_first</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+	<u><font color="white">$brih_nxt</font></u> &nbsp;
+	<u><font color="white">$brih_last</font></u> &nbsp;
+
+	#else
+
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_first)">$brih_first</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">$brih_nxt</a> &nbsp;
+	<a href="$link.setPage("call,UserMgmt_Admin,StudentList.vm").addPathInfo("queryList",$query).addPathInfo("value",$value).addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+	#end
+  </td>
+ </tr>
+</table>

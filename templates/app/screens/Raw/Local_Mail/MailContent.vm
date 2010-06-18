@@ -1,0 +1,298 @@
+#*
+ * @(#)MailContent.vm
+ *  Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+#*
+ * @author <a href="mailto:chitvesh@yahoo.com">Chitvesh Dutta</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+ *#
+#if($stat=="admns")
+$page.setTitle("Admin Home | Communication | Local Mail | Mails")
+#else
+$page.setTitle("Home | $CName | Communication | Local Mail | Mails")
+#end
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		#if(($stat=="admns")||($mod=="adminmail"))
+		<a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> | 
+		<a href =$link.setPage("call,Notice_User,Notices.vm")>$brih_communication </a> | 
+		<a href =$link.setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")>$brih_localmail </a> | 
+		#else
+		<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication </a> | 
+		<a href =$link.setPage("call,Local_Mail,Mail.vm")>$brih_localmail </a> | 
+		#end
+		#if($mode=="All")
+		$Notice_All $Notice_Mails 
+		#else
+		$Notice_Unread $Notice_Mails
+		#end
+		</font>
+		</td>
+	</tr>
+</table>
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+<table align=left bgColor="$ui.tableColor" width=100%>
+	<tr><b>
+		#if($data.getUser().getUserName()!="guest")
+			#if($stat=="admns")
+			<td><a href=$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("stat","admns").addPathInfo("status","compose")>
+			#else
+			<td><a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","compose")>
+			#end
+			<img border=0 src="$content.getURI("/images/$lang/ml.gif")">$LocalMail_MailContent_msg1</a><td>
+			#if($mode=="All")
+				#if($stat=="admns")
+				##<td><a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mod","adminmail").addPathInfo("mode","Unread")>
+				<td><a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("stat","admns").addPathInfo("mod","adminmail").addPathInfo("mode","Unread")>
+				#else
+				<td><a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","Unread")>
+				#end
+				<img border=0 src="$content.getURI("/images/$lang/newmail1.gif")">$LocalMail_MailContent_msg2</a></td>
+			#else
+			<td><a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>$LocalMail_MailContent_msg3</a></td>
+	        	#end	
+		#end	
+	</b>
+	</tr>
+</table>
+<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Local_Mail,MailContent.vm").setAction("MailSendMessage")">
+#if($status!="blank")
+<table width=100% align=left>
+<tr bgcolor="$ui.menuColor">
+  	<td colspan=5 align=left>
+  	<font size=5>
+		#if($lang=="english")
+     		<I> $LocalMail_MailContent_msg4 <font color=blue>$username</font></I>
+		#else
+		<I><font color=blue>$username</font>$LocalMail_MailContent_msg4</I>
+		#end
+  	</font>
+  	</td>
+	<td align=right colspan=2>
+         	#if( $total_size!=0 )
+                	#if( $endIndex < $total_size )
+                        	#if( $endIndex < $userConf )
+                        	[$k - $total_size] $LocalMail_MailContent_msg5 $total_size
+                        	#elseif($k == $j)
+                        	[$k - $total_size] $LocalMail_MailContent_msg5 $total_size
+                        	#else
+                        	[$k - $endIndex] $LocalMail_MailContent_msg5 $total_size
+                        	#end
+                	#else
+                		[$k - $total_size] $LocalMail_MailContent_msg5 $total_size
+                	#end
+        	#end
+        </td>
+ </tr>
+#set($headings=["$Notice_Sender","$Notice_Subject","$brih_Da","$LocalMail_Task","$brih_status"])
+	<tr bgcolor="$ui.tableColor">
+		<td width=2% align="center">
+		</td>
+		<td width=2% align="center">
+		</td>
+	#foreach($heading in $headings)
+		<td align="center">
+		<b>$heading</b>
+		</td>
+	#end
+	</tr>
+#set($count="")
+#foreach($e in $entry)
+#if($velocityCount%2==0)
+<tr bgColor="$ui.tableColor">
+#else
+<tr bgcolor="$ui.menuColor">
+#end
+	#*if(($e.getStatus()=="0")&& ($e.getMailType()!="1"))
+		<tr bgcolor="$ui.buttonBoxColor">
+	#elseif($e.getMailType()=="1")
+	        <tr bgcolor="$ui.fontColorPink">
+	#else
+		<tr bgcolor="$ui.tableColor">
+	#end*#
+	<td width=2% align="Center">
+        <INPUT TYPE="CHECKBOX" NAME="$e.getMailID()" onClick="addDeleteList(this,document.frm);">
+	</td>
+	<td width=2% align="Center">
+	#if($e.getReplyStatus()!="0")
+		<img src="$content.getURI("/images/$lang/reply.gif")">
+	#end
+	</td>
+	<td align="center">
+		$e.getSender()</td>
+	<td align="Center">
+		#if($stat=="admns")
+		<a href=$link.setPage("call,Local_Mail,MailView.vm").addPathInfo("msgid",$e.getMailID()).addPathInfo("mod","adminmail")>
+		#else
+		<a href=$link.setPage("call,Local_Mail,MailView.vm").addPathInfo("msgid",$e.getMailID())>
+		#end
+		<font face="$ui.sansSerifFonts">
+		$e.getMSubject() 
+		</font></a>
+	</td>
+	<td align="Center">$e.getPDate()</td>
+	<td align=center> 
+		#if($data.getUser().getName()!="guest")
+			#if(( $data.getUser().getTemp("lang" ).toString()) != "hindi")
+			#if($stat=="admns")
+	        	<a href=$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("msgid",$e.getMailID()).addPathInfo("status","reply")>
+			#else
+	        	<a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("msgid",$e.getMailID()).addPathInfo("status","reply")>
+			#end
+				<font face="$ui.sansSerifFonts">
+        	        	$LocalMail_Reply </font>&nbsp;
+				</a>
+			#end
+			#if(($data.getUser().getTemp("lang" ).toString()) == "hindi")
+				 #set($tempId = "reply${e.getMailID()}")
+			#if($stat=="admns")
+	        		<a href=$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("status","$tempId")>
+			#else
+				<a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("status","$tempId")>
+			#end
+				<font face="$ui.sansSerifFonts">
+		                	$LocalMail_Reply </font>&nbsp;
+				</a>
+			#end
+	 	#end
+	 </td>
+	#if($e.getStatus() == "0")
+		<td align=center>
+		<font face="$ui.sansSerifFonts" color="RED">
+		#if($mode=="All")
+		$Notice_Unread
+		#else
+		$brih_new
+		#end
+		</td>
+	#else
+		<td align=center>
+		<font face="$ui.sansSerifFonts">
+		$Notice_Read
+		</td>
+	#end
+	</tr>
+#set($count="$count$e.getMailID()^")
+#end
+<tr bgcolor="$ui.tableColor">
+<td colspan=2 align=center>
+	<INPUT TYPE="button" NAME="eventSubmit_doDelete" VALUE="$brih_delete" onClick="checkValue(document.frm,this);">
+        <INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+        <INPUT TYPE="hidden" NAME="actionName" VALUE="">
+        <INPUT TYPE="hidden" NAME="mode" VALUE="$mode">
+	
+</td>
+<td colspan=5 align=center bgcolor="$ui.menuColor">
+        #if($total_size <= $userConf)
+        <u><font color="white">$brih_first</font></u> &nbsp;
+        <u><font color="white">$brih_pre</font></u> &nbsp;
+        <u><font color="white">$brih_nxt</font></u> &nbsp;
+        <u><font color="white">$brih_last</font></u> &nbsp;
+
+        #elseif($startIndex == $userConf_string)
+        <u><font color="white">$brih_first</font></u> &nbsp;
+        <u><font color="white">$brih_pre</font></u> &nbsp;
+	#if($stat=="admns")
+<a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">Next</a> &nbsp;
+      <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">Last</a> &nbsp;
+        #else
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode","$mode")">$brih_nxt</a> &nbsp;
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode","$mode")">$brih_last</a> &nbsp;
+	#end
+        #elseif($endIndex == $total_size || $endIndex > $total_size)
+	 #if($stat=="admns")
+     <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">First</a> &nbsp;
+      <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">Previous</a> &nbsp;
+	#else
+     <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode","$mode")">$brih_first</a> &nbsp;
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode","$mode")">$brih_pre</a> &nbsp;
+	#end
+        <u><font color="white">$brih_nxt</font></u> &nbsp;
+        <u><font color="white">$brih_last</font></u> &nbsp;
+
+        #else
+		#if($stat=="admns")
+     <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">First</a> &nbsp;
+      <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">Previous</a> &nbsp;
+     <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">Next</a> &nbsp;
+    <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode","$mode").addPathInfo("stat",$stat)">Last</a> &nbsp;
+       		#else
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode","$mode")">$brih_first</a> &nbsp;
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode","$mode")">$brih_pre</a> &nbsp;
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex).addPathInfo("mode","$mode")">$brih_nxt</a> &nbsp;
+        <a href="$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode","$mode")">$brih_last</a> &nbsp;
+        	#end
+        #end
+</td>
+</tr>
+</table>
+#end
+<form>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+	{
+		frm.actionName.value=field.name;
+        	frm.submit();
+	}
+	else
+	{
+		alert("Please select checkbox for deletion !!");
+	}
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+       	}
+}
+
+function selectAll(field)
+{
+        if(field.checked)
+        {
+                var rmFile,index,actualString,pre=0,next=0;
+                actualString=document.frm.deleteFileNames.value="$count";
+                while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                        rmFile=document.frm.elements[temp].checked=true;
+                         }
+
+        }
+        else
+        {
+                    var rmFile,index,actualString,pre=0,next=0;
+                    actualString=document.frm.deleteFileNames.value="$count";
+
+                  while( ( pre=actualString.indexOf("^",next) ) >=0 )
+
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                         rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+           }
+}
+</SCRIPT>

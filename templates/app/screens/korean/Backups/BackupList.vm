@@ -1,0 +1,27 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	        <a href=$link.setPage("call,Admin.vm")>Admin's ì§? </a> | <a href=$link.setPage("call,Backups,Backups.vm")> ë°±ì?? </a> | ë°±ì?? ëª©ë¡?
+	        </td>
+</tr>
+</table>
+
+<br>
+<table border="1" align="center">
+	<tr bgcolor="$ui.menuColor">
+		<td colspan="4" align=center><b>  ì ?ê°?ì?? ì?¬ì?© ê°?ë?¥ ë°±ì??  </b></td>
+	</tr>
+	<tr bgcolor="$ui.menuColor" align="center">
+				<td>  ì?´ë¦? of ë°±ì?? í??ì?¼  </td>
+		<td bgcolor="$ui.menuColor" >ì?¬ì?© ê°?ë?¥í?? ì??ì??</td>
+	</tr>
+		</table>

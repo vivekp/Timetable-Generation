@@ -1,0 +1,23 @@
+
+
+$page.setTitle("Admin Home | List Management | List of All User | Usage Details")
+
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr>
+	<td><font face="$ui.sansSerifFonts" size=3>
+     	<a href=$link.setPage("call,Admin.vm")>??????? ????? ??????</a> | 
+	<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm")>??????? ???????</a> | 
+	<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>????? ??????????????? ?????? </a> | ?????????? ?????
+	</font></td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+        <tr width=50%><td>
+               <a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">View All Course</a>
+        </td>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">View All User</a>
+        </td>
+        </tr>
+ </table>

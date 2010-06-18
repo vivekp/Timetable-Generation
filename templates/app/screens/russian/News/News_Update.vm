@@ -1,0 +1,73 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+<body>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			                        	$page.setTitle("Home ")
+                        	<a href=$link.setPage("Index.vm")>�?ом</a> |
+                         							$page.setTitle("| $course | Communication | News | $mode")
+				<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |          
+ 				<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>Сооб�?ение</a> |  
+                        	<a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status",$status)>�?ов�?й</a> | 
+                            			�?ов�?й �?бновление       
+                </font>
+                </td>
+        </tr>
+</table>
+<br>
+
+
+</body>     
+<form name=frm method="post" action="$link.setAction("NewsAction").setPage("call,News,News_Edit.vm")">
+<table border=1 align=center bgcolor="$ui.menuColor">
+	<tr>
+                <td align=center>
+                <b><u>�?ов�?й  �?од�?обно�?�?и</u></b>
+                </td>
+       </tr>
+              <tr>
+                <td align=center>
+                <table Cell spacing=0 align=center bgcolor="$ui.tableColor">
+		             </table>
+             </td>
+          </tr>
+                         
+                          <tr>
+                            <td align=center colspan=2>
+                            <font face="$ui sanSerif fonts">
+                          <input type="button" name="eventSubmit_doUpdate" value=�?бновление onClick="checkNews(document.frm,this);"/>
+			     <input type="hidden" name="id" value="$id">
+			     <input type="hidden" name="actionName">
+			     <input type="hidden" name="status" value=$status>
+                             </font>
+                            </td>
+                         </tr>
+      </table>
+ </form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkNews(frm,field)
+        {
+                if((frm.newst.value!="") && (frm.news.value!=""))
+                {
+			if((frm.expt.value>=1) && (frm.expt.value<=30))
+				{
+                                frm.actionName.value=field.name;
+                                frm.submit();
+				}
+			else
+				{
+				alert("The Expiry time should be between 1 to 30 days ")
+				}
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+</SCRIPT>

@@ -1,0 +1,262 @@
+#*
+ * @(#) OnlineRegistration_Admin.vm 
+ * Copyright (c) 2008, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * @author <a href="mailto:omprakash_kgp@yahoo.co.in">Om Prakash</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @modify 20-03-2009
+*#
+
+
+$page.setTitle("Admin Home | View Online Registration ")
+
+$page.setBgColor($ui.bgcolor)
+
+<table  bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+ <td> 
+ <font face="$ui.sansSerifFonts" size=3> 
+ <b> <a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> | $brih_view $online_online $brih_reg    </b>
+ </font>
+</td>
+</tr>
+</table>
+<body>
+<form name="frm" method="post" action="$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("lang",$lang).setAction("OnlineRegistration_Admin")">
+<div>
+        <table> <tr align="left"><td >
+        <font face="$ui.sansSerifFonts" size=3>
+        <a href=javascript:popupWin("/brihaspati2/docs/OnlineRegistrationAdmin.html","newWin");>$brih_help</a>
+        </font>
+	<img src="$content.getURI("/images/Lefthand.gif")">
+	</td></tr></table>
+
+<table align=center bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td align="right"><b>
+        <a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("status","CourseRegistration")>$brih_view $brih_course $brih_reg </a>
+        </td>
+        <td align="right" width="20%"><b>
+        <a href=$link.setPage("call,OnLine_Rgtn,OnlineRegistration_Admin.vm").addPathInfo("status","UserResitration")>$brih_view $brih_usr $brih_reg </a>
+        </td>
+</tr>
+</table>
+$!data.getMessage()
+#if( $entry.size() !=0 )
+<br>
+
+	<table align="center" border=1 bgcolor="$ui.tableColor" cellpadding="5">
+
+	#if($status == "UserResitration")
+
+      <tr bgcolor="$ui.menuColor"  align="right">
+                <td align=center>
+                        <b> $brih_role</b>
+                </td>
+                <td align=center>
+                        <b> $brih_course $brih_Of1 $brih_ID </b>
+                </td>
+                <td align=center>
+                        <b> $brih_email </b>
+                </td>
+		<td align=center>
+			<b> $online_organisation </b>
+		</td>
+		<td>
+			<b>$brih_last $brih_name</b>
+		</td>
+		<td align=center>
+			<b>$brih_first $brih_name</b>
+		</td>
+                <td align=center>
+                        <b> $brih_usr $brih_Of1 $brih_name </b>
+                </td>
+                <td align=center>
+                        <b> $brih_select </b>
+                </td>
+
+ 
+        </tr>
+        #foreach($e in $entry)
+        <tr  align="right">
+ 
+                <td >
+                        $e.getMsgID()
+                </td>
+                <td >
+                        $e.getStatus()
+                </td>
+                <td >
+                        $e.getMSubject()
+ 
+                </td>
+		<td>
+			$e.getGrpmgmtType()
+		</td>
+		<td>
+			$e.getPermission()
+		</td>
+		<td>
+			$e.getExpiryDate()
+		</td>
+                <td >
+                        $e.getSender()
+                </td>
+                <td align=center>
+                        ##<INPUT TYPE="CHECKBOX" NAME=$e.getMSubject() VALUE="" onClick="addDeleteList(this,document.frm);">
+			#set($mailCname="${e.getMSubject()}:${e.getStatus()}:${e.getSender()}")
+                        <INPUT TYPE="CHECKBOX" NAME="$mailCname" VALUE="" onClick="addDeleteList(this,document.frm);">
+
+                </td>
+        </tr>
+        #end
+ 
+        <tr>
+                <td align="center"colspan=8 bgcolor="$ui.menuColor">
+                <input type="hidden" name="actionName" value="">
+                <input type="button" name="eventSubmit_AcceptUser" value="$online_accept" onClick="AcceptField(document.frm,this);">
+                <input type="button" name="eventSubmit_RejectUser" value="$online_reject" onClick="AcceptField(document.frm,this);">
+                <input type="hidden" name="deleteFileNames" value="">
+                ##<input type="hidden" name="group" value="$group">
+                <input type="hidden" name="role" value="$role">
+                </td>
+        </tr> 
+
+	#end
+</td>
+</tr>
+                
+	<input type="hidden" name="status" value=$status>
+
+##////////////////////////view courses/////////////////////////////	
+		
+
+	#if($status == "CourseRegistration")
+
+	<tr bgcolor="$ui.menuColor"  align="right">	
+		<td>
+			<b> $online_organisation </b>
+		</td>
+		<td align="center">
+			<b>$brih_last $brih_name </b>
+		</td>
+		<td align="center">
+			<b>$brih_first $brih_name </b>
+		</td>
+		<td align="center">
+			<b> $brih_email </b>
+		</td>
+		<td align="center">
+			<b> $brih_course $brih_Of1 $brih_name</b>
+		</td>
+		<td align="center">
+			<b> $brih_usr $brih_Of1 $brih_name </b>
+		</td>
+		<td align="center">
+			<b> $brih_course $brih_Of1 $brih_ID</font></bi	
+		</td>
+		<td>
+                	<b> $brih_select </b>
+		</td>
+
+	</tr>
+	#foreach($e in $entry)
+	<tr  align="right">
+	
+
+
+	  <td>
+		$e.getGrpmgmtType()
+	  </td>		
+	  <td >
+		$e.getPermission()
+	  </td>
+	  <td >
+		$e.getMsgID()	
+	  </td>
+          <td >
+
+		$e.getStatus()
+	  </td>
+          <td >
+
+		$e.getPDate()
+	  </td>
+          <td >
+
+		$e.getMSubject()
+	  </td>
+          <td>
+
+		$e.getSender()
+	  </td>
+          <td align="center">
+		##<INPUT TYPE="CHECKBOX" NAME="$e.getStatus()" VALUE="" onClick="addDeleteList(this,document.frm);">
+		#set($mailCname="${e.getStatus()}:${e.getSender()}${e.getMSubject()}")
+                <INPUT TYPE="CHECKBOX" NAME="$mailCname" VALUE="" onClick="addDeleteList(this,document.frm);">
+	  </td>	 	
+	</tr>
+	#end
+
+	<tr>
+  	<td align="center" colspan=8 bgcolor="$ui.menuColor">
+	<input type="hidden" name="actionName" value="">
+	<input type="button" name="eventSubmit_doAcceptCourses" value="$online_accept" onClick="AcceptField(document.frm,this);">
+	<input type="button" name="eventSubmit_doDeleteCourse" value="$online_reject" onClick="AcceptField(document.frm,this);">
+	<INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+     	</td>
+	</tr>
+	#end
+	<br>
+
+</td>
+</tr>
+</table>
+#end
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function AcceptField(frm,field)
+        {
+		 if(frm.deleteFileNames.value != "")
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                {
+                        alert("Please select the check box");
+                        return;
+                }
+	
+	}
+ 
+        function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        }
+
+
+</SCRIPT>
+

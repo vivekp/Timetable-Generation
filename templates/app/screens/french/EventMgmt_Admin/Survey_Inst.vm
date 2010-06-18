@@ -1,0 +1,130 @@
+
+
+
+
+$page.setBgColor($ui.bgcolor)
+<body>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+				$page.setTitle("Survey")
+									<a href=$link.setPage("call,IndexHome.vm")> Maison</a> | 
+											<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> | Aperçu  pour $cname 
+											</b></font>
+                </td>
+        </tr>
+</table>
+
+
+<table width=100%>
+        <tr>
+                <td align=right>
+		                <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/SurveyStud.html","newWin");>Aide </a>
+		                </td>
+        </tr>
+</table>
+<form name=frm method="post" action="$link.setAction("SurveyAction").setPage("call,EventMgmt_Admin,Survey_Inst.vm")">
+<table border=1 align=center bgcolor="$ui.tableColor" width=50%>
+	<tr><td  width=100% align="center" bgcolor="$ui.menuColor"> <font color="#000000 "><I><b>
+		</b></I></td></tr>
+						</table>
+
+<table border=1 align=center bgcolor="$ui.tableColor" width=50%>
+			 	
+                	<input type="hidden" name="actionName">
+                	<input type="hidden" name="val">
+                	<input type="hidden" name="mode" value=$mode>
+                	<input type="hidden" name="group" value=$group>
+	</table>
+	</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckQues(frm,field)
+        {
+		if((frm.group1.value!="") &&(frm.uname.value!=""))
+		{ 
+          		if((frm.q1.value!="") &&(frm.q2.value!="") && (frm.q3.value!="") && (frm.q4.value!="") &&(frm.q5.value!="")) 
+			{
+                		frm.actionName.value=field.name;
+                        	frm.submit();
+                	}
+                	else
+               	 	{
+                        	alert("Please Fill All The mandatory (*) Fields");
+                	}
+		}
+		else
+		{
+                        alert("Please Select CourseId and InstructorName");
+                }
+        }
+        function ValueUpdate(frm,field)
+        {
+		if((frm.pdate.value!="") &&(frm.q1.value!="") &&(frm.q2.value!="") && (frm.q3.value!="") && (frm.q4.value!="") &&(frm.q5.value!=""))
+		{ 
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+                else
+                {
+                        alert("There is no question for updating");
+                }
+        }
+        function CheckMarks(frm,field)
+        {
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+        function CheckResult(frm,field)
+        {
+		if((frm.group1.value!="") &&(frm.uname.value!=""))
+		{ 
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+		else
+		{
+                        alert("Please Select CourseId and InstructorName");
+                }
+	}
+	function checkField(frm,field)
+        {
+		var items;
+		items=frm.deleteFileNames.value;
+                if(items.length!=0)
+                {
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert("Please select checkbox  !!");
+        }
+        function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        }
+	function checkoption (frm,field)
+	{
+		frm.val.value=document.frm.group1.value;
+	}
+</SCRIPT>

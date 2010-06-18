@@ -1,0 +1,119 @@
+#*
+ * @(#) UploadMarks.vm
+ * Copyright (c) 2007-2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com ">Shaista</a>
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Upload Marks")
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	$brih_upload $brih_marks
+	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>  
+	</font>
+</td>
+</tr>
+</table>
+<SCRIPT language="JavaScript">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"resizable,height=500,width=800,menubar=yes,toolbar=yes,scrollbars=yes");
+        }
+	function checkFile(uploadform,field)
+	{
+		if(uploadform.file.value!="")
+		{
+			uploadform.actionName.value=field.name;
+			uploadform.submit();
+		}
+		else
+		{
+			alert("File could not empty !!");
+		}
+	}
+</SCRIPT>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+                <font size=4 color=red><b>$brih_MarksMsg1 </b></font>
+        </marquee>
+
+
+<form name="uploadform" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_User,UploadMarks.vm").setAction("UploadMarksAction")" on>
+
+  	<div align="left">
+    	<font face="$ui.sansSerifFonts">
+		<a href=javascript:popupWin("/brihaspati2/docs/MarkList.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+	</font>
+  	</div>
+#if($fileExists=="true")
+	<table align="right">
+	<tr aligh="right">
+	<td align="right">
+		<a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("type","marks").addPathInfo("filename",$fileName)","newWin");> $brih_view $brih_marks  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+		</tr>
+		<tr align="right">
+		<td align="right">
+		<a href="$link.setPage("call,ViewFileContent.vm").addPathInfo("type","marks").addPathInfo("dl",1).addPathInfo("filename",$fileName)"> $brih_download $brih_marks </a>&nbsp;&nbsp;
+	</td>
+	</tr>
+  	</table>
+#end
+	
+	<table width=100% bgcolor="$ui.bgcolor" align="center">
+      	#if ($errorTemplate)
+      	<tr>
+        <td colspan="4">
+          <table bgcolor="$ui,bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      	</tr>
+      	#end
+	<tr>
+	<td>
+		<font color="brown"><b>$!data.getMessage()</b></font>
+	</td>
+	</tr>
+        </table>
+
+	<table border=1 bgcolor="$ui.bgcolor" width="50%" align="center">
+	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center"><font size=4><b>
+		$brih_upload $brih_marks
+	</b></font>
+	</td>
+	</tr>
+      	<tr align="right">
+        	##fileUpload ("$brih_at_file <font color=Red>*</font>" "file")
+		<td><input type="file" size="35" name="file"> </td>
+		<td> &nbsp;&nbsp; <font color=Red>*</font> $brih_at_file </td>
+      	</tr>
+      	<tr>
+        <td align="center" colspan=2 bgcolor="$ui.buttonBoxColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+
+          <font face="$ui.sansSerifFonts">
+	  <input type="hidden" name="actionName">
+          <input type="button" name="eventSubmit_doUpload" value="$brih_upload" onClick="checkFile(document.uploadform,this);"/>
+          </font>
+        </td>
+      </tr>
+      
+    </table>
+</form>

@@ -1,0 +1,8 @@
+#*
+ * @(#) News_All.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+*#
+#parse("screens/${lang}/News_All.vm")

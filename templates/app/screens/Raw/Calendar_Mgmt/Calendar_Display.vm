@@ -1,0 +1,284 @@
+#*
+ * @(#)Calendar_Display.vm
+ * Copyright (c) 2005-2006,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singhnk@iitk.ac.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:madhavi_mungole@hotmail.com">Madhavi Mungole</a> 
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set ($lang=$data.getUser().getTemp("lang" ).toString())
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+##<table bgcolor="$ui.tableColor" width=100%>
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+	##<font face="$ui.sansSerifFonts"><b>
+	<font><b>
+	 #if($data.getUser().getUserName() == "admin")
+         $page.setTitle("Admin's Calendar ")
+         ##<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | $brih_calendar 
+         <a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> | $brih_calendar 
+	#elseif($path =="personal")
+		##<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+		<a href=$link.setPage("Index.vm")>$brih_home</a> |
+		$page.setTitle("Personal Calendar")
+		$personal $brih_calendar
+	#else
+		##<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+		<a href=$link.setPage("Index.vm")>$brih_home</a> |
+		$page.setTitle("Course Calendar ")
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		#if($lang=="hindi") $brih_course $brih_Of1 $brih_calendar #else $brih_calendar for $course #end 
+	#end
+	</font>
+	</td>
+</tr>
+</table>
+
+<table width="100%" bgcolor="$ui.tableColor">
+<tr><td><I>* $brih_star</I></td><td><font color="green"><I>$brih_col2</I></font></td>
+<td><font color="magenta"><I>$brih_col1</I></font></td><td><font color="green"><I>(R)$brih_rh</I></font></td> 
+<td><font color="Gray"><I>$brih_col3</font></I></td></tr>
+</table>
+
+## This is main table
+
+<table align="center" width="100%">
+<tr><td align="center" valign="top">
+## width add by nksingh
+	<table align="left" bgcolor="$ui.tableColor" width="100">
+	#if($currentyear == $year1)	
+		<tr><td align=center bgcolor="$ui.menuColor"><font color="magenta">$brih_col1</font></td></tr>
+		<tr><td align=left><b><I>$M</b></I></td></tr>
+		#if($acal.size() > 0)
+			#foreach($acd in [1..31])
+                        	#if($acal.containsKey($INT.toString($acd)))
+                        	<tr>
+                                <td bgcolor="$ui.tableColor"><font color="magenta">$acd
+                                <font color="black"><I>$acal.get($INT.toString($acd))</I></font></td></tr>
+                                #end
+			#end
+		#else
+			<tr><td><I>$brih_noevent </I></td></tr>
+		#end
+	#end
+	</table>
+</td>
+<td align="center" >
+## width add by nksingh
+
+<table align="center" bgcolor="$ui.menuColor" cellspacing="1" width="80%">
+<tr>
+	<td align=center>
+		<font size=2><b><I>$brih_Da & $brih_time</b></I></font>
+	</td>
+	<td align=center>
+		<font color="blue" size=2><b><I>$date</I></b></font>
+	</td>
+</tr>
+</table>
+<table align=center bgcolor="$ui.menuColor" width="80%">
+<tr>
+	<td>
+		<font face="$ui.sansSerifFonts" size=1><b>
+		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","previous").addPathInfo("path",$path)><I>$brih_pre $brih_month</I></a>
+          	</font>
+	</td>
+	<td align=center bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFont" size=1>
+		<b>$M - $year1</b>
+		</font>
+	</td>
+	<td align=right bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFonts" size=1><b>
+        	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","next").addPathInfo("path",$path)><I>$brih_nxt $brih_month</I></a>
+		</font>
+	</td>
+</tr>
+</table>
+    	
+<form name="frm" method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm")">
+	#set($mon=["$brih_January","$brih_February","$brih_March","$brih_April","$brih_May","$brih_June","$brih_July","$brih_August","$brih_September","$brih_October","$brih_November","$brih_December"])
+## width add by nksingh
+	   <table align="center" bgcolor="$ui.tableColor" width="80%">
+		<tr bgcolor="$ui.tableColor"><td align="center">
+		#set($count=1)
+		##<font size=2>	
+		<font size=1>	
+			<select name="month">
+       			<option value="$M">$M
+			#foreach($month_name in $mon)
+				#if($month_name!=$M)
+					<option value="$count">$month_name
+				#end
+			#set($count=$count+1)
+			#end
+			</option>
+	       		</select>
+       			<select name="year">
+		       <option value="$year1">$year1
+			#foreach($list in $year_list)
+				#if($list!=$year1)
+					<option value="$list">$list
+				#end
+			#end	
+       			</option>
+			</select>
+		</font>
+		<input type ="submit" value="Go">
+		<input type="hidden" name="status" value="current">
+		<input type="hidden" name="path" value="$path">
+	       </td>
+       </tr></table>
+## width add by nksingh previous is 20%
+        <table align=center bgcolor="$ui.tableColor" cellspacing="0" cellpadding="2" width=80%>
+        ## For printing name of days*****************************************
+        <tr>
+		##set ($DAY =[" SUN "," MON "," TUE "," WED "," THR "," FRI "," SAT "])
+		#set ($DAY =[" $brihSUN "," $brihMON "," $brihTUE "," $brihWED "," $brihTHU "," $brihFRI "," $brihSAT "])
+              	#foreach ($element in $DAY)
+               	<td bgcolor="$ui.tableColor">
+                	##<b><font size=2>$element</font> </b>
+                	<font size=1>$element</font>
+		</td>
+              	#end
+        </tr>
+	<tr>
+		#if($fday.equals("1"))
+			#set($nm=1)
+		#end
+		#if($fday.equals("2"))
+			#set($nm=2)
+		#end
+		#if($fday.equals("3"))
+			#set($nm=3)
+		#end
+		#if($fday.equals("4"))
+			#set($nm=4)
+		#end
+		#if($fday.equals("5"))
+                	#set($nm=5)
+		#end
+		#if($fday.equals("6"))
+			#set($nm=6)
+		#end
+		#if($fday.equals("0"))
+			#set($nm=0)
+		#end       
+	## Getting  the current date***********************************
+
+		#set ($arr =["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+		#foreach($ele in $arr)
+			#if ($c.equals($ele))
+				#set ($p=$ele)
+			#end
+		#end 
+		## Getting the number of column is blank*******************
+		#foreach ($element in $space)
+			<td></td>
+		#end
+		#foreach ($element in $element1)
+		#set($d=0)        
+	##Verify the current date and then highlighted***************
+		#if($element == $p && $currentyear == $year1)
+			#if($currentmonth == $month1)
+                	##<td bgcolor="$ui.menuColor">
+                	<td>
+			#elseif($nm == $d)
+                 	##<td bgcolor="$ui.bgcolor">
+                 	<td>
+			#else
+				<td>
+			#end
+                #elseif($nm == $d)
+                 	<td>
+		#else
+				<td >
+                #end
+
+		#set($flag="")
+			#foreach($ele in $keyword)
+				#if($ele.equals("01"))
+		          		#set($ele="1")
+	              		#end
+				#if($ele.equals("02"))
+					#set($ele="2")
+				#end
+				#if($ele.equals("03"))
+					#set($ele="3")
+				#end
+				#if($ele.equals("04"))
+					#set($ele="4")
+				#end
+				#if($ele.equals("05"))
+					#set($ele="5")
+				#end
+				#if($ele.equals("06"))
+					#set($ele="6")
+				#end
+				#if($ele.equals("07"))
+					#set($ele="7")
+				#end
+				#if($ele.equals("08"))
+					#set($ele="8")
+				#end
+				#if($ele.equals("09"))
+					#set($ele="9")
+				#end
+				#if($element == $ele)
+					#set($flag="*")
+				#end
+			#end
+			##<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").addPathInfo("day",$element).addPathInfo("month",$M).addPathInfo("year",$year1).addPathInfo("mon",$month1).addPathInfo("path",$path)><I>$element <font color="black">$flag</font></a></I>
+			<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").addPathInfo("day",$element).addPathInfo("year",$year1).addPathInfo("mon",$month1).addPathInfo("path",$path)>
+			 #if($nm==$d)
+                                <font color="red">
+                        #elseif($hday.containsKey($element))
+                                <font color="green">
+                        #elseif($acal.containsKey($element))
+                                <font color="magenta">
+                        #else
+                                <font>
+                        #end
+                        $element </a><font color="black">$flag</font>
+                        </font>
+                        
+			</td>
+                  
+	## Code for changing the rows*********************************
+		#set ($nm=$nm + 1)
+			#if($nm ==7)
+                          </tr>
+		<tr>
+		#set($nm=0)
+			#end
+		#end
+		</tr>
+       </table>
+</td>
+<td align="left" Valign="top">
+	#if($currentyear == $year1)
+		<table align=right bgcolor="$ui.tableColor">
+		<tr><td align=center bgcolor="$ui.menuColor"><font color="green">$brih_col2</font></td></tr>
+		<tr><td align=center><b><I>$M</I></b></td></tr>
+		#if($hday.size() > 0)
+			#foreach($vhd in [1..31])
+                        	#if($hday.containsKey($INT.toString($vhd)))
+                                <tr>
+                                <td bgcolor="$ui.tableColor"><font color="green">$vhd
+                                <font color="black"><I>$hday.get($INT.toString($vhd))</I></font></td></tr>
+                                #end
+			#end
+		#else
+			<tr><td><I>$brih_nohld </I></td></tr>
+		#end
+		</table>
+	#end
+</td>
+</tr>
+</table>
+</form>

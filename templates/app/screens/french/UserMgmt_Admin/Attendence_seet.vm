@@ -1,0 +1,56 @@
+
+
+
+
+<table bgcolor="$ui.tableColor" width=100% align="center">
+    <tr bgcolor="$ui.menuColor"> <td colspan=7>
+        <a href=$link.setPage("index.vm")>Admin's Maison</a> |
+        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>Utilisateur Gestion </a> | Attendance Report
+     </td></tr>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">Ajouter  Utilisateur</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>√?tudiant  Cours  Liste</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>Effacement Instructeur </a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>Effacement √?tudiant </a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>Ajouter  Multiple  Utilisateur</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>T√©l√©chargement   Photo</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>Attendance Report</a></td>
+</tr>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm").addPathInfo("status","ForallUser")">
+
+
+        <tr bgcolor="$ui.menuColor">
+                                <td align=left colspan=7>
+                        <b>Corde de match   </b>
+                        <input align=center type="text" name="valueString" value="" >
+                        <input type="button" name="Search" value="Rechercher " onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+        </tr>
+
+	<tr>	
+				<td colspan=7 align="left">
+	                <b> Attendance Report pour <font color=green><i> Instructeur  </i></b></font>
+                </td>
+	</tr> 
+  	<tr>
+		<td colspan=7>
+      								<tr bgcolor="$ui.menuColor">
+				<td colspan=7 align="left"><b>
+					Instructeur  Nom  
+				</td>
+			</tr>
+						</td>
+		</tr>
+</table>
+
+<SCRIPT language="JavaScript">
+        function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

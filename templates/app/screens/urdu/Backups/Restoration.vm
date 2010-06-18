@@ -1,0 +1,49 @@
+ 
+
+
+$page.setTitle("Brihaspati Administrator")
+$page.setBgColor("$ui.bgcolor")
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>????? ?? ????</a> | ???? ???? 
+	</td>
+</tr>
+</table>
+
+
+ 
+<ul>
+
+
+<table width=20% align=center bgcolor="$ui.menuColor" cellpadding=10>
+<tr><td align=center>
+	<table>
+
+		<tr>
+		<td>
+    			<a href=$link.setPage("call,Backups,AdminRestore.vm")>	
+			<img src="$content.getURI("/images/$lang/restore.jpg")" border="0"></a><br>
+		</td>
+		</tr>
+
+
+		<tr>
+		<td>
+    			<a href=$link.setPage("call,Backups,AdminRestore.vm").addPathInfo("st","db")>	
+			<img src="$content.getURI("/images/$lang/completesystemrestore.jpg")" border="0"></a><br>
+		</td>
+		</tr>
+		<tr>
+		<td>
+    			<a href=$link.setPage("call,Backups,AdminRestore.vm").addPathInfo("st","glsry")>	
+			<img src="$content.getURI("/images/$lang/glsaryrestore.jpg")" border="0"></a><br>
+		</td>
+		</tr>
+
+	</table>
+</td></tr>
+</table>

@@ -1,0 +1,13 @@
+ 
+   Things to do:
+  
+   (1) Institute Course timetable -> formulation and implementation as parent time table
+   
+   (2) Work related to turbine -> every dept. has a separate login
+		               -> accordingly, one copy of database needs to be for each dept.
+		               -> user permissions and roles
+			       -> upload history and other action's history for each user to maintain
+				  a log and track down their mistakes if they blame on us
+  
+   (2) Generating student time table by getting the registration data ( to do at the last)
+

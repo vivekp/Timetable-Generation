@@ -1,0 +1,42 @@
+
+
+<div class="menu" align="center">
+ <div class="heading">
+	 Sample App Menu
+ </div>
+</div>
+
+ <hr/>
+
+<div class="menu">
+ <div class="heading">
+	Forms
+ </div>
+
+ <ul>
+  <li> <a href="$link.setPage("notes,Index.vm")">Notes Application</a> </li>
+ </ul>
+</div>
+
+<div class="menu">
+ <div class="heading">
+	Users
+ </div>
+
+ <ul>
+  <li> <a href="$link.setPage("user,FluxUserList.vm")">Users</a> </li>
+  <li> <a href="$link.setPage("group,FluxGroupList.vm")">Groups</a> </li>
+  <li> <a href="$link.setPage("permission,FluxPermissionList.vm")">Permissions</a> </li>
+ </ul>
+</div>
+
+<div class="menu">
+ <div class="heading">
+	Common Items	
+ </div>
+
+ <ul>
+  <li> <a href="$link.setPage("Index.vm")">Home</a>  </li>
+  <li> <a href="$link.setAction("LogoutUser")">Logout</a>  </li>
+ </ul>
+</div>

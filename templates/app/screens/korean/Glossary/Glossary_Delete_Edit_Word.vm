@@ -1,0 +1,96 @@
+
+
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home | Glossary | Delete & Edit Word")
+
+ <table bgcolor="$ui.tableColor" width=100%>
+    <tr> 
+        <td><font face="$ui.sansSerifFonts"><b>
+	                  <a href="$link.setPage("Index.vm")">ì§?</a> |
+	                  <a href="$link.setPage("call,Glossary,Glossary.vm")">ì?©ì?´ </a> | 
+             			ì?­ì ?/ í?¸ì§? ë?¨ì?´
+
+	                </font>
+        </td>
+    </tr>
+ </table>
+
+
+<br>
+<center>
+  <table bgcolor="$ui.tableColor" cellpadding="5" width="5" height="5">
+     <tr>
+        
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>í?? </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>B </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>C </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>D </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>E </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>F </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>G </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ë°?ì?¥ë?? </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ë?? </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>J </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ì¼?ì?´ </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>í?¨ </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ë?¨  </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>N </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Oë¥¼ </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>P </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Q </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>R </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>S </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Të?? </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ì?  </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ë¸?ì?´ </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ì?¹ </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>ì??ì?¤ </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Y </b></a>
+             </td>
+                        <td><a href="$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>Z </b></a>
+             </td>
+                </tr>
+  </table>
+<br>
+</center>
+
+<br>
+ 
+<SCRIPT LANGUAGE="javascript">
+  function checkField(frm,field)
+   {
+    if(frm.word_list.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox");
+   }
+</SCRIPT>

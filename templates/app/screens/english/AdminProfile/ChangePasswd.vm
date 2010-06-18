@@ -1,0 +1,79 @@
+
+
+$page.setTitle("Admin Home | Change Password")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	     	<a href=$link.setPage("Index.vm")>Admin's Home</a> | Change Password
+	</td>
+</tr>
+</table>
+<form name=frm method="post" action="$link.setAction("changePW").setPage("call,AdminProfile,ChangePasswd.vm")">
+  <table width="100%" bgcolor="$ui.tableColor">
+	<tr>
+        	<td><a href=$link.setPage("call,AdminProfile,ChangePasswd.vm")>Change Password</a></td>
+		<td><a href=$link.setPage("call,AdminProfile,AdminParam.vm")>Admin's Profile</a></td>
+	</tr>
+</table>
+  <table align=left width="100%" bgcolor="$ui.tableColor">
+	<tr width="100%"><td align="left" bgcolor="$ui.menuColor"><font size=4><b>
+				Change Password for Admin's
+			</b></font></td></tr>
+  </table>
+  <table align=left width="100%" bgcolor="$ui.tableColor">
+		
+	<tr>
+	#formPasswordCell("Old Password" "oldpassword" "")
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+	#formPasswordCell("New Password" "newpassword" "")
+	</tr>
+    	<tr>
+	#formPasswordCell("Retype New Password" "retypepassword" "")
+	</tr>
+    	<tr bgcolor="$ui.menuColor">
+      	<td colspan=2 align=left>	
+	  <input type="hidden" name="actionName">
+	<input type="button" name="eventSubmit_doUpdate" value="Submit" onClick="checkPassword(document.frm,this);"/>   
+	<input type="reset" name="reset" value="Reset" onClick="checkClear(document.frm,this);"/>
+      	</td>
+    	</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        //function checkPassword(frm,field,v,b)
+        function checkPassword(frm,field)
+        {
+		if((frm.oldpassword.value!="") && (frm.newpassword.value!="")  && (frm.retypepassword.value!=""))
+		{
+			if(frm.newpassword.value == frm.retypepassword.value)
+			{
+                                frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else
+			{
+				alert("The values in 'New Password' and 'Retype New Password' fields are not same !!");
+				//alert(v);
+			}
+                }
+                else
+                {
+                       alert("None of the fields can be empty !!");
+			//alert(b);
+                }
+        }
+
+        function checkClear(frm,field)
+        {
+	        frm.oldpassword.value="";
+        	frm.newpassword.value="";
+	        frm.retypepassword.value="";
+        }
+</SCRIPT>

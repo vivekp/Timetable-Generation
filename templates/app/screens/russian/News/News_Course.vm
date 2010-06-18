@@ -1,0 +1,27 @@
+
+
+$page.setTitle("Home | $course | All Course News")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+         <tr>
+             <td>
+                <font face="$ui.sansSerifFonts"><b>
+        	        <a href=$link.setPage("call,IndexHome.vm")>Ð?Ð¾Ð¼</a> | 
+			<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | Ð?Ñ?Ðµ Ð?Ñ?Ñ?Ñ? Ð?Ð¾Ð²Ñ?Ð¹
+                </font>
+              </td>
+        </tr>
+</table>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+</SCRIPT>
+<br>
+
+<form name="frm" method="post">
+<blink><b>Ð?Ð¸ÐºÐ°ÐºÐ¸Ðµ Ð½Ð¾Ð²Ð¾Ñ?Ñ?Ð¸ Ð½Ðµ Ð¿Ð°Ñ?Ñ?Ñ? Today' Ð´Ð°Ñ?Ð° sâ?¦</b></blink>
+</form>

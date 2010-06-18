@@ -1,0 +1,195 @@
+#*
+ * @(#) Gradecard.vm
+ * Copyright (c) 2007-2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr align= "right">
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz </a> | $brih_grade $brih_card
+                | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+                <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+                </font>
+                </td>
+        </tr>
+</table>
+
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Gradecard.vm").setAction("Quiz_Action")>
+<div align="left">
+$!data.getMessage()
+<br >
+<br>
+				
+	<table align=center bgcolor="$ui.tableColor" border=1 cellpadding="5" width=60% >
+	#if($user_role == "instructor")
+	<tr bgcolor="$ui.tableColor" >	
+                <td width=20% align="center" colspan=2 bgcolor="$ui.menuColor">
+                        <input type="button" name="Go" value="$brih_search" onClick="checkField1(document.frm,this);"/>
+                </td>
+                <td width=30% align="center" bgcolor="$ui.menuColor" colspan=2 >
+			<font color=blue > <i> $userList1 </i> </font>
+                        <SELECT name=userList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+				<option value=""></option> 
+                               #foreach($topic in $userList)
+                               		<option value="$!topic.getLoginName()">$!topic.getLoginName()</option>
+                               #end
+                               </SELECT>
+                        <b>    : $brih_usr $brih_Of1 $brih_name   </b>
+                </td>
+	</tr>
+	#end	
+	#if($user_role == "student")
+	<tr>
+	<td width=10% align=center colspan=4 >
+          <i>  $userList1 </i> <b> : $brih_usr $brih_Of1 $brih_name  </b>
+        </td>
+	</tr>
+	#end
+	#if($userList1 != "0" && $size != 0)
+	<tr>
+                <td width=10%  align=center colspan=2  >
+                        <b>   %  $!percentage   : $brih_percentage   </b>
+                </td>
+                <td width=20%  align=center >
+                        <b>  $!per : $brih_grade </b>
+                </td>
+                <td width=30%  align=center >
+                        <b>  $!ranks : $brih_rank </b>
+                </td>
+                
+	</tr>
+	<tr>
+
+		<td width=10%  align=center >
+                <b>    $brih_marks  </b>
+                </td>
+		<td width=20%  align=center >
+		<b>    $brih_marks $brih_Of $brih_max  </b>
+		</td>
+		<td width=20%  align=center >
+                	<b> $brih_assignment $brih_Of / $brih_quiz $brih_Of $brih_ID  </b>
+                </td>
+		<td width=30%  align=center >
+               		<b>    $brih_quiz $brih_Of $brih_Da  </b>
+                </td>
+	</tr>	
+
+	#foreach($e in $qname)
+        <tr>
+
+		#if($user_role == "instructor")
+                <td width=10%  align=center  >
+               		<input type="text" size=2 name="$e.getquizid()" value="$e.getfeedback()"  onChange="addDeleteList(this,document.frm);"  />
+                </td>
+		#end
+		#if($user_role == "student")
+		<td width=10%  align=center >
+			$e.getfeedback()
+		</td>
+		#end
+                <td width=20%  align=center >
+                	$e.getmaxmarks()
+		</td>
+		<td width=20%  align=center >
+                <b>         $e.getquizid()     </b>
+                </td>
+        	<td width=30%  align=center  >
+                	$e.getQDate()
+                </td>
+	</tr>
+
+        #end
+	#if($user_role == "instructor")
+        <tr bgcolor="$ui.menuColor">
+                <td align="center" colspan=4 >
+			<input type="button" name="Savegradecard" value="$WikiSave" onClick="checkField(document.frm,this);"/>
+                        <input type="reset"  value="$brih_reset" />
+                        <INPUT TYPE="hidden" NAME="deleteFileNames" VALUE="">
+			<INPUT TYPE="hidden" name="DB_subject" value="">
+                </td>
+        <tr>
+	#end
+	#if($user_role == "student")
+        <tr align="center" bgcolor="$ui.menuColor" >
+                <td align="center" colspan=4 >
+                        <input type="button" name="print" value="$brih_print" onClick="javascript:window.print();"/>
+                                <b>   $!overallgrade /  $totalmarks  : $brih_total </b>
+                </td>
+        <tr>
+        #end
+	#end
+		  <input type="hidden" name="actionName">
+	</table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+        
+	function checkField(frm,field)
+        {
+                if(frm.userList.value !="") {
+			if(isNumberString(frm.DB_subject.value))
+                        {
+			       alert("Max Grade should be an integer value");
+                                ##frm.grade.focus();
+                                return false;
+                        }
+
+			frm.actionName.value=field.name;
+                       	frm.submit();
+		}
+                else
+                        alert(" Please select Student name  !!");
+        }
+	function checkField1(frm,field)
+        {
+                if(frm.userList.value !="") {
+
+                        frm.actionName.value=field.name;
+                        frm.submit();
+                }
+                else
+                        alert(" Please select Student name  !!");
+        }
+
+		
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789@";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+	
+	function addDeleteList(field,frm)
+        {
+        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                frm.DB_subject.value=frm.DB_subject.value+field.value+"@";
+	}
+	
+</script>

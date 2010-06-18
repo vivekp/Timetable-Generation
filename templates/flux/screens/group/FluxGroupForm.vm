@@ -1,0 +1,66 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxGroupForm.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+$page.setTitle("Group Administration")
+$page.setBgColor($ui.bgcolor)
+
+<form method="post" action="$link.setPage("group,FluxGroupList.vm").setAction("group.FluxGroupAction")">
+  <div align="left">
+    <table bgcolor="#ffffff" cellpadding="$ui.tableCellPadding">
+
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="2">
+          <table bgcolor="#ffffff">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+      
+      <tr>
+        #formCell ("Group Name" "name" "$!flux.Group.Name" )
+      </tr>
+
+      <tr>
+        <td align="$ui.buttonAlignment" bgcolor="$ui.buttonColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+
+          <font face="$ui.sansSerifFonts">
+
+          #if ($flux.Mode == "modify")
+            <input type="submit" name="eventSubmit_doUpdate" value="Update Group"/>
+          #elseif ($flux.Mode == "delete")
+            <input type="submit" name="eventSubmit_doDelete" value="Confirm Deletion"/>
+          #else
+            <input type="submit" name="eventSubmit_doInsert" value="Add Group"/>
+          #end
+          
+          </font>
+       <td>
+     </tr>
+  </table>
+  </div>
+<!-- why is this here? !FIXME!
+  <input type="hidden" name="userid" value="$!user.UserId"/>
+-->
+</form>
+
+#if ($showEmbeddedMenu)
+  <hr size="1" noshade>
+  #parse ("screens/FluxEmbeddedMenu.vm")
+#end

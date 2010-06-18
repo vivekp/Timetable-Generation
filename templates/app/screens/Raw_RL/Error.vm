@@ -1,0 +1,7 @@
+$page.setTitle("System Error")
+
+<h2>$brih_error </h2>
+<b>$brih_error1</b>
+	#if ( $data.getMessage() )
+		$data.getMessage()
+	#end

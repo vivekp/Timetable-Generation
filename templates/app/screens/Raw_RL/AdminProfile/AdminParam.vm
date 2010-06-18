@@ -1,0 +1,136 @@
+#*
+ * @(#)AdminParam.vm
+ * Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:chitvesh@yahoo.com">Chitvesh Dutta</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * modify date: 10-06-2009
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | Change Parameters")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right" bgcolor="$ui.tableColor">
+	<td colspan="2">
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> | $brih_cp
+	</td>
+</tr>
+<form name="frm" method="post" action="$link.setPage("call,AdminProfile,AdminParam.vm").setAction("changeAParam")">
+    <tr bgcolor="$ui.menuColor"><td colspan=2 align="right"><font size=4><b>$brih_ap</b></font></td></tr>
+    <tr align="right" bgcolor="$ui.tableColor">
+	<td width="50">	<font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AFName" value="$!afname">	</font> </td>
+	<td width="30"> <font face="$ui.sansSerifFonts"> $brih_first $brih_name </font> </td>
+    </tr>
+    <tr align="right"  bgcolor="$ui.menuColor"> 
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="ALName" value="$!alname">  </font> 	</td>
+	<td width="30"> $brih_last $brih_name </td>
+    </tr>
+    <tr align="right" bgcolor="$ui.tableColor">
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AdminConf" value="$!AdminConf">  </font> </td>
+	<td width="30"> <font face="$ui.sansSerifFonts"> $brih_lcv  </font> </td>
+    </tr>
+    <tr align="right" bgcolor="$ui.menuColor">
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AdminCrsExp" value="$!CrsExp"> </font> </td>
+	<td width="30" > <font face="$ui.sansSerifFonts"> $brih_course $brih_expiry </font> </td>	
+    </tr>
+    <tr align="right" bgcolor="$ui.tableColor">   
+	<td width="50" > <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailServ" value="$!mServer"> </font> </td>
+	<td width="30"> <font face="$ui.sansSerifFonts"> $LocalMail_mail $brih_server $brih_Of1 $brih_name </font> </td>
+    </tr>
+    <tr align="right"  bgcolor="$ui.menuColor">
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailFrom" value="$!mFrom"> </font> </td>
+	<td width="30" > <font face="$ui.sansSerifFonts"> $LocalMail_mail $brih_from </font> </td>
+    </tr>
+    <tr align="right"  bgcolor="$ui.tableColor">
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailDomain" value="$!dName"> </font> </td>
+	<td width="30" > <font face="$ui.sansSerifFonts">  $brih_local $brih_domain $brih_Of1 $brih_name  </font> </td>
+    </tr>
+    <tr align="right"  bgcolor="$ui.menuColor"> 
+	<td width="50" > <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="muName" value="$!muname">  </font> </td>
+	<td width="30"> <font face="$ui.sansSerifFonts"> $LocalMail_mail $brih_Of2 $brih_usr $brih_Of1 $brih_name   </font> </td>
+    </tr>
+    <tr align="right"  bgcolor="$ui.tableColor">
+	<td size="50" >  <font face="$ui.sansSerifFonts"> <input type="password" size="30" name="mPass" value="$!mPassword"> </font></td>
+	<td size="30" > <font face="$ui.sansSerifFonts"> $LocalMail_mail $brih_Of1 $brih_pwd  </font></td>	
+    </tr>
+	<tr align="right" bgcolor="$ui.menuColor">
+	        <td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="cquota" value="$!cquota"></font></td>
+        	<td width=30><font face="$ui.sansSerifFonts">$brih_course $brih_quota ($brih_in $quota_sze)</td>
+	</tr>
+	<tr bgcolor="$ui.tableColor" align="right">
+	        <td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="uquota" value="$!uquota"></font></td>
+        	<td width=30><font face="$ui.sansSerifFonts">$brih_usr $brih_quota ($brih_in $quota_sze)</td>
+	</tr>
+
+	<tr bgcolor="$ui.menuColor" align="right">
+	        <td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="hdir" value="$!hdir"></font></td>
+        	<td width=30><font face="$ui.sansSerifFonts">$brih_home $brih_dir </td>
+	</tr>
+        <tr bgcolor="$ui.tableColor" align="right">
+		<td colspan=2 >	
+		  <input type="hidden" name="actionName">
+	          <input type="button" name="eventSubmit_doUpdate" value="$brih_submit" onClick="checkValues(document.frm,this);"/>
+		  <input type="reset" name="reset" value="$brih_reset" onClick="checkClear(document.frm,this);"/>
+	      </td>
+	</tr>
+</form>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkValues(frm,field)
+        {
+                if((frm.AFName.value!="") && (frm.ALName.value!="") && (frm.AdminConf.value!=""))
+                {
+			if(frm.AdminConf.value>=1 && frm.AdminConf.value<=100)
+			{
+				if(isNumberString(frm.AdminCrsExp.value))
+        	                {
+                	                if(isNumberString(frm.cquota.value))
+                        	        {
+                                	        if(isNumberString(frm.uquota.value))
+                                        	{
+                                                	frm.actionName.value=field.name;
+	                                                frm.submit();
+        	                                }
+                	                }
+                        	}
+			}
+			else
+			{
+				alert("List Config. Value should be between 1 to 100");
+			}
+                }
+                else
+                {
+			alert("None of the fields can be empty !!");
+                }
+        }
+
+        function checkClear(frm,field)
+        {
+	        frm.AFName.value="";
+        	frm.ALName.value="";
+	}
+	function isNumberString(chString)
+	{
+        	if(chString.length==0)
+	        return false;
+        	var RefString="0123456789";
+	        for(count=0;count<chString.length;count++)
+        	{
+                	tempChar=chString.charAt(count);
+                        	if(RefString.indexOf(tempChar)==-1)
+	                        {
+        	                        alert("Value should be numeric")
+                	                return false;
+                        	}
+	        }
+        	return true;
+	}
+
+</SCRIPT>

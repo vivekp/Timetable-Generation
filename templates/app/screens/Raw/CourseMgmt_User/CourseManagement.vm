@@ -1,0 +1,88 @@
+#*
+ * @(#) CourseManagement.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+*#
+
+$page.setTitle("Home | $course | Course management")
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString())  
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | $brih_course $brih_mgmt
+	</font>
+</td>
+</tr>
+</table>
+<table width=100%>
+<tr>
+	<td align=right>
+	<img src="$content.getURI("/images/hand.gif")">	<a href=javascript:popupWin("/brihaspati2/docs/CourseManagement.html","newWin");>$brih_help</a>
+	</td>
+</tr>
+</table>
+<body>
+<font face="$ui.sansSerifFonts">
+<ul>
+#if($user_role == "instructor")
+	<table width="20%" align="Center" bgcolor="$ui.menuColor" border=0 cellpadding="10">
+  	<tr>
+  	<td align=center>
+    		<table cellspacing=3>
+    		<tr>
+		<td>
+    			<a href=$link.setPage("call,CourseMgmt_User,Upload.vm")>
+			<img src="$content.getURI("/images/$lang/uploadcoursecontent.jpg")"border=0></a><br>
+		</td>
+    		</tr>
+    		<tr>
+		<td>
+    			<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+			<img src="$content.getURI("/images/$lang/coursecontent.jpg")"border=0></a><br>
+		</td>
+    		</tr>
+    		<tr>
+		<td>   <a href=$link.setPage("call,CourseMgmt_User,Configuration.vm").addPathInfo("cName",$course)>
+			<img src="$content.getURI("/images/$lang/CourseConfigurationcopy.jpg")"border=0></a><br>
+		</td>
+    		</tr>
+    		
+		<tr>
+		<td>   <a href=$link.setPage("call,CourseMgmt_User,UploadImage.vm")> 
+			<img src="$content.getURI("/images/$lang/upldcrsheader.jpg")"border=0></a><br>
+		</td>
+    		</tr>
+		
+		<tr>
+                <td>   <a href=$link.setPage("call,CourseMgmt_User,UploadImage.vm").addPathInfo("mode","NotUploadImage")>
+                        <img src="$content.getURI("/images/$lang/configuregrade.jpg")"border=0></a><br>
+                </td>
+                </tr>
+		<tr>
+                <td>   <a href=$link.setPage("call,CourseMgmt_User,BrihaspatiEditor.vm")>
+                       <img src="$content.getURI("/images/$lang/packager.jpg")"border=0></a><br>
+                </td>
+                </tr>
+
+    		</table>
+    		</table>
+  	</td>
+	</tr>
+	</table>
+#end
+</ul>
+</font>
+</body>   
+ 
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

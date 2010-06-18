@@ -1,0 +1,85 @@
+
+
+$page.setTitle("Admin Home | Registeration Management")
+$page.setBgColor("bgcolor")
+
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+		     	     	<a href=$link.setPage("Index.vm")>Admin's Home </a> |
+	<a href="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")">Registration Management</a> |
+	                        View Selected Courses
+        
+ 		</td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+              <td width=33%>
+        <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")>Register Course</a>
+        </td>
+        <td width=33%>
+        <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","MCRegister")>Register Multiple  Course</a>
+        </td>
+        <td width=33%>
+        <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","All").addPathInfo("scourse","scourse")>Course List</a>
+        </td>
+</tr>
+</table>
+<table bgcolor="$ui.tableColor" align=left width=100%>
+	<tr><td>
+					</td></tr>
+  </table>
+</td>
+</tr>
+</table>
+</table>
+<SCRIPT LANGUAGE="javascript">
+        function checkCourseName(frm,field)
+        {
+                if((frm.COURSEID.value!="") && (frm.UNAME.value!="")  && (frm.CNAME.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+        function checkClear(frm,field)
+        {
+        frm.COURSEID.value="";
+        frm.UNAME.value="";
+        frm.CNAME.value="";
+        }
+	 function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+	 function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+
+
+</SCRIPT>

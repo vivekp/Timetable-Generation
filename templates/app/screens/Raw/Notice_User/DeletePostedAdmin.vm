@@ -1,0 +1,83 @@
+#*
+ * @(#) DeletePosted.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:madhavi_mungole@hotmail.com ">Madhavi Mungole</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | Communication | Delete Posted Notice")
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100%>
+	<tr><td>
+	<a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> | 
+	<a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_communication</a> | $Notice_DeletePosted_msg1
+	</td></tr>
+</table>
+<form name="frm" method="Post" action="$link.setPage("call,Notice_User,DeletePostedAdmin.vm").setAction("Notice_Send_Delete")">
+#if($Mas_size!="0")
+<table align="left" width=100% bgcolor="$ui.tableColor">
+<tr>
+	<td>$Notice_Subject</td>
+	<td>$brih_Da</td>
+</tr>
+##tr for description
+<tr>
+	#foreach($detail in $msgDetail)
+		#if($velocityCount%2==0)
+		<tr bgcolor="$ui.tableColor">
+		#else
+		<tr bgcolor="$ui.menuColor">
+		#end
+		<td>
+                	<INPUT TYPE="CHECKBOX" NAME="$detail.getMsgId()" onClick="addDeleteList(this,document.frm);">
+		<a href="$link.setPage("call,Notice_User,DeletePostedAdmin.vm").addPathInfo("notice_id",$detail.getMsgId()).addPathInfo("desc","Notice_Des")">$detail.getMsgSubject()</a></td>
+		<td>$detail.getPostTime()</td>
+		</tr>
+	#end
+	<tr bgcolor="$ui.tableColor">
+	<td>
+		<input type="button" name="eventSubmit_doDelete" value="$brih_delete" onClick="CheckValue(document.frm,this);">
+		<input type="hidden" name="actionName" value="">
+		<input type="hidden" name="deleteFileNames" VALUE="">
+	</td>
+#if($desc=="Notice_Des")
+<tr>
+<td bgcolor="$ui.tableColor" align="center"><font size=4><I><b>$Notice_sub</b></I></font></td>
+</tr>
+<tr><td><textarea name=description rows=10 cols=55 wrap=physical onFocus="this.blur();">$message</textarea></td></tr>
+#end
+</tr>
+</table>
+#end
+</form>
+<SCRIPT LANGUAGE="javascript">
+function CheckValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        {
+                alert("Please select checkbox for deletion !!");
+        }
+}
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+</SCRIPT>

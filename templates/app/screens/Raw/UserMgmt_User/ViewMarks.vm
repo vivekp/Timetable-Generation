@@ -1,0 +1,62 @@
+#*
+ * @(#) ViewMarks.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:ammu_india@yahoo.com">Amit Joshi</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("View Marks")
+#set ($lang=$data.getUser().getTemp("lang" ).toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | #if($lang=="hindi") $brih_marks $brih_view  #else $brih_view $brih_marks #end
+</font>
+</td>
+</tr>
+</table>
+
+<br>
+$!data.getMessage()
+<form enctype="multipart/form-data" >
+    <table align="center" bgcolor="$ui.bgcolor" cellpadding="0">
+    #if($status != "Blank")	
+      <tr>
+	<td>
+      	<b><u>$brih_marks $brih_in $course</u><b><br><br>
+	</td>
+      </tr>
+      <tr>
+	      	<table border="1" cellpadding="0" cellspacing="1" align="center">
+			<tr>
+				#foreach($heading in $markHeading)
+      					<th bgcolor="$ui.menuColor">&nbsp;&nbsp;$heading&nbsp;&nbsp;</th>
+				#end
+			</tr>
+			<tr>	
+				#foreach($entry in $marks)
+					<td align="center" bgcolor="$ui.tableColor">$entry</td>
+				#end
+			</tr>
+      		</table>
+      </tr>
+    	#end
+      <tr>
+		#if($marksDSize == "0")
+			<td colspan=3> $brih_MarksMsg2 '$data.getUser().getUserName()'!!	</td>
+		#end
+		#if($Exp == "MExp")
+			<td colspan=3> $brih_MarksMsg3 </td>
+		#end
+		#if($Exp == "Exp")
+			<td colspan=3> $brih_MarksMsg4 	</td>
+		#end
+      </tr>	
+    </table>
+</form>

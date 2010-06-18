@@ -1,0 +1,37 @@
+
+
+
+$page.setTitle("Backups")
+$page.setBgColor("#ffffff")
+<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+	<tr align="right"><td>
+		<font face="$ui.sansSerifFonts" size=3>
+		<b><a href=$link.setPage("call,Admin.vm")>????? ?? ????</a> | ????????? </b>
+		</font>
+	</td></tr>
+</table>
+
+
+<br>
+<form method="post" enctype="multipart/form-data" >
+<table width=20% align=center bgcolor="#e5e5e5" cellpadding=1>
+
+	<tr><td>
+    		<a href=$link.setPage("call,Backups,BackupAdmin.vm")>	
+		<img src="$content.getURI("/images/$lang/backupcontent.jpg")" border="0"></a>
+	</td></tr>
+	<tr><td>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doCompleteBackup")">
+		<img src="$content.getURI("/images/$lang/completesystembackup.jpg")" border="0"></a>
+	</td></tr>
+	<tr><td align="center">
+    		<a href=$link.setPage("call,Backups,BackupList.vm")>	
+		<img src="$content.getURI("/images/$lang/backuplist.jpg")" border="0"></a>
+	</td></tr>
+	<tr><td>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doGlossaryBackup")">
+		<img src="$content.getURI("/images/$lang/glosrybackup.jpg")" border="0"></a>
+	</td></tr>
+
+</table>
+</form>

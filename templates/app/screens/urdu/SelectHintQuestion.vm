@@ -1,0 +1,71 @@
+
+
+$page.setTitle("$brih_select $brih_hint $brih_qus")
+
+
+<br>
+  <table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+    <tr align="right">
+      <td>
+        <font face="$ui.sansSerifFonts" size=3>
+           <b> ????? ????  ?????? ????</b>
+        </font>
+      </td>
+    </tr>
+  </table>
+
+<br>
+<table align=center bgcolor="$ui.bgcolor" border=1 cellpadding="1" cellspacing=1>
+  <form name=frm method="post" action="$link.setPage("BrihaspatiLogin.vm").setAction("ForgotPassword")">
+    <div align="center">
+      <h3>
+        ????? ????  ?????? ????
+      </h3>
+      <td>
+        <tr>
+            <td>
+              	<select name="qid" size=1>
+        	 		</option>
+	      </select>
+            </td>
+	    <td bgcolor="$ui.tableColor">
+	     <b>
+	      <font face="$ui.sansSerifFonts">
+	        ????? ????  ????
+	      </font>
+	     </b>
+	    </td>
+	</tr>
+        	<tr>
+		 <td> <input type="txt" name="answer" value=" " > </td>
+		 <td> <b> ???? ???? ??? ???? </b> </td>
+           	          	</tr>
+	<tr>
+        <td colspan=2 align=center>
+	  <align=center bgcolor="$ui.bgcolor" border=2 cellpadding="5">
+	  <input type="hidden" name="actionName">
+	  <input type="hidden" name="uid" value=$uid>
+	  <input type="hidden" name="lang" value="$lang">
+	  <input type="button" name="eventSubmit_doInsertHint" value="????  ??? " onClick="checkAnswer(document.frm,this);"/>
+	</td>
+	</tr>	 
+</table>
+  </div>
+</form>
+</body>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+	function checkAnswer(frm,field)
+	{
+		if(frm.answer.value!="")
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please Fill The Answer!!");
+		}
+	}
+</SCRIPT>

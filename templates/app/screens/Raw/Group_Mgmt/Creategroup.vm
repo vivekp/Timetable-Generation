@@ -1,0 +1,352 @@
+<html>
+#*
+ * @(#) Creategroup.vm
+ *  Copyright (c) 2006-07 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+	<tr> <td><b>
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a> |
+        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")> $brih_grp $brih_mgmt </a> |
+	#if($lang=="english")
+	$WikiCreate $brih_grp
+	#else
+	$brih_grp $WikiCreate
+	#end
+     </b></td></tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+	<tr><td align ="right">
+          <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Creategrp.html","newWin");>$brih_help</a>
+	</td></tr>
+</table> ## table 2 end
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Creategroup.vm").setAction("Groupmanagement")>
+<table align="center" border=1 bgcolor="$ui.tableColor" width=85% > ## table 3 start
+		<tr bgcolor="$ui.tableHeaderColor"><td align ="center"colspan=5 vlaign="top"> ## td tr 1 satart
+			##<b><font size=5><I>$brih_course $brih_Groups</I></font></b>
+			#if($lang == "english")
+			<b><font size=5><I>$WikiCreate $brih_grp </I></font></b>
+			#else
+			<b><font size=5><I>$brih_grp $WikiCreate</I></font></b>
+			#end
+		</td></tr> ##tr 1 end
+		#if($flag == "true")
+			<tr><td> ## tr td 2 start
+				<br>
+				#if($lang=="english")
+				&nbsp;&nbsp;<b>$WikiCreate $brih_grp : $brih_grpmsg1</b><br><br>
+				#else
+				&nbsp;&nbsp;<b>$brih_grp $WikiCreate : $brih_grpmsg1</b><br><br>
+				#end
+				#if($lang=="english")
+				<input type="radio" checked="true" name="grouptype" value="usagegroup">$WikiCreate $brih_Usage $brih_grp<br>
+				#else
+				<input type="radio" checked="true" name="grouptype" value="usagegroup">$brih_Usage $brih_grp $WikiCreate<br>
+				#end
+				&nbsp;&nbsp;($brih_grpmsg2)<br><br>
+				#if($lang=="english")
+				<input type="radio" name="grouptype" value="Multiplegroup">$WikiCreate $brih_multiple1 $brih_grp<br>
+				&nbsp;&nbsp;($brih_grpmsg7 $brih_grpmsg19 $brih_grpmsg20<br> 
+				&nbsp;&nbsp;$brih_grpmsg8)<br><br> 
+				#else
+				<input type="radio" name="grouptype" value="Multiplegroup">$brih_multiple1 $brih_grp $WikiCreate<br>
+				&nbsp;&nbsp;($brih_grpmsg7 $brih_grpmsg19 $brih_grpmsg20) <br><br> 
+				#end
+				#if($lang=="english")
+				<input type="radio" name="grouptype" value="signupgroup">$WikiCreate $brih_grp $brih_signup<br>
+				#else
+				<input type="radio" name="grouptype" value="signupgroup">$brih_grp $brih_signup $WikiCreate<br>
+				#end
+				&nbsp;&nbsp;($brih_grpmsg3)
+				<tr bgcolor="$ui.tableHeaderColor"><td colspan="5">
+				&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="eventSubmit_doCreategrouptype" value="$brih_cont" onClick="checkField1(document.frm, this);"/>
+				&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="eventSubmit_doCancel" value="$brih_cancel">
+			</tr></td> ## tr td 2 end
+		#end
+		#if($actionName == "eventSubmit_doCreategrouptype" && $grouptype == "usagegroup")
+	 		<tr><td>
+				#if($lang=="english")
+                		<center><b><font size=4>&nbsp;&nbsp;$WikiCreate $brih_Usage $brih_grp</font></b><br>
+				#else
+                		<br>&nbsp<center><font size=4>$brih_Usage $brih_grp $WikiCreate</font>
+				#end
+                		<table  border="0" bgcolor="$ui.tableColor" width="100%" colspan=3>
+                			<tr>
+					<td><b><font color=red>*</font>$brih_name $brih_Of1 $brih_grp :</b></td>
+                        		<td><input type="text"  size="31" name="groupname"  value=""/></td>
+                			</tr>
+                			<tr>
+					<td><b>$brih_desc $brih_Of1 $brih_grp:</b></td>
+                        		<td><textarea name="groupdesc" rows=5 cols=50 ></textarea></td>
+                			</tr>
+                		</table>
+			</td></tr>
+		#end
+		## end of usage create ##
+        	## start of multiple group ##
+        	#if($actionName == "eventSubmit_doCreategrouptype" &&  $grouptype == "Multiplegroup" || $actionName == "eventSubmit_doCreategrouptype" &&  $grouptype == "signupgroup" )
+        	<tr><td>
+        		#if($grouptype == "Multiplegroup")
+				#if($lang=="english")
+                                <br><b>&nbsp;&nbsp;$WikiCreate $brih_multiple1 $brih_grp :</b><br>
+                                #else
+                                <br><b>&nbsp;&nbsp;$brih_multiple1 $brih_grp $WikiCreate :</b><br>
+                               #end
+                     	#else
+				#if($lang=="english")
+        			<br><b>&nbsp;&nbsp;$WikiCreate $brih_grp $brih_signup :</b><br>
+				#else
+        			<br><b>&nbsp;&nbsp; $brih_grp $brih_signup $WikiCreate :</b><br>
+				#end
+        		#end
+        		&nbsp;&nbsp;$brih_grpmsg5<br>
+        		&nbsp;&nbsp;$brih_grpmsg6<br><br>
+                	<table  border="0" bgcolor="$ui.tableColor" width="100%" colspan=5>
+                	#if($grouptype =="Multiplegroup")
+                		<tr>
+                		<input type="radio" name="groupmode" value="Mgroup"onClick="this.form.studentno.disabled=true;this.form.studentno.focus();" />
+                   		$brih_grpmsg7 $brih_grpmsg19<br><br>
+                		<input type="radio"  checked="true" name="groupmode" value="MRgroup"onClick="this.form.studentno.disabled=false;this.form.studentno.focus();" />
+				#if($lang=="english")
+                 		$brih_grpmsg7 $brih_grpmsg8 $brih_students
+				#else
+                 		$brih_grpmsg7 $brih_grpmsg8 
+				#end
+                		</tr>
+                	#end
+                	<tr>
+                        	<td><b>
+                                <font color=red>*</font>
+                                $brih_name $brih_Of1 $brih_grp:</b>
+                        	</td>
+                        	<td>
+                                <input type="text"  size="31" name="groupname"  value=""/>
+                        	</td>
+                	</tr>
+                	<tr>
+	                	<td>
+                        	&nbsp;<b>$brih_default $brih_desc :</b>
+                        	</td>
+                        	<td>
+                        	<textarea name="groupdesc"  rows=5 cols=50 ></textarea>
+		        	</td>
+                	</tr>
+                	<tr>
+                        	<td><b>
+                        	<font color=red>*</font>
+                        	##$brih_nos $brih_groups :</b>
+				#if($lang=="english")
+                        	$brih_nos $brih_grp :</b>
+				#else
+                        	$brih_grp $brih_Of $brih_nos :</b>
+				#end
+                        	</td>
+                         	<td>
+                                <input type="text" size="31" name="groupno" value="" onChange="validate(this)">
+                        	</td>
+                	</tr>
+                	<tr>
+                        	<td><b><font color=red>*</font>
+                        	##$brih_nos $brih_students $brih_perg $brih_group:</b>
+				#if($lang=="english")
+				$brih_nos $brih_students $brih_perg :</b>
+				#else
+                        	$brih_perg $brih_grp $brih_in $brih_students $brih_Of $brih_nos:</b>
+				#end
+                        	</td>
+                        	<td>
+                        	##<input type="text" size="20" name="studentno" value="" onKeyUp="if (this.disabled) this.value=''" onChange="validate(this)">
+				#if($grouptype == "Multiplegroup")
+                        	<input type="text" size="31" name="studentno"  onClick="this.form.disabled=true" onChange="validate(this)">
+				#else
+                        	<input type="text" size="31" name="studentno" onClick="this.form.enabled=true" onChange="validate(this)">
+				#end
+                        	</td>
+                	</tr>
+                </table>
+        </tr></td>
+        #end
+        <br><br>
+        ## end of multiple group
+        <br>
+        #if($actionName == "eventSubmit_doCreategrouptype" )
+        #*<tr><td> ## td tr of 7
+               <I><b><font size="3">$brih_students $brih_infos:</b></font>$brih_grpmsg4</b></I><br>
+        </tr></td>*#
+        <tr><td> ## td tr 8 start
+                <table border="0" bgcolor="$ui.tableHeaderColor" colspan="5" width="100%"> ## table 7 start
+                        <tr><td align="left" >&nbsp;&nbsp;&nbsp;
+			#if($grouptype=="usagegroup")
+                          <input type="button" name="eventSubmit_doSavegroup" value="$WikiSave" onClick="checkField(document.frm,this);"/>
+			#end
+			#if($grouptype=="Multiplegroup")
+                          <input type="button" name="eventSubmit_doSavegroup" value="$WikiSave" onClick="checkField3(document.frm,this);"/>
+                        #end
+			#if($grouptype=="signupgroup")
+                          <input type="button" name="eventSubmit_doSavegroup" value="$WikiSave" onClick="checkField2(document.frm,this);"/>
+                        #end
+                                <input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+                        </tr></td>
+                </table> ## end of table 7
+        </tr></td> ## end od td tr 8
+        #end ## end if
+	<input type="hidden" name="actionName" >
+        <input type="hidden" name="grouptype" value="$grouptype" >
+        <input type="hidden" name="groupdesc" value="$groupdesc" >
+        <input type="hidden" name="deleteFileNames" value="">
+        <input type="hidden" name="stat" value="grpmgmt">
+        <input type="hidden" name="val" value="$val">
+</form>
+</table> ## end of table 3
+</html>
+<SCRIPT LANGUAGE="javascript">
+function checkField1(frm,field)
+{
+        	frm.actionName.value=field.name;
+               	frm.submit();
+}
+function checkField(frm,field)
+{
+	if(frm.groupname.value!="")
+	{
+        	frm.actionName.value=field.name;
+               	frm.submit();
+	}
+	else
+       		alert("Please fill the Mandatory(*) Fields !!");
+}
+function checkselect(frm,field)
+{
+	var items;
+	items=frm.deleteFileNames.value;
+	if(items.length!=0) 
+        {
+		frm.actionName.value=field.name;
+               	frm.submit();
+	}
+	else
+		alert("Please check box");
+}
+function deleteConfirm(frm,field)
+{
+	var delfiles;
+        delfiles=frm.deleteFileNames.value;
+        if(delfiles.length!=0)
+        {
+        	if(confirm("Selected Group will be Deleted"))
+                {
+                	frm.actionName.value=field.name;
+                        frm.submit();
+                }
+
+        }
+	else
+		alert("Please Select check box  !!");
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked)
+        {
+        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else
+        {
+        	 var rmFile,index,actualString,preString,postString;
+                 actualString=frm.deleteFileNames.value;
+                 index=actualString.indexOf(field.name+"^",0);
+                 preString=actualString.substring(0,index);
+                 postString=actualString.substring(index+field.name.length+1);
+                 actualString=preString+postString;
+                 frm.deleteFileNames.value=actualString;
+         }
+        
+}
+function validate(obj)
+{
+      	value = obj.value;
+       	for (n = 0; n < value.length; n++)
+      	if ( ! isDigit(value.charAt(n)))
+	{
+       		alert("Field must be numeric !!");
+       		return;
+       	}	
+}
+function isDigit(ch) 
+{
+	if (ch >= '0' && ch <= '9')
+      	return true;
+      	return false;
+}
+function Changegroup(frm,field)
+{
+        frm.val.value=document.frm.activity.value;
+	alert(frm.val.value);
+}
+function popupWin(url,popupName)
+{
+        Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+function checkField2(frm,field)
+{
+	if((frm.groupname.value!="") && (frm.groupno.value!="") && (frm.studentno.value!=""))
+	{
+		if((frm.studentno.value>=1) && (frm.groupno.value>=1))
+		{
+                	frm.actionName.value=field.name;
+                        frm.submit();
+		}
+		else
+			alert("Number of student per group and Number of groups should not be less than 1");
+	}
+	else
+		alert("Please fill the Mandatory(*) Fields !!");
+}
+function checkField3(frm,field)
+{
+	if(frm.groupmode[1].checked)
+        {
+        	if((frm.groupname.value!="") && (frm.groupno.value!="") && (frm.studentno.value!=""))
+                {
+                	if((frm.studentno.value>=1) && (frm.groupno.value>=1))
+                        {
+                        	frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        	alert("Number of student per group and Number of groups should not be less than 1");
+                }
+                else
+                {
+                	alert("Please fill the Mandatory(*) Fields !!");
+                }
+           }
+           if(frm.groupmode[0].checked)
+           {
+           	if((frm.groupname.value!="") && (frm.groupno.value!=""))
+                {
+                	if(frm.groupno.value>=1)
+                        {
+                        	frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        	alert("Number of groups should not be less than 1 ");
+                }
+                else
+                {
+                	alert("Please fill the Mandatory(*) Fields !!");
+                }
+          }
+
+}
+</script>

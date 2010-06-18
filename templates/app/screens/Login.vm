@@ -1,0 +1,49 @@
+#*
+ * @(#) Login.vm
+ * Copyright (c) 2004 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+#*
+<meta http-equiv="refresh" content="2; URL=http://172.28.44.17:8080/brihaspati/servlet/brihaspati/template/BrihaspatiLogin.vm">
+<meta name="keywords" content="automatic redirection">
+*#
+$page.setTitle("Brihaspati")
+$page.setBgColor($ui.bgcolor)
+<br>
+$!data.getMessage()
+##parse ("BrihaspatiLogin.vm")
+<form name="frm">
+<table align="right">
+<tr>
+<td>
+<font color="purple">Click here to enter in <b>Brihaspati</b></font><br>  
+<a href=$link.setPage("BrihaspatiLogin.vm")>
+<img src="$content.getURI("/images/login.jpg")" border="0"></a>
+</td>
+</tr>
+<tr><td colspan=2><b>
+<a href=$link.setAction("myLogin").addPathInfo("username","guest").addPathInfo("password","guest")> Open Access Courses</a>
+</b></td></tr>
+</table>
+<br>
+<br>
+<table>
+<tr>
+<td align="Left" width="90%">
+<b><u>What is BRIHASPATI? </u></b><br>
+A platform independent, highly scalable content-delivery tool for web based e-learning system !!<br><br>
+<b><u>Entities !!</u></b><br>
+ENJOY the features of Administrator, Instructor (Primary/Secondary) or Student !! <br><br>
+<b><u>Interactive communication tools !!</u></b>
+<ul><li> CHAT :- Users can communicate online...</ul>
+<ul><li> WHITE BOARD :- Instructor can make drawings,freehand or pre-defined components while chatting...</ul>
+<b><u>Features under development !!</u></b>
+<ul><li> SCORM player in brihaspati</ul>
+<ul><li> Content authoring and course instruction functionality decoupled</ul>
+<ul><li> Multiserver architecture</ul>
+<ul><li> Synchronous tool</ul>
+</td>
+</tr>
+</table>
+</form>

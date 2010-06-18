@@ -1,0 +1,74 @@
+
+
+
+
+<body>
+$page.setTitle("Admin Home | Registeration Management | Register Secondary Instructor | Registeration")
+
+<table align=left bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	 <a href=$link.setPage("Index.vm")>??????? ????? ??????</a> |
+	 <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")>?????????? ???????</a> |
+	 <a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","All")>????? ?????? ??????</a> | 
+		  ???? ??????? ???????? ???????????? ???? $entry
+		 </td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+        <tr>
+        <td width=33%><a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")>???????? ????</a></td>
+        <td width=33%><a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","MCRegister")>???????? ???  ????</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").addPathInfo("mode","All")>???? ??????</a></td>
+        </tr>
+</table>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm").setAction("InstructorRegisteration").addPathInfo("cName",$entry)">
+<table align=left width=100% bgcolor="$ui.tableColor">
+<tr bgcolor="$ui.menuColor">  
+		<td><b>???? ????</b></td>
+		<td><b>$entry</b></td>
+      </tr>
+      <tr>
+        #formCell ("???????????? ??? <font color=red>*</font>" "UNAME" "")
+      </tr>
+      <tr bgcolor="$ui.menuColor" >
+        #formPasswordCell ("?????????" "PASSWD" "")
+      </tr>
+      <tr>
+  	#formCell ("????? ???" "FNAME" "")
+      </tr>
+      <tr bgcolor="$ui.menuColor">
+        #formCell("?????? ???" "LNAME" "")
+      </tr>
+      <tr>
+        #formCell("???? ????" "EMAIL" "")
+      </tr>
+	<tr bgcolor="$ui.menuColor">
+	<td colspan=2 align=left>
+	    <input type="button" name="eventSubmit_doRegister" value="??????????" onClick="checkField(document.frm,this);"/>
+	    <input type="reset" name="Clear" value="???????? ??"/>
+	</td>
+	</tr>
+    </table>
+    <input type="hidden" name="actionName">
+    <input type="hidden" name="mode" value="$mode">	
+    <input type="hidden" name="cName" value="$entry">	
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                if(frm.UNAME.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please fill the Mandatory(*) Fields !");
+                }
+        }
+</SCRIPT>

@@ -1,0 +1,105 @@
+#*
+ * @(#) CourseRegister.vm
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com">Awadhesh Kumar Trivedi</a>
+ * @author  <a href="sweetshaista00@yahoo.com">Shaista Shekh</a>  
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("UserHome | Admin Home | Course Registration")
+$!data.getMessage()
+
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> | 
+     	<a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")> $brih_mgmt $brih_reg </a> | $brih_course $brih_reg
+	</td>
+</tr>
+</table>
+
+<br>
+<form name=frm method="post" action="$link.setPage("call,CourseMgmt_Admin,CourseRegister.vm").setAction("RegisterCourseInstructor")">
+  <div align="left">
+    <table align="center" border=2 bgcolor="$ui.bgColor" cellpadding="5">
+      <tr align="right" bgcolor="$ui.tableColor">  
+	<td> <input type="txt" size="30%" name="COURSEID" value=" "> </td>
+	<td><b><font color="$ui.fontColorRed">*</font> $brih_course $brih_Of1 $brih_ID </b></td>
+      </tr>
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="CNAME" value=" " bgcolor="$ui.bgcolor"> </td>
+	<td><b><font color="$ui.fontColorRed">*</font> $brih_course $brih_Of1 $brih_name </b></td>
+      </tr>
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="DEPARTMENT" value=" "> </td>
+	<td> <b>$brih_dept </b></td>
+      </tr>
+      <tr  align="right" bgcolor="$ui.tableColor">
+	<td>
+		<font face="$ui.sansSerifFonts"><textarea name="DESCRIPTION" rows=5 cols=60></textarea></font>
+    	</td>
+	<td>
+		<b><font face="$ui.sansSerifFonts"> $brih_desc </font> </b>
+	</td>
+      </tr>
+      <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="UNAME" value=" "> </td>
+	<td><b><font color="$ui.fontColorRed">*</font> $brih_usr $brih_Of1 $brih_name </b></td>
+     </tr>
+     <tr  align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="PASSWD" value=" "> </td>
+	<td><b> $brih_pwd</b></td>
+     </tr>
+     <tr  align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="FNAME" value=" "> </td>
+	<td><b> $brih_first $brih_name </b></td>
+    </tr>
+    <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="LNAME" value=" "> </td>
+	<td><b> $brih_last $brih_name </b></td>
+    </tr>
+    <tr align="right" bgcolor="$ui.tableColor">
+	<td> <input type="txt" size="30%" name="EMAIL" value=" "> </td>
+	<td> <b>$brih_email $brih_ID </b> </td>
+   </tr>
+   <tr>
+	<td align=center colspan=2 bgcolor="$ui.menuColor">
+		<input type="hidden" name="actionName" >
+		<input type="button" name="eventSubmit_doRegister" value=$brih_reg  onClick="checkCourseName(document.frm,this);"/>
+		<input type="reset" name="Clear" value=$brih_clear onClick="checkClear(document.frm,this);"/>
+	</td>
+   </tr>
+	</table>
+  </div>
+</form>
+</body>
+
+</tr></table>
+<SCRIPT LANGUAGE="javascript">
+	function checkCourseName(frm,field)
+	{
+		if((frm.COURSEID.value!="") && (frm.UNAME.value!="")  && (frm.CNAME.value!=""))
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please Fill All The Mandatory(*) Fields");
+		}
+	}
+	function checkClear(frm,field)
+	{
+	frm.COURSEID.value="";
+	frm.UNAME.value="";
+	frm.CNAME.value="";
+	}
+</SCRIPT>

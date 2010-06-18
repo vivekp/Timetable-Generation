@@ -1,0 +1,46 @@
+
+
+$page.setTitle("Edit Test Information")
+$page.setBgColor("$ui.bgcolor")
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	<a href=$link.setPage("call,Question_Bank,Question_bank.vm")>????  ?????? (???? )</a> | 
+	<a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>???   ????  ?????? (???? )</a> |  ???? ????          </td>
+</tr>
+</table>
+
+<br>
+<form name="frm" method="post" action="$link.setPage("call,Question_Bank,Question_List.vm").setAction("Question_Bank")">
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteQuestionsId.value=frm.deleteQuestionsId.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteQuestionsId.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteQuestionsId.value=actualString;
+       	 }
+}
+function checkField(frm,field)
+   {
+    if(frm.deleteQuestionsId.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+</script>

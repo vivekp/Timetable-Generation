@@ -1,0 +1,425 @@
+#*
+ * @(#) IndexHome.vm
+ * Copyright (c) 2006-2008,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Login | Index | IndexHome")
+$page.setBgColor("$ui.bgcolor")
+
+<body>
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+#macro(UNAME)
+
+        #if($firstname!="")
+                #if($lastname!="")
+                <b> $firstname $lastname</b>
+                #else
+                <b> $firstname</b>
+                #end
+        #else
+        <b>$username</b>
+        #end
+#end
+
+#macro (BlinkingText $text)
+  <font face="$ui.sansSerifFonts" color="$ui.fontColorRed">
+      &nbsp;&nbsp;<blink><sup>$text</sup></blink>&nbsp;
+  </font>
+#end
+
+
+<table width=100% CellPadding=0 align=center>
+<tr bgcolor="$ui.tableColor">
+	<td align="center"><font size=5>
+	<I>
+	<b>
+	#if($user_role!="student")
+		$brih_instructor $brih_Of1 $brih_inter
+	#else
+		$brih_student $brih_Of1 $brih_inter
+	#end
+	</b></I></font></td>
+</tr>
+<tr bgcolor="$ui.bgcolor">
+	<td align=center>
+	
+		<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+			        <font size=4 face="$ui.sansSerifFonts"> <font color="$ui.fontColorBlue" > <b> #UNAME() </font> $brih_welcome
+			       </b> </font>
+
+        	</marquee>
+	</td>
+</tr>
+</table>
+
+<br>
+#if($guest_login=="true")
+<table align=center border=1 width=80% bgcolor="$ui.tableColor" cellpadding=5>
+<tr>
+<td align=center>
+<font face="$ui.sansSerifFonts" color="$ui.fontColorRed">brih_guestMsg</font>
+</td>
+</tr>
+</table>
+#end
+
+<br>
+<table width=100% align=center> ##table 1 start
+	<tr>
+## Start of today's events
+#if($guest_login=="false")
+        <td width=20% valign="top">
+        <table border=1 width=100% valign="top">
+        <tr><td>
+	#if($information.size() > 0)
+        	<div style="width:300px; overflow: auto;">
+        #end
+                <table border=1 width=100% align=center valign="top">
+                <tr>
+			<td colspan=3 align=center bgcolor="$ui.tableColor">
+	                <font face="$ui.sansSerifFonts"><b>$brih_today $brih_Of1 $brih_event</b></font>
+                	</td>
+		</tr>
+                </table>
+                <table width=100% valign="top">
+                #set ( $count1 = 1 )
+                #set ( $row_counter = 1 )
+                #foreach ($element in $information)
+                        #set ( $count2 = 1 )
+                        #foreach ($begt in $Stime)
+                                #set ( $count3 = 1 )
+                                #foreach ($stt in $Etime)
+                                        #if (($count1 == $count2) && ($count1 ==$count3))
+                                        ##<tr>
+					#if($row_counter % 2 == 0)
+                                                <tr bgcolor="$ui.tableColor">
+                                                #set($row_counter=$row_counter+1)
+                                        #else
+                                                #set($row_counter=$row_counter+1)
+                                                <tr bgcolor="$ui.buttonBoxColor">
+                                        #end
+
+                                                #if ($INT.valueOf($begt) > $INT.valueOf($currenttime))
+                                                <td><font color="$ui.fontColorGreen">$element</font>
+                                                #elseif($INT.valueOf($currenttime) < $INT.valueOf($stt))
+                                                <td><blink><font color="$ui.fontColorRed">$element</font></blink>
+                                                #else
+                                                <td><font color="$ui.fontColorBlack">$element</font>
+                                                #end
+                                                </td>
+					</tr>
+                                        #end
+                                #set($count3 =$count3 + 1)
+                                #end
+                        #set($count2=$count2+1)
+                        #end
+                #set ( $count1 = $count1 + 1 )
+                #end
+		 </table>
+		</div>
+        </table>
+        </td>
+#end		
+##end of today event
+		<td valign="top" align="center">
+		#if($inst.size() >1)
+		<div style="width:460px; overflow: auto;">
+		#end
+		<table border=0 width=100%>
+			<tr><td>
+			<table border=1 width=100% align=left valign="top">
+				<tr><td colspan=4 align=center bgcolor="$ui.menuColor">
+					<font face="$ui.sansSerifFonts"><b><u>$brih_reg2 $brih_course</font>
+				</td></tr>
+			</table>
+			<tr><td bgcolor="$ui.menuColor">
+				<table border=1 width="100%" valign="top" align="left">
+				#if(($guest_login=="false")&&($user_role!="student"))
+					<tr>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>$brih_msg2</font>
+					</td>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>$brih_status</font>
+					</td>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>$brih_course $brih_Of1 $brih_name</font>
+					</td>
+					</tr>
+					#set($count=1)
+					#foreach($instructor in $inst)
+					#set($count1=1)
+					#foreach($message in $unread_msg)
+					#if($count==$count1)
+					<tr>
+						#if($message=="0" )
+							<td align=center>
+							<font face="$ui.sansSerifFonts">
+							$message $brih_unread $brih_msg2
+##$message Unread Messages
+							</font>
+							</td>
+						#else
+							<td align=center>
+							<font face="$ui.sansSerifFonts">
+							<a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("courseId",$instructor.getGroupName()).addPathInfo("flag","FromHome")>$message $brih_unread $brih_msg2</a>
+							</font>
+							</td>
+						#end
+                        			<td align="center">
+						#if($instructor.getActive()=="1")
+							<font color="$ui.fontColorGreen">$brih_active</font>
+						#else
+							<font color="$ui.fontColorRed">$brih_inactive</font>
+						#end
+						</td>
+						<td align=center>
+						<font face="$ui.sansSerifFonts">
+						<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm").addPathInfo("courseId",$instructor.getGroupName())>$instructor.getCAlias()-$instructor.getCourseName()</a>
+						</td>
+	 				</tr>
+					#end ##if
+					#set($count1=$count1+1)
+					#end ## foreach
+					#set($count=$count+1)
+					#end ##foreach
+				#else
+					<tr>	
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>$brih_msg2</font>
+					</td>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>$brih_instructor $brih_Of1 $brih_name</font>
+					</td>
+					<td align=center bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts"><b>$brih_course $brih_Of1 $brih_name</font>
+					</td>
+					</tr>
+					#set ( $count1 = 1 )
+					#set ( $row_counter = 1 )
+					#foreach($student in $stud)
+					#if($row_counter % 2 == 0)
+                                         	<tr bgcolor="$ui.tableColor">
+                                                        #set($row_counter=$row_counter+1)
+					#else
+                                        	#set($row_counter=$row_counter+1)
+                                                <tr bgcolor="$ui.buttonBoxColor">
+					#end
+					##<tr>
+						#set ( $count2 = 1 )
+						#foreach($message in $unread_msg)	
+							#if($count1 == $count2)
+								#if( $message=="0" )
+		                                                        <td align=center>
+                		                                        <font face="$ui.sansSerifFonts">
+                                		                        $message $brih_unread $brih_msg2
+                                                		        ##$message Unread Messages
+		                                                        </font>
+                		                                        </td>
+                                		                #else
+                                                		        <td align=center>
+		                                                        <font face="$ui.sansSerifFonts">
+                		                                        <a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("courseId",$student.getGroupName()).addPathInfo("role","student").addPathInfo("flag","FromHome")>$message $brih_unread $brih_msg2
+                                		                        </a>
+                                                		        #set ($no_of_messages=$message)
+		                                                        <input type="hidden" name="no_of_messages">
+                		                                        </font>
+                                		                        </td>
+                                                		#end
+								<td align=center>
+									<font face="$ui.sansSerifFonts">
+										$student.getInstructorName()
+						     			</font>
+								</td>
+
+								<td align=center>
+									<font face="$ui.sansSerifFonts">
+										<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm").addPathInfo("courseId",$student.getGroupName())>$student.getCAlias() - $student.getCourseName()</a>
+						     			</font>
+										##BlinkingText("New" $student.hasLastModifiedAfter($lastlogin))
+										## Putting "New" word as a superscript while any new course are registered
+                                                                                #if( $student.hasLastModifiedAfter($lastlogin) )
+                                                                                        #BlinkingText("New")
+                                                                                #end
+	
+								</td>
+
+							#end
+							#set ( $count2 = $count2+1 )
+						#end
+						#set ( $count1 = $count1+1 )	
+					</tr>
+				#end
+				#end
+			</table>
+	                </td> </tr>
+			</td> </tr>
+			<tr> <td>
+			<table width="100%" >
+				<tr>
+
+					#if($guest_login=="false")
+                                        <td align="center"><a href="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path","personal")">                                         <img src="$content.getURI("/images/$lang/personalcalendar.jpg")"border=0></a>
+                                        </td>	
+					<td align="center"><a href="$link.setPage("call,UserMgmt_User,PersonalArea.vm")">
+                                        <img src="$content.getURI("/images/$lang/personalarea.jpg")"border=0></a>
+					</td>
+					#end
+				</tr>
+			</table>
+			</td></tr>
+		</table>
+		</div>
+		</td>
+	##start of today's task
+		#if($guest_login=="false")
+		<td width=20% valign="top">
+
+			<table width="100%" border=1 valign="top">
+				<tr>
+                                     <td colspan=3 align="center" bgcolor="$ui.tableColor">
+                                     <font face="$ui.sansSerifFonts"><b>$brih_today $brih_Of1 $brih_task</b></font>
+                                      </td>
+                                </tr>
+			</table>
+			#if($taskList.size() > 0)
+	                	<div style="width:300px; overflow: auto;">
+        		#end
+			<table width="100%" border=1 valign="top">
+					#set($row_counter=1)
+					#set($i=0)
+					#set($allTask="")
+					#foreach ($element in $taskList)
+						#if($row_counter % 2 == 0)
+	                                                <tr bgcolor="$ui.tableColor">
+							#set($row_counter=$row_counter+1)
+						#else
+							#set($row_counter=$row_counter+1)
+	                                                <tr bgcolor="$ui.buttonBoxColor">
+                                                #end
+
+						<td><a href=$link.setPage("call,IndexHome.vm").addPathInfo("id",$taskList.get($i).getTask_Id()).addPathInfo("actionName","eventSubmit_doDelete").setAction("Task_Action")>$brih_delete</a></td>
+						<td align="right">$taskList.get($i).getTitle()</td>
+						</tr>
+						## Below line #set($allTask...) is added by shaista
+                                                ## Adding the list of all task in a $allTask context
+						#set($allTask = "${allTask}${taskList.get($i).getTitle()}<br>")
+					#set($i=$i+1)
+                                        #end
+			</table>
+			</div>
+				#if($taskList.size() > 0)
+				<table  bgcolor="$ui.buttonBoxColor" border="1" width="100 %" valign="top">
+				<tr><td bgcolor="$ui.menuColor">
+					<input type="hidden" name="allTask" value="$allTask">
+	        	                <tr align="right"><td colspan="2"><a href=javascript:popupWin("newWin");>$brih_print $brih_for $brih_view $brih_task $brih_Of $brih_list</a>
+					</td></tr>
+				</tr></td>
+				</table>
+			#end
+		</td>
+		#end
+
+##end of today's task
+	</tr>
+</table>
+## bookmarks##
+                        <tr align="right">
+                        <ul>
+                                <td border=1><b><a href="$link.setPage("call,IndexHome.vm")" onmouseover="mopen('m1')" onmouseout="mclosetime()">$brih_My $brih_Bookmark</a></b>
+                                <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                                <b><li dir="rtl" ><a href="$link.setPage("call,Bookmarks,ManageBookmarks.vm").addPathInfo("stat1","All")"> $LocalMail_show $brih_all </a></li></b>
+                                #foreach ($Allbookmark in $allTopics)
+                                #if($Allbookmark.type=="general")
+                                <li dir="rtl"><a href="javascript:void(0)"onclick="window.open('$Allbookmark.Url')">$Allbookmark.Topic</a></li>
+                                #end
+                                #if($Allbookmark.type=="Course")
+                                <li dir="rtl"><a href="$link.setPage("call,Bookmarks,AddBookmarks.vm").addPathInfo("btname",$Allbookmark.Topic).addPathInfo("bturl",$Allbookmark.Url).addPathInfo("bgroup",$Allbookmark.Name).addPathInfo("stat","view").addPathInfo("stat1","All")">$Allbookmark.Url</a></li>
+                                #end
+                                #if($Allbookmark.type=="Course_file")
+                                <li dir="rtl"><a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("topic",$Allbookmark.Topic).addPathInfo("dir",$Allbookmark.Name).addPathInfo("type","Bookmarks").addPathInfo("filename",$Allbookmark.Url)","newWin")>$Allbookmark.Url</a></li>
+                                #end
+                                #end
+                                </div>
+                                </ul>
+                                </td>
+			</tr>
+                                <div style="clear:both"></div>
+##bookmarks ##
+</body>
+<SCRIPT language="JavaScript">
+	var timeout     = 500;
+	var closetimer  = 0;
+	var ddmenuitem  = 0;
+
+	// open hidden layer
+	function mopen(id)
+	{
+        	// cancel close timer
+	        mcancelclosetime();
+
+        	// close old layer
+	        if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+	
+        	// get new layer and show it
+	        ddmenuitem = document.getElementById(id);
+        	ddmenuitem.style.visibility = 'visible';
+	
+	}
+// close showed layer
+	function mclose()
+	{
+        	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+	}
+
+	// go close timer
+	function mclosetime()
+	{
+        	closetimer = window.setTimeout(mclose, timeout);
+	}
+
+	// cancel close timer
+	function mcancelclosetime()
+	{
+        	if(closetimer)
+	        {
+        	        window.clearTimeout(closetimer);
+                	closetimer = null;
+	        }
+	}
+
+	// close layer when click-out
+	document.onclick = mclose;
+	function popupWin(urlName,popupName)
+	{
+	         window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+	}
+	function open_mywin(url,height,width) {
+	window.open(url,height,width)
+	}
+
+       	function popupWin(popupName) {
+                var x = document.getElementsByTagName('input');
+                for (var i=0;i<x.length;i++) {
+                        if (x[i].getAttribute('name') == 'allTask') {
+                                var temp =x[i].value
+                                break;
+                        }
+                }
+                //alert("allTask="+temp);
+                Win1=window.open('',popupName,"scrollbars=1,resizable,height=200,width=400");
+                var tmp = Win1.document;
+                tmp.write('<html><head><title>popup</title>');
+                tmp.write('</head><body><p>'+temp+'<p>');
+                tmp.write('<p><a href="javascript:self.print()">Print</a> all task of popup.</p>');
+                tmp.write('<p><a href="javascript:self.close()">Close</a> the popup.</p>');
+                tmp.write('</body></html>');
+        }
+
+</SCRIPT>

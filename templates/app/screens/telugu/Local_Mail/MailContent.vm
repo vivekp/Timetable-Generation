@@ -1,0 +1,84 @@
+
+
+
+$page.setTitle("Home | $CName | Communication | Local Mail | Mails")
+
+<table bgcolor="$ui.menuColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+				<a href=$link.setPage("call,IndexHome.vm")>????</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>?????????? </a> | 
+		<a href =$link.setPage("call,Local_Mail,Mail.vm")>????? ???? </a> | 
+						????? ??????
+				</font>
+		</td>
+	</tr>
+</table>
+<table align=left bgColor="$ui.tableColor" width=100%>
+	<tr><b>
+			</b>
+	</tr>
+</table>
+<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Local_Mail,MailContent.vm").setAction("MailSendMessage")">
+<form>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+        if(frm.deleteFileNames.value!="")
+	{
+		frm.actionName.value=field.name;
+        	frm.submit();
+	}
+	else
+	{
+		alert("Please select checkbox for deletion !!");
+	}
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+       	}
+}
+
+function selectAll(field)
+{
+        if(field.checked)
+        {
+                var rmFile,index,actualString,pre=0,next=0;
+                actualString=document.frm.deleteFileNames.value="$count";
+                while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                        rmFile=document.frm.elements[temp].checked=true;
+                         }
+
+        }
+        else
+        {
+                    var rmFile,index,actualString,pre=0,next=0;
+                    actualString=document.frm.deleteFileNames.value="$count";
+
+                  while( ( pre=actualString.indexOf("^",next) ) >=0 )
+
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                         rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+           }
+}
+</SCRIPT>

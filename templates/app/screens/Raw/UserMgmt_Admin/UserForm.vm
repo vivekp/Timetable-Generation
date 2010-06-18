@@ -1,0 +1,128 @@
+#*
+ * @(#)UserForm.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a> 
+ *#
+
+$page.setBgColor($ui.bgcolor)
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+#if($status!="viewallUser")
+	#if($Process=="modify")
+		$page.setTitle("Admin Home | List Management | Search User | Update User")
+	#else
+		$page.setTitle("Admin Home | List Management | Search User | Remove User")
+	#end
+#else
+	#if($Process=="modify")
+		$page.setTitle("Admin Home | List Management | View All Users | Update User")
+	#else
+		$page.setTitle("Admin Home | List Management | View All Users | Remove User")
+	#end
+#end
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,ListManagement.vm")>$brih_list_mgmt</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>$brih_listUsr</a> |
+#if($Process=="modify")
+	#if($lang == "hindi")
+		$brih_userDetail $brih_update 
+	#else
+		$brih_update $brih_usr 
+        #end
+#else
+	#if($lang == "hindi")
+		$brih_userDetail $brih_remove 
+	#else
+		$brih_remove $brih_usr
+	#end
+#end
+</td></tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+	<td><a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">View All Course</a></td>
+        <td><a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">View All User</td>
+</tr>
+</table>
+<form method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin")">
+<table width=100% align="left" bgcolor="$ui.menuColor">
+<tr><td> $brih_userDetail</td></tr>
+</table>
+<table width=100% bgcolor="$ui.tableColor" align="left">
+      #foreach($i in $udetail)
+      <tr bgcolor="$ui.tableColor">
+		#entry1Cell("$brih_usr $brih_name" $!i.UserName)
+      </tr>
+      #if($Process=="modify")
+      <tr bgcolor="$ui.menuColor">
+        	#formCell ("$brih_first $brih_name" "firstname" $!i.FirstName)
+      </tr>
+      <tr bgcolor="$ui.tableColor">
+        	#formCell ("$brih_last $brih_name" "lastname" $!i.LastName)
+      </tr>
+      <tr bgcolor="$ui.menuColor">
+        	#formCell ("$brih_email $brih_ID" "email" $!i.Email)
+      </tr>
+      #else
+      <tr>
+        <td><b>$brih_first $brih_name</b></td>
+	<td>$!i.FirstName</td>
+      </tr>
+      <tr>
+        <td><b>$brih_last $brih_name</b></td>
+	<td>$!i.LastName</td>
+      </tr>
+      <tr>
+        <td><b>$brih_email $brih_ID</b></td>
+	<td>$!i.Email</td>
+      </tr>
+      #end
+      <input type="hidden" name="username" value="$i.UserName"/>
+      <input type="hidden" name="mode" value="$mode"/>
+       #end
+         ##</table> 
+     
+      <tr>
+        <td align="left" bgcolor="$ui.tableColor">
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+          #if ($Process== "modify")
+            <input type="submit" name="eventSubmit_doUpdate" value="$brih_update"/>
+          #elseif ($Process == "delete")
+            <input type="submit" name="eventSubmit_doDelete" value="$brih_remove"/>
+          #end
+      </td>
+    </tr>
+    </table>
+</form>
+
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+#set ( $count = 1 )
+        #foreach( $entry in $error_user )
+                #set ( $count2 = 1 )
+                #foreach( $type in $error_type )
+                        #if( $count == $count2 )
+                        <tr bgcolor="$ui.tableColor">
+                        <td align=center>
+                                <font face="$ui.sansSerifFonts">User
+Name <font color="brown">"$entry"</font></font>
+                        </td>
+                        <td align=center>
+                                <font
+face="$ui.sansSerifFonts">$type</font>
+                        </td>
+                        </tr>
+                        #end
+                        #set ( $count2 = $count2+1 )
+                #end
+                #set ( $count = $count+1 )
+        #end
+</table>

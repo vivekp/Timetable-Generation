@@ -1,0 +1,45 @@
+
+
+$page.setTitle("Admin Home | User Management")
+$page.setBgColor("#ffffff")
+
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr bgcolor="$ui.menuColor">
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     		     	<a href=$link.setPage("Index.vm")>Admin's Ð?Ð¾Ð¼</a> | 
+	<a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionstat","Edit")">Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ñ?Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ñ?</a> |
+                        Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ð²Ñ?Ð±Ñ?Ð°Ð½Ð½Ñ?Ñ? ÐºÑ?Ñ?Ñ?Ð¾Ð²
+        	</td>
+	<td width="30%" align="right">
+                </td>
+	</tr>
+</table>
+        <table width=100% align=left bgcolor="$ui.tableColor">
+	<tr><td width=50%>
+        <a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">Ð?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?ÐµÑ?Ñ? Ð²Ñ?Ðµ ÐºÑ?Ñ?Ñ?Ñ?</a>
+        </td>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">Ð?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?ÐµÑ?Ñ? Ð²Ñ?Ðµ Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ?</a>
+        </td>  
+	</tr>
+  </table>
+
+</table>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+        function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

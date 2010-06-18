@@ -1,0 +1,3 @@
+<a href="$content.getURI("/reports/pdf/batch")"> Batches </a> <br />
+<a href="$content.getURI("/reports/pdf/faculty")"> Faculty </a> <br />
+<a href="$content.getURI("/reports/pdf/room")"> Rooms </a> <br />

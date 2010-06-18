@@ -1,0 +1,58 @@
+
+
+$page.setTitle("$brih_home | $course | $brih_Wiki | $WikiLog $brih_Wiki")
+$page.setBgColor("#ffffff")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>???</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,Wiki,Wiki.vm")>?????</a> | ??? ?????
+
+        </font>
+</td>
+</tr>
+</table>
+
+
+
+<table width=100%>
+        <tr>
+                <td align=right>
+                       <img src="$content.getURI("/images/hand.gif")"> <a href=javascript:popupWin("/brihaspati2/docs/Wikiusermanual.html","newWin");>???</a>
+                </td>
+        </tr>
+</table>
+
+
+<br>
+
+<div align=center>
+	<table align="center" border=1 bgcolor="$ui.menuColor" cellpadding="5" width="10%" >
+		<tr>
+			<td>
+							???  ????  ????   ???   <INPUT type="text" value="$filename" size="25" READONLY> 
+						</td>
+		</tr>
+		<tr>	
+			<td>
+
+<TEXTAREA  wrap="virtual" name="text" rows="25"  cols="100" READONLY>
+</TEXTAREA>
+
+			</td>
+		</tr>
+	</table>       
+</div>    
+
+
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

@@ -1,0 +1,26 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxError.vm,v 1.1 2004/11/16 09:33:28 ynsingh Exp $
+
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("")
+
+<font face="$ui.sansSerifFonts">
+
+The reason for the error was:
+<p>
+<pre>
+$processingException
+
+</pre>
+
+<P>
+The stacktrace is as follows:
+<pre>
+$stackTrace
+</pre>
+
+</font>

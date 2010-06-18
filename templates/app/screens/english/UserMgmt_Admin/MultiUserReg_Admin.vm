@@ -1,0 +1,111 @@
+
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Add Multiple Users ")
+
+
+
+<br>
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+
+      <a href=$link.setPage("call,Admin.vm")>Admin's Home</a> |
+        <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>User Management</a> | Add Multiple Users  
+
+        </td>
+
+	</b>
+</tr>
+</table>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+                <font size=4 color=red><b>The file for uploading should have '.txt' extension & proper format !!</b></font>
+        </marquee>
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,MultiUserReg_Admin.vm").setAction("UserAction_Admin")">
+<div align="left">
+<br>
+<table width="100%"><tr><td align="right"><img src="$content.getURI("/images/hand.gif")"><b>
+	<font face="$ui.sansSerifFonts" size=3><a href=javascript:popupWin("/brihaspati2/docs/Userdoc.html","newWin");>Help</a></font></td></tr>
+</table>
+<br>
+<table width=50% bgcolor="$ui.menuColor" cellpadding="2" align="center" border=1>
+            	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+				<font size=4><b>File Upload for automatic multiple user registration</b></font>
+	</td>
+	</tr>
+	<tr>
+	<td bgcolor="$ui.tableColor">
+	 	 <b>
+	  	<font face="$ui.sansSerifFonts">
+	  		  	Select a Course <font color=RED>*</font> 
+	  	</font>
+	  	</b>
+	</td>
+     	<td>
+    		<select name="GroupName" size=1>
+			   	</option>
+	  	</select>
+	</td>
+    	</tr>
+     	<tr>
+	  <td bgcolor="$ui.tableColor">
+	  	<b>
+	  	<font face="$ui.sansSerifFonts">
+	  		  	Select a Role <font color=RED>*</font>
+	  	</font>
+	  	</b>
+	  	</td>
+     	  <td>
+    	  	<select name="role" size=1>
+	  	<option value="student">Student
+	 	<option value="instructor">Instructor
+	  	</option>
+	  	</select>
+	 </td>
+  	</tr>
+   	<tr>
+        	
+        	#fileUpload ("Attach File <font color=RED>*</font>" "file")
+
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.buttonBoxColor">
+          
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadadmin" value="Upload" onClick="CheckFields(document.frm,this);"/>
+          	          	<input type="hidden" name="actionName" value=""/>
+         
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>
+  </div>
+</form>
+<SCRIPT LANGUAGE="javascript">
+                function CheckFields(frm,field)
+        {
+                if((frm.GroupName.value!="") && (frm.role.value!="")  && (frm.file.value!=""))
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+			                }
+        }
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+</SCRIPT>

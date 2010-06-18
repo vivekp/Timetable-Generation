@@ -1,0 +1,113 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+		<font><b>
+	 				<a href=$link.setPage("Index.vm")>Ð?Ð¾Ð¼</a> |
+		$page.setTitle("Course Calendar ")
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		 Ð?Ð°Ð»ÐµÐ½Ð´Ð°Ñ?Ñ? for $course 		</font>
+	</td>
+</tr>
+</table>
+
+<table width="100%" bgcolor="$ui.tableColor">
+<tr><td><I>* Ð?Ð¾ÐºÐ°Ð·Ñ?Ð²Ð°ÐµÑ?, ÐµÑ?Ñ?Ñ? Ñ?Ð¾Ð±Ñ?Ñ?Ð¸Ðµ Ð² Ñ?Ñ?Ð¾Ñ? Ð´ÐµÐ½Ñ?</I></td><td><font color="green"><I>Ð?Ñ?Ð°Ð·Ð´Ð½Ð¸ÐºÐ¸</I></font></td>
+<td><font color="magenta"><I>Ð?ÐºÐ°Ð´ÐµÐ¼Ð¸Ñ?Ð½Ñ?Ðµ Ñ?Ð»Ñ?Ñ?Ð°Ð¸</I></font></td><td><font color="green"><I>(R)Ð£ÐºÐ°Ð·Ñ?Ð²Ð°ÐµÑ?, Ð¾Ð³Ñ?Ð°Ð½Ð¸Ñ?ÐµÐ½Ð¾ Ð¿Ñ?Ð°Ð·Ð´Ð½Ð¸ÐºÐ¸</I></font></td> 
+<td><font color="Gray"><I>Ð¢ÐµÐºÑ?Ñ?Ð¸Ð¹ Ð¡Ð²Ð¸Ð´Ð°Ð½Ð¸Ðµ</font></I></td></tr>
+</table>
+
+
+<table align="center" width="100%">
+<tr><td align="center" valign="top">
+	<table align="left" bgcolor="$ui.tableColor" width="100">
+		</table>
+</td>
+<td align="center" >
+
+<table align="center" bgcolor="$ui.menuColor" cellspacing="1" width="80%">
+<tr>
+	<td align=center>
+		<font size=2><b><I>????? & Ð?Ñ?ÐµÐ¼Ñ?</b></I></font>
+	</td>
+	<td align=center>
+		<font color="blue" size=2><b><I>$date</I></b></font>
+	</td>
+</tr>
+</table>
+<table align=center bgcolor="$ui.menuColor" width="80%">
+<tr>
+	<td>
+		<font face="$ui.sansSerifFonts" size=1><b>
+		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","previous").addPathInfo("path",$path)><I>Ð?Ñ?ÐµÐ´Ñ?Ð´Ñ?Ñ?Ð°Ñ? Ð?ÐµÑ?Ñ?Ñ?</I></a>
+          	</font>
+	</td>
+	<td align=center bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFont" size=1>
+		<b>$M - $year1</b>
+		</font>
+	</td>
+	<td align=right bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFonts" size=1><b>
+        	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","next").addPathInfo("path",$path)><I>Ð¡Ð»ÐµÐ´Ñ?Ñ?Ñ?Ð¸Ð¹ Ð?ÐµÑ?Ñ?Ñ?</I></a>
+		</font>
+	</td>
+</tr>
+</table>
+    	
+<form name="frm" method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm")">
+		   <table align="center" bgcolor="$ui.tableColor" width="80%">
+		<tr bgcolor="$ui.tableColor"><td align="center">
+						<font size=1>	
+			<select name="month">
+       			<option value="$M">$M
+																																																																																										</option>
+	       		</select>
+       			<select name="year">
+		       <option value="$year1">$year1
+			       			</option>
+			</select>
+		</font>
+		<input type ="submit" value="Go">
+		<input type="hidden" name="status" value="current">
+		<input type="hidden" name="path" value="$path">
+	       </td>
+       </tr></table>
+        <table align=center bgcolor="$ui.tableColor" cellspacing="0" cellpadding="2" width=80%>
+                <tr>
+		              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> SUN </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> MON </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> Ð¢Ð? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> Ð¢Ð? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> THR </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> FRI </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> SAT </font>
+		</td>
+              	        </tr>
+	<tr>
+															
+																																																																																																																																																																							</tr>
+       </table>
+</td>
+<td align="left" Valign="top">
+	</td>
+</tr>
+</table>
+</form>

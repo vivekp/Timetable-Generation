@@ -1,0 +1,26 @@
+
+
+$page.setTitle("$ Repo_Repo1 $Repo_browser")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<td><b>
+        <a href=$link.setPage("Index.vm")>ì?¬ì?©ì?? ì§? </a>| Repository  ë¸?ë?¼ì?°ì ? </b>
+        </td>
+</table>
+
+
+<table align ="left" bgcolor="$ui.tableColor" width=100% colspan=3>
+	<tr colspan=3 bgcolor="$ui.tableColor"> 
+	                 #headerCell(ì ?ì?? ì?´ë¦?)
+                          #headerCell(ëª©ì°¨ì?? ì ?ì?? $contentlist)
+                          #headerCell(í??ì?¼ì?? ì£¼ì ? $topic)
+          	</tr>
+	<tr>
+	<td align="left">
+        <table align="left" width=100%>
+                </table>
+	</td>
+</tr>
+</table>

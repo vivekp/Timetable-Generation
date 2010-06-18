@@ -1,0 +1,92 @@
+#*
+ * @(#) News_Course.vm
+ * Copyright (c) 2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">jaivir singh</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Home | $course | All Course News")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+         <tr align="right">
+             <td>
+                <font face="$ui.sansSerifFonts"><b>
+			 $brih_all $brih_course $brih_news
+			| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        	        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+                </font>
+              </td>
+        </tr>
+</table>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+</SCRIPT>
+
+<br>
+<form name="frm" method="post">
+#if($status!="empty")
+<table align="center" width="50%">
+	#set($count=1)
+	#foreach($news in $detail)
+	#if($count%2!=0)
+	<tr bgcolor="$ui.menuColor" align="right">
+		<td>
+		<font size=3>
+		<a href=javascript:popupWin("$link.setPage("call,ViewNews_Photo.vm").addPathInfo("newsid",$news.getNews_ID()).addPathInfo("date",$news.getPDate()).addPathInfo("user",$news.getSender())","newWin");>...$brih_more</a> $news.getNews_Subject()
+		</font>
+		</td>
+  	</tr>
+	#set($count=$count+1)
+	#else
+	<tr bgcolor="white" align="right">
+		<td>
+		<font size=3>
+		##$news.getNews_Subject()
+		<a href=javascript:popupWin("$link.setPage("call,ViewNews_Photo.vm").addPathInfo("newsid",$news.getNews_ID()).addPathInfo("date",$news.getPDate()).addPathInfo("user",$news.getSender())","newWin");>...$brih_more</a> $news.getNews_Subject()
+		</font>
+		</td>
+  	</tr>
+	#set($count=$count+1)
+	#end
+	#end
+	</table>
+	<br>
+	<table align="center"  width="50%">
+		<tr>
+			<td align="left">
+			#if($total_size<=11)
+				<font color="white">&laquo; $brih_less</font>
+			#elseif($startIndex=='11')
+				<font color="white">&laquo; $brih_less</font>
+			#elseif($endIndex == $total_size || $endIndex > $total_size)
+				<a href="$link.setPage("call,News,News_Course.vm").addPathInfo("startIndex",$check_pre)">&laquo; $brih_less</font>
+			#else
+				<a href="$link.setPage("call,News,News_Course.vm").addPathInfo("startIndex",$check_pre)">&laquo; $brih_less</font>
+			#end
+			</td>
+			<td align="right">
+			#if($total_size<=11)
+				<font color="white">$brih_more &raquo;</font>
+			#elseif($startIndex=='11')
+				<a href="$link.setPage("call,News,News_Course.vm").addPathInfo("startIndex",$startIndex)">$brih_more &raquo;</font>
+			#elseif($endIndex == $total_size || $endIndex > $total_size)
+				<font color="white">$brih_more &raquo;</font>
+			#else
+				<a href="$link.setPage("call,News,News_Course.vm").addPathInfo("startIndex",$startIndex)">$brih_more &raquo;</font>
+			#end
+			</td>
+		</tr>
+	</table>
+#else
+<blink><b>$brih_newsNo</b></blink>
+#end
+</form>

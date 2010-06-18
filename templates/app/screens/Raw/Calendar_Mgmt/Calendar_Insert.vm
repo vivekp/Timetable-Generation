@@ -1,0 +1,283 @@
+#*
+ * @(#)Calendar_Insert.vm
+ * Copyright (c)2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singhnk@iitk.ac.in">Nagendra Kumar Singh</a>
+ * @author <a href="mailto:madhavi_mungole@hotmail.com">Madhavi Mungole</a>  
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set ($lang=$data.getUser().getTemp("lang" ).toString())
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+#if($data.getUser().getUserName()=="admin")
+<a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> |
+ 	#if($mode=="insert")
+  		$page.setTitle("Add Information in Calendar")
+ 	#else
+  		$page.setTitle("Update Information Page in Calendar")
+ 	#end
+  		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>$brih_calendar</a> | 
+  		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").addPathInfo("day",$day).addPathInfo("year",$year).addPathInfo("mon",$month_num).addPathInfo("path",$path)>$day of $month_name ' $year</a> |
+	#if($mode=='insert')  
+		$brih_insert $brih_event $brih_detail
+ 	#else
+		#if($lang=="hindi")
+		$brih_event $brih_detail $brih_update
+		#else
+		$brih_update $brih_event $brih_detail
+		#end
+ 	#end
+#elseif($path=='personal')
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+ 	#if($mode=='insert')
+  		$page.setTitle("Add Personal Information in Calendar")
+ 	#else
+  		$page.setTitle("Update Personal Information in Calendar")
+ 	#end
+  		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>$personal $brih_calendar</a> | 
+  		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").addPathInfo("day",$day).addPathInfo("month",$month_name).addPathInfo("year",$year).addPathInfo("mon",$month_num).addPathInfo("path",$path)>$day of $month_name ' $year</a> |
+ 	
+	#if($mode=='insert')  
+		$brih_insert $brih_event $brih_detail
+ 	#else
+		#if($lang=="hindi")
+                $brih_event $brih_detail $brih_update
+                #else
+                $brih_update $brih_event $brih_detail
+                #end
+
+ 	#end
+#else
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+ 
+	#if($mode=='insert')
+  		$page.setTitle("Add Course Information in Calendar")
+ 	#else
+  		$page.setTitle("Update Course Information in Calendar")
+	#end
+
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("path",$path)>$brih_calendar</a> |
+	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").addPathInfo("day",$day).addPathInfo("year",$year).addPathInfo("mon",$month_num).addPathInfo("path",$path)>$day of $month_name ' $year</a> |
+
+	#if($mode=='insert')
+		$brih_insert $brih_event $brih_detail
+ 	#else
+		#if($lang=="hindi")
+                $brih_event $brih_detail $brih_update
+                #else
+                $brih_update $brih_event $brih_detail
+                #end
+
+	#end
+#end 
+
+	</font>
+</td></tr>
+</table>
+<table align=left width=100% bgcolor="$ui.tableColor">
+<tr>
+	#if($mode=='insert' || $mode=='update')
+		<td><b><font color=RED size="4">*</font><I>$brih_mnd</I></td>
+		<td><b><u><I>$brih_note</I></u></b></td>
+	#end
+<body bgcolor="$ui.bgcolor">
+ 	#set($min=["00","05","10","15","20","25","30","35","40","45","50","55"])
+#if($mode=='insert')
+<form name=frm method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Insert.vm").setAction("Calendar_Actions")">
+ 
+<div align="left">
+##<table align=center bgcolor="$ui.bgcolor" border="1" cellspacing="1" cellpadding="1">
+	<tr bgcolor="$ui.menuColor">
+        	<td><b><I>$brih_Da</I></b></td>
+		<td><I>$day - $month_num - $year</I></td>
+        </tr>
+        <tr>
+		<td bgcolor="$ui.tableColor"><b><I> $brih_info <font color=RED size="4">* </font></I></b></td>
+		<td><textarea name="detail" cols=40 rows=5></textarea></td>
+        </tr>
+        <tr bgcolor="$ui.menuColor">
+		<td><b><I>$brih_start $brih_time</I></b></td>
+		<td>
+                	<select name="Start_hr">
+			#foreach($hr in $hour)
+                        <option value="$hr">$hr
+		    	#end
+			</select>
+                 	&nbsp;<b><font size=+1>:: </font></b>&nbsp;
+            		<select name="Start_min">
+			#foreach($m in $min)
+	          	<option value="$m">$m	
+			#end
+       			</select>
+     		</td>
+   	</tr>
+       	<tr>
+		<td><b><I>$brih_end $brih_time</I></b></td>
+		<td>
+			<select name="Last_hr">
+         		#foreach($hr in $hour)
+           		<option value="$hr">$hr
+         		#end
+       			</select>
+       			&nbsp;<b><font size=+1>:: </font></b>&nbsp;
+       			<select name="Last_min">
+          		#foreach($m in $min)
+	     		<option value="$m">$m	
+	  		#end
+       			</select>
+		</td>
+	</tr>
+     	<tr bgcolor="$ui.menuColor"> 
+        	#formCell("$Notice_NoticeSend_msg4 " "expiry" "1")
+	</tr>
+  	<tr>
+		<td colspan=2>
+         	<input type ="button" name="eventSubmit_doInsert" value="$brih_insert" onClick="checkField(document.frm,this)"> 
+		<input type="hidden" name="uname" value=$name>
+                <input type= "reset"  value="$brih_reset">
+		</td>
+	</tr>
+</table>
+
+#else        
+<form name=frm method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Day.vm").setAction("Calendar_Actions")">
+   
+<div align="left">
+<table align=left bgcolor="$ui.tableColor" width=100%>
+	<tr bgcolor="$ui.menuColor">
+		<td><b><I>$brih_Da</b></I></td>
+		<td><I>$day - $month_num - $year<I></td>
+        </tr>
+        <tr>
+        	<td bgcolor="$ui.tableColor"><b><I> $brih_info <font color=RED size="4">* </font></I></b></td>
+		<td><textarea name="detail" cols=40 rows=5>$description</textarea></td>
+        </tr>
+	<tr bgcolor="$ui.menuColor">
+		<td><b><I>$brih_start $brih_time</b><I></td>
+		<td>
+			<select name="Start_hr">
+			<option value="$st_hr">$st_hr
+			#foreach($hr in $hour)
+				#if($hr!=$st_hr)
+				<option value="$hr">$hr
+				#end
+			#end
+            		</select>
+                 	&nbsp;<b><font size=+1>:: </font></b>&nbsp;
+            		<select name="Start_min">
+	          	<option value="$st_min">$st_min	
+			#foreach($m in $min)
+		  		#if($m!=$st_min)
+	          		<option value="$m">$m	
+		  		#end
+			#end
+       			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><b><I>$brih_end $brih_time</I></b></td>
+       		<td>
+			<select name="Last_hr">
+           		<option value="$end_hr">$end_hr
+         		#foreach($hr in $hour)
+				#if($hr!=$end_hr)
+				<option value="$hr">$hr
+				#end
+			#end
+			</select>
+			&nbsp;<b><font size=+1>:: </font></b>&nbsp;
+			<select name="Last_min">
+			<option value="$end_min">$end_min
+			#foreach($m in $min)
+				#if($m!=$end_min)
+				<option value="$m">$m
+				#end
+			#end
+			</select>
+		</td>
+	</tr>
+	<tr bgcolor="$ui.menuColor">
+		#formCell("$Notice_NoticeSend_msg4" "expiry" $expiry)
+	</tr>
+	<tr>
+		<td align=left colspan=2>
+         	<input type ="button" name="eventSubmit_doUpdate" value="$brih_update" onClick="checkField(document.frm,this)"> 
+		</td>
+	</tr>
+</table>
+#end
+		<input type="hidden" name="actionName">
+		<input type="hidden" name="path" value=$path>
+		<input type="hidden" name="day" value=$day>
+		<input type="hidden" name="mon" value=$month_num>
+		
+		<input type="hidden" name="year" value=$year>
+		<input type="hidden" name="mode" value=$mode>
+		<input type="hidden" name="info_id" value=$info_id>
+	
+</div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+function checkField(frm,field)
+{
+	if(frm.detail.value!="")
+	{
+		if((frm.Start_hr.value=="00") &&(frm.Start_min.value=="00"))
+		{
+			alert("Fill the event timeings");
+		}
+		else
+		{
+			if((frm.Start_hr.value > frm.Last_hr.value)||(frm.Start_hr.value == frm.Last_hr.value) && (frm.Start_min.value >= frm.Last_min.value)) 
+			{
+				alert("Start Time should be less than End Time");
+			}
+			else
+			{
+				if((frm.expiry.value=="")||(frm.expiry.value<=0)||(frm.expiry.value>=366))
+				{
+					alert("Expiry time can not be empty and should have the value between 1 to 365");
+				}
+				else if(!isNumberString(frm.expiry.value))
+				{
+					alert(" Deletion time Should be an integer value");
+				}			
+				else{
+					frm.actionName.value=field.name;
+					frm.submit();
+				}
+			}  
+		}
+	}
+	else
+	{
+		alert("Information can not be empty");
+	}
+}
+	 function isNumberString(chString)
+        {
+                if(chString.length==0)
+                return false;
+                var RefString="0123456789";
+                for(count=0;count<chString.length;count++)
+                {
+                        tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return false;
+                        }
+                }
+                        return true;
+        }
+
+</SCRIPT>

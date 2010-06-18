@@ -1,0 +1,84 @@
+#*
+ * @(#)DB.vm
+ * Copyright (c) 2005-2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *@author <a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ *@author <a href="mailto:sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ *@author <a href="mailto:rekha_20july@yahoo.co.in">Rakha Pal</a>
+ *#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+$page.setTitle("$brih_home |$DiscussionBoard")
+
+<body>
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr><td>
+       		<font face="$ui.sansSerifFonts"><b>
+        	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> |<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $DiscussionBoard
+       		</font>
+       </td></tr>
+</table>
+$!data.getMessage()
+<br>
+	<form name="frm" ENCTYPE="multipart/form-data" METHOD="POST" action="$link.setPage("call,Dis_Board,DB.vm").setAction("SendDB")">
+	##<form method="GET" action="$link.setPage("call,Dis_Board,DBContent.vm")">
+ 	<table border=1 width=40% align=center bgcolor="$ui.tableColor" cellpadding=4> 
+ 		<tr align=center bgcolor="$ui.menuColor">
+ 		<td colspan=2><b><font size=4><u>$DisBoard_WorkGroup:</u></font>&nbsp&nbsp<font color=green size=4>$courseid</font></b>
+ 		</td>
+ 		</tr>
+	</table>
+<br>
+	<table align="center">
+	<tr><td colspan=2 align="center">
+	#if($unread=="0")
+		<font size="3" face="$ui.sansSerifFonts"><b>$brih_unreadMsg(<font color="Blue">$unread</font>)&nbsp&nbsp
+	#else
+		<blink>
+		<font size="3" face="$ui.sansSerifFonts"><b>$brih_unreadMsg(<font color="Blue">$unread</font>)</blink>&nbsp&nbsp
+	#end
+	$LocalMail_Mail_msg1(<font color="blue">$total</font>)</b></font>
+	<tr>	
+	#if($total!="0")
+		<td align="center">
+			<input type="hidden" name="mode" value="All">
+			<INPUT TYPE="button" NAME="eventSubmit_doShowDBContent" VALUE="$LocalMail_Mail_msg2" onClick="checkValue(document.frm,this);">
+			##<input type="Submit" name=submit value="$LocalMail_Mail_msg2">
+			<input type="hidden" name="course_id" value=$courseid>
+		</td>
+	#end
+		<td>
+			<INPUT TYPE="button" NAME="eventSubmit_doShowArchive" VALUE="$brih_arch" onClick="checkValue(document.frm,this);">
+			<input type="hidden" name="course_id" value=$courseid>
+	 		<INPUT TYPE="hidden" NAME="actionName">
+                </td>
+	</tr>	
+	</td></tr>
+ 	</table>
+<br>
+#if($data.getUser().getUserName()!="guest")
+<table align="center">
+	#if($total!="0")
+	<tr><td>
+		<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("mode","compose").addPathInfo("course_id",$courseid)><img src="$content.getURI("/images/$lang/DB.jpg")" border="0"></a>
+	</td></tr>
+	#else
+	<tr><td>
+		<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("mode","compose").addPathInfo("check","first").addPathInfo("course_id",$courseid)><img src="$content.getURI("/images/$lang/DB.jpg")"border="0"></a>
+	</tr></td>
+	#end
+</table>
+#end
+</body>
+
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+	frm.actionName.value=field.name;
+        frm.submit();
+}
+</SCRIPT>
+

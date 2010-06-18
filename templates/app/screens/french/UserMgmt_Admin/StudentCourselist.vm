@@ -1,0 +1,62 @@
+
+
+$page.setTitle("Admin Home | User Management | Search Student | Course Details for '$username'")
+
+
+$page.setBgColor($ui.bgcolor)
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr><td>
+<b><a href=$link.setPage("Index.vm")>Admin's Maison</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>Utilisateur Gestion </a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>Rechercher un étudiant </a> | Détail de cours 
+</b></td>
+</tr>
+</table>
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">Ajouter l'utilisateur </a></td>
+       <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>�?tudiant Cours  Liste</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>Effacement Instructeur </a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>Effacement �?tudiant </a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>Ajouter les utilisateurs multiples   </a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>Téléchargement   Photo</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>Attendance Report</a></td>
+
+</tr>
+</table>
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_Admin,StudentCourselist.vm").setAction("RemoveStudentCourse").addPathInfo("username",$username)">
+<table align=left width=100% bgcolor="$ui.tableColor">
+				<tr bgcolor="$ui.menuColor">
+		<td>Enregistrement dans le nouveau cours  </td>
+		<td><select name="group" size=1>
+				</option>
+		</select>
+		</td>
+		<td><INPUT TYPE="SUBMIT" NAME=eventSubmit_doRegister VALUE="Registre">
+		</td>
+	</tr>
+</table>
+
+<INPUT TYPE="hidden" NAME=deleteFileNames VALUE="">
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function addDeleteList(field,frm)
+{
+if(field.checked)
+	{
+	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	}
+else
+        {
+        var rmFile,index,actualString,preString,postString;
+        actualString=frm.deleteFileNames.value;
+        index=actualString.indexOf(field.name+"^",0);
+        preString=actualString.substring(0,index);
+        postString=actualString.substring(index+field.name.length+1);
+	actualString=preString+postString;
+	
+	frm.deleteFileNames.value=actualString;
+	}
+}
+</SCRIPT>																			

@@ -1,0 +1,80 @@
+<html>
+
+<table bgcolor="#d9e3ec" width=100% >         <tr><td><b>
+        <a href=$link.setPage("call,IndexHome.vm")>Home page</a> |
+        <a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm")>Ricerca Repository</a> |
+	        Aggiungere Nuovo  Tema
+	     </b></td></tr>
+</table> <table width=100% >         <tr>
+                <td align ="right">
+          <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/ResearchRepository.html","newWin");>Aiuto</a>
+                </td>
+        </tr>
+</table> <form name="frm" method="post" action=$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").setAction("ResearchRepo_Action")>
+        <input type="hidden" name="actionName" >
+        <input type="hidden" name="mode" value="$mode">
+        <input type="hidden" name="topicname" value="$topicname">
+	<input type="hidden" name="deleteFileNames" value="">
+</form>
+</table> </html>
+<SCRIPT LANGUAGE="javascript">
+function checkField(frm,field)
+{
+	if(frm.subject.value!="")
+	{
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	else
+		alert("Please fill the Manadatory(*) Fields !!");
+}
+function checkmessage(frm,field)
+{
+        if(frm.message.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+                alert("Please fill the Message Area !!");
+}
+function deleteConfirm(frm,field)
+        {
+                var delfiles;
+                delfiles=frm.deleteFileNames.value;
+                if(delfiles.length!=0)
+                {
+                        if(confirm("Selected Group will be Deleted"))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+                else
+                alert("Please Select check box  !!");
+        }
+function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+
+        }
+function popupWin(url,popupName)
+{
+        Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+</script>
+

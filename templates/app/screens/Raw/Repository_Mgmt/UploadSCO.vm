@@ -1,0 +1,203 @@
+#*
+ * @(#) UploadSco.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("$brih_upload")
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("UploadSCO")
+$!data.getMessage()
+#set($lang=$data.getUser().getTemp("lang").toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr><td><b>
+<a href=$link.setPage("call,Repository_Mgmt,Author.vm")>$brih_authorHome </a> | 
+#if($lang == "hindi")
+	$brih_content $brih_upload 
+#else
+	$brih_upload $brih_content
+#end
+</b>
+</td></tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=right>
+<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/ContentUpload.html","newWin");>$brih_help</a>
+</td>
+</tr>
+</table>
+<table width="100%"><tr><td><b>$brih_space $!SpaceKb $quota_sze</b></td><td align="right"><b>$brih_usedspace   $!TUSize $quota_sze </b></td></tr></table>
+<table border="1" bgcolor="$ui.tableColor">
+#if($errorMess!="")
+     <tr>
+           <td><b>$brih_uploadingError </b>$!errorMess </td>
+     </tr>
+#else
+        <tr>
+        #if($uploadStatus=="full")
+                <td>
+                $brih_uploadSucessfully 
+                </td>
+        #else
+                #if($uploadStatus=="partial")
+                        <td>
+                       ## Some of the files have been uploaded
+                        $brih_uploadSomeFile  <br>
+
+                       ## Following files already existed, so were not uploaded :
+                        $brih_uploadFileExist :<br>
+
+                #elseif($totalFilesEntries.Count>0)
+                        <td>
+                        ##None of the files were Uploaded <br>
+                        ##All of the following  Existed at Server :
+                        $brih_uploadNonefile <br>
+                        $brih_uploadFileOnServer <br>
+                #elseif($uploadStatus!="")
+                        <td>
+                        ##There is nothing to Upload
+                        $brih_uploadNothin <br>
+                #end
+                <br>
+                #set($count=1)
+                #foreach($File in $failedFiles)
+			<tr>
+                        <td>$count.  $File</td>
+			</tr>
+                        #set($count=$count+1)
+                #end
+               </td>
+        #end
+        </tr>
+#end
+</table>
+<script LANGUAGE="JAVASCRIPT">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+
+	function blurTopicName(frm)
+	{
+		//document.uploadform.topicExisting.value="OLDTOPIC";
+		
+		frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+	}
+	
+	function changeTopic(frm)
+	{
+		if(frm.topicExisting[0].checked)
+		{
+			frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+		}
+		else
+		{
+			frm.contentTopic.focus();
+		}
+	}
+
+	function checkRadio()
+	{
+		if(document.uploadform.topicExisting[0].checked)
+		{
+			document.uploadform.contentTopic.blur();
+		}
+		
+	}
+	function validate(uploadform,field)
+	{
+		var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.contentTopic.value!="")
+                {
+                        var totNamedEntries=uploadform.topicList.length;
+                        for(i=1;i<totNamedEntries;i++)
+                        {
+                                if(tList.options[i].text==cTopic.value)
+                                {
+                                        if(uploadform.topicExisting[1].checked)
+                                        {
+                                                if(confirm("The topic already exists. Pressing OK will put the file/s in existing Topic"))
+                                                {
+                                                uploadform.actionName.value=field.name;
+                                                uploadform.submit();
+                                                }
+                                                else
+                                                {
+                                                return;
+                                                }
+
+                                        }
+                                }
+                        }
+                        uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+                else
+                {
+                        alert("Topic Name Can not Empty !!");
+                }
+	}
+</script>
+<form name=uploadform method="post" enctype="multipart/form-data" action="$link.setPage("call,Repository_Mgmt,UploadSCO.vm").setAction("UserAreaAction").addPathInfo("actionName","eventSubmit_doUpload")" >
+  <div align="left">
+    <table align=center bgcolor="$ui.bgcolor" cellpadding="0">
+	 <tr>
+                <img src="$content.getURI("/images/hand.gif")"><font color="red">$brih_UploadMsg</font>
+        </tr>
+<br><br>
+      <tr>
+	<td colspan=4>
+	<input type="RADIO" name=topicExisting checked=true value="OLDTOPIC" onClick=blurTopicName(document.uploadform)>$brih_Exist $brih_topic
+	<SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+	  <option></option>
+	  #foreach($topic in $allTopics)
+		<option>$topic</option>
+	  #end
+	</SELECT>
+	<input type="RADIO" name=topicExisting value="NEWTOPIC" >$brih_new $brih_topic
+	</td>
+	</tr>
+	
+      <tr>
+  	<td bgcolor="$ui.tableColor">
+  	<b><font face="$ui.sansSerifFonts">$brih_topic $brih_name</font> </b>
+	</td>
+	<td>
+	<input type="text" name=contentTopic onFocus=checkRadio() size=26>
+    	</td>
+      <tr>
+              #fileUpload ("1.&nbsp; $brih_at_file " "file1")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("6.&nbsp; $brih_at_file  &nbsp;" "file6") 
+      </tr>
+      <tr>
+              #fileUpload ("2.&nbsp; $brih_at_file " "file2")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("7.&nbsp; $brih_at_file  &nbsp;" "file7") 
+      </tr>
+      <tr>
+              #fileUpload ("3.&nbsp; $brih_at_file " "file3")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("8.&nbsp; $brih_at_file  &nbsp;" "file8") 
+      </tr>
+      <tr>
+              #fileUpload ("4.&nbsp; $brih_at_file " "file4")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("9.&nbsp; $brih_at_file  &nbsp;" "file9") 
+      </tr>
+      <tr>
+              #fileUpload ("5.&nbsp; $brih_at_file " "file5")</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>#fileUpload ("10.&nbsp; $brih_at_file  &nbsp;" "file10") 
+      </tr>
+
+      <tr>
+	<td colspan=5 align="center" bgcolor="$ui.buttonBoxColor">
+          <font face="$ui.sansSerifFonts">
+        <input type="button" name="eventSubmit_doUpload" value="$brih_upload" onClick="validate(document.uploadform,this);"/>
+	<input type="hidden" name="actionName"value="">
+
+          </font>
+        </td>
+      </tr>
+      
+    </table>
+</div>
+</form>

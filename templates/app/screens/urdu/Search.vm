@@ -1,0 +1,58 @@
+
+
+$page.setTitle("Admin Home | Search Engine")
+
+
+$page.setBgColor("$ui.bgcolor")
+
+
+<table bgcolor="$ui.tableColor" width="100%" cellspacing=2>
+	<tr>
+		<td>$page.setTitle("Home ")
+		<b><a href=$link.setPage("Index.vm")>???? </a> | ???? ?????? </b>
+		</td>
+	</tr>
+</table>
+
+<br>
+<form name="frm" method="post" action="$link.setPage("call,Search.vm").setAction("SearchEngine")">
+	<table bgcolor="$ui.tableColor" align="left" cellspacing=2>
+	<tr>
+
+					#formCell("?????? ????? ???  ??????????" "WORD" "") 
+				<td>
+		<input type="button" name="eventSubmit_doSearch" value="??????" onClick="checkValue(document.frm,this);">
+		<input type="hidden" name="actionName" value="">
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 width="30%">
+			<applet archive="Web.jar" code="Search.class"
+			codebase=$codeBase width="540" height="40">
+			</applet>
+		</td>
+
+	</tr>
+	</table>
+
+<br>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+ function checkValue(frm,field)
+   {
+    if(frm.WORD.value!="")
+      {
+		frm.actionName.value=field.name;
+       		frm.submit();
+      }
+    else
+      {
+       alert("Please Insert String for search");
+      }
+   }
+</SCRIPT>

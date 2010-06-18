@@ -1,0 +1,103 @@
+#*
+ * @(#)UserForm_Instructor.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:madhavi_mungole@hotmail.com ">Madhavi Mungole</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang=$data.getUser().getTemp("lang" ).toString())
+$page.setBgColor($ui.bgcolor)
+#if ($stat=="remove")
+	$page.setTitle("Home | $course | Student Management | List of Students | Remove User")
+#else
+	$page.setTitle("Home | $course | Student Management | List of Students | Update User")
+#end
+
+    <table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+      <tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")> $brih_home</a> |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |  
+	<a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_student $brih_mgmt</a> | 
+	<a href=$link.setPage("call,UserMgmt_User,StudentList.vm").addPathInfo("mode","All")>$brih_listOfStudent</a> | 
+	
+	#if ($stat=="remove")
+		#if($lang=="hindi")
+			$brih_userDetail $brih_remove
+		#else
+			$brih_remove  $brih_usr
+		#end
+	#else
+		#if($lang=="hindi")
+			$brih_userDetail $brih_update
+		#else
+			 $brih_update  $brih_usr
+		#end
+	#end
+	</td>
+    </tr>
+</table>
+<br>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_User,StudentList.vm").setAction("UserAction_Instructor")">
+  <div align="left">
+    <table width=40% border=1 align=center bgcolor="$ui.tableColor" cellpadding="5">
+	<tr>
+		<td align="center" bgcolor="$ui.menuColor"><font size=4>
+			<b>$brih_userDetail</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% bgcolor="$ui.tableColor" border="1" CellPadding="5">
+			#foreach($user in $user_details)
+			<tr>
+				<td><b><font size=4>$brih_usr $brih_name</font></b></td><td>$!user.UserName</td>
+			</tr>
+			#if($stat=="update")
+				<tr> #formCell ("$brih_first $brih_name" "firstname" $!user.FirstName) </tr>
+				<tr> #formCell ("$brih_last $brih_name" "lastname" $!user.LastName) </tr>
+				<tr> #formCell ("$brih_email $brih_ID" "email" $!user.Email) </tr>
+			#else
+				<tr>
+					<td width=30%><b><font size=4>$brih_first$brih_name</font></b></td>
+					<td>$!user.FirstName</td>
+				</tr>
+	        		<tr>
+					<td width=30%><b><font size=4>$brih_last$brih_name</font></b></td>
+					<td>$!user.LastName</td>
+				</tr>
+	        		<tr>
+					<td width=30%><b><font size=4>$brih_email $brih_ID</font></b></td>
+					<td>$!user.Email</td>
+				</tr>
+			#end
+			<tr>
+				<td align=center colspan=2 bgcolor="$ui.tableColor">
+					<font face="$ui.sansSerifFonts">
+					<input type="hidden" name="username" value="$!user.UserName"/>  
+          				</font>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" bgcolor="$ui.menuColor">
+			#if ($stat== "update")
+				<input type="submit" name="eventSubmit_doUpdate" value="$brih_update"/>
+			#elseif ($stat == "remove")
+				<input type="submit" name="eventSubmit_doDelete" value="$brih_remove"/>
+			#end
+			<input type=hidden name="mode" value="All">
+		</td>
+	</tr>
+	#end
+  </table>
+</td>
+</tr>
+</table>
+</div>
+</form>

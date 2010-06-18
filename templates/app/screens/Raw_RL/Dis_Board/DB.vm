@@ -1,0 +1,67 @@
+#*
+ * @(#)DB.vm
+ * Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *@author <a href="mailto:aktri@iitk.ac.in">Awadhesh Kumar Trivedi</a>
+ *@author <a href="mailto:sumanrjpt@yahoo.co.in">Suman Rajput</a>
+ *@author <a href="mailto:rekha_20july@yahoo.co.in">Rakha Pal</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ *#
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+$page.setTitle("$brih_home |$DiscussionBoard")
+<body>
+<table bgcolor="#d9e3ec" width=100%>
+	<tr align="right"><td>
+       		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> | $DiscussionBoard
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cname</a> 
+        	| <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+       		</font>
+       </td></tr>
+</table>
+<br>
+	<form method="GET" action="$link.setPage("call,Dis_Board,DBContent.vm")">
+ 	<table border=1 width=40% align=center bgcolor="#d9e3ec" cellpadding=4> 
+ 		<tr align=center bgcolor="#e5e5e5">
+ 		<td colspan=2><b><font color=green size=4>$courseid</font> &nbsp&nbsp <font size=4><u>: $brih_course $brih_Of1 $brih_ID </u></font></b>
+ 		</td>
+ 		</tr>
+	</table>
+<br>
+	<table align="center">
+	<tr><td colspan=2 align="center">
+	#if($unread=="0")
+		<td align="right"> <font size="3"><b>(<font color="Blue">$unread</font>) </b> $brih_unread  $brih_msg2</td>
+	#else
+		<td align="right"> <b><blink> <font size="3"><b>(<font color="Blue">$unread</font>) </b> $brih_unread $brih_msg2 </blink> </b></td>
+	#end
+	<td align="center"> <b>&nbsp;&nbsp;&nbsp; (<font color="blue"> $total</font>) $LocalMail_Mail_msg1 </b>
+	<img src="$content.getURI("/images/$lang/newmail1.gif")"></td>
+
+	#if($total!="0")
+		<tr> <td colspan="2" > </td> <td align="right">
+			<input type="hidden" name="mode" value="All">
+			<input type="Submit" name=submit value="$LocalMail_Mail_msg2">
+			<input type="hidden" name="course_id" value=$courseid>
+		</td></tr>
+	#end
+	</td></tr>
+ 	</table>
+<br>
+#if($data.getUser().getUserName()!="guest")
+<table align="center">
+	#if($total!="0")
+	<tr><td>
+		<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("mode","compose").addPathInfo("course_id",$courseid)><img src="$content.getURI("/images/$lang/DB.jpg")"></a>
+	</td></tr>
+	#else
+	<tr><td>
+		<a href=$link.setPage("call,Dis_Board,DisBoard.vm").addPathInfo("mode","compose").addPathInfo("check","first").addPathInfo("course_id",$courseid)><img src="$content.getURI("/images/$lang/DB.jpg")"></a>
+	</tr></td>
+	#end
+</table>
+#end
+</body>
+</form>        

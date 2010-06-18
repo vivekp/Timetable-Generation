@@ -1,0 +1,71 @@
+#*
+ * @(#)SelectHintQuestion.vm
+ * Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singhsatyapal@rediffmail.com ">Satyapal Singh</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("$brih_select $brih_hint $brih_qus")
+$!data.getMessage()
+#set ($lang=$data.getUser().getTemp("lang" ).toString())
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+	<a href=$link.setPage("BrihaspatiLogin.vm").addPathInfo("lang",$lang)>$brih_login $WikiPage</a> | $brih_select $brih_hint $brih_qus
+</td></tr>
+</table>
+<table align=left bgcolor="$ui.tableColor" width=100%>
+<form name=frm method="post" action="$link.setPage("BrihaspatiLogin.vm").setAction("ForgotPassword")">
+<tr><td>
+        	#if($lang=="hindi")
+                        <b> $brih_hint $brih_qus $brih_select</b>
+                #else
+                        <b> $brih_select $brih_hint $brih_qus</b>
+                #end
+</td></tr>
+<tr bgcolor="$ui.menuColor">
+<td>
+		#if($lang=="hindi")
+			$brih_qus $brih_select
+		#else
+		        $brih_select $brih_qus
+		#end
+</td>
+<td>
+             	<select name="qid" size=1>
+        	 #foreach($i in $question)	  
+	 	 	<option value="$i.getQuestionId()">$i.getQuestionName()
+		 #end
+		</option>
+	      </select>
+</tr>
+<tr>
+       	#formCell("$Profile_Ans" "answer" "")
+</tr>
+	<tr bgcolor="$ui.menuColor">
+        <td colspan=2 align=left>
+	  <input type="hidden" name="actionName">
+	  <input type="hidden" name="uid" value=$uid>
+	  <input type="hidden" name="lang" value=$lang>
+	  <input type="button" name="eventSubmit_doInsertHint" value="$brih_submit" onClick="checkAnswer(document.frm,this);"/>
+	</td>
+	</tr>	 
+</table>
+</form>
+</body>
+</table>
+<SCRIPT LANGUAGE="javascript">
+	function checkAnswer(frm,field)
+	{
+		if(frm.answer.value!="")
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please Fill The Answer!!");
+		}
+	}
+</SCRIPT>

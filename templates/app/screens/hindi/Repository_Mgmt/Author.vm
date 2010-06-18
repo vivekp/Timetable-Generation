@@ -1,0 +1,43 @@
+
+
+$page.setTitle("Author Interface") 
+$page.setBgColor($ui.bgcolor)
+
+<table width=100% cellspacing=0  bgcolor="$ui.menuColor">
+<tr>
+	<td align="center" bgcolor="$ui.tableColor"><font size=5><I><b>???? ???????? ( ??????? )</b><I></font></td>
+</tr>
+<tr>
+	<td align=center bgcolor="$ui.tableColor">
+		<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+		<font size=4><b>  ??  ??????  ?? ? 
+	  	<b>$username</b>
+	 		</font>
+        </td>
+</tr>
+</table>
+
+<table width=100% >
+<tr>
+<td align="right">
+	<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/AuthorManagement.html","newWin");>??????</a>
+</td>
+</tr>
+</table>
+<table bgcolor="$ui.menuColor" width=20% align="center">
+	        <tr>
+        <td align=center>
+        	<font face="$ui.sansSerifFonts" size=3>
+        	<a href="$link.setPage("call,Repository_Mgmt,Author.vm").setAction("RepositoryAction").addPathInfo("actionName","eventSubmit_doCreate_Repo")">????  ???? ?????</a> &nbsp;&nbsp;
+		</font>
+        </td>
+        </tr>
+        </table>
+<br>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

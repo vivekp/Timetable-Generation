@@ -1,0 +1,510 @@
+
+targetdatabase = mysql
+dbprops.idMethod = $dbprops.get("idMethod")
+# Taken from java.sql.Types in the IBM 1.3 JDK
+# JDBC to MySQL mappings.
+#
+# A good MySQL resource for determining these mappings is at
+# http://www.mysql.com/doc/C/o/Column_types.html
+
+BIT = BIT
+TINYINT = TINYINT
+SMALLINT = SMALLINT
+INTEGER = INTEGER
+BIGINT = BIGINT
+FLOAT = FLOAT
+REAL = REAL
+DOUBLE = DOUBLE
+NUMERIC = DECIMAL
+DECIMAL = DECIMAL
+CHAR = CHAR
+VARCHAR = VARCHAR
+LONGVARCHAR = MEDIUMTEXT
+DATE = DATETIME
+TIME = TIME
+TIMESTAMP = TIMESTAMP
+BINARY = BLOB
+VARBINARY = MEDIUMBLOB
+LONGVARBINARY = LONGBLOB
+NULL = NULL
+OTHER =
+JAVA_OBJECT =
+DISTINCT =
+STRUCT =
+ARRAY =
+BLOB = LONGBLOB
+CLOB = LONGTEXT
+REF =
+
+AUTOINCREMENT = AUTO_INCREMENT
+NOTNULL = NOT NULL
+ 
+removeNotNullWithAutoIncrement = false
+suppressDefaults = false
+maxColumnNameLength = 64
+
+
+# See mysql docs for valid table type names.
+# For example, if you wanted to use the transactional type InnoDB,
+# then specify "tableType = InnoDB"
+#tableType = MyISAM
+
+  
+        
+    
+    org.iitk.brihaspati.om
+    org.iitk.brihaspati.om
+    org.iitk.brihaspati.om.map
+
+        Failed to create dir or dir already exists: C:\brihaspati\tdk-2.3_01\webapps\brihaspati2\WEB-INF\src\java/org\iitk\brihaspati\om\
+
+        Failed to create dir or dir already exists: C:\brihaspati\tdk-2.3_01\webapps\brihaspati2\WEB-INF\src\java/org\iitk\brihaspati\om\map\
+
+        Failed to create dir or dir already exists: C:\brihaspati\tdk-2.3_01\webapps\brihaspati2\WEB-INF\src\java/org\iitk\brihaspati\om\
+
+                  NOTE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                RDF
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                COURSES
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                CAL_INFORMATION
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                DB_SEND
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                DB_RECEIVE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                GLOSSARY
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                GLOSSARY_ALIAS
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                HINT_QUESTION
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                MAIL_SEND
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                MAIL_RECEIVE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                NEWS
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                NOTICE_SEND
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                NOTICE_RECEIVE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                SYSTEM_CLEANTIME
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TASK
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                USAGE_DETAILS
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                USER_CONFIGURATION
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                REMOTE_COURSES
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                PROXY_USER
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                SURVEY_QUESTION
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                SURVEY_STUDENT
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                SURVEY_RESULT
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                QUIZ
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                ATTENDENCE_SEET
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                ASSIGNMENT
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                LECTURE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                SessionAddress
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                RESEARCH_REPOSITORY
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                      
+        
+    
+    org.iitk.brihaspati.om
+    org.iitk.brihaspati.om
+    org.iitk.brihaspati.om.map
+
+        Failed to create dir or dir already exists: C:\brihaspati\tdk-2.3_01\webapps\brihaspati2\WEB-INF\src\java/org\iitk\brihaspati\om\
+
+        Failed to create dir or dir already exists: C:\brihaspati\tdk-2.3_01\webapps\brihaspati2\WEB-INF\src\java/org\iitk\brihaspati\om\map\
+
+        Failed to create dir or dir already exists: C:\brihaspati\tdk-2.3_01\webapps\brihaspati2\WEB-INF\src\java/org\iitk\brihaspati\om\
+
+                  TURBINE_PERMISSION
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TURBINE_ROLE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TURBINE_GROUP
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TURBINE_ROLE_PERMISSION
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TURBINE_USER
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TURBINE_USER_GROUP_ROLE
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                                TURBINE_SCHEDULED_JOB
+        
+                
+
+                  
+        
+              
+                  
+        
+                
+                
+        
+                    

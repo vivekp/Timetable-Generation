@@ -1,0 +1,152 @@
+#*
+ * @(#)ViewQuiz.vm
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("")
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+
+		#*	<table>
+			#if($startQuiz == false)
+			<tr><td> $brih_over  Quiz Time is Over</td></tr>
+			#end
+			</table>*#
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+        	<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz</a> |  
+		<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm")>$brih_quiz $brih_detail</a> | $brih_view & $brih_update $brih_quiz
+                </font>
+                </td>
+        </tr>
+</table>
+$!data.getMessage()
+<br>
+#*<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="yourClock()", onUnload="stopClock(); return true" >
+*#
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,ViewQuiz.vm").setAction("Quiz_Action")>
+<div align="left">
+	<table align=center bgcolor="$ui.tableColor" border=0 cellpadding="5" width=70% >
+        <tr bgcolor="$ui.menuColor" >
+        	<td align=center colspan=2 >
+        		<font size=4><b>$brih_quiz $brih_name  $!quid  </b></font>
+                </td>
+        </tr>
+	<tr>
+		<td>
+		<table align=center bgcolor="$ui.tableColor" border=1 cellpadding="3" width=100% >
+		#foreach($e in $contentvalue)
+		
+		<tr>
+			<td align=center colspan=2 width=30%>
+				<font size=4> <b>$brih_qus </b></font>
+			</td>
+			<td>
+				$!e.getQuestion()
+			</td>
+			<td>
+			<a href=$link.setPage("call,Quiz_Mgmt,Multi_Type.vm").addPathInfo("typeList",$e.getQuiztype()).addPathInfo("quizid",$quid).addPathInfo("questioid",$e.getquestionid()).addPathInfo("Mode","edit") >$brih_edit </a>
+			
+			</td>
+		</tr>
+		
+		<tr>
+			<td align=center colspan=2 width=30% >
+                                <font size=4> <b>  $brih_answer    </b></font>
+                        </td>
+	                <td>
+				<table align=center bgcolor="$ui.tableColor" border=0 cellpadding="5" width=100% >
+				
+					#if($e.getQuiztype() == "Multiple")
+	        	                <tr> 
+					      	<td align=left colspan=2 > <b> A </b>
+						<INPUT TYPE="CHECKBOX" NAME="$brih_a" VALUE = "" onClick="addDeleteList(this,document.frm);">
+						$!e.getoptionA()	
+	                       	        	</td>
+						<td align=left colspan=2 ><b> B </b>
+						<INPUT TYPE="CHECKBOX" NAME="$brih_b" VALUE = "" onClick="addDeleteList(this,document.frm);">
+							$!e.getoptionB()
+						</td>
+					</tr>
+					<tr>	
+				
+						<td align=left colspan=2 > <b> C </b>
+                               			<INPUT TYPE="CHECKBOX" NAME="$brih_c" VALUE ="" onClick="addDeleteList(this,document.frm);">
+                                                	$!e.getoptionC()
+                                        	</td>
+                                		<td align=left colspan=2> <b> D </b>
+                               			<INPUT TYPE="CHECKBOX" NAME="$brih_d" VALUE ="" onClick="addDeleteList(this,document.frm);">  
+						$!e.getoptionD()
+                                        	</td>
+					</tr>
+					#end
+					#if($e.getQuiztype() == "TF")
+					<tr>
+	
+					<td align=center colspan=2>
+					<input type="RADIO" name="field1"  value="$brih_a" onClick="radio_button_checker(document.frm);">
+							$!e.getoptionA()	
+					</td>
+					<td align=center colspan=2 >
+					<input type="RADIO" name="field1" value="$brih_b" onClick="radio_button_checker(document.frm);" >
+						$!e.getoptionB()
+					</td>	
+					</tr>
+					#end			
+					#if($e.getQuiztype() == "Short")
+					<tr>
+					<td align=center colspan=2>
+				<textarea name="message" wrap="physical" rows=2 cols=40 "readonly" > $!e.getAnswer() </textarea>
+					</td>
+					</tr>	
+					#end
+				</table>
+			</td>
+			<td>
+	
+			</td>
+		</tr>
+		#if($e.getQuiztype() != "Short" )
+		<tr>
+			<td align=center colspan=2 width=30%>
+                                <font size=4> <b> $brih_correct  $brih_answer </b></font>
+                        </td>
+                        <td>
+                                $!e.getAnswer()
+                        </td>
+		</tr>
+		#end
+		
+	               <INPUT TYPE="hidden" NAME="idarvind" VALUE= "$e.getquestionid()" >
+		#end 	
+		</table>
+		</td>
+	</tr>
+			
+			 <input type="hidden" name="qid" value="$!quid">	
+			<input type="hidden" name="actionName">
+		</table>
+		</td>
+        </tr>
+   </table>
+  </div>
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+        function checkField(frm,field)
+        {
+			frm.actionName.value=field.name;
+                	frm.submit();
+	}
+
+</script>

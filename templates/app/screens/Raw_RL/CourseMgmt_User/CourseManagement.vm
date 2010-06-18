@@ -1,0 +1,79 @@
+#*
+ * @(#) CourseManagement.vm
+ * Copyright (c) 2005,2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+*#
+
+$page.setTitle("Home | $course | Course management")
+#set($lang = $data.getUser().getTemp("lang" ).toString())  
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts"><b> $brih_course $brih_mgmt |
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	</font>
+</td>
+</tr>
+</table>
+<table width=100%>
+<tr>
+	<td>
+	<blink><a href="/brihaspati/docs/CourseManagement.html">$brih_help</a><img src="$content.getURI("/images/Lefthand.gif")"> </blink>
+	</td>
+</tr>
+</table>
+<body>
+<font face="$ui.sansSerifFonts">
+<ul>
+#if($user_role == "instructor")
+	<table align="Center" bgcolor="$ui.menuColor" border=0 cellpadding=5>
+  	<tr>
+  	<td align=center>
+    		<table cellspacing=3>
+    		<tr>
+		<td>
+    			<a href=$link.setPage("call,CourseMgmt_User,Upload.vm")>
+			<img src="$content.getURI("/images/$lang/uploadcoursecontent.jpg")"border="0"></a><br>
+		</td>
+    		</tr>
+    		<tr>
+		<td>
+    			<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+			<img src="$content.getURI("/images/$lang/coursecontent.jpg")"border="0"></a><br>
+		</td>
+    		</tr>
+    		<tr>
+		<td>   <a href=$link.setPage("call,CourseMgmt_User,Configuration.vm").addPathInfo("cName",$course)>
+			<img src="$content.getURI("/images/$lang/CourseConfigurationcopy.jpg")"border="0"></a><br>
+		</td>
+    		</tr>
+		<tr>
+                <td>   <a href=$link.setPage("call,CourseMgmt_User,UploadImage.vm")>
+                        <img src="$content.getURI("/images/$lang/upldcrsheader.jpg")"border=0></a><br>
+                </td>
+                </tr>
+
+                <tr>
+                <td>   <a href=$link.setPage("call,CourseMgmt_User,UploadImage.vm").addPathInfo("mode","NotUploadImage")>
+                        <img src="$content.getURI("/images/$lang/configuregrade.jpg")"border=0></a><br>
+                </td>
+                </tr>
+                <tr>
+                <td>   <a href=$link.setPage("call,CourseMgmt_User,BrihaspatiEditor.vm")>
+                       <img src="$content.getURI("/images/$lang/packager.jpg")"border=0></a><br>
+                </td>
+                </tr>
+
+    		</table>
+  	</td>
+	</tr>
+	</table>
+#end
+</ul>
+</font>
+</body>

@@ -1,0 +1,39 @@
+
+ 
+$page.setTitle("Login | Index | Question Bank")
+$page.setBgColor("#ffffff")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<td>
+        <font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,IndexHome.vm")>�?ом</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | �?оп�?о�? Уп�?авление
+        </font>
+</td>
+</table>
+<br>
+<table bgcolor="$ui.tableColor" width=100% align=center>
+<tr>
+<td align=center>
+<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="slide">
+	        <font size=4><b>�?об�?о пожалова�?�? в воп�?о�?е �?�?анили�?е банка</b></font>
+	        </marquee>
+</td>
+</tr>
+</table>
+
+<br>
+<table width="60%" align="center" bgcolor="$ui.menuColor">
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")>  Созда�?�? �?оп�?о�? �?анк �?оделено  </a>
+                </td></tr>
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>  �?о�?мо�?�?е�?�? в�?е �?ем�?, в воп�?о�?е банка  </a>
+	
+                <tr><td align="center">
+                <b><a href=$link.setPage("call,Question_Bank,UploadQuestions.vm")></a>  �?ве�?�?�?аг�?�?зи�?�? �?оп�?о�?                 </td></tr>
+				
+</td>
+</tr>
+</table>

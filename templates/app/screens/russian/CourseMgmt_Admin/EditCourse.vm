@@ -1,0 +1,53 @@
+
+
+$page.setTitle("Admin Home | List Management | View All Courses | Edit Course")
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td><font face="$ui.sansSerifFonts" size=3><a href=$link.setPage("Index.vm")>Admin's Ð?Ð¾Ð¼</a> |
+     	<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionstat","Edit")>Ð¡Ð¿Ð¸Ñ?Ð¾Ðº Ñ?Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ñ?</a> |Ð?Ð·Ð¼ÐµÐ½Ð¸Ñ?Ñ? Ð?Ñ?Ñ?Ñ? : $Courseid
+		</td>
+</tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+        <tr><td>
+        <a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">Ð?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?ÐµÑ?Ñ? Ð²Ñ?Ðµ Ð?Ñ?Ñ?Ñ?</a>
+                </td width=50%>
+        <td>
+        <a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">Ð?Ð¾Ñ?Ð¼Ð¾Ñ?Ñ?ÐµÑ?Ñ? Ð²Ñ?Ðµ Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ?</a>
+        </td>
+        </tr>
+</table>
+
+<form name=frm method="post" action="$link.setPage("call,CourseMgmt_Admin,EditCourse.vm").setAction("EditCourse")">
+  <div align="left">
+        <table align=left width=100% bgcolor="$ui.tableColor">
+         </table>
+  </div>
+</form>
+<script LANGUAGE="javascript">
+  function confirmForUD(frm,val){
+	frm.actionButton.value=val;
+	if(val=="eventSubmit_doDelete")
+	{
+     		if(confirm("The course is going to be removed ! Are you sure ?"))
+		{
+			frm.submit();
+		}
+		return;
+        }
+	else if(val=="eventSubmit_doshow")
+	{
+	alert("This is an active course. Can not be removed !")
+	return;
+	}
+	frm.submit();
+ }
+</script>

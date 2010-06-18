@@ -1,0 +1,33 @@
+
+
+
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+ <tr>
+    <td><font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("Index.vm")>?????</a> | 
+	        <a href=$link.setPage("call,Glossary,Glossary.vm")>????????</a> |
+            </font>
+    </td>
+ </tr>
+</table>
+
+<br>
+ 
+
+<SCRIPT LANGUAGE="javascript">
+ function checkValue(frm,field)
+  {
+   if((frm.WORD.value!="") && (frm.DESCRIPTION.value!=""))
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+   else
+    {
+     alert("Please Fill All The Mandatory(*) Fields");
+    }
+  }
+</SCRIPT>  

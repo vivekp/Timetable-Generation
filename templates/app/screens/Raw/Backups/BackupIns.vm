@@ -1,0 +1,91 @@
+#*
+ * @(#) BackupIns.vm
+ * Copyright (c) 2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:nksinghiitk@yahoo.co.in">Nagendra Kumar Singh</a>
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Instructor Backup")
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+##set($crsName = $data.getUser().getTemp("course_id" ).toString())
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home </a> |<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$data.getUser().getTemp("course_name" ).toString() </a> |  $brih_backup 
+        </td>
+</tr>
+</table>
+
+$!data.getMessage()
+<br>
+<br>
+<form name=frm method="post" action="$link.setAction("BackupAction").setPage("call,Backups,BackupIns.vm")">
+
+	<div align="center">
+	<table bgcolor="$ui.menuColor" cellpadding="5" border="1" >
+        
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+
+	<tr><td colspan="3" align="center">
+			<font size=4><b> 
+				#if ($lang == "english") 
+					$brih_course Wise $brih_backup 
+				#else 
+					$brih_course $brih_Of1 $brih_backup 
+				#end 
+			</b></font>
+	</td></tr>
+	<tr bgcolor="$ui.tableColor" >
+		<td>
+			<input type="text" name="courses" value="$data.getUser().getTemp("course_id" ).toString()" readonly />
+
+		##		<select name="courses">
+		##				<option value="$data.getUser().getTemp("course_id" ).toString()">$data.getUser().getTemp("course_id" ).toString()</option>
+		##		</select>		
+		</td>
+		<td>
+          		
+			<font face="$ui.sansSerifFonts">
+	        	<input type="button" name="eventSubmit_doCourseBackup" value="$brih_content  $brih_backup" onClick="checkField(document.frm,this);"/>
+          		<input type="button" name="eventSubmit_doStudent_db_backup" value="$brih_database $brih_backup" onClick="checkField(document.frm,this);"/>
+			<input type="hidden" name="actionName">
+          		</font>
+		</td>
+	</tr>
+	<tr><td align="center" colspan="2">
+                	<a href=$link.setPage("call,Backups,BackupList.vm").addPathInfo("st","ins")>
+        	        <img src="$content.getURI("/images/$lang/backuplist.jpg")" border="0"></a>
+	        </td></tr>
+	     
+	</table>
+</div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function checkField(frm,field)
+        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+        }	
+</SCRIPT>

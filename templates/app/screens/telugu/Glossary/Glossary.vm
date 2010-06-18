@@ -1,0 +1,21 @@
+
+ 
+
+
+$page.setTitle("Home | Glossary")
+
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+ <tr>
+  <td>
+    	<font face="$ui.sansSerifFonts"><b>
+	     	<a href=$link.setPage("Index.vm")>????</a> | ???????</b>
+	    </font>
+  </td>
+ </tr>
+</table>
+  <table width="100%" align="left" bgcolor="$ui.tableColor">
+    <tr>
+       <td width=33%><a href=$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("status","blank")>Search Word </td>
+        </table>

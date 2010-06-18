@@ -1,0 +1,240 @@
+#*
+ * @(#) Notice_Send.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:madhavi_mungole@hotmail.com ">Madhavi Mungole</a>
+ * @author <a href="mailto:awadhesh_trivedi">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+#if($data.getUser().getUserName() == "admin")
+$page.setTitle("AdminHome | Notices | Send Notice")
+#else
+$page.setTitle("Home | $course | Communication | Notices | Send Notice")
+#end
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts">
+		 #if($data.getUser().getUserName() == "admin")
+	                <a href=$link.setPage("call,Admin.vm")><b>$brih_ad $brih_home</a> |
+        	        <a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_Notices</a> | 
+			#if($nflag == "fh")
+				$brih_flash $brih_heading
+			#else
+				$Notice_NoticeSend_msg1
+			#end
+                #else
+
+			<a href=$link.setPage("call,Index.vm")><b>$brih_home</a> | 
+			<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")><b>$course</a> | 
+			#if($mode1=="grpmgmt")
+        	        	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")><b>$brih_grp $brih_mgmt</a> |
+	                #else
+				<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")><b>$brih_communication</a> |  
+				<a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_Notices</a> |
+			#end
+			$Notice_NoticeSend_msg1 
+		#end
+		</font>
+	</tr>
+</table>
+$!data.getMessage()
+<br>
+
+<form name=frm method="post" action="$link.setPage("call,Notice_User,Notices.vm").setAction("Notice_Send_Delete")">
+  <div align="left">
+    <br>
+    <table align=center bgcolor="$ui.tableColor" cellpadding="0" cellspacing=0 border=1>
+        
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+	#if($nflag == "fh")	
+		<tr bgcolor="$ui.menuColor">
+			<td align=center colspan=2>
+			<font size=4 face="$ui.sansSerifFonts"><b><i>$brih_flash $brih_heading $RemoteConfiguration </i></font>
+                        </td>
+		</tr>
+	#else
+	<tr bgcolor="$ui.menuColor">
+		#if(( $data.getUser().getTemp("lang" ).toString())=="hindi")
+			<td align=center colspan=2>
+			<font size=4 face="$ui.sansSerifFonts"><b><i>$Notice_NoticeSend_msg2</i></font>
+			</td>
+		#else
+			<td align=center>
+			<font size=4 face="$ui.sansSerifFonts"><b><i>$Notice_NoticeSend_msg2</i></font>
+			</td>
+			<td align=center>
+			<font size=4 face="$ui.sansSerifFonts"><b><i>$brih_courseName</i></font>
+			</td>
+		#end
+	</tr>
+
+	#if($data.getUser().getUserName() == "admin")
+         <tr bgcolor="$ui.tableColor">
+                <td>
+                        <b><font face="$ui.sansSerifFonts" size=3>
+                        $brih_sel_course
+                        </font></b>
+                </td>
+                <td>
+                <select name="course_list" size=1>
+                #foreach($c_ls in $clist)
+                        #if(($c_ls.getName()!="author")&&($c_ls.getName()!="global"))
+                                <option value="$c_ls.getName()">$c_ls.getName()
+                        #end
+                #end
+                </option>
+                </select>
+                </td>
+        </tr>
+        #else
+		#foreach($course_ls in $courselist)
+		<tr bgcolor="$ui.tableColor">
+			<td>
+			#if($course_ls == $course)
+				<input type="checkbox" checked="true" name="course_list" value="$course_ls">
+			#else
+				<input type="checkbox"  name="course_list" value="$course_ls">
+			#end
+			</td>
+	
+			<td>
+			<font face="$ui.sansSerifFonts"><b>$course_ls</font>
+			</td>
+		</tr>
+		#end
+	#end
+
+    <tr>
+		#formCell("$Notice_Subject <font color=red>*</font>" "subject" "")
+    </tr>
+
+     <tr>
+	  <td bgcolor="$ui.tableColor">
+	  	<b>
+	  	<font face="$ui.sansSerifFonts" size=3>
+	  	$Notice_NoticeSend_msg3
+	  	</font>
+	  	</b>
+	  	</td>
+     	  <td>
+    	  	<select name="role" size=1>
+		#if($mode1!= "grpmgmt")
+		  	<option value="all">$Notice_All
+		 	<option value="instructor">$brih_Instructor
+	  		<option value="student">$brih_student
+		#else
+        	        <option value="all">$Notice_All
+	        #end
+
+		  	</option>
+	  	</select>
+	 </td>
+     
+	 
+  </tr>
+	
+#end ##end for Flash Heading
+   <tr>
+	  <td bgcolor="$ui.tableColor">
+	  	<b>
+	  	<font face="$ui.sansSerifFonts" size=3>
+	  	$brih_msg2	
+	  	</font>
+	  	</b>
+	  	</td>
+	<td colspan=1>
+	<textarea name="message" rows=10 cols=60></textarea>
+	</td>
+   </tr>
+			#if($nflag == "fh")
+                               #set ($ext=10)
+                        #else
+                               #set ($ext=1)
+    				<tr>
+					#formCell("$Notice_NoticeSend_msg4" "expiry" "$ext")
+				</tr>
+                        #end
+
+	
+    
+      <tr>
+        <td align=center bgcolor="$ui.menuColor" colspan=2>
+          #*
+            Check for a mode, the update and delete buttons
+            shouldn't appear when inserting a new user.
+          *#
+
+          <font face="$ui.sansSerifFonts">
+	  <input type="hidden" name="mode1" value="$mode1">
+          <input type="hidden" name="val" value="$val">
+         ## <input type="hidden" name="flag" value="$nflag">
+
+	  <input type="hidden" name="actionName">
+	#if($nflag == "fh")
+	  <input type="button" name="eventSubmit_doWrite" value="$Notice_Send" onClick="checkField1(document.frm,this);"/> 
+	#else
+	  <input type="button" name="eventSubmit_doSend" value="$Notice_Send" onClick="checkField(document.frm,this);"/> 
+	#end
+    
+          </font>
+        </td>
+      </tr>
+      
+    </table>
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+
+	function checkField1(frm,field)
+        {
+                if(frm.message.value!="")
+                {
+			frm.actionName.value=field.name;
+                        frm.submit();
+
+                }
+                else
+                {
+                        alert("Message can not be empty !!");
+                }
+        }
+
+        function checkField(frm,field)
+        {
+                if(frm.subject.value!="" && frm.message.value!="")
+                {
+			 if((frm.expiry.value>=1) && (frm.expiry.value<=365))
+                                {
+                                        frm.actionName.value=field.name;
+                                        frm.submit();
+                                }
+                         else
+                         	alert("Deletion Time should not be less than 1 day and greater than 365 days");
+
+                }
+                else
+                {
+                        alert("Subject and Message can not be empty !!");
+                }
+        }
+</SCRIPT>

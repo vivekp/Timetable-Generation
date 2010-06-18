@@ -1,0 +1,129 @@
+
+#*
+ * @(#)Glossary_Search_Word.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#*
+ * @author <a href="mailto:sharad23nov@yahoo.com ">Sharad Singh</a>
+ *
+*#
+
+$page.setBgColor($ui.bgcolor)
+#if($data.getUser().getUserName()=="admin")
+$page.setTitle("Admin Home | Glossary | Search Word")
+#else
+$page.setTitle("Home | Glossary | Search Word")
+#end
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr align="right">
+	<td>
+	        <font face="$ui.sansSerifFonts"><b>
+	        	#if($data.getUser().getUserName()=="admin")
+		        <a href="$link.setPage("call,Admin.vm")">$brih_ad $brih_Of1 $brih_home</a> |
+			#else
+			<a href="$link.setPage("Index.vm")">$brih_home</a> |
+			#end
+				<a href="$link.setPage("call,Glossary,Glossary.vm")">$Glossary</a> | $brih_search1 $brih_word 
+			</font>
+	</td>
+	</tr>
+</table>
+<br>
+<form name="frm" method="post" action=$link.setPage("call,Glossary,Glossary_Search_Word.vm").setAction("Glossary_Action").addPathInfo("stat","Noblank")>
+<div align="center">
+<table bgcolor="$ui.tableColor" cellpadding="5" width="5" height="5">
+	<tr>
+        	## #set($Alphabate=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"])
+		#set($Alphabate=["$brih_z","$brih_y","$brih_x","$brih_w","$brih_v","$brih_u","$brih_t","$brih_s","$brih_r","$brih_q","$brih_p","$brih_o","$brih_n","$brih_m","$brih_l","$brih_k","$brih_j","$brih_i","$brih_h","$brih_g","$brih_f","$brih_e","$brih_d","$brih_c","$brih_b","$brih_a"])
+		#foreach($alphabate in $Alphabate)
+           	<td><a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("alpha",$alphabate).addPathInfo("status","Noblank")"><b>$alphabate </b></a> 
+           	</td>
+        	#end
+     	</tr>
+</table>
+<br>
+<table>
+	<tr bgcolor="$ui.tableColor">
+       <td align=center colspan=2>
+		<input type="button" name="eventSubmit_doSearch" value="$brih_search" onClick="checkValue(document.frm,this);"/>
+       	<td>
+		#if($key!="")
+			## #formCell("$brih_string $brih_search" "WORD" "$key")
+			<td><input type="txt" size="30%" name="WORD" value="$key">
+			<td>$brih_search1 $brih_string </td>
+		#else
+	  		## #formCell("$brih_string $brih_search" "WORD" "")
+			<td><input type="txt" size="30%" name="WORD" value="">
+			<td>$brih_search1 $brih_string </td>
+		#end
+       </td>
+	  	<input type ="hidden" name="search" value="search">
+	  	<input type ="hidden" name="actionName">
+	  	<input type ="hidden" name="WORD">
+       </td>
+       </tr>
+</table>
+<br>
+#if($stat=="Noblank")
+<table border="5">
+	<tr>
+      	<td>
+		#set($i=0) 
+       	#if($search=="search")
+		#foreach($v1 in $v)
+			<a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("wordid",$v.get($i).getWordId()).addPathInfo("status","Noblank").addPathInfo("word",$v.get($i).getWord()).addPathInfo("alpha",$key)">$v.get($i).getWord()</a><br>
+			#set ($i = $i+1)
+                #end
+	#else 
+		#foreach($v1 in $v)
+			<a href="$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("wordid",$v.get($i).getWordId()).addPathInfo("status","Noblank").addPathInfo("word",$v.get($i).getWord()).addPathInfo("alpha",$alpha).addPathInfo("st",$v.get($i).getWordId())">$v.get($i).getWord()</a>
+                        <font color=red>
+                        #if($wid=="$v.get($i).getWordId()")
+                        	<b>--></b>
+                        #end
+                        </font>
+                        <br>
+			#set ($i = $i+1)
+              #end
+	#end
+
+	#if($description!="") 
+		#if($waliassize!="0")
+            	<td>
+                	<font face="$ui.sansSerifFonts"><textarea name="DESCRIPTION" rows=5 cols=50>$description See also:$walias</textarea></font>
+            	</td>
+           	#else
+            	<td>
+                	<font face="$ui.sansSerifFonts"><textarea name="DESCRIPTION" rows=5 cols=50>$description</textarea></font>
+            	</td>
+           	#end	
+         #else
+          	 <td><font face="$ui.sansSerifFonts"><textarea name="DESCRIPTION" rows=5 cols=50></textarea></font>
+           	 </td>
+         #end  
+	</tr>
+</table>
+#end
+</div>
+</form>
+
+
+<SCRIPT LANGUAGE="javascript">
+ function checkValue(frm,field)
+   {
+    if(frm.WORD.value!="") 
+      {
+       frm.actionName.value=field.name;
+       frm.submit();
+      }
+    else
+      {
+       alert("Please Insert String for search");
+      }
+   }
+</SCRIPT>

@@ -1,0 +1,115 @@
+#*
+ * @(#) ASS_subm.vm
+ *  Copyright (c) 2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="arvindjss17@yahoo.co.in">Arvind Pal</a>
+ *  @modify <a href="shaistashekh@hotmail.com">Shaista</a>
+ *  @date 15-05-2009
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+
+        <tr align="right"> <td><b>
+	$brih_assignment | 
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a> 
+        | <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+        </td></tr>
+
+</table> ##table 1 end   
+
+<table width=100%>
+<tr>
+<td> 
+                #if($user_role == "instructor")
+			<a href=javascript:popupWin("/brihaspati2/docs/ASS.html","newWin");>$brih_help</a>
+			<img src="$content.getURI("/images/Lefthand.gif")">
+ 
+                #else
+			<a href=javascript:popupWin("/brihaspati2/docs/ASS1.html","newWin");>$brih_help</a>
+			<img src="$content.getURI("/images/Lefthand.gif")">
+                #end
+</td>
+</tr>
+</table>
+
+$!data.getMessage() 
+	<br>
+	  <table align="Center" bgcolor="$ui.menuColor" width="20%" border=0 cellpadding="10">
+          <tr>
+          <td align=center> 
+          	<table cellspacing=3> 
+		#if($user_role == "instructor")
+		<tr>
+			<td>
+	               	<a href=$link.setPage("call,Assignment,AssView.vm")>
+                        <img border=0  src="$content.getURI("/images/$lang/postAssignment.jpg")"></a>
+			</td>
+		</tr>
+		#if($u == true)	
+		<tr>
+                	<td>
+                		<a href=$link.setPage("call,Assignment,ViewAss.vm")>
+				<img border=0  src="$content.getURI("/images/$lang/viewassignment.jpg")"></a>
+                	</td>
+                </tr>
+		#if($u1 == true)
+		<tr>
+                	<td>
+                        	<a href=$link.setPage("call,Assignment,PostAns.vm")>
+  				<img border=0  src="$content.getURI("/images/$lang/postAnswer.jpg")"></a>  
+  
+                	</td>
+                </tr>
+		<tr>
+			<td> 
+				<a href=$link.setPage("call,Assignment,RePermission.vm")>
+				<img border=0  src="$content.getURI("/images/$lang/repostPermission.jpg")"></a>   
+			</td>
+                </tr>
+		#end
+	#end
+#end
+#if($user_role ==  "student")
+     #if($u == true)
+		<tr>
+                        <td>
+                                <a href=$link.setPage("call,Assignment,ViewAss.vm")>
+                                <img border=0  src="$content.getURI("/images/$lang/viewassignment.jpg")"></a>
+                        </td>
+                </tr>
+	#if($u1 == true) 
+                <tr>
+                        <td>
+                                <a href=$link.setPage("call,Assignment,PostAns.vm")>  
+				<img border=0  src="$content.getURI("/images/$lang/postAnswer.jpg")"> </a><br>
+                        </td>
+                </tr>
+	#end
+	#if($u2 == true)
+		<tr>
+                        <td>
+        		        <a href=$link.setPage("call,Assignment,RePostAns.vm")> 
+				<img border=0  src="$content.getURI("/images/$lang/repostAnswer.jpg")">
+					 </a><br>
+                        </td>
+                </tr>
+	#end
+   #end
+#end
+                </table>
+        </td>
+        </tr>
+        </table>                             
+		<form name="frm" method="post" action=$link.setPage("call,Assignment,AssView.vm").setAction("Assignments")>
+<br>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+ function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</SCRIPT>

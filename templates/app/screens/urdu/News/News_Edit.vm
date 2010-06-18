@@ -1,0 +1,73 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+  <tr align=right>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                		$page.setTitle("| $course | Communication | News")
+    		<a href =$link.setPage("call,CourseMgmt_User,Communication.vm")>???????</a> | ???? ?? ?????
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $course</a> |
+                						$page.setTitle("Home ")
+                        <a href=$link.setPage("Index.vm")>????</a> 
+                        		</font>
+                </td>
+        </tr>
+</table>
+
+<br>
+<form name="frm" action="$link.setPage("call,News,News_Edit.vm").setAction("NewsAction")">
+<table  border=1 width=60%  bgcolor="$ui.tableColor" cellpadding="2" align=center>
+<tr>
+<td width="70%">
+<table width="100%">
+<tr bgcolor="$ui.menuColor">
+<td colspan=3 align=center><b><font size=4>
+<I>
+???? ?? ?????
+</font></b>
+</td>
+</tr>
+<tr align=right><td colspan=3>?? ??  ?????  ?? ???? ???  ???  ?? </td></tr>
+		<tr bgcolor="$ui.menuColor">
+		<td width=3%>
+				</td>
+			<td colspan=2 align="center"><b><a href=$link.setPage("call,News,News_Add.vm").addPathInfo("status",$status)> ????? ???? ???? </a></b></td>
+</tr>
+</td>
+</table>
+</td>
+</tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+  function checkField(frm,field)
+   {
+    if(frm.deleteFileNames.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+
+</SCRIPT>

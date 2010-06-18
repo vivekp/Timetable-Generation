@@ -1,0 +1,104 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			<a href=$link.setPage("Index.vm")>Ð?Ð¾Ð¼</a> | Ð?Ð°Ð´Ð°Ñ?Ð° Ð?ÐµÐ½ÐµÐ´Ð¶ÐµÑ? 
+                      
+                </td>
+        </tr>
+</table>
+
+<br>
+<table align="center">
+<tr>
+        <td align="center">
+                <b>*<font color="red">Ð?Ñ?Ð°Ñ?Ð½Ñ?Ð¹ Ð¦Ð²ÐµÑ? </font></b> -> Ð?Ð°Ð´Ð°Ñ?Ð° Ñ?Ñ?Ð¾ Ð¾Ð±Ñ?Ñ?Ñ?Ð½Ñ?ÐµÑ?Ñ?Ñ? Ð±Ð¾Ð»ÐµÐµ &nbsp;&nbsp;&nbsp;
+                <b>*Ð§ÐµÑ?Ð½Ñ?Ð¹ Ð¦Ð²ÐµÑ? </b> -> Ð?Ð°Ð´Ð°Ñ?Ð°  .......... &nbsp;&nbsp;&nbsp;
+                <b>*<font color="blue">Ð¡Ð¸Ð½Ð¸Ð¹ Ð¦Ð²ÐµÑ? </font></b> -> Ð?Ð°Ð´Ð°Ñ?Ð° Ð? Ð½Ð°Ñ?Ñ?Ð¾Ñ?Ñ?ÐµÐµ Ð²Ñ?ÐµÐ¼Ñ? Ñ?Ð°Ð¼Ñ?Ð¼ <br>
+
+        </td>
+</tr>
+<tr>
+        <td align="center">
+		                	<b>*<u>Delete </u></b> -> Delete Ð?Ð¾Ð½ÐºÑ?ÐµÑ?Ð½Ð°Ñ? Ð·Ð°Ð´Ð°Ñ?Ð°  &nbsp;&nbsp;&nbsp;
+	                <b>*<u>Ð?Ð·Ð¼ÐµÐ½Ð¸Ñ?Ñ? </u></b> -> Ð?Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð?Ð¾Ð½ÐºÑ?ÐµÑ?Ð½Ð°Ñ? Ð·Ð°Ð´Ð°Ñ?Ð°  &nbsp;&nbsp;&nbsp;
+         	       <b>*<u>Ð?Ð²Ð¸Ð³Ð°Ñ?Ñ?Ñ?Ñ? </u></b> -> Ð?Ð²Ð¸Ð³Ð°Ñ?Ñ?Ñ?Ñ? Ð·Ð°Ð´Ð°Ñ?Ð° Ð½Ð° ÐºÐ»Ð°Ñ?Ñ?Ð¸Ñ?Ð¸ÐºÐ°Ñ?Ð¸Ð¾Ð½Ð½Ð¾Ð¹ Ñ?Ñ?Ñ?Ð°Ð½Ð¸Ñ?Ðµ Ð²Ð½Ð¸Ð·  "<b><u>TODAY' Ð?Ð?Ð?Ð?Ð§Ð? S </u></b>"
+		
+        </td>
+</tr>
+</table>
+<br>
+
+
+
+
+<table cellpadding=0 cellspacing=1 align=center bgcolor="$ui.tableColor" border="1">
+	<tr><td bgcolor="$ui.menuColor" align="center" colspan="2"><font size=4><b><I>Ð?Ð°Ð´Ð°Ñ?Ð° </I></b></font></td></tr>
+	<tr><td>
+		<table>
+			<tr><td>
+							<table border=1 cellspacing=0 align=center bgcolor="$ui.tableColor">
+												</table>
+			</td></tr>
+			<tr><td>
+							<tr><td><center> <a href=$link.setPage("call,Task_Mgmt,TaskDIUD.vm").addPathInfo("mode","insert")>  Ð?Ð¾Ð±Ð°Ð²Ñ?Ñ?Ðµ Ð?Ð°Ð´Ð°Ñ?Ð° </a>
+				</td></tr>
+						</td></tr>
+		</table>
+	</td>
+			</tr>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+	function addtask(frm,field)
+        {
+                if((frm.title.value!="") && (frm.et.value!=""))
+                {
+                        if(frm.et.value>=1 && frm.et.value<=30)
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        {
+                                alert("The Expiry time Should be between 1 to 30 days");
+                        }
+                }
+                else
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+	function checktask(frm,field)
+        {
+          if((frm.title.value!="") && (frm.et.value!=""))
+                {
+                        if(frm.et.value<31 && frm.et.value>=1)
+                        {
+                                if(frm.dday.value>=1 && frm.dday.value<=7)
+                                {
+                                        frm.actionName.value=field.name;
+                                        frm.submit();
+                                }
+                                else
+                                {
+                                        alert("Task Conf days should not be more than 7 days");
+                                }
+                        }
+                        else
+                        {
+                                alert("The Expiry time Should be between 1 to 30 days");
+                        }
+                }
+                else
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+
+</SCRIPT>

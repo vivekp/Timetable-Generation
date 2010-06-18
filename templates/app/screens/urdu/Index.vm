@@ -1,0 +1,32 @@
+
+
+$page.setTitle("Login | Index")
+$page.setBgColor("$ui.bgcolor")
+
+
+<table bgcolor="$ui.tableColor" width=100% align=center>
+<tr align=right>
+<td align=center>
+	<font face="$ui.sansSerifFonts"> 
+	  	<b>$username</b>
+		<b> ???????? </b>
+	</font>
+</td>
+</tr>
+</table>
+<br>
+
+
+
+	<table width="50%" align="center" bgcolor="$ui.menuColor" Cellpadding=4>
+               
+    		    		    		    		    			</table>
+
+			<table align=center cellspacing=10>
+                                <tr>
+                                        <td>
+                                                                                </td>
+                                </tr>
+                        </table>
+
+</body>

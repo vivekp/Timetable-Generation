@@ -1,0 +1,44 @@
+
+
+$page.setTitle("Home | $courseName | $brih_grpmgmt")
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts">
+	<a href=$link.setPage("call,IndexHome.vm")><b>Maison</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a>|
+	Groupe Gestion 	
+	</font>
+</td></tr>
+</table>
+<table width=100%>
+<tr>
+<td align=right>
+				<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/joingroupactivity.html","newWin");>Aide </a>
+		</td>
+</tr>
+</table>
+<br>
+<table align=center bgcolor="$ui.tableHeaderColor" width=20% cellpadding=10>
+<tr><td align=center>
+ 	<table cellspacing=10>
+				<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,Signupform.vm")>
+                <img src="$content.getURI("/images/$lang/joingroup.jpg")" border="0"></a><br>
+               	</td></tr>
+		<tr><td>
+    		<a href=$link.setPage("call,Group_Mgmt,ViewActivity.vm")>
+                <img src="$content.getURI("/images/$lang/viewactivity.jpg")" border="0"></a><br>
+		</td></tr>
+		 	</table>
+</td></tr>
+</table>
+<SCRIPT LANGUAGE="javascript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+</SCRIPT>

@@ -1,0 +1,84 @@
+#*
+ * @(#) Communication.vm
+ * Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+$page.setTitle("Home | $courseName | Communication")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td><b>
+	<font face="$ui.sansSerifFonts">
+	$brih_communication
+	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $courseName </a>
+	| <a href=$link.setPage("call,IndexHome.vm")><b>$brih_home</a>  
+	</font>
+</b></td>
+</tr>
+</table>
+<form>
+<br>
+<table align=center bgcolor="$ui.menuColor" width=20% cellpadding=10>
+<tr>
+<td align=center>
+ <table cellspacing=10>
+	<tr>
+	<td>
+		<a href=$link.setPage("call,Local_Mail,Mail.vm")>
+		<img src="$content.getURI("/images/$lang/localm.jpg")"><br>
+		</a>
+	</td>
+	</tr>
+ 	<tr>
+	<td>
+    		<a href=$link.setPage("call,Chat,Chat.vm")>
+		<img src="$content.getURI("/images/$lang/chat.jpg")"></a><br>
+	</td>
+ 	</tr>
+ 	#if($user_role=="instructor")
+ 	<tr>
+	<td>
+    		<a href=$link.setPage("call,Notice_User,Notices.vm")>
+		<img src="$content.getURI("/images/$lang/notices.jpg")"></a><br>
+	</td>
+ 	</tr>
+ 	#end
+ 	#if($user_role=="student")
+ 	<tr>
+	<td>
+    		<a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("flag","FromNotices")>
+		<img src="$content.getURI("/images/$lang/readnotice.jpg")"></a><br>
+	</td>
+ 	</tr>
+	#end
+	<tr>
+	<td>
+		<a href=$link.setPage("call,Dis_Board,DB.vm")>
+                <img src="$content.getURI("/images/$lang/discussionboard.jpg")"></a><br>
+
+	</td>
+ 	</tr>
+	<tr>
+	<td>
+    		<a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status","fromCourse")>
+		<img src="$content.getURI("/images/$lang/news.jpg")"></a><br>
+	</td>
+	</tr>
+	#*if($guestRole=="no")
+	<tr>
+        <td>
+    		<a href=$link.setPage("call,News_Edit.vm").addPathInfo("status","fromCourse")>
+		<img src="$content.getURI("/images/$lang/news.jpg")"></a><br>
+        </td>
+	</tr>
+	#end*#
+ </table>
+</td>
+</tr>
+</table>
+</form>

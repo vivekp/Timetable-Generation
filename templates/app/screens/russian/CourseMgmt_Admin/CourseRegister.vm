@@ -1,0 +1,91 @@
+
+
+$page.setTitle("UserHome | Admin Home | Course Registration")
+
+
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("call,Admin.vm")>Admin's Ð?Ð¾Ð¼</a> | 
+     	<a href=$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")> Ð?Ð°Ñ?ÐµÐ³Ð¸Ñ?Ñ?Ñ?Ð¸Ñ?Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð£Ð¿Ñ?Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ</a> | Ð?Ñ?Ñ?Ñ? Ð?Ð°Ñ?ÐµÐ³Ð¸Ñ?Ñ?Ñ?Ð¸Ñ?Ð¾Ð²Ð°Ð½Ð¸Ðµ
+	</td>
+</tr>
+</table>
+<br>
+<form name=frm method="post" action="$link.setPage("call,CourseMgmt_Admin,CourseRegister.vm").setAction("RegisterCourseInstructor")">
+  <div align="left">
+        <table align="center" border=2 bgcolor="$ui.menuColor" cellpadding="5">
+      <tr bgcolor="$ui.menuColor" >  
+        #formCell ("Ð?Ñ?Ñ?Ñ? Ð£Ð´Ð¾Ñ?Ñ?Ð¾Ð²ÐµÑ?ÐµÐ½Ð¸Ðµ Ð»Ð¸Ñ?Ð½Ð¾Ñ?Ñ?Ð¸ <font color=Red>*</font>" "COURSEID" "")
+      </tr>
+      <tr bgcolor="$ui.menuColor" >
+        #formCell ("Ð?Ñ?Ñ?Ñ? Ð?Ð¼Ñ? <font color=Red>*</font>" "CNAME" "")
+      </tr>
+      <tr bgcolor="$ui.menuColor" >
+        #formCell ("Ð?ÐµÐ¿Ð°Ñ?Ñ?Ð°Ð¼ÐµÐ½Ñ? " "DEPARTMENT" "")
+      </tr>
+	  <tr bgcolor="$ui.menuColor" >
+	  	<td bgcolor="$ui.tableColor">
+	  	<b><font face="$ui.sansSerifFonts"> Ð?Ð¿Ð¸Ñ?Ð°Ð½Ð¸Ðµ </font> </b>
+	  	</td>
+		
+     		<td>
+	  	<font face="$ui.sansSerifFonts"><textarea name="DESCRIPTION" rows=5 cols=60></textarea></font>
+    		</td>
+	  </tr>
+	  <tr bgcolor="$ui.menuColor" >
+	           #formCell ("Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð?Ð¼Ñ? <font color=Red>*</font>" "UNAME" "")
+          </tr>
+          <tr bgcolor="$ui.menuColor" >
+                  #formPasswordCell ("Ð?Ð°Ñ?Ð¾Ð»Ñ?" "PASSWD" "")
+          </tr>
+          <tr bgcolor="$ui.menuColor" >
+                  #formCell ("Ð?ÐµÑ?Ð²Ñ?Ð¹ Ð?Ð¼Ñ?" "FNAME" "")
+           </tr>
+           <tr bgcolor="$ui.menuColor" >
+                   #formCell("Ð?Ð¾Ñ?Ð»ÐµÐ´Ð½Ð¸Ð¹ Ð?Ð¼Ñ?" "LNAME" "")
+            </tr>
+            <tr bgcolor="$ui.menuColor">
+                   #formCell("Ð­Ð»ÐµÐºÑ?Ñ?Ð¾Ð½Ð½Ð°Ñ? Ð¿Ð¾Ñ?Ñ?Ð° Ð£Ð´Ð¾Ñ?Ñ?Ð¾Ð²ÐµÑ?ÐµÐ½Ð¸Ðµ Ð»Ð¸Ñ?Ð½Ð¾Ñ?Ñ?Ð¸" "EMAIL" "")
+            </tr>
+    	  <tr bgcolor="$ui.menuColor">
+	  <td align=center colspan=2 bgcolor="$ui.menuColor">
+    <input type="hidden" name="actionName" >
+    <input type="button" name="eventSubmit_doRegister" value=Ð?Ð°Ñ?ÐµÐ³Ð¸Ñ?Ñ?Ñ?Ð¸Ñ?Ð¾Ð²Ð°Ð½Ð¸Ðµ onClick="checkCourseName(document.frm,this);"/>
+    <input type="reset" name="Clear" value=Ð¯Ñ?Ð½Ñ?Ð¹ onClick="checkClear(document.frm,this);"/>
+	</td>
+	</tr>
+	</table>
+  </div>
+</form>
+</body>
+
+</tr></table>
+<SCRIPT LANGUAGE="javascript">
+	function checkCourseName(frm,field)
+	{
+		if((frm.COURSEID.value!="") && (frm.UNAME.value!="")  && (frm.CNAME.value!=""))
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please Fill All The Mandatory(*) Fields");
+		}
+	}
+	function checkClear(frm,field)
+	{
+	frm.COURSEID.value="";
+	frm.UNAME.value="";
+	frm.CNAME.value="";
+	}
+</SCRIPT>

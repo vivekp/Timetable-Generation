@@ -1,0 +1,24 @@
+<font face="verdana,geneva,helvetica">
+<hr>
+<table width="100%" nosave size=640>
+<tr>
+<td valign=bottom size="40%">
+<a href="http://jakarta.apache.org/turbine">
+<img align="left" border=0 src="$content.getURI("images/logo.gif")"></a> </td>
+<td valign=bottom><font size=-1><center>
+Opensource component development supported by <a
+href="http://www.mcit.gov.in">Elearning Division, MCIT,</a>  <a
+href="http://www.iitk.ac.in">IIT Kanpur</a>, and <a
+href="http://www.ignouonline.ac.in/sakshatproposal/default.aspx">NMEICT,
+MHRD</a><br>
+Opensource development available for download at <a href="http://sourceforge.net/projects/brihaspati">Sourceforge.net<a><br>
+For problems at this site send email to <a href="mailto:brihspti@iitk.ac.in">ETRG, IIT Kanpur</a><br>
+For reporting bugs, suggestion, feature request, and maintainence support<br>
+ send Email to <a href="mailto:brihaspati@brihaspatisolutions.co.in">BSS</a>
+<br>Copyright &copy; 2002-2009 ETRG, IIT Kanpur, Copyright &copy; 2006-2009 BSS</center> </font></td>
+<td valign=bottom align=right><font size=-1>Based on Open Source Brihaspati at</font><br>
+<a href="http://sourceforge.net/projects/brihaspati">
+<img align="right" border=0 src="$content.getURI("images/sflogo.png")"></a>
+</td>
+</tr></table>
+</font>

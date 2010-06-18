@@ -1,0 +1,105 @@
+#*
+ * @(#) RepositoryBrowser.vm
+ *  Copyright (c) 2002,2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("$ Repo_Repo1 $Repo_browser")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align=right><td><b>
+        <a href=$link.setPage("Index.vm")>$brih_usr $brih_Of1 $brih_home </a>&nbsp;| $Repo_Repo1 $Repo_browser </b>
+        </td></tr>
+</table>
+
+<br>
+<table bgcolor="$ui.tableColor" width=80% align="center">
+<tr>
+<td align=center>
+		<marquee scrollamount="3" direction="left" loop="0" width="100%" behaviour="rotation">
+                <font size=4 color=blue>
+<b>
+ #if( $lang == "english")
+                $brih_welcome $authorname
+        #else
+                $authorname $brih_welcome
+        #end
+	</b>
+                </font>
+        </td>
+       </tr>
+</table>
+
+<br>
+#if($lang =="english")
+	#set ( $headings = ["$brih_author $brih_name","$brih_contentOf $brih_author $contentlist", "$brih_file1 $brih_topic $topic"] )
+#else
+	#set ( $headings = ["$brih_author $brih_Of1 $brih_name","$brih_author $brih_Of1 $brih_content $contentlist", "$brih_topic $brih_Of2 $brih_file $topic"] )
+#end
+
+<table align ="center" bgcolor="$ui.tableColor" width=60% colspan=3>
+	<tr colspan=3>
+	 #foreach ($heading in $headings)
+                #headerCell($heading)
+          #end
+	</tr>
+	<tr>
+	<td align="left">
+        <table align="left">
+        #foreach($author in $authorvalue)
+         <tr>
+        <td align="left"colspan=2>
+        <font face="$ui.sansSerifFonts">
+         <a href=$link.setPage("call,Repository_Mgmt,RepositoryBrowser.vm").addPathInfo("status","fromDirectory").addPathInfo("name",$author)>$author</a>
+				<font color=red>
+				#if($contentlist=="$author")
+                                <b>--></b>
+				#end
+				</font>
+ 
+        </font>
+        </td>
+        </tr>
+        #end
+        </table>
+	</td>
+
+#if($status == "fromDirectory" || $status == "fromSubDirectory")
+
+<td align="left" >
+       <table align="left">
+      #foreach ($RepoFile in $contentvalue)
+        <tr>
+        <td align=left>
+        <font face="$ui.sansSerifFonts">
+        <a href=$link.setPage("call,Repository_Mgmt,RepositoryBrowser.vm").addPathInfo("name",$contentlist).addPathInfo("status","fromSubDirectory").addPathInfo("topic",$RepoFile)>$RepoFile</a> 
+        </font>
+        </td>
+        </tr>
+        #end
+        </table>
+</td>
+#end
+#if($status == "fromSubDirectory")
+<td  align="left">
+        <table align="center">
+        #foreach ($AllFiles in $FFfiles)
+         <tr>
+         <td align=left>
+        <font face="$ui.sansSerifFonts">
+          $AllFiles.getName()
+         </font>
+        </td>
+        </tr>
+        #end
+        </table>
+</td>
+#end
+</tr>
+</table>

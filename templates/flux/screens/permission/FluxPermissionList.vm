@@ -1,0 +1,75 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxPermissionList.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+
+$page.setTitle("Index")
+$page.setBgColor($ui.bgcolor)
+
+#set ( $headings = ["Permission Name"] )
+
+<table>
+  
+  #if ($showFinder)
+  <tr>
+    <td align="left">
+      <table>
+        <tr>
+        <form method="post" action="">
+          <td align="left">
+            #listBox ($flux.FieldList)
+          </td>
+          <td align="right">
+            #textField("searchField" "*" "20")
+          </td>
+          <td>
+            <font face="$ui.sansSerifFonts">
+              <a href="$link.setPage("permission,FluxPermissionList.vm")">find</a>
+            </face>
+          </td>
+        </form>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  #end
+  
+  <tr>
+    <td>
+      <table cellspacing="$ui.tableCellSpacing" cellpadding="$ui.tableCellPadding">
+        <tr>
+          #foreach ($heading in $headings)
+          #headerCell ($heading)
+          #end
+        </tr>
+        
+        #foreach ($permission in $flux.Permissions)
+        <tr>
+          #entryCell ($permission.Name)
+          <td>
+            <font face="$ui.sansSerifFonts">
+              <a href="$link.setPage("permission,FluxPermissionForm.vm").addPathInfo("name",$permission.Name).addQueryData("mode","modify")">Details</a> &nbsp;
+              <a href="$link.setPage("permission,FluxPermissionForm.vm").addPathInfo("name",$permission.Name).addQueryData("mode","delete")">Remove</a>
+            </font>
+          </td>
+        </tr>
+        #end
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font face="$ui.sansSerifFonts">
+        <a href="$link.setPage("permission,FluxPermissionForm.vm").addQueryData("mode","insert")">Add Permission</a>
+      </font>
+    <td>
+  </tr>
+</table>
+
+#if ($showEmbeddedMenu)
+  <hr size="1" noshade>
+  #parse ("screens/FluxEmbeddedMenu.vm")
+#end

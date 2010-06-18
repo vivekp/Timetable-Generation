@@ -1,0 +1,48 @@
+
+
+$page.setTitle("Chat")
+$page.setBgColor($ui.bgcolor)
+
+
+
+<table bgcolor="$ui.tableColor" width=100%>
+	<tr>
+		<td>
+		<font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,IndexHome.vm")>�?ом</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>Сооб�?ение</a> | Ча�?
+		</font>
+		</td>
+	</tr>
+<td>
+</tr>
+</table>
+<br>
+
+<br>
+<table align="center">
+<tr><td>
+        <blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+                �?л�? �?о�?�?анени�? �?а�? и до�?к�?, вам необ�?одимо вне�?�?и неко�?о�?�?е изменени�? в поли�?ике Java-�?айл. �?Сп�?авка дл�? нее, пожал�?й�?�?а, нажми�?е �?�?да.  <a href="/brihaspati/docs/saveChat.html">�?де�?�?</a><br>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+		<a href=http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=8&PartDetailId=jre-6u5-oth-JPR&SiteId=JSC&TransactionId=noreg> Download Java SE Runtime Environment</a>
+</td></tr>
+
+<tr>
+<td>
+	<blink> <img src="$content.getURI("/images/hand.gif")"> </blink>
+	�?�?ли �?а�?-аппле�? не може�? подкл�?�?и�?�?�?�?, �?мени�?�? па�?ол�? один �?аз, �?�?об�? �?озда�?�? �?�?е�?н�?�? запи�?�? дл�? �?а�?а.
+	<a href=$link.setPage("call,UserMgmt_User,changePassword.vm")>�?змени�?е па�?ол�?</a>
+</td>
+</table>
+<applet archive="babylon.jar" code="babylon.babylonApplet.class" codebase=$codeBase width="0" height="0">
+	<param name="chatroom" value=$chatRoom>
+	<param name="username" value=$username>
+	<param name="password" value=$password>
+	<param name="servername" value=$serverName>
+	<param name="autoconnect" value="yes">
+	<param name="locksettings" value="yes">
+	<param name="embed" value="no">
+	<param name="lang" value=$lang>
+</applet>

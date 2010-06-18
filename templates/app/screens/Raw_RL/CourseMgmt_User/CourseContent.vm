@@ -1,0 +1,123 @@
+#*
+ * @(#) CourseContents.vm
+ * Copyright (c) 2006-2007, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * @modified date 25-04-2009
+*#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Course Content")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td colspan=2>
+	<font face="$ui.sansSerifFonts"><b>
+	#if($isAdmin=="true")
+			$brih_course $brih_Of $brih_content
+		<a href=$link.setPage("call,Admin.vm")>$brih_home</a> | $course | 
+	#elseif ($isInstructor=="true")
+		## <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>$brih_course $brih_mgmt</a> |
+                	$brih_course $brih_Of $brih_content
+		| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	#else
+                        $brih_course $brih_Of $brih_content
+		 | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>
+	#end
+	</font>
+</td>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=left> <blink>
+	#if ($isInstructor=="true")
+		<a href="/brihaspati/docs/CourseContent.html">$brih_help</a>
+		<img src="$content.getURI("/images/Lefthand.gif")">	
+	#end
+</blink> </td>
+</tr>
+<form method="post" enctype="multipart/form-data" >
+  <div align="left">
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+                <img src="$ui.image($ui.alertImage,$data)">
+      </td>
+        <td>
+        	#parse ($errorTemplate)
+        </td>
+      </tr>
+      #end
+      <tr align="right">
+	#set ( $count=1 )
+	<td bgcolor="$ui.menuColor" colspan=3>
+	<font size=4><b>$brih_availableAction 
+	</td>
+	<td bgcolor="$ui.menuColor">
+	<font size=4><b>
+		$brih_topic $brih_Of1 $brih_name
+	</td>
+	<td bgcolor="$ui.menuColor">&nbsp;&nbsp;</td>
+	</tr>
+	#if($isInstructor=="true")
+		#foreach($file in $dirContent)
+		<tr align="right">
+			<td align="right" width=60% > <a href="$link.setPage("call,CourseMgmt_User,PublishModule.vm").addPathInfo("topic",$file.getName())">$brih_publish</a></td>
+			<td align="right"><a href="$link.setPage("call,CourseMgmt_User,Edit.vm").addPathInfo("topic",$file.getName())">$brih_edit</a></td>
+			<td align="right"><a href="$link.setPage("call,CourseMgmt_User,View.vm").addPathInfo("topic",$file.getName())">$brih_view</a></td>
+			<td align="right"><b>$file.getName()</b> </td><td align="right">&nbsp;&nbsp; .$count &nbsp;</td>
+		</tr>
+		#set ( $count= $count+1)
+
+		#end
+		 #foreach($r in $read)
+                <tr align="right">
+                        <td align="right" width=60% ><a href="$link.setPage("call,CourseMgmt_User,PublishModule.vm").addPathInfo("stat","Repo").addPathInfo("uname",$r.UserName).addPathInfo("topic",$r.Topic)">$brih_publish</a></td>
+                        <td align="center"><a href="$link.setPage("call,CourseMgmt_User,Edit.vm").addPathInfo("uname",$r.UserName).addPathInfo("status","Repo").addPathInfo("topic",$r.Topic)">$brih_edit</a>&nbsp;&nbsp;</td>
+                        <td align="center"><a href="$link.setPage("call,CourseMgmt_User,View.vm").addPathInfo("uname",$r.UserName).addPathInfo("status","Repo").addPathInfo("topic",$r.Topic)">$brih_view</a>&nbsp;&nbsp;</td>
+                        </td><td><b>$r.Topic</b></td><td align="right">&nbsp;&nbsp; .$count&nbsp;</td>
+                </tr>
+                #set ( $count= $count+1)
+                #end
+
+	#else
+		#foreach($file in $dirContent)
+		<tr align="right">
+			<td align="right"><a href="$link.setPage("call,CourseMgmt_User,View.vm").addPathInfo("topic",$file.getName())">$brih_view</a>&nbsp;&nbsp;</td> 
+			<td align="right"> <b>$file.getName()</b> </td>
+			<td align="right"> &nbsp;&nbsp;.$count &nbsp;</td> 
+		</tr>
+		#set ( $count= $count+1)
+		#end
+              	#foreach($r in $read)
+              	<tr align="right">
+                 <td align="center"><a href="$link.setPage("call,CourseMgmt_User,View.vm").addPathInfo("uname",$r.UserName).addPathInfo("status","Repo").addPathInfo("topic",$r.Topic)">$brih_view</a>&nbsp;&nbsp;</td>
+		<td align="right"><b>$r.Topic</b></td>
+              	<td align="right"> &nbsp;&nbsp; .$count &nbsp;</td> 
+     		</tr>
+      		#set ( $count= $count+1)
+                #end
+		#foreach($r in $readR)
+                <tr align="right">
+                        <td align="right"><a href="$link.setPage("call,CourseMgmt_User,View.vm").addPathInfo("uname",$r.UserName).addPathInfo("status","Remote").addPathInfo("cName",$r.CourseName).addPathInfo("topic",$r.Topic)">$brih_view</a>&nbsp;&nbsp;</td>                 
+			<td align="right"><b>$r.Topic</b></td>
+                        <td align="right">&nbsp; &nbsp; .$count&nbsp;</td>
+		</tr>
+                #set ( $count= $count+1)                
+		#end
+       #end
+  </div>
+</form>
+</table>
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+</SCRIPT>

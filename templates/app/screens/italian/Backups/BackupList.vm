@@ -1,0 +1,27 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<font face="$ui.sansSerifFonts">
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+	        <a href=$link.setPage("call,Admin.vm")>Admin's Home page </a> | <a href=$link.setPage("call,Backups,Backups.vm")> Backup  </a> | Backup  Elenco
+	        </td>
+</tr>
+</table>
+
+<br>
+<table border="1" align="center">
+	<tr bgcolor="$ui.menuColor">
+		<td colspan="4" align=center><b>  Lista di Disponibile Backup   </b></td>
+	</tr>
+	<tr bgcolor="$ui.menuColor" align="center">
+				<td>  nome of Backup  File  </td>
+		<td bgcolor="$ui.menuColor" >disponibili Azioni </td>
+	</tr>
+		</table>

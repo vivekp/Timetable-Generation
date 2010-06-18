@@ -1,0 +1,178 @@
+#*
+ * @(#) RePermission.vm 
+ * Copyright (c) 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved
+ * @author <a href=" mailto:arvindjss17@gmail.com ">Arvind Pal</a>
+ * @modify <a href="mailto:shaistashekh@hotmail.com">Shaista </a>
+ * @date 21-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr align="right"> <td><b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment  </a>|
+        <a href=$link.setPage("call,Assignment,AssView.vm")> </a>$brih_repost $brih_Of $Repo_Perm  
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | 
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a>  </b>
+        </td></tr>
+</table> 
+	##table 1 end
+	$!data.getMessage()
+	<table width=100% align="right">
+	<tr align="right">
+<td> 
+                #if($user_role == "instructor")
+			<a href=javascript:popupWin("/brihaspati2/docs/RePostPermission.html","newWin");>$brih_help</a><img src="$content.getURI("/images/Lefthand.gif")">
+ 
+                #else
+			<a href=javascript:popupWin("/brihaspati2/docs/RePostPermission.html","newWin");>$brih_help</a><img src="$content.getURI("/images/Lefthand.gif")">
+                #end
+</td>
+</tr>
+</table>
+
+
+        #set($month=["01","02","03","04","05","06","07","08","09","10","11","12"])
+	#set($day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,RePermission.vm").setAction("Assignments")>
+
+<br>		
+<table Cell padding="20" Cell spacing="1" align="center" bgcolor="$ui.tableColor" border="1" width="75%" >
+<tr >
+
+		<tr bgcolor="$ui.menuColor" >
+			<td align="center"> <b> $brih_assignment  $brih_Of $brih_Da</b> </id>
+			<td align="center"> <b> $brih_topic $brih_Of1 $brih_name </b> </td>  
+			<td align="center"> <b>$brih_student $brih_Of1 $brih_name </b> </td>
+		</tr>
+	<tr>
+		<td  width="35%" align="center">
+		<select  name="Start_year" >
+	                <option value="$cyear">$cyear
+        	        #foreach($year in $year_list)
+                	    #if($cyear != $year)
+                      		<option value="$year">$year
+                    	    #end
+                  	#end
+                 </select>
+      		&nbsp<b><font size=+1>-</font></b>&nbsp
+          	<select  name="Start_mon" >
+          		<option value="$cmonth">$cmonth
+            		#foreach($mon in $month)
+            			#if($mon != $cmonth)
+            				<option value="$mon">$mon
+            			#end
+            		#end
+          	</select>
+                &nbsp;<b><font size=+1>-</font></b>&nbsp;
+                <select  name="Start_day" >
+                	<option value="$cdays">$cdays
+                  	#foreach($d in $day)
+                    		#if($d!=$cdays)
+                    			<option value="$d">$d
+                    		#end
+                  	#end
+		</select>	        
+		</td> 
+		<td width="1%" align="center">
+		<SELECT  name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+                        #foreach($topic in $allTopics)
+                        <option>$topic</option>
+                        #end
+		</SELECT>			
+		</td>
+        	<td width="15%" align="center"> 
+		<SELECT id="std_name" name=topicList1 onFocus=changeTopic1(document.uploadform) onChange=changeTopic1(document.uploadform)>
+                        <option> All  </option>
+                        #foreach($topic1 in $userList)
+				<option> $!topic1.getLoginName() </option>
+			#end
+        	</SELECT>			
+	        </td>
+               </tr>
+	<tr>
+     		<td colspan=3 align="center" bgcolor="$ui.menuColor" >
+                <font face="$ui.sansSerifFonts">
+		<input type="button" name="Repermission" value="$brih_granted" onClick="checkBlank(document.uploadform,this);"  />
+		<input type="button" name="Reset" value="$brih_reset" onClick="checkBlank1(document.uploadform,this);"  />
+		<input type="hidden" name="actionName"> 
+
+	        </font>
+
+		</td>
+	</tr>
+</table>
+
+
+<script LANGUAGE="JAVASCRIPT">
+	
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+
+
+	function checkBlank1(uploadform,field)
+        {
+                if(confirm(" If you are agree then press OK "))
+                {
+                        uploadform.actionName.value=field.name;
+                        uploadform.submit();
+                }
+        }
+
+        function checkBlank(uploadform,field)
+        {
+		if(confirm(" If you are agree then press OK "))
+		{
+                	uploadform.actionName.value=field.name;
+                	uploadform.submit();
+		}
+        }
+        function changeTopic1(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        uploadform.contentTopic.value=uploadform.topicList1.options[uploadform.topicList1.selectedIndex].text;
+                }
+                if(uploadform.group.value=="author")
+                {
+ 
+                }
+                else
+                {
+                        uploadform.contentTopic.focus();
+                } 
+        }
+
+	function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        uploadform.contentTopic.value=uploadform.topicList.options[uploadform.topicList.selectedIndex].text;
+                }
+                if(uploadform.group.value=="author")
+                {
+ 
+                }
+                else
+                {
+                        uploadform.contentTopic.focus();
+                }
+        }
+
+	function makeDisable()
+        {
+                var x=document.getElementById("std_name")
+                x.disabled=false
+ 
+        }
+        function makeEnable()
+        {
+                var x=document.getElementById("std_name")
+                x.disabled=true
+        }
+
+</script>

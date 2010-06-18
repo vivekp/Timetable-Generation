@@ -1,0 +1,45 @@
+#*
+ * @(#) Backups.vm
+ * Copyright(c)2006 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:mann_singh2004@yahoo.com">Manvendra Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+$page.setTitle("Backups")
+$page.setBgColor("#ffffff")
+##$!data.getMessage()
+<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+	<tr align="right"><td>
+		<font face="$ui.sansSerifFonts" size=3>
+		<b><a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> | $brih_backup </b>
+		</font>
+	</td></tr>
+</table>
+$!data.getMessage()
+
+<br>
+<form method="post" enctype="multipart/form-data" >
+<table width=20% align=center bgcolor="#e5e5e5" cellpadding=1>
+
+	<tr><td>
+    		<a href=$link.setPage("call,Backups,BackupAdmin.vm")>	
+		<img src="$content.getURI("/images/$lang/backupcontent.jpg")" border="0"></a>
+	</td></tr>
+	<tr><td>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doCompleteBackup")">
+		<img src="$content.getURI("/images/$lang/completesystembackup.jpg")" border="0"></a>
+	</td></tr>
+	<tr><td align="center">
+    		<a href=$link.setPage("call,Backups,BackupList.vm")>	
+		<img src="$content.getURI("/images/$lang/backuplist.jpg")" border="0"></a>
+	</td></tr>
+	<tr><td>
+		<a href="$link.setPage("call,Backups,Backups.vm").setAction("BackupAction").addPathInfo("actionName","eventSubmit_doGlossaryBackup")">
+		<img src="$content.getURI("/images/$lang/glosrybackup.jpg")" border="0"></a>
+	</td></tr>
+
+</table>
+</form>

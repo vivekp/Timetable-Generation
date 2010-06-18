@@ -1,0 +1,142 @@
+
+
+$page.setTitle("Create Quiz")
+
+<table bgcolor="$ui.tableColor" width=100%>
+        <tr>
+                <td>
+                <font face="$ui.sansSerifFonts"><b>
+                <a href=$link.setPage("call,IndexHome.vm")>????? ??????</a> |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+        	<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>?????? </a> | 
+        	<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm")>?????? ?????????? ?????? </a> | ?????? ?? ?????? 
+                </font>
+                </td>
+        </tr>
+</table>
+
+
+<br> 
+<body bgcolor="$ui.bgcolor" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Create_Quiz.vm").setAction("Quiz_Action")>
+  <div align="left">
+    <table align=center bgcolor="$ui.tableColor" border=2 cellpadding="5" width=60% >
+        <tr bgcolor="$ui.menuColor" >
+        <td align=center colspan=2 >
+                <font size=4><i> <b> ?????? ?? ?????? :<b> $Quizid  <i>  </b></font>
+        </td>
+        </tr>
+	<tr>
+		<td > <b> <font face="$ui.sansSerifFonts">
+			????????? ???????? ?????? </font> <font color=red>*</font></td>
+		<td > <input type="text" name="maxmarks" value="" readonly></td> 
+        </tr>
+	<tr>
+                #formCell("???????? ?????? ????? ?????? " "marks" "")
+        </tr>
+        <tr>
+                #formCell(" ?????? ??????  <font color=red>*</font>" "noofques" "")
+        </tr>
+        <tr>
+		<td width=30% align="centre" >
+      			<b><font face="$ui.sansSerifFonts"> ??? ?? ??????  </font></b>
+   		</td>
+   		<td  width=70% align="left" >
+        		<font face="$ui.sansSerifFonts">
+        		<SELECT name=typeList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.frm)>
+                        <option></option>
+		        <option value="Multiple">???  ??????</option>
+		        <option value="TF">???? / ????? ??????</option>
+		        <option value="Short">??? ??????</option>
+
+                        </SELECT> &nbsp; </font>	
+  		</td>
+	<tr>
+                #formCell(" ???????? ???????? ??????  <font color=red>*</font> " "passmarks" "")
+        </tr>
+        <tr bgcolor="$ui.menuColor">
+		<td align="center" colspan=2>
+
+			<input type="button" name="eventSubmit_doCreate" value="????? ??" onClick="checkField(document.frm,this);"/>
+			
+			<input type="hidden" name="quizid" value="$Quizid">
+                	<input type="hidden" name="actionName">
+			<input type="reset" name="Reset" value="?????? ??? ??"/>
+	        </td>
+        </tr>
+    </table>
+  </div>
+</form>
+</body>
+
+<script LANGUAGE="JAVASCRIPT" >
+
+        function checkField(frm,field)
+        {
+		if((frm.maxmarks.value!="") && (frm.noofques.value!="") && (frm.passmarks.value!="")){	
+			if(isNumberString(frm.noofques.value))
+                        {
+                                alert("Total questions should be an integer value");
+                                frm.noofques.focus();
+                                return false;
+                        }
+                        if(isNumberString(frm.passmarks.value))
+                        {
+                                alert("Passing marks should be an integer value ");
+                                frm.passmarks.focus();
+                                return false;
+                        }
+                        if(isNumberString(frm.marks.value))
+                        {
+                                alert("Marks per question should be an integer value ");
+                                frm.marks.focus();
+                                return false;
+                        }
+
+			var passmarks=0;
+			passmarks=frm.passmarks.value;
+			var max=0;
+			max=frm.maxmarks.value; 
+			var myboolean1=new Boolean(true);	
+			if(frm.marks.value!="")
+			{
+				var mpq=0;
+                                mpq=frm.marks.value;
+				mpq=mpq*frm.noofques.value;
+				if(mpq > max)
+				myboolean1=false;
+			}
+			if(myboolean1)
+			{	
+				max=max*1;					
+				if((passmarks <= max )&&(passmarks >= 1 ))
+				{	   
+					frm.actionName.value=field.name;
+                			frm.submit();
+				}
+				else
+					alert("Pass Marks should not be greater than Max Marks !!");
+			}
+			else
+				alert("Multiplication of  total number of question and marks per Question should not be greater than Max Marks !!");
+		}
+		else
+                	alert("Please Fill All Fields");
+        }
+
+	function isNumberString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+                var RefString="0123456789.";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)==-1)
+                        {
+                                return true;
+                        }
+                }
+                return false;
+        }
+</script>

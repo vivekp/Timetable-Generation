@@ -1,0 +1,79 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home|$CName|Communication|Local Mail|Read Message")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>??????? </a> | 
+<a href=$link.setPage("call,Local_Mail,Mail.vm")>????  ????</a> |	 
+<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>?? ????</a> | ???? ??? ????
+| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+<a href=$link.setPage("call,IndexHome.vm")>???? </a> 
+</font>
+</td>
+</tr>
+</table>
+<br>
+<br>
+<form method="post" enctype="multipart/form-data">
+  <div align="left">
+  <table align="center" border=1>
+    <tr> 
+    <td>   
+    <table bgcolor="$ui.tableColor" border=1 cellpadding="0" align=center>
+        
+           <tr>
+     <td align="right" >$sub &nbsp;<b><u>: ????? </u></b></td>
+     </tr>
+     
+     <tr>
+     <td align="right"> $retrive_user &nbsp;<b><u>: ?????? ???? </u></b></td>
+     </tr>
+     
+     <tr>
+     <td align="right"> $retrive_date &nbsp <b><u>: ?????? ?? ?????  </u></b></td>
+     </tr>
+    
+    <tr>
+     <tr>
+     <td>
+      <table align=center>
+
+      <tr><td align="right">
+	<b><u>: ????? </u><b>
+      </td></tr>
+      <tr>
+       <td bgcolor="$ui.bgcolor">
+	<textarea name=description rows=10 cols=55 wrap=physical onFocus="this.blur();"> $message</textarea>
+       </td>
+       </tr>
+      </table>
+      </td>
+      </tr>
+      <tr><td>
+			</table>
+
+      </td>
+     </tr>
+
+    <tr bgcolor="$ui.menuColor">
+    <td align="center">
+	<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>??? ????</a>
+
+  </td>
+  </tr>
+  </table>
+  </td>
+    </tr>
+  </table>
+  </div>
+</form>
+<SCRIPT language="JavaScript">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+</SCRIPT>

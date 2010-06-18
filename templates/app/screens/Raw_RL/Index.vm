@@ -1,0 +1,105 @@
+#*
+ * @(#) Index.vm
+ * Copyright(c)2004 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:nksngh_p@yahoo.co.in">Nagendra Kumar Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Login | Index")
+$page.setBgColor("$ui.bgcolor")
+$!data.getMessage()
+#macro(UNAME)
+
+	#if($firstname!="")
+  		#if($lastname!="")
+  		<b> $firstname $lastname</b>
+  		#else
+  		<b> $firstname</b>
+  		#end
+	#else
+  	<b>$username</b>
+	#end
+#end
+
+<table bgcolor="$ui.tableColor" width=100% align=center>
+<tr align=right>
+<td align=center>
+#if(( $data.getUser().getTemp("lang" ).toString())=="english")
+	<font face="$ui.sansSerifFonts"><b>$brih_welcome </b>
+	#UNAME()
+	</font> 
+#else
+	<font face="$ui.sansSerifFonts"> #UNAME() 
+	<b> $brih_welcome </b>
+	</font>
+#end
+</td>
+</tr>
+</table>
+<br>
+
+#if($guest_login=="false")
+<div align=center>
+        #if($ImageSize!="null")
+                <img src="$content.getURI("/images/user/$data.getUser().getUserName()")" width="80" height="100">
+        #end
+</div>
+#end
+
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+	<table width="50%" align="center" bgcolor="$ui.menuColor" Cellpadding=4>
+               
+    		#if($Role1=="AdminRole")
+		<tr><td align="center">
+        		<b><a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a>
+		</td></tr>
+   		#end
+    		#if($Role2=="InstructorRole")
+		<tr><td align="center">
+       		<b><a href=$link.setPage("call,IndexHome.vm").addPathInfo("role","instructor")>$brih_instructor $brih_Of1 $brih_home</a>
+		</td></tr>
+		#end
+    		#if($Role3=="StudentRole")
+		<tr><td align="center">
+       		<b><a href=$link.setPage("call,IndexHome.vm").addPathInfo("role","student")>$brih_student $brih_Of1 $brih_home</a>
+		</td></tr>
+		#end
+    		#if($Role4=="GAdminRole")
+		<tr><td align="center">
+       		<b><a href=$link.setPage("call,IndexHome.vm")>$brih_groupAdmin  $brih_home</a>
+		</td></tr>
+		#end
+    		#if($Role5=="AuthorRole")
+		<tr><td align="center">
+       		<b><a href=$link.setPage("call,Repository_Mgmt,Author.vm").addPathInfo("role","Author")>$brih_author $brih_Of1 $brih_home</a>
+		</td></tr>
+		#end
+	</table>
+
+			<table align=center cellspacing=10>
+                                <tr>
+                                        <td>
+                                        #if($guest_login=="false" )
+						#if($Role1=="AdminRole")
+							<a href=$link.setPage("call,AdminProfile,ChangePasswd.vm")>
+	                                                <img src="$content.getURI("/images/$lang/changepass.jpg")"></a>
+							</td><td>
+							<a href=$link.setPage("call,AdminProfile,AdminParam.vm")>
+	                	                        <img src="$content.getURI("/images/$lang/profile.jpg")"></a>
+						#else
+                                        	        <a href=$link.setPage("call,UserMgmt_User,changePassword.vm").addPathInfo("status","homePage")>
+                                                	<img src="$content.getURI("/images/$lang/changepass.jpg")"></a>
+							</td><td>
+							<a href=$link.setPage("call,UserMgmt_User,Profile.vm")>
+	        	                                <img src="$content.getURI("/images/$lang/profile.jpg")"></a>
+	
+						#end
+                                        #end
+                                        </td>
+                                </tr>
+                        </table>
+
+</body>

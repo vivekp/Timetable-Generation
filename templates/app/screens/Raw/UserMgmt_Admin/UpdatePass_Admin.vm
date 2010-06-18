@@ -1,0 +1,71 @@
+#*
+ * @(#)UpdatePass_Admin.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a>  
+ *#
+
+$page.setBgColor($ui.tableColor)
+
+$page.setTitle("call,List Management | User List | Change Password")
+##<table bgcolor="#d9e3ec" width=100% cellspacing=0>
+
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr><td><font face="$ui.sansSerifFonts" size=3>
+<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_home</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm")>$brih_list_mgmt</a> |
+<a href=$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")>$brih_listUsr</a> | $brih_changePassword1 $username
+</td></tr>
+</table>
+<table width=100% align=left bgcolor="$ui.tableColor">
+<tr>
+	<td><a href="$link.setPage("call,ListMgmt_Admin,List_Mgmt.vm").addPathInfo("listcourse","listcourse").addPathInfo("mode","All").addPathInfo("actionStat","Edit")">View All Course</a></td>
+        <td><a href="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").addPathInfo("mode","All")">View All User</td>
+</tr>
+</table>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,Adminviewall.vm").setAction("UserAction_Admin")">
+<table align="left" width="100%" bgcolor="$ui.menuColor" >
+	#if(($data.getUser().getTemp("lang" ).toString())== "hindi")
+	<tr><td>$username $brih_Of1  $brih_changePassword1</td></tr> 
+	#else
+	<tr><td>$brih_changePassword1 $username</td></tr>
+	#end
+</table>
+<table align="left" width="100%" bgcolor="$ui.tableColor" >
+	<tr>
+	#formPasswordCell("$brih_pwd  <font color=Red>*</font>" "newpass" "")
+	</tr>
+</table>
+<table align="left" width="100%" bgcolor="$ui.menuColor" >
+	<tr><td>
+        <input type="button" name="eventSubmit_doUpdatePass" value="$brih_update" onClick="checkpass(document.frm,this);"/>
+        <input type="reset" name="clear" value="$brih_clear" onClick="clearValues(document.frm,this);"/>
+        <input type="hidden" name="username" value=$username />
+        <input type="hidden" name="actionName"/>
+        <input type="hidden" name="mode" value="All"/>
+     	</td></tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+function checkpass(frm,field,v)
+ {
+ if(frm.newpass.value!="")
+     {
+      frm.actionName.value=field.name;
+      frm.submit();
+     }
+ else
+    {
+        alert("Password can not be null!");
+    }
+ }
+
+function clearValues(frm,field)
+{
+	frm.newpass.value="";
+}
+</SCRIPT>

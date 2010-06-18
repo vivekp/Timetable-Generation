@@ -1,0 +1,168 @@
+#*
+ * @(#)MailCompose.vm
+ *  Copyright (c) 2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author  <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+*#
+
+#set($lang = $data.getUser().getTemp("lang").toString())
+
+#if ($lang != "english" || $lang != "french" )
+	<head>
+	<script type="text/javascript">/*<![CDATA[*/
+	var wgIsArticle = false;
+	        /*]]>*/</script>
+	<script type="text/javascript" src="../../../../../scrpts/index"> </script>
+	##<link rel="stylesheet" href="../../../../../scrpts/matthew" type="text/css">
+#end
+#if ($lang == "bangla")
+	<script type="text/javascript" src="../../../../../scrpts/bangla_002" &action="raw"></script>
+#end
+
+#if ($lang == "hindi" ||  $lang == "marathi")
+	<script type="text/javascript" src="../../../../../scrpts/hindiMarathi_002" &action="raw"></script>
+#end
+</head>
+$page.setTitle("Admin Home | Communication | Local Mail | Compose Message")
+$page.setBgColor($ui.bgcolor)
+$!data.getmessage()
+<table bgcolor="$ui.menuColor" width=100% >
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> |
+        <a href=$link.setPage("call,Notice_User,Notices.vm")>$brih_communication</a> |
+        <a href=$link.setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")>$brih_localmail</a> | 
+	#if($status!="reply") 
+		$LocalMail_MailContent_msg1
+	#else
+		$LocalMail_Reply
+	#end 	
+</tr>
+</table>
+<body>
+#if ( $lang == "english")
+	<form name ="editform" method = "post" enctype="multipart/form-data" action="$link.setAction("MailSendMessage").setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")">
+#else
+	<div id="bodyContent">
+	<form id="editform" name="editform" method="post" enctype="multipart/form-data" action="$link.setAction("MailSendMessage").setPage("call,Local_Mail,Mail.vm").addPathInfo("mod","adminmail")">
+#end	
+<table align="left" width=100% cellpadding=3>
+##if(($status!="reply")&& ($mode1!="grpmgmt"))
+#if($status!="reply")
+<tr bgcolor="$ui.tableColor">
+	<td colspan=2>
+	#if($stat1=="")
+	<a href="$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("stat1","insertcc")">$brih_add $LocalMail_CC</a> |
+        <a href="$link.setPage("call,Local_Mail,viewall.vm").addPathInfo("mode","NotAll").addPathInfo("mod","adminmail")">$brih_adb  </a>
+	#else
+	<a href="$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("stat1","")">$brih_remove $LocalMail_CC</a>  |
+	#end
+	</td>
+</tr>
+#end
+<tr bgcolor="$ui.menuColor"> 
+	#*if($mode1 == "grpmgmt")
+        	#formCell("$LocalMail_MailTestMessage_To<font color=Red>*</font>" "addressNames" "$!val")
+        #else*#
+		#if($checkVector == "AddressBook")
+			#formCell("$LocalMail_MailTestMessage_To<font color=Red>*</font>" "addressNames" "$!userVector")
+		#else
+			#formCell("$LocalMail_MailTestMessage_To<font color=Red>*</font>" "addressNames" "$!toAddress")
+		#end	
+	##end
+</tr>
+
+#if($stat1=="insertcc")
+<tr bgcolor="$ui.tableColor" > 
+	#formCell("$LocalMail_CC" "addressNames1" "")
+</tr>
+#end
+<tr bgcolor="$ui.tableColor"> 
+	#formCell("$Notice_Subject" "subject" "$!subject")
+</tr>
+<input type="hidden" name="hexaStr" value="">
+<tr bgcolor="$ui.menuColor">
+<td>$brih_msg2</td>
+<td>
+#if ( $lang == "english")
+	<textarea name="wpTextbox1" rows=8 cols=50>$!message</textarea >
+#else
+	<textarea tabindex="1" accesskey="," name="wpTextbox1" id="wpTextbox1" rows="8" cols="50">$!message</textarea>
+	<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+</td>
+</tr>
+	#end
+<tr bgcolor="$ui.tableColor">
+	#fileUpload("$brih_at_file" "file")
+</tr>
+<tr bgcolor="$ui.menuColor">
+<td align="left" colspan=2>
+<font face="$ui.sansserifFonts">
+  <input type="button" name="eventSubmit_doSend" value="$Notice_Send"  onClick="checkValue(document.editform,this);"/>
+  #if($status!="reply")
+  	<input type="reset" value="$brih_clear"> 
+  #end
+        <input type="hidden" name="mode1" value="$mode1">
+	<input type="hidden" name="val" value="$val">
+	<input type="hidden" name="actionName">
+	<input type="hidden" name="RepMsg_Id" value=$RepMsg_id>
+	<input type="hidden" name="repStat" value="$status">
+	<input type="hidden" name="lang" value="$lang">
+	<Input type="hidden" name="sentMessage" value="$!sentMess">
+</font>
+</td>
+</tr>
+</table>
+</form>
+ </body>
+<SCRIPT LANGUAGE="javascript">
+function checkValue(editform,field){
+   	if(editform.addressNames.value!="") 
+    	{
+   		if(editform.subject.value=="")
+    		{
+     			alert("Fill the Subject Field");
+     			editform.subject.focus();
+    		}
+		else{
+			if(editform.wpTextbox1.value == "")	
+			{
+				if(confirm("Your message is empty !!"))
+				{
+					if (editform.lang.value == "english")
+						editform.hexaStr.value = editform.wpTextbox1.value;
+					if(editform.repStat.value == "reply")
+						editform.hexaStr.value = editform.sentMessage.value + editform.hexaStr.value;
+					//alert("sentMessage.value....."+editform.sentMessage.value);
+					//alert("hexastr.value....."+editform.hexaStr.value);
+  	   				editform.actionName.value=field.name;
+     					editform.submit();
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				if (editform.lang.value == "english")
+					editform.hexaStr.value = editform.wpTextbox1.value;
+				if(editform.repStat.value == "reply")
+					editform.hexaStr.value = editform.sentMessage.value + editform.hexaStr.value;
+				//alert("sentMessage.value....."+editform.sentMessage.value);
+				//alert("hexastr.value....."+editform.hexaStr.value);
+				editform.actionName.value=field.name;
+     				editform.submit();
+			}
+		}
+    	}
+   	else
+    	{
+     		alert("Fill the Address Field");
+     		editform.addressNames.focus();
+    	}
+}
+</SCRIPT>
+

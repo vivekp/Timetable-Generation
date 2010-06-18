@@ -1,0 +1,82 @@
+#*
+ * @(#) Communication.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:madhavi_mungole@hotmail.com ">Madhavi Mungole</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+#set($lang = $data.getUser().getTemp("lang" ).toString()) 
+$page.setTitle("Home | $courseName | Communication")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts">
+	<a href=$link.setPage("call,IndexHome.vm")><b>$brih_home</a> | 
+	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $courseName </a>|
+	$brih_communication
+	</font>
+</td>
+</tr>
+</table>
+<form>
+<br>
+<table align=center bgcolor="$ui.menuColor" width=20% cellpadding=10>
+<tr>
+<td align=center>
+ <table cellspacing=10>
+	#if($guestRole=="no")
+	<tr>
+	<td>
+		<a href=$link.setPage("call,Local_Mail,Mail.vm")>
+		<img src="$content.getURI("/images/$lang/localm.jpg")"border=0><br>
+		</a>
+	</td>
+	</tr>
+ 	<tr>
+	<td>
+    		<a href=$link.setPage("call,Chat,Chat.vm")>
+		<img src="$content.getURI("/images/$lang/chat.jpg")"border=0></a><br>
+	</td>
+ 	</tr>
+ 	#end
+ 	#if($user_role=="instructor")
+ 	<tr>
+	<td>
+    		<a href=$link.setPage("call,Notice_User,Notices.vm")>
+		<img src="$content.getURI("/images/$lang/notices.jpg")"border=0></a><br>
+	</td>
+ 	</tr>
+ 	#end
+ 	#if($user_role=="student")
+ 	<tr>
+	<td>
+    		<a href=$link.setPage("call,Notice_User,NoticeContent.vm").addPathInfo("flag","FromNotices")>
+		<img src="$content.getURI("/images/$lang/readnotice.jpg")"border=0></a><br>
+	</td>
+ 	</tr>
+	#end
+	<tr>
+	#if($lang!="urdu")
+	<td>
+		<a href=$link.setPage("call,Dis_Board,DB.vm")>
+                <img src="$content.getURI("/images/$lang/discussionboard.jpg")"border=0></a><br>
+
+	</td>
+	#end
+ 	</tr>
+	#if($guestRole=="no")
+	<tr>
+	<td>
+    		<a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status","fromCourse")>
+		<img src="$content.getURI("/images/$lang/news.jpg")"border=0></a><br>
+	</td>
+	</tr>
+	#end
+ </table>
+</td>
+</tr>
+</table>
+</form>

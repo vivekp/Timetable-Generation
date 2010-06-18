@@ -1,0 +1,33 @@
+
+
+$page.setTitle("$brih_reg2 $brih_courses $brih_list")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<a href=$link.setPage("BrihaspatiLogin.vm").addPathInfo("lang",$lang)>?????? ????</a> |
+	?????????? ??????????    ???????
+	</font>
+	</td>
+</tr>
+</table>
+<form name="frm" method="Post">
+<table align="left" width="100%" bgcolor="$ui.tableColor">
+<tr><td>
+			<b>???? ??????? ?????</b> &nbsp;&nbsp;
+	<select name="SearchList" onChange="ShowList(document.frm,this);"/>
+<option value=$ListConf_str>$ListConf_str</option>
+					</select>     
+</td>
+<td><b>?????? ???????</b>&nbsp;&nbsp;<input type="text" name="SearchKey" value="" onSelect="ShowList(document.frm,this);"/></td>
+</tr>
+</table>
+</form>
+<SCRIPT LANGUAGE="javascript">
+	function ShowList(frm,field)
+	{
+		frm.submit();
+	}
+</SCRIPT>

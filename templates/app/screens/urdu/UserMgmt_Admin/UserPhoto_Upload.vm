@@ -1,0 +1,74 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Admin Home | User Management | Upload Multiple Users Photo")
+
+
+
+<br>
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+        <td>
+        <font face="$ui.sansSerifFonts" size=3>
+        <b>
+      <a href=$link.setPage("call,Admin.vm")>????? ?? ????</a> |
+      <a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>????? ??????  </a> | ?????  ?????  ???? ???? 
+        </td>
+	</b>
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+<td align=left>
+        ???  <img src="$content.getURI("/images/Lefthand.gif")"> <a href="/brihaspati/docs/PhotoUpload.html"></a>
+</td>
+</tr>
+</table>
+
+
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setPage("call,UserMgmt_Admin,UserPhoto_Upload.vm").setAction("UserAction_Admin")">
+<div align="left">
+<br>
+<br>
+<table width=60% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+      	<tr>
+	<td colspan=2 bgcolor="$ui.menuColor" align="center">
+		<font size=4><b>????? ???? ????? ??????? ???? ????? ?? ????? ?? ?? ???? ???? ????</b></font>
+	</td>
+	</tr>
+	<tr>
+		<td> <input type="file" name="file" size="35%"> </td>
+		<td><font face="$ui.sansSerifFonts"><b>???? ?????  </b></font> </td>
+   	</tr>
+      	<tr>
+        <td colspan=2 align="center" bgcolor="$ui.menuColor">
+          	<font face="$ui.sansSerifFonts">
+          	<input type="button" name="eventSubmit_doUploadphoto" value="???? ???? " onClick="CheckFields(document.frm,this);"/>
+          	<input type="hidden" name="actionName" value=""/>
+    
+          	</font>
+        </td>
+      	</tr>
+</table>
+<br>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>
+  </div>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+        function CheckFields(frm,field)
+        {
+                if(frm.file.value!="")
+                {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Fields");
+                }
+        }
+</SCRIPT>

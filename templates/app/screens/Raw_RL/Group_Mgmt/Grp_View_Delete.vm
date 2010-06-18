@@ -1,0 +1,197 @@
+<html>
+#*
+ * @(#) Grp_View_Delete.vm
+ *  Copyright (c) 2006-07,2009 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="mailto:shaistashekh@hotmail.com"> Shaista</a> 
+ *  @modify 07-05-09
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *#
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+<tr align="right">
+	<td align=right>
+        	#if( $total_size!=0 )
+                	#if( $endIndex < $total_size )
+                        	#if( $endIndex < $userConf )
+					  [$total_size - $k] $brih_all $total_size  $brih_inFrom
+                        	#elseif($k == $j)
+					  [$total_size - $k] $brih_all $total_size  $brih_inFrom
+                        	#else
+        	        		 [$endIndex -$k] $brih_all $total_size $brih_inFrom
+                        	#end
+                	#else
+				  [$total_size - $k] $brih_all $total_size  $brih_inFrom
+                	#end
+        	#end
+        </td>
+	<td><b>
+       	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>$brih_mgmt $brih_grp </a> |
+ 	$brih_view/$brih_delete $brih_grp
+       	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>| 
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	</b> </td>
+</tr>
+</table> ##table 1 end
+<table width=100% > ##table 2 start
+	<tr>
+		<td align ="right">
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/view-deletegroup.html","newWin");>$brih_help</a>
+		</td>
+	</tr>
+</table> ## table 2 end
+<form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").setAction("Groupmanagement")>
+	<table align="center" border=1 bgcolor="$ui.tableColor" width=85% > ## table 3 start
+	<tr bgcolor="$ui.menuColor"><td align ="center"colspan=5 vlaign="top"> ## td tr 1 satart
+        <b><font size=4<I> $brih_course </I>$brih_Of2 $brih_grp <font color="blue"> " $courseid " </font> </font></b>
+	</td></tr>
+	<tr><td align="center" colspan="5"> ##  td tr 2 start
+	<b><font size=4><I>: $brih_grp $brih_Of $brih_infos </I></font></font></b>
+	#if($Mode=="NoBlank") ## if satar (mode)
+	<table  border="0" bgcolor="$ui.tableColor" width="100%" colspan="5"> ## table 5 start
+	#set($headings=["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_creation $brih_Da","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_grp $brih_Of1 $brih_type","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$brih_grp $brih_Of1 $brih_name"])
+	<tr bgcolor="$ui.tableColor" align="right"> ## tr 3 start
+                        #foreach($heading in $headings)
+                        <td>
+                                <b>$heading</b>
+                        </td>
+                        #end
+                       	<td align="right">
+                        <font face="$ui.sansSerifFonts"><b>$brih_selAll</b>
+			<input type="CHECKBOX" name="checkAll" onClick="selectAll(this);">
+                        </td>
+			#set ( $count="" )
+			#foreach($Read in $grplist)
+			#if($groupname == $Read.Name)
+				<tr bgcolor="$ui.fontColorPink" align="right"> ## tr 4 start
+			#else
+			<tr bgcolor="$ui.menuColor"> ## tr 4 start
+			#end
+				<td align ="center">
+					$Read.PDate
+				</td>
+				<td >
+				&nbsp;&nbsp;&nbsp;&nbsp; $Read.type
+				</td>
+				<td align ="center">
+					$Read.Name
+				</td>
+				<td align ="right" >
+					<input type=checkbox name="$!Read.Name" onClick="addDeleteList(this,document.frm);">
+				</td>
+			</tr> ## tr 4 end
+			#set ( $count= "$count$!Read.Name^")
+			#end
+	</tr> ## tr 3 end
+	</table> ## table 5 end
+	<tr bgcolor="$ui.menuColor" align="right"><td align="right">&nbsp;&nbsp; ## td 5 start
+	<a href=$link.setPage("call,Group_Mgmt,Addmembers.vm")> $brih_member $brih_view/$brih_add </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        	#if($total_size <= $userConf)
+        	<u><font color="white">$brih_first</font></u> &nbsp;
+        	<u><font color="white">$brih_pre</font></u> &nbsp;
+        	<u><font color="white">$brih_nxt</font></u> &nbsp;
+        	<u><font color="white">$brih_last</font></u> &nbsp;
+        	#elseif($startIndex == $userConf_string)
+        	<u><font color="white">$brih_first</font></u> &nbsp;
+        	<u><font color="white">$brih_pre</font></u> &nbsp;
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$startIndex)">$brih_nxt</a> &nbsp;
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+        	#elseif($endIndex == $total_size || $endIndex > $total_size)
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$check_first)">$brih_first</a>&nbsp;
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+        	<u><font color="white">$brih_nxt</font></u> &nbsp;
+        	<u><font color="white">$brih_last</font></u> &nbsp;
+        	#else
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$check_first)">$brih_first</a>&nbsp;
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">$brih_nxt</a> &nbsp;
+        	<a href="$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+        	#end
+	&nbsp;&nbsp;&nbsp;&nbsp; <input type="button" name="eventSubmit_doDeleteGroup" value="$brih_grp $brih_delete" onClick="deleteConfirm(document.frm,this);"/>
+        </td>
+</tr>
+#else
+<b><font color="blue"><i>$brih_grpmsg18</i></font></b>
+#end ## if end of mode
+	</tr></td> ## td tr 2 end
+	<input type="hidden" name="actionName" >
+	<input type="hidden" name="grouptype" value="$grouptype" >
+	<input type="hidden" name="groupdesc" value="$groupdesc" >
+	<input type="hidden" name="deleteFileNames" value="">
+	<input type="hidden" name="stat" value="grpmgmt">
+	<input type="hidden" name="val" value="$val">
+</form>
+</table> ## end of table 3
+</html>
+<SCRIPT LANGUAGE="javascript">
+	function deleteConfirm(frm,field)
+        {
+                var delfiles;
+                delfiles=frm.deleteFileNames.value;
+                if(delfiles.length!=0)
+                {
+                        if(confirm("Selected Group will be Deleted"))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+		else
+		alert("Please Select check box  !!");
+        }
+	function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        
+        }
+	function selectAll(field)
+        {
+                if(field.checked)
+                {
+                        var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.deleteFileNames.value="$count";
+                        while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                                var temp=actualString.substring(next,pre);
+                                next=pre+1;
+                                rmFile=document.frm.elements[temp].checked=true;
+                        }
+                }
+                else
+                {
+                        var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.deleteFileNames.value="$count";
+                        while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                                var temp=actualString.substring(next,pre);
+                                next=pre+1;
+                                rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+                }
+        }
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+</script>

@@ -1,0 +1,115 @@
+#*
+ * @(#) RePostAns.vm
+ * Copyright (c) 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:arvindjss17@gmail.com ">Arvind Pal</a>
+ * @modify <a href="mailto:shaistashekh@hotmai.com">  shaista </a>
+ * @adate 22-05-09
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+
+#set($lang=$data.getUser().getTemp("lang").toString())
+<table bgcolor="$ui.tableColor" width=100% > ##table 1 start
+        <tr align="right"> <td><b>
+        <a href=$link.setPage("call,Assignment,ASS_subm.vm")> $brih_assignment  </a>|
+        <a href=$link.setPage("call,Assignment,AssView.vm")> </a> $DisBoard_DB_msg25 $brih_answer  
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")> $coursename </a> | 
+        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+	</b>
+        </td></tr>
+</table> ##table 1 end
+
+$!data.getMessage()  
+
+<br>
+<br>
+		<form name=uploadform method="post" enctype="multipart/form-data"  action=$link.setPage("call,Assignment,RePostAns.vm").setAction("Assignments")>
+	<table width=50% bgcolor="$ui.tableColor" cellpadding="2" align="center" border=1>
+	<tr bgcolor="$ui.menuColor" align="right">
+		<td>  <SELECT name=topicList onFocus=changeTopic(document.uploadform) onChange=changeTopic(document.uploadform)>
+         	<option value="" ></option>
+		#foreach($topic in $allTopics)
+			<option value="$topic" >$topic</option>
+		#end
+		</SELECT>
+		</td>
+		<td >	<b>	$brih_topic $brih_Of1 $brih_name   </b> </td>
+                </tr>         
+	<tr align="right">
+                ###fileUpload ("$brih_at_file <font color=RED>*</font>" "file")
+		<td> 
+			<input type="file" name="file" size="30%" >
+		</td> 
+		<td> 
+			<font color=RED>*</font> $brih_at_file 
+		</td> 
+        </tr>
+        <tr align="right">
+ <td colspan=2 align="center" bgcolor="$ui.menuColor">
+                <font face="$ui.sansSerifFonts">
+		<input type="button" name="RePostAns" value="$brih_upload" onClick="checkBlank(document.uploadform,this);"  />
+                               <input type="hidden" name="actionName">             
+                               <input type="hidden" name="date" value=$date />             
+                               <input type="hidden" name="courseid" value=$courseid />             
+		</font>
+        </td>
+        </tr>
+</table>
+</form>
+<script LANGUAGE="JAVASCRIPT">       
+  
+        function checkBlank(uploadform,field)
+        {
+		var tList=uploadform.topicList;
+                var cTopic=uploadform.contentTopic;
+                if(uploadform.topicList.value!="")
+                {
+                        if(uploadform.file.value!="")
+                        {
+			
+	        	        uploadform.actionName.value=field.name;
+        	        	uploadform.submit();
+
+                        }
+                        else
+                         alert("Attach file Can not Empty !!");
+
+                }
+                else
+                        alert("Selected Topic can not Empty !!");
+        }
+#*
+        function blurTopicName(frm)
+        {
+                document.uploadform.topicExisting.value="OLDTOPIC";
+                frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+        }
+*#
+
+        function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+                }
+                if(frm.group.value=="author")
+                {
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+               }
+        }
+#*
+        function checkRadio()
+        {
+                if(document.uploadform.topicExisting[0].checked)
+                {
+                        document.uploadform.contentTopic.blur();
+                }
+        }
+*#
+
+</script>

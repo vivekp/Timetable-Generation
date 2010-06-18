@@ -1,0 +1,126 @@
+
+$page.setTitle("Admin Home | Change Parameters")
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr bgcolor="$ui.menuColor">
+	<td colspan="2">
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href=$link.setPage("Index.vm")>Admin's Ð?Ð¾Ð¼</a> | Ð?Ð·Ð¼ÐµÐ½Ð¸Ñ?Ðµ Ð¿Ñ?Ð¾Ñ?Ð¸Ð»Ñ?
+	</td>
+</tr>
+<form name="frm" method="post" action="$link.setPage("call,AdminProfile,AdminParam.vm").setAction("changeAParam")">
+    <tr width="100" bgcolor="$ui.tableColor"><td colspan=2><font size=4><b>Admin' Ð¿Ñ?Ð¾Ñ?Ð¸Ð»Ñ? s</b></font></td></tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> Ð?ÐµÑ?Ð²Ñ?Ð¹ Ð?Ð¼Ñ? </font></td> 
+	<td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AFName" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> Ð?Ð¾Ñ?Ð»ÐµÐ´Ð½Ð¸Ð¹ Ð?Ð¼Ñ? </td>   
+	<td width="50"> <font face="$ui.sansSerifFonts"><input type="text" size="30" name="ALName" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">Config Ñ?Ð¿Ð¸Ñ?ÐºÐ°. Ð?Ð½Ð°Ñ?ÐµÐ½Ð¸Ðµ </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AdminConf" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> Ð?Ñ?Ñ?Ñ? Ð?Ñ?Ñ?ÐµÑ?ÐµÐ½Ð¸Ðµ Ñ?Ñ?Ð¾ÐºÐ° Ð²Ñ?ÐµÐ¼Ñ? (Ð² Ð´Ð½Ñ?Ñ?) </font></td>	
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="AdminCrsExp" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">  Ð?Ð¾Ñ?Ñ?Ð° Ð¡ÐµÑ?Ð²ÐµÑ? Ð?Ð¼Ñ?  </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailServ" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts"> Ð?Ð¾Ñ?Ñ?Ð° Ð?Ñ? </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts">  <input type="text" size="30" name="mailFrom" value=""> </font></td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">   Ð?ÐµÑ?Ñ?Ð½Ñ?Ð¹ Ð?Ð¾Ð¼ÐµÐ½ Ð?Ð¼Ñ?  </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="mailDomain" value=""> </font> </td>
+    </tr>
+    <tr bgcolor="$ui.tableColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">   Ð?Ð¾Ñ?Ñ?Ð° Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð?Ð¼Ñ?  </font></td>
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="text" size="30" name="muName" value=""> </font> </td>
+    </tr>
+    <tr bgcolor="$ui.menuColor">
+      	<td width="30"> <font face="$ui.sansSerifFonts">  Ð?Ð¾Ñ?Ñ?Ð° Ð?Ð°Ñ?Ð¾Ð»Ñ? </font></td>	
+        <td width="50"> <font face="$ui.sansSerifFonts"> <input type="password" size="30" name="mPass" value=""> </font></td>
+    </tr>
+<tr bgcolor="$ui.tableColor">
+	<td width=30><font face="$ui.sansSerifFonts">Ð?Ñ?Ñ?Ñ? Ð?Ð²Ð¾Ñ?Ð° (Ð²  Ð?Ð?)</td>	
+	<td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="cquota" value=""></font></td>
+</tr>
+<tr bgcolor="$ui.menuColor">
+	<td width=30><font face="$ui.sansSerifFonts">Ð?Ð¾Ð»Ñ?Ð·Ð¾Ð²Ð°Ñ?ÐµÐ»Ñ? Ð?Ð²Ð¾Ñ?Ð° (Ð²  Ð?Ð?)</td>	
+	<td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="uquota" value=""></font></td>
+    </tr>
+
+<tr bgcolor="$ui.tableColor">
+	<td width=30><font face="$ui.sansSerifFonts">Ð?Ð¾Ð¼ Ð?Ð°Ñ?Ð°Ð»Ð¾Ð³ </td>	
+	<td width="50"><font face="$ui.sansSerifFonts"> <input type="text" size="30" name="hdir" value=""></font></td>
+</tr>
+    <tr bgcolor="$ui.menuColor">
+      <td colspan=2 bgcolor="$ui.menuColor">	
+	  <input type="hidden" name="actionName">
+          <input type="button" name="eventSubmit_doUpdate" value="Ð?Ñ?Ð¿Ñ?Ð°Ð²Ð¸Ñ?Ñ?" onClick="checkValues(document.frm,this);"/>
+	  <input type="reset" name="reset" value="Ð¡Ð±Ñ?Ð¾Ñ?Ð¸Ñ?Ñ?" onClick="checkClear(document.frm,this);"/>
+      </td>
+    </tr>
+</form>
+</table>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValues(frm,field)
+{
+	if((frm.AFName.value!="") && (frm.ALName.value!="") && (frm.AdminConf.value!=""))
+        {
+		if(frm.AdminConf.value>=1 && frm.AdminConf.value<=100)
+		{
+			if(isNumberString(frm.AdminCrsExp.value))
+                        {
+				if(isNumberString(frm.cquota.value))
+                        	{
+					if(isNumberString(frm.uquota.value))
+		                        {
+                		               	frm.actionName.value=field.name;
+                                		frm.submit();
+                        		}
+                        	}
+			}
+		}	
+		else
+		{
+			alert("List Config. Value should be between 1 to 100");
+		}
+	}
+        else
+        {
+		alert("None of the fields can be empty !!");
+	}
+}
+
+function checkClear(frm,field)
+{
+	frm.AFName.value="";
+        frm.ALName.value="";
+}
+function isNumberString(chString)
+{
+	if(chString.length==0)
+        return false;
+        var RefString="0123456789";
+        for(count=0;count<chString.length;count++)
+        {
+        	tempChar=chString.charAt(count);
+                	if(RefString.indexOf(tempChar)==-1)
+                        {
+                                alert("Value should be numeric")
+                                return false;
+                        }
+        }
+        return true;
+}
+</SCRIPT>

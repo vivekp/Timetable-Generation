@@ -1,0 +1,65 @@
+
+
+
+$page.setTitle("Admin Home | User Management | Search Student | Course Details for '$username'")
+
+
+$page.setBgColor($ui.bgcolor)
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+<td>
+<font face="$ui.sansSerifFonts" size=3>
+<b><a href=$link.setPage("call,Admin.vm")>????? ?? ????</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>????? ?????? </a> |
+<a href=$link.setPage("call,UserMgmt_Admin,SelectUser.vm")>??????? ???? ???</a> | ??????? ???? 
+</b>
+</td>
+</tr>
+</table>
+<br>
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_Admin,StudentCourselist.vm").setAction("RemoveStudentCourse").addPathInfo("username",$username)">
+<table border=1 align=center width=40% cellspacing="$ui.tableCellSpacing" cellpadding=5 bgcolor="$ui.tableColor">
+	</table>
+<br>
+
+<table border=1 align=center width=40% cellspacing="$ui.tableCellSpacing" cellpadding=5 bgcolor="$ui.tableColor">
+		</table>
+
+<br>
+<table align=center border=1 width=60% cellspacing="$ui.tableCellSpacing" cellpadding=5> 
+	<tr>
+		<td bgcolor="$ui.tableColor"><INPUT TYPE="SUBMIT" NAME=eventSubmit_doRegister VALUE="??????"></td>
+		<td align="center" bgcolor="$ui.tableColor">
+			<select name="group" size=1>
+								</option>
+			</select>
+		</td>
+		<td width=40% bgcolor="$ui.tableColor" align="right">
+			<b>?? ???? ??? ?????? </b>
+		</td>
+	</tr>
+</table>
+
+<INPUT TYPE="hidden" NAME=deleteFileNames VALUE="">
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function addDeleteList(field,frm)
+{
+if(field.checked)
+	{
+	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	}
+else
+        {
+        var rmFile,index,actualString,preString,postString;
+        actualString=frm.deleteFileNames.value;
+        index=actualString.indexOf(field.name+"^",0);
+        preString=actualString.substring(0,index);
+        postString=actualString.substring(index+field.name.length+1);
+	actualString=preString+postString;
+	
+	frm.deleteFileNames.value=actualString;
+	}
+}
+</SCRIPT>																

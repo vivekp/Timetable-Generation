@@ -1,0 +1,54 @@
+#*
+ * @(#)Glossary.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+ 
+#*
+ * @author <a href="mailto:sharad23nov@yahoo.com">Sharad Singh</a>
+*#
+
+
+$page.setBgColor($ui.bgcolor)
+#if($data.getUser().getUserName()=="admin")
+$page.setTitle("Admin Home | Glossary")
+#else
+$page.setTitle("Home | Glossary")
+#end
+
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+
+$!data.getMessage()
+<table bgcolor="$ui.tableColor" width=100%>
+ <tr align=right>
+  <td>
+    	<font face="$ui.sansSerifFonts"><b>
+	#if($data.getUser().getUserName()=="admin")
+     	<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |$Glossary</b>
+	#else
+     	<a href=$link.setPage("Index.vm")>$brih_home</a> | $Glossary</b>
+	#end
+    </font>
+  </td>
+ </tr>
+</table>
+<br>
+<center>
+  <table>
+    <tr>
+       <td><a href=$link.setPage("call,Glossary,Glossary_Search_Word.vm").addPathInfo("status","blank")><img src="$content.getURI("/images/$lang/Search.jpg")"></a>
+       </td>
+    </tr> 
+      #if($guest_login=="false")
+    <tr>
+       <td><a href=$link.setPage("call,Glossary,Glossary_Insert_Word.vm").addPathInfo("mode","Insert")><img src="$content.getURI("/images/$lang/insertword.jpg")"></a><br>
+       </td>
+    </tr>
+    <tr>
+       <td><a href=$link.setPage("call,Glossary,Glossary_Delete_Edit_Word.vm").addPathInfo("status","blank")><img src="$content.getURI("/images/$lang/deleteedit.jpg")"></a>
+       </td>
+    </tr>
+      #end
+  </table>
+</center>

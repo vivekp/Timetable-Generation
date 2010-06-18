@@ -1,0 +1,183 @@
+
+
+$page.setTitle("Enter the Question")
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td>
+                <font face="$ui.sansSerifFonts"><b>
+		<a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>???? </a> | 
+                <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm")>???? ?? ?????</a>  
+		        	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |
+        	<a href=$link.setPage("call,IndexHome.vm")>????</a> 
+		</font>
+
+        	</font>
+	</td>
+</tr>
+</table>
+
+<br>
+<br>
+		<form name="frm" method="post"  enctype="multipart/form-data" action=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm").setAction("Quiz_Action")>
+	<table border=1 align="center" width="60%" bgcolor="$ui.tableColor" cellpadding="3">
+<tr bgcolor="$ui.menuColor" >
+   	<td  width=70% align="left"  >
+        	<font face="$ui.sansSerifFonts">
+		<b>  ?? ??   </b>  &nbsp;&nbsp;&nbsp; <input type="button" name="Go" value="??????" onClick="checkValue1(document.frm,this);"> &nbsp;&nbsp;&nbsp;
+		<SELECT name=typeList onFocus=changeTopic(document.frm) onChange=changeTopic(document.frm)>
+							<option>  </option>
+							<option value="Multiple">?????  ??? ?? ????</option>
+        			<option value="TF">???? / ??? ??? ?? ????</option>
+			        <option value="Short">????? ??? ?? ????</option>
+		</SELECT> 
+		  		<input type="hidden" name="quizid" value= > 
+	</td>
+	<td width=30% align="right">
+      		<b><font face="$ui.sansSerifFonts"> ???? ?? ??? </font></b>
+   	</td>
+</tr>
+		<tr bgcolor="$ui.menuColor" >
+		<td align=center colspan=2>
+       		<font face ="$ui.sansserifFonts">
+                <input type="button" name="eventSubmit_doSaveQuestion" value= ????? onClick="checkValue(document.frm,this);">
+                <input type="reset" value="??????  ?????">
+		<input type="hidden" name="mode" value=$mode >
+                <input type="hidden" name="quizid" value=$quizid >
+		<input type="hidden" name="noofquestion" value=$noofquestion >
+                </font>
+	</td>
+	</tr>	
+		
+		<input type="hidden" name="xmlsize" value=$xmlsize >
+		<input type="hidden" name="questionsid" value=$questionsid >
+		<input type="hidden" name="actionName" value="">
+
+</table>
+
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=200,width=300,align=center");
+        }
+
+	function checkValue1(frm,field)
+        {
+		if(frm.typeList.value !="") {
+			frm.actionName.value=field.name;
+                	frm.submit();
+		}
+		else
+			alert("Please Select the Type of list !!");
+	}
+
+		var spl="";
+	function checkValue(frm,field)
+        {
+		
+		var btype=new Boolean(true);
+		if(frm.typeList.value =="True False Question")
+		{
+			btype=false;
+			var anscheck=frm.ans.value;
+			var noval="ABab";
+			if(anscheck.length==1)
+			{
+				 for(k=0;k<noval.length;k++)
+                		{	
+                        		for (n = 0; n < anscheck.length; n++)
+                        		{
+                                		if(noval.charAt(k) == anscheck.charAt(n))
+                                        	{	btype=true;
+							break;
+						}
+			                }
+		                }
+			}
+			else
+			{	alert("Answer should be a or b "); return; }
+		}
+		
+		if(frm.typeList.value =="Multiple")
+                {
+			if((frm.op1.value=="") || (frm.op2.value=="") || (frm.op3.value=="") || (frm.op4.value==""))
+                        {
+                                alert("Please Fill All The mandatory (*) Fields");
+                                return;
+                        }
+
+			var temp=frm.ans.value+frm.op1.value+frm.op2.value+frm.op3.value+frm.op4.value;
+			if(isString(temp))
+                        {
+
+                                alert("Please check the special character !! "+spl);
+                                                                return false;
+                        }
+		}
+		if(frm.typeList.value =="Short"){
+			if(isString(frm.ans.value))
+                        {
+
+                                alert("Please check the special character in answer field !!"+spl);
+                                                                return false;
+                        }
+		}
+		
+	
+		if(btype == true)
+		{
+			if((frm.question.value !="")&&(frm.ans.value != "")&&(frm.marks.value !="")){
+				
+                        	if(isString(frm.question.value))
+	                        {
+        	                        alert("Please check the special character in Question field !!"+spl);
+                	                return false;
+                        	}
+
+
+				frm.actionName.value=field.name;
+                                frm.submit();
+			}
+			else
+				alert("Please Fill All The mandatory (*) Fields");	
+        	}
+		else
+			alert("Please check Answer should be a , b , c or d ");
+	}
+
+	function isString(chString)
+        {
+                if(chString.length==0)
+                        return false;
+	        var RefString="/\$|#|~|`|\^|\[|\]|\[|\}|\{|\&|\|\||\\|\!|\$|\/";
+                for(count=0;count<chString.length;count++)
+                {
+                        var tempChar=chString.charAt(count);
+                        if(RefString.indexOf(tempChar)>0)
+                        {
+				spl=tempChar;
+                                return true;
+				
+                        }
+                }
+                return false;
+        }
+
+
+	function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.typeList.options[frm.typeList.selectedIndex].text;
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+
+                }
+        }
+</script>

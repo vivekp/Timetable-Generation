@@ -1,0 +1,220 @@
+#*
+ * @(#) ListCourse_Register.vm
+ * Copyright (c) 2007 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:awadhk_t@yahoo.com ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a> 
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | Registration Management | CoursesList ")
+$page.setBgColor("$ui.bgcolor")
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+	<td width="30%" align="right">
+	#if( $total_size!=0 )
+	#if( $endIndex < $total_size )
+		#if( $endIndex < $AdminConf )
+                [$k - $total_size] $brih_all $total_size $brih_in $brih_from
+		#else
+		[$k - $endIndex]  $brih_all $total_size  $brih_in $brih_from
+		#end
+	#else
+	[$k - $total_size]  $brih_all $total_size  $brih_in $brih_from
+	#end
+	#end
+	</td>
+	<td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+     	<a href="$link.setPage("call,Admin.vm")">$brih_ad $brih_Of1 $brih_home</a> |
+	
+	<a href="$link.setPage("call,UserMgmt_Admin,RegisterationManagement.vm")">$brih_mgmt $brih_reg </a> | 
+
+	$brih_secInsReg $brih_instructor $brih_Of2 $brih_reg $brih_for
+	#if($mode!="Search")
+
+	##$brih_view_all $brih_course	
+	$brih_view $brih_all $brih_course	
+
+	#else
+
+	$brih_view_sel 
+
+	#end
+	</td>
+
+</tr>
+</table>
+<br>
+<form name="frm" method="post" action="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm")">
+<table border=1 align=center bgcolor="$ui.tableColor" cellpadding=1 cellspacing=1>
+        <tr>
+                <td>
+                        <b><a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("mode","All")">$brih_course $brih_Of $brih_list </a></b>
+                </td>
+                <td>
+                        <input type="button" name="Search" value="$brih_search" onClick="checkNull(document.frm,this);">
+                        <input type="hidden" name="mode" value="Search">
+                </td>
+		<td align=left>
+                        <input align=center type="text" name="valueString" value="">
+                </td>
+		<td align=center><b>$brih_match_str</b></td>
+		<td align=left>
+                        <select name="queryList">
+                                <option value=CourseId>$brih_course $brih_Of1 $brih_ID</option>
+                                <option value="Course Name">$brih_course $brih_Of1 $brih_name</iption>
+                                <option value=Dept>$brih_dept</option>
+                        </select>
+                </td>
+                <td align=center><b>$brih_searchBy</b></td>
+                
+                
+        </tr>
+</table>
+
+#if($status == "Noblank" )
+
+#set($headings = ["","$brih_status","$brih_creation $brih_Da","$brih_desc","$brih_dept","$brih_course $brih_Of1 $brih_name","$brih_course $brih_Of1 $brih_ID"] )
+
+<br>
+<table bgcolor="$ui.tableColor" align="center">
+  <tr>
+    <td>
+      <table border="1" cellspacing="1" cellpadding="1">
+        <tr align="center">
+          #foreach($heading in $headings)
+        	  #headerCell($heading)
+          #end    
+        </tr>
+        #foreach($entry in $courseDetail)
+        <tr align="center">
+		  <td bgcolor="$ui.tableColor">
+		  	<font face="$ui.sansSerifFonts">
+			<a href="$link.setPage("call,UserMgmt_Admin,RegisterSecInstructor.vm").addPathInfo("gName",$entry.getGroupName())">$brih_reg</a>
+		  	</font>
+		 </td>
+		  #if($entry.getActive()=="1")
+
+		  <td><font bgcolor="$ui.tableColor" color="Green">$brih_active</font></td>
+		  #else
+		  
+		  <td><font bgcolor="$ui.tableColor" color="Red">$brih_inactive</font></td>
+		  #end
+		  #entryCell($entry.getCreateDate())
+		  #entryCell($entry.getDescription())
+		  #entryCell($entry.getDept())
+		  #entryCell($entry.getGroupName())
+		  <td bgcolor="$ui.tableColor">
+		  	<font face="$ui.sansSerifFonts">
+			$entry.getCourseName()
+			</font>
+			</td>
+	</tr>
+	#end
+</table>
+</td>
+</tr>
+         <tr bgcolor="$ui.menuColor">
+	      <td align=center>
+	 #if($mode!="Search")
+	 #if($total_size<= $AdminConf)
+	 
+	 <u><font color="white">$brih_first</font></u> &nbsp;
+	 <u><font color="white">$brih_nxt</font></u> &nbsp;
+	 <u><font color="white">$brih_pre</font></u> &nbsp;
+	 <u><font color="white">$brih_last</font></u> &nbsp;
+
+	  #elseif($startIndex== $AdminConf_str)
+
+	  <u><font color="white">$brih_first</font></u> &nbsp;
+	  <u><font color="white">$brih_pre</font></u> &nbsp;
+
+	  <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode)">$brih_nxt</a> &nbsp;
+	  <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode)">$brih_last</a> &nbsp;
+	 #elseif($endIndex == $total_size || $endIndex > $total_size)
+
+         <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode)">$brih_first</a> &nbsp;
+ 	 <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode)">$brih_pre</a> &nbsp;
+	 <u><font color="white">$brih_nxt</font></u> &nbsp;
+         <u><font color="white">$brih_last</font></u> &nbsp;
+	  #else
+
+
+	   <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode)">$brih_first</a> &nbsp;
+	   <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode)">$brih_pre</a> &nbsp;
+	   <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode)">$brih_nxt</a> &nbsp;
+	    <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode)">$brih_last</a> &nbsp;
+     #end
+     #else
+	 #if($total_size<= $AdminConf)
+
+	 <u><font color="white">$brih_first</font></u> &nbsp;
+	 <u><font color="white">$brih_nxt</font></u> &nbsp;
+	 <u><font color="white">$brih_pre</font></u> &nbsp;
+	 <u><font color="white">$brih_last</font></u> &nbsp;
+	
+	  #elseif($startIndex== $AdminConf_str)
+	  <u><font color="white">$brih_first</font></u> &nbsp;
+	  <u><font color="white">$brih_pre</font></u> &nbsp;
+	  <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_nxt</a> &nbsp;
+	  <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_last</a> &nbsp;
+	 #elseif($endIndex == $total_size || $endIndex > $total_size)
+         <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_first</a> &nbsp;
+ 	 <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_pre</a> &nbsp;
+	 <u><font color="white">$brih_nxt</font></u> &nbsp;
+         <u><font color="white">$brih_last</font></u> &nbsp;
+	  #else
+	   <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_first).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_first</a> &nbsp;
+	   <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_pre).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_pre</a> &nbsp;
+	   <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$startIndex).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_nxt</a> &nbsp;
+	    <a href="$link.setPage("call,ListMgmt_Admin,ListCourse_Register.vm").addPathInfo("startIndex",$check_last).addPathInfo("mode",$mode).addPathInfo("queryList",$query).addPathInfo("valueString",$valueString)">$brih_last</a> &nbsp;
+     #end
+    #end
+    </td>
+ </tr>
+</table>
+</table>
+#end
+</form>
+<br>
+<table width=60% border=1 bgcolor="$ui.menuColor" align=center>
+#set ( $count = 1 )
+        #foreach( $entry in $error_user )
+                #set ( $count2 = 1 )
+                #foreach( $type in $error_type )
+                        #if( $count == $count2 )
+                        <tr bgcolor="WHITE">
+                        <td align=center>
+                                <font face="$ui.sansSerifFonts">$brih_usr $brih_Of2 $brih_name
+ <font color="brown">"$entry"</font></font>
+                        </td>
+                        <td align=center>
+                                <font
+face="$ui.sansSerifFonts">$type</font>
+                        </td>
+                        </tr>
+                        #end
+                        #set ( $count2 = $count2+1 )
+                #end
+                #set ( $count = $count+1 )
+        #end
+</table>
+
+<SCRIPT language="JavaScript">
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable,height=200,width=300");
+        }
+	function checkNull(frm,field){
+                if(frm.valueString.value!=""){
+                        frm.submit();
+                }
+                else{
+                        alert("The 'Match String' text box can not be NULL");
+                }
+        }
+</SCRIPT>

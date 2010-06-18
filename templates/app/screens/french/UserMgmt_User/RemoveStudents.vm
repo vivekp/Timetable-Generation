@@ -1,0 +1,92 @@
+
+
+$page.setTitle("$brih_home | $course | $brih_student $brih_mgmt | $brih_remove $brih_student")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr>
+        <td>
+        <font face="$ui.sansSerifFonts">
+        <b>
+        <a href=$link.setPage("call,IndexHome.vm")>Maison</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>Ã?tudiant  Gestion </a> | 
+			Enlever Ã?tudiant 
+	        </td>
+	<td align=right>
+	 	</td>
+</tr>
+</table>
+<br>
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_User,RemoveStudents.vm").setAction("UserAction_Instructor")">
+
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function checkValue(frm,field)
+{
+	if(frm.deleteFileNames.value!="")
+	{
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	else
+	{
+		alert("Please Select check box for deletion !!");
+	}
+}
+function addDeleteList(field,frm)
+{
+if(field.checked)
+{
+frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+}
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+			actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+}
+
+
+ function selectAll(field)
+{
+        if(field.checked)
+        {
+                var rmFile,index,actualString,pre=0,next=0;
+                actualString=document.frm.deleteFileNames.value="$count";
+                while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                        rmFile=document.frm.elements[temp].checked=true;
+
+
+                         }
+
+        }
+        else
+        {
+                    var rmFile,index,actualString,pre=0,next=0;
+                             actualString=document.frm.deleteFileNames.value="$count";
+
+                  while( ( pre=actualString.indexOf("^",next) ) >=0 )
+
+                        {
+                         var temp=actualString.substring(next,pre);
+                         next=pre+1;
+                         rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+           }
+}
+</SCRIPT>
+<br>
+<table width=60% border=1 bgcolor="$ui.tableColor" align=center>
+</table>

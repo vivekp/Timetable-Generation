@@ -1,0 +1,116 @@
+#*
+ * @(#) Quiz_Score.vm
+ * Copyright (c) 2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">Jaivir Singh</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Quiz Management")
+$page.setBgColor($ui.bgcolor)
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+
+<table bgcolor"=$ui.tableColor" width=100%>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz </a> | $brih_score $brih_card 
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |  
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 	
+        </font>
+        </td>
+</tr>
+</table><br>
+$!data.getMessage()
+
+<br>
+<form name=frm method="post" action="$link.setPage("call,Quiz_Mgmt,Quiz_Score.vm").setAction("Quiz_Action")">
+	<table bgcolor="$ui.tableColor" align=center border=1 width="40%">
+	<tr bgcolor="$ui.menuColor" >
+		<td align="center" colspan=5><b><i> $brih_for $brih_score $brih_card $!quizid </i></b></td></tr>
+	<tr bgcolor="$ui.menuColor" ><td colspan=2>
+		<table border=0 width="100%" bgcolor="$ui.tableColor" ><tr>		
+		<td align=center >
+			<input type="button" name="Go" value="$brih_submit" onClick="checkField(document.frm,this);"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                	<SELECT name="Quizid" onFocus=changeTopic(document.frm) onChange=changeTopic(document.frm)>
+		       	        #foreach($topic in $Quizid)
+	                		<option value="$!topic">$!topic</option>
+	        	        #end
+        	        </SELECT>
+                        <input type="hidden" name="Quizid" value=$Quizid >
+		
+		</td>
+		#if($checkedQuiz == "cheked")
+		<td align="right" >	
+			$!marks	$brih_out $!mmarks	
+                </td>
+		#end
+		</tr>
+		</table>
+	</td>
+	</tr>	
+	#if($checkedQuiz == "cheked")
+	<tr align="right">
+			<td>$!marks</td>
+			<td> $brih_score </td>
+	</tr>
+	<tr align="right">
+                <td>$!passingmarks</td>
+		<td>$brih_min $brih_pass</td>
+	</tr>
+	<tr align="right">
+                <td>$!pscore</td>
+		<td> (%) $brih_percentage </td>
+	</tr>
+	<tr align="right">
+		<td><b><i> $!pass </i></b></td> 
+		<td>$brih_result</td>
+	</tr>
+	<tr>
+
+	        <td align=center colspan=2>
+        	<input type="button" name="eventSubmit_doGetdetail" value="$brih_answer $brih_Of1 $brih_sheet" onClick="detailedquiz(document.frm,this);"/>
+	        </td>
+	</tr>
+	#foreach($detai in $detail)
+		<tr> <td>$!detai.getQuestion()</td> <td>$brih_qus</td> </tr>
+		<tr> <td>$!detai.getGrade()</td> <td> $brih_your  $brih_answer  </td> </tr>
+		<tr> <td>$!detai.getAnswer()</td> <td>$brih_correct $brih_answer </td> </tr>
+		<tr> <td> $!detai.getfeedback()</td> <td>$brih_feedback</td> </tr>
+	#end
+	#end
+        	<input type="hidden" name="actionName">
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+
+ 	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+	function checkField(frm,field){
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	function detailedquiz(frm,field){
+		frm.actionName.value=field.name;
+		frm.submit();
+	}
+	 function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.Quizid.options[frm.Quizid.selectedIndex].text;
+
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+
+                }
+	}	
+
+</SCRIPT>

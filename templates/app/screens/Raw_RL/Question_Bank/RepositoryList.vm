@@ -1,0 +1,239 @@
+#*
+ * @(#) RepositoryList.vm
+ *  Copyright (c) 2004-2006 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:tarankhan1@yahoo.com">Tarannum Khan</a>
+ * @author <a href="mailto:manju_14feb@yahoo.com">Mithelesh Parihar</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ *#
+
+$page.setTitle("QuestionBank | View All Question Bank")
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<table bgcolor="$ui.tableColor" width=100%>
+<td align=left>
+        <td>
+	<font face="$ui.sansSerifFonts" size=3>
+	<b>
+        <a href=$link.setPage("call,Question_Bank,Question_bank.vm")>$brih_queBank </a>| $brih_view_all $brih_bank 
+	</b>
+	</font>
+        </td>
+</table>
+
+<br>
+#if($status == "quesList")
+<form name="frm" method="post" action="$link.setPage("call,Question_Bank,Question_List.vm").addPathInfo("modulename","$modulename")">
+#else
+<form name="frm" method="post" action="$link.setPage("call,Question_Bank,RepositoryList.vm").setAction("Question_Bank")">
+#end
+<table bgcolor="$ui.tableColor" cellspacing=1 cellpadding=5>
+<tr>
+<td>	<a href=$link.setPage("call,Question_Bank,Create_Bank_Repository.vm")><I><b>$WikiCreate $brih_new $brih_queBank</b></I></a>
+</td>
+</tr>
+<tr>
+<td width="40%" valign="top">
+     	<table width="100%" border=1 cellspacing=1 cellpadding=2>
+	<tr>
+	<td align="center" colspan=3 bgcolor="$ui.menuColor">
+        <font size=4><b>$brih_queBank $Repo_Repo2 $username</font>
+	</b>
+	</td>
+	</tr>
+	#set( $count = 1)
+	#foreach ($repository in $allTopics)
+		#set ($count1 = 1)
+		##foreach ($id in $rid)
+			##if ($count == $count1)
+        <tr>
+		<td width=3% align="center"><input type="checkbox" name="$repository" onClick="addDeleteList(this,document.frm);"></td>
+        <td align=left>
+        <font face="$ui.sansSerifFonts">
+	##<a href=$link.setPage("call,Question_Bank,RepositoryList.vm").addPathInfo("status","Repository").addPathInfo("repositoryname",$repository)>$repository</a>&nbsp;&nbsp;
+	<a href=$link.setPage("call,Question_Bank,RepositoryList.vm").addPathInfo("modulename",$repository).addPathInfo("status","quesList")><I>$repository</I></a>&nbsp;&nbsp;</td>
+<td><a href=$link.setPage("call,Question_Bank,RepositoryList.vm").addPathInfo("modulename",$repository).addPathInfo("status","Addques")>$brih_add $brih_question</a>
+		##<a href=$link.setAction("Question_Bank").addPathInfo("modulename",$repository).addPathInfo("actionName","delete")> Delete</a>
+</td>
+	</font>
+	</td>
+		##end
+		##set ($count1 = $count1 + 1)
+		##end
+		#set ($count = $count + 1)
+        </tr>
+	#end
+	<tr>
+	<td>
+	<input type="button" name="eventSubmit_doDelete" Value=$brih_delete onClick="checkField(document.frm,this);">
+	<input type="hidden" name="actionName">
+	<input type="hidden" name="deleteFileNames">
+	</td>
+	<td>
+	</td>
+	</table>
+</td>
+
+#if($modulename != " ")
+<td>
+#if($status == "quesList")
+Select Question Type
+<select name="Ques_Type" onChange="ShowQues(document.frm);">
+	<option value=""></option>
+	<option value="Multiple">$brih_multiple1 $brih_qus</option>
+	<option value="TF">$brih_true $brih_false $brih_qus</option>
+	<option value="ST">$brih_QuestionShort</option>
+	<option value="MT">$brih_MatchQuestion</option>
+</select>
+#elseif($status == "Addques")
+<table>
+<tr>
+	<td>
+                <b><a href=$link.setPage("call,Question_Bank,InsertEdit_Multiple.vm").addPathInfo("modulename",$modulename).addPathInfo("mode","Insert")>$brih_multiple1 $brih_type</a>
+        </td></tr>
+        <tr><td>
+        	<b><a href=$link.setPage("call,Question_Bank,InsertEdit_TF.vm").addPathInfo("modulename",$modulename).addPathInfo("mode","Insert")>$brih_true $brih_false $brih_type</a>
+         </td></tr>
+         <tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,Insert_Short.vm").addPathInfo("rName",$rName).addPathInfo("mName",$mName).addPathInfo("file",$fName)></a>$brih_shortType
+         </td></tr>
+         <tr><td>
+                <b><a href=$link.setPage("call,Question_Bank,Insert_Match.vm").addPathInfo("rName",$rName).addPathInfo("mName",$mName).addPathInfo("file",$fName)></a>$brih_matchType
+         </td></tr>
+</table>
+#end
+</td>
+#end
+##</tr>
+#if($status == "Repository" || $status == "Module" || $status == "File")
+##<td width=40% bgcolor="#d9e3ec">
+<td>
+      	##<table width=100% border=1 cellspacing=1 cellpadding=5>
+      	<table  border=1 cellspacing=1 cellpadding=4
+        <tr>
+	<td valign="top" colspan=3>
+	<b>$brih_availableModuleOf $repo 
+	</b>
+	</td>
+	</tr>
+        #foreach ($files1 in $allmodule)
+         <tr>
+         <td align=left>
+         <font face="$ui.sansSerifFonts">
+            <a href=$link.setPage("call,Question_Bank,RepositoryList.vm").addPathInfo("modulename",$files1).addPathInfo("status","Module").addPathInfo("repositoryname",$repo)>$files1</a>
+<td>
+		<a href=$link.setPage("call,Question_Bank,RepositoryList.vm").setAction("Question_Bank").addPathInfo("mode","Module").addPathInfo("status","Module").addPathInfo("modulename",$files1).addPathInfo("repositoryname",$repo).addPathInfo("actionName","delete")>$brih_delete</a>
+</td>
+<td>
+		<a href=$link.setPage("call,Question_Bank,UploadQuestions.vm").addPathInfo("mname",$files1).addPathInfo("rname",$repository)> $brih_upload $brih_qus</a>
+</td>
+	
+	</font>
+	</td>
+	</tr>
+	#end
+	</table>
+</td>
+#end
+#if($status == "Module")
+##<td width=40% bgcolor="e5e5e5">
+<td>
+      	<table width=100% border=1 cellspacing=1 cellpadding=5>
+        <tr>
+	<td valign="top" align="center" colspan=6>
+	<b>Available Files of $m_Name 
+	</b>	
+        </td>
+        </tr>
+	#foreach ($AllFiles in $paper)
+         <tr>
+
+	#* <td width=40% bgcolor="#d9e3ec" align=left>
+         <font face="$ui.sansSerifFonts">
+	<a href=$link.setPage("call,Question_Bank,RepositoryList.vm")>$AllFiles</a>&nbsp;&nbsp; *#
+		<td>
+		<a href=$link.setPage("call,Question_Bank,Status.vm").addPathInfo("status","file").addPathInfo("repositoryname",$rname).addPathInfo("modulename",$m_Name).addPathInfo("FileName",$AllFiles)> $brih_status</a></td>
+		<td>
+		<a href=$link.setPage("call,Question_Bank,Select_Type.vm").addPathInfo("repositoryname",$rname).addPathInfo("modulename",$m_Name).addPathInfo("FileName",$AllFiles)> $brih_add $brih_qus</a></td>
+		<td>
+		<a href=$link.setPage("call,Question_Bank,RepositoryList.vm").setAction("Question_Bank").addPathInfo("mode","File").addPathInfo("actionName","delete").addPathInfo("repositoryname",$repo).addPathInfo("modulename",$m_Name).addPathInfo("FileName",$AllFiles)> $brih_delete</a></td>
+		<td><a href=javascript:popupWin("$link.setScreen("ViewFile").addPathInfo("repositoryName",$repo).addPathInfo("moduleName",$m_Name).addPathInfo("filename",$AllFiles)","newWin");>$brih_view</a></td>
+		<td>
+		<a href=$link.setPage("call,Question_Bank,Question_List.vm").addPathInfo("file",$AllFiles).addPathInfo("repositoryname",$repository).addPathInfo("modulename",$m_Name)> $brih_edit $brih_qus</a></td>
+	</font>
+        </td>
+        </tr>
+        #end
+	</table>
+</td>
+#end
+</tr>
+</table>
+</form>
+
+<script LANGUAGE="JAVASCRIPT">
+	function ShowQues(frm)
+	{
+		frm.submit();
+	}
+        function blurTopicName(frm)
+        {
+
+                frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+        }
+        function changeTopic(frm)
+        {
+                if(frm.topicExisting[0].checked)
+                {
+                        frm.contentTopic.value=frm.topicList.options[frm.topicList.selectedIndex].text;
+                }
+                else
+                {
+                        frm.contentTopic.focus();
+                }
+        }
+
+function deleteTopicConfirm(frm,field)
+        {
+                if(frm.delTopic.checked)
+                {
+                        if(confirm("All Data linked to the topic will be Deleted"))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+        }
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+function addDeleteList(field,frm)
+{
+        if(field.checked){
+                frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else{
+                var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                       preString=actualString.substring(0,index);
+                       postString=actualString.substring(index+field.name.length+1);
+                       actualString=preString+postString;
+                       frm.deleteFileNames.value=actualString;
+        }
+}
+function checkField(frm,field)
+   {
+    if(frm.deleteFileNames.value!="")
+    {
+     frm.actionName.value=field.name;
+     frm.submit();
+    }
+    else
+     alert("Please select checkbox for deletion !!");
+   }
+</script>

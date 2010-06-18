@@ -1,0 +1,129 @@
+#*
+ * @(#)StudentCourselist.vm
+ *  Copyright (c) 2005 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@gmail.com ">Shaista</a> 
+ *#
+
+$page.setTitle("Admin Home | User Management | Search Student | Course Details for '$username'")
+$!data.getMessage()
+
+$page.setBgColor($ui.bgcolor)
+<table bgcolor="$ui.menuColor" width=100% cellspacing=0>
+<tr><td>
+<b><a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> |
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")>$brih_usr $brih_mgmt</a> |
+##<a href=$link.setPage("call,UserMgmt_Admin,SelectUser.vm")>$brih_ser_student</a> | $brih_courseDetail
+<a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>$brih_ser_student</a> | $brih_courseDetail
+</b></td>
+</tr>
+</table>
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+        <td><a href="$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm")">$brih_a_usr</a></td>
+       <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","sclist")>$brih_student$brih_course $brih_list</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","instructor")>$brih_delete $brih_Instructor</a></td>
+     <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","userdelete").addPathInfo("role","student")>$brih_delete $brih_student</a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","AddMUser")>$brih_multi_usr</a></td>
+  <td><a href=$link.setPage("call,UserMgmt_Admin,UserManagement_Admin.vm").addPathInfo("mode","UPhoto")>$brih_upload $brih_photo</a></td>
+        <td><a href=$link.setPage("call,UserMgmt_Admin,Attendence_seet.vm")>$brih_attendence</a></td>
+
+</tr>
+</table>
+<FORM ENCTYPE="multipart/form-data" NAME="frm" METHOD="POST" ACTION="$link.setPage("call,UserMgmt_Admin,StudentCourselist.vm").setAction("RemoveStudentCourse").addPathInfo("username",$username)">
+<table align=left width=100% bgcolor="$ui.tableColor">
+	#foreach($i in $student)
+		#if($!i.getFirstName() != "")
+		<tr bgcolor="$ui.menuColor">
+			<td><b>$brih_usr $brih_name</b></td>
+			<td colspan=6><b>$brih_student $brih_name</b></td>
+		</tr>
+		<tr>
+			<td>$!i.UserName</td>
+			<td colspan=6>$!i.getFirstName() $!i.getLastName()</td>
+		</tr>
+		#else
+		<tr bgcolor="$ui.menuColor">
+			<td colspan=7><b>$brih_usr $brih_name</b></td>
+		</tr>
+		<tr">
+			<td colspan=7>$!i.UserName</td>
+		</tr>
+		#end
+	#end
+##</table>
+##<table align=left width=100% bgcolor="$ui.tableColor">
+		#foreach($i in $student)
+			<tr bgcolor="$ui.menuColor">
+				<td colspan=7><b>$brih_listCourse</b></td>
+			</tr>
+			<tr>
+				<td colspan=7>
+					<table width=100%>
+					#set($count="")
+					#foreach($groupname in $groupname)
+						#if($velocityCount%2==0)
+						<tr bgcolor="$ui.menuColor">
+						#else
+						<tr bgcolor="$ui.tableColor">
+						#end
+							<td>
+								#set($userAndGroup = "$groupname:$!i.UserName" )
+								<INPUT TYPE="CHECKBOX" NAME="$userAndGroup" onClick="addDeleteList(this,document.frm);">
+							</td>
+							<td>$groupname</td>
+						</tr>
+						#set($count="$count$userAndGroup^")
+					#end
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<INPUT TYPE="SUBMIT" NAME=eventSubmit_doRemove VALUE="$brih_remove"></td></tr>
+				</td>
+			</tr>
+		#end
+##</table>
+##<table align=left width=100% bgcolor="$ui.menuColor"> 
+	<tr bgcolor="$ui.menuColor">
+		<td>$brih_c_msg13</td>
+		<td><select name="group" size=1>
+		#foreach($name in $CourseList)
+			#if($name.getName() !="global" && $name.getName()!="author")
+			<option value="$name.getName()">$name.getName()
+			#end
+		#end
+		</option>
+		</select>
+		</td>
+		<td><INPUT TYPE="SUBMIT" NAME=eventSubmit_doRegister VALUE="$brih_reg1">
+		</td>
+	</tr>
+</table>
+
+<INPUT TYPE="hidden" NAME=deleteFileNames VALUE="">
+</FORM>
+
+<SCRIPT LANGUAGE="javascript">
+function addDeleteList(field,frm)
+{
+if(field.checked)
+	{
+	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+	}
+else
+        {
+        var rmFile,index,actualString,preString,postString;
+        actualString=frm.deleteFileNames.value;
+        index=actualString.indexOf(field.name+"^",0);
+        preString=actualString.substring(0,index);
+        postString=actualString.substring(index+field.name.length+1);
+	actualString=preString+postString;
+	
+	frm.deleteFileNames.value=actualString;
+	}
+}
+</SCRIPT>																			

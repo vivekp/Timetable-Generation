@@ -1,0 +1,368 @@
+#*
+ * @(#) Edit.vm
+ * Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:singh_jaivir@rediffmail.com">Jaivir Singh</a>
+*#
+
+
+$page.setBgColor($ui.bgcolor)
+#set($lang=$data.getUser().getTemp("lang").toString())
+$page.setTitle("$brih_home | $course | $brih_course $brih_mgmt | $brih_course $brih_content | $brih_edit $brih_content")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+ 	<a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>$brih_course $brih_mgmt</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+#if($lang =="hindi")
+	$brih_course $brih_Of $brih_content </a> | $brih_content - $brih_edit
+#else	
+	$brih_course $brih_content </a> | $brih_edit $brih_content 
+#end
+	</font>
+</td>
+</tr>
+</table>
+#if($Mode=="NoBlank")
+<form name="frm" method="post" enctype="multipart/form-data" action="$link.setAction("EditContent_Action").setPage("call,CourseMgmt_User,Edit.vm").addPathInfo("topic",$topic)">
+	<div align="center">
+		<CENTER><H2 ><u>$topic</u></H2></CENTER>
+        	<u><input type=checkbox name=modify>
+#if($lang =="hindi") 
+	<b>$brih_desc $brih_modify</b></u><br>     
+#else 
+	<b>$brih_modify $brih_desc</b></u><br>      
+#end
+       		<textarea name=description rows=10 cols=90 onFocus="checkModify(document.frm);">$!topicDesc</textarea><br>
+		<input type="checkbox" name=delTopic><b>$brih_topicDelete</b>
+		<input type="button" name=eventSubmit_doDeleteTopic value="$brih_delete" onClick="deleteTopicConfirm(document.frm,this);"><br><br>
+		<input type="button" name=eventSubmit_doDelete value="$brih_deleteCheck $brih_file #if($lang =="hindi") $brih_delete #end" onClick="deleteConfirm(document.frm,this);">
+		<input type="button" name=eventSubmit_doChangeAlias value="$brih_aliasChange" onClick="changeAlias(document.frm,this);">
+		#if($lang =="hindi")
+		<input type="button" name=eventSubmit_doUpdate value=" $brih_desc $brih_update " onClick="Update(document.frm,this);">
+		#else
+		<input type="button" name=eventSubmit_doUpdate value="$brih_update $brih_desc" onClick="Update(document.frm,this);">
+		#end
+		<input type="button" name=eventSubmit_doUpdateDelete value="$brih_update & $brih_delete" onClick="UpdateDelete(document.frm,this);">
+		<input type="button" name=eventSubmit_doChangeOrder value="$brih_fileOrder" onClick="isOrderChanged(document.frm,this);">
+
+		<input type="hidden" name="status" value="$status">
+                <input type="hidden" name="uname" value="$username">
+                <input type="hidden" name="cName" value="$cName">
+		<input type="hidden" name=actionName value="">
+		<input type="hidden" name=deleteFileNames value="">
+		<input type="hidden" name=changeFileNameOrder value="">
+		<input type="hidden" name=changeFileSeqnoOrder value="">
+		<input type="hidden" name=topic value="$topic">
+		<input type="hidden" name=doSubmit value="false">
+		<input type="hidden" name=onFocusVal value="">
+  	<table>
+    	<tr>
+    	<td>
+    		<table bgcolor="$ui.bgcolor" cellpadding="5">
+        
+      		#if ($errorTemplate)
+      		<tr>
+        	<td colspan="4">
+          		<table bgcolor="$ui.bgcolor">
+            		<tr>
+             		<td>
+                		<img src="$ui.image($ui.alertImage,$data)">
+              		</td>
+              		<td>
+                		#parse ($errorTemplate)
+              		</td>
+            		</tr>
+          		</table>
+        	</td>
+      		</tr>
+      		#end
+      	</td>
+      	<tr>	
+	<H3><u>$brih_attachment</u></H3>
+     	
+	#set ( $count=1 )
+	#set ( $seqno=1 )
+	<table bgcolor="$ui.tableColor" border=1 cellpadding=0 cellspacing=0>
+	<tr>
+	<td>
+		<table bgcolor="$ui.tableColor" border=1 cellpadding=0 cellspacing=0>
+		<tr>
+		#set ( $totalRows = $dirContent.size() )
+		##set($headings = ["S.No.","Files","Alias","Creation Time","Delete","Change Order"] )
+		#set($headings = ["$brih_serialNo.","$brih_file","$brih_alias","$brih_creation $brih_time","$brih_delete","$brih_fileOrder "] )
+		#foreach($heading in $headings)
+                	#headerCell($heading)
+        	#end
+
+		#if($isInstructor)
+			#foreach($file in $dirContent)
+			<tr>		     	
+		     		<td>$count </td>
+			 	<td><b>$file.Name&nbsp;&nbsp;</b></td> 
+				#set ( $seqno= $count - 1 )
+			
+				#set ( $aliasval ="$!file.Alias")
+				#if($aliasval.length()==0)				
+					#set ( $aliasval ="$file")
+				#end
+			 	<td><b><input type="text" name=$seqno value="$aliasval" size="$aliasval.length()" onChange="return validate(this);" onFocus="setOldVal(this);"></b></td>
+				<input type="hidden" name="$file.Name" value=$seqno>
+		         	<td>$file.PDate</td>
+	     	     	 	<td align="center"><input type="checkbox" name="$file.CheckboxName" onClick="addDeleteList(this,document.frm);"></td>
+	     	     	 	<td align="center">
+				#if($totalRows>1)
+					<input type="radio" name="orderRadio" value="$file.CheckboxName" onClick="changeOrder(this,document.frm,$seqno);">
+				#end
+				</td>
+			</tr>
+			#set ( $count= $count+1)
+			#end
+
+		#end
+	</table>
+	</td>
+	<td>
+	<table bgcolor="$ui.tableColor" border=1 cellpadding=0 cellspacing=0>
+	<tr>
+                	#headerCell("$brih_action")
+			#headerCell("$brih_sequence")
+	</tr>
+	<tr>
+	<td>
+		#if( $totalRows>1)	
+			<select name="actionType">
+				<option selected value="-1"></option>
+				<option value=1>$brih_move</option>
+				<option value=2>$brih_exchange </option>
+			</select>
+		#end
+	</td>
+	<td>
+		#if( $totalRows>1)	
+			<select name="destinationSeqno">
+				<option selected value="-1"></option>
+				#foreach($index in [1..$totalRows])
+					#set ( $seqno= $index - 1 )
+					<option value=$seqno >$index</option>
+				#end
+			</select>
+		#end
+	</td>
+	</tr>
+	</table>
+	</td>
+	</tr>		
+	</table>
+
+      </tr>
+      
+    </table>
+	<input type="button" name=eventSubmit_doDelete value="$brih_deleteCheck $brih_file #if($lang =="hindi") $brih_delete #end" onClick="deleteConfirm(document.frm,this);">
+	<input type="button" name=eventSubmit_doChangeAlias value="$brih_aliasChange" onClick="changeAlias(document.frm,this);">
+	#if($lang == "hindi")
+	<input type="button" name=eventSubmit_doUpdate value="$brih_desc $brih_update" onClick="Update(document.frm,this);">
+	#else
+	<input type="button" name=eventSubmit_doUpdate value="$brih_update $brih_desc" onClick="Update(document.frm,this);">
+	#end
+	<input type="button" name=eventSubmit_doUpdateDelete value="$brih_update & $brih_delete" onClick="UpdateDelete(document.frm,this);">
+	<input type="button" name=eventSubmit_doChangeOrder value="$brih_fileOrder" onClick="isOrderChanged(document.frm,this);">
+    </td>
+    </tr>
+  </table>
+  </div>
+</form>
+#else
+##No Publish File in the $topic Topic of $course
+#if($lang == "hindi")
+<b><font color="blue">$course</font>$brih_topicOf $topic $brih_publishFileMsg</b>
+#else
+$brih_publishFileMsg $topic $brih_topicOf <b><font color="blue">$course</font></b>
+#end
+
+#end
+<SCRIPT LANGUAGE="javascript">
+	function checkModify(frm)
+	{
+		if(!frm.modify.checked)
+		{
+			frm.description.blur();
+		}
+
+	}
+	function setOldVal(frmElement)
+	{
+		document.frm.onFocusVal.value=frmElement.value;
+	}
+	function getOldVal(frmElement)
+	{	if(document.frm.doSubmit.value=="false")
+			frmElement.value=document.frm.onFocusVal.value;
+	}
+	function findSPLC(textField,sChar)
+	{
+		var textVal=textField.value;
+		var charAt=textVal.indexOf(sChar,0);
+		if(charAt>=0)
+		{	alert("An alias cannot have &  <  > ;");
+//			document.frm.doSubmit.value="false";
+			textField.value=document.frm.onFocusVal.value;
+			return true;
+		}
+		return false;
+	}
+	function validate(textField)
+	{		
+		if(findSPLC(textField,"&"))
+			return false;
+		if(findSPLC(textField,"<"))
+			return false;
+		if(findSPLC(textField,">"))
+			return false;
+		if(findSPLC(textField,";"))
+			return false;
+		document.frm.doSubmit.value="true";
+		return true;
+	}
+
+	function changeAlias(frm,field)
+	{		
+		if(frm.doSubmit.value=="true")
+		{
+			frm.actionName.value=field.name;
+			frm.submit();
+		}
+		else
+		{
+			alert("Please Change Alias !!");
+		}
+	}
+	function deleteTopicConfirm(frm,field)
+	{
+		if(frm.delTopic.checked)
+		{
+			if(confirm("All Data linked to the topic will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+		else
+		{
+			alert("Please Select check box for deletion !!");
+		}
+	}
+	function changeOrder(field,frm,seqno)
+	{
+		frm.changeFileNameOrder.value=field.value;
+		frm.changeFileSeqnoOrder.value=seqno;
+		var delFileNames=frm.deleteFileNames.value;
+		frm.deleteFileNames.value="";
+		if(delFileNames!="")
+		{
+			var currentPos=0,index=0;
+			while( (currentPos=delFileNames.indexOf('^',index))>=0 )
+			{
+				checkboxname=delFileNames.substring(index,currentPos);
+				index=currentPos+1;
+				frm.elements[checkboxname].checked=false;
+			}
+		}
+		
+	}
+	function isOrderChanged(frm,field)
+	{
+		var delfiles;
+		if((frm.changeFileNameOrder.value.length!=0) && (frm.actionType.value!="-1") && (frm.destinationSeqno.value!="-1"))
+		{
+			frm.actionName.value=field.name;
+			frm.submit();	
+				
+		}
+		else
+		{
+			alert("Please Select file,Action and Sequence No. !!!");
+		}
+	}
+	
+	function deleteConfirm(frm,field)
+	{
+		var delfiles;
+		delfiles=frm.deleteFileNames.value;
+		if(delfiles.length!=0)
+		{
+			if(confirm("Selected files will be Deleted"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+	}
+	
+	function Update(frm,field)
+	{
+		if(frm.modify.checked)
+		{
+			if( confirm("The Course Description Will be changed"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();
+			}
+		}
+		else
+		{
+			alert("Please Select check box for modification in Course Description !!");
+		}
+	}
+	
+	function UpdateDelete(frm,field)
+	{
+		var delfiles;
+		delfiles=frm.deleteFileNames.value;
+		if(delfiles.length!=0 && frm.modify.checked)
+		{
+			if(confirm("Selected files will be Deleted and the topic description will be changed"))
+			{
+				frm.actionName.value=field.name;
+				frm.submit();	
+			}
+				
+		}
+	
+	}
+	function addDeleteList(field,frm)
+	{
+		var reorderFile=frm.changeFileNameOrder.value;
+		if($seqno>0)
+		{
+			frm.destinationSeqno.selectedIndex=0;
+			frm.actionType.selectedIndex=0;
+		}
+		if(reorderFile!="")
+		{
+			frm.orderRadio[frm.changeFileSeqnoOrder.value].checked=false;
+			frm.changeFileNameOrder.value="";
+			frm.changeFileSeqnoOrder.value="";
+		}
+		if(field.checked)
+		{
+			frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+		else
+		{
+			var rmFile,index,actualString,preString,postString;
+			actualString=frm.deleteFileNames.value;
+			index=actualString.indexOf(field.name+"^",0);
+			preString=actualString.substring(0,index);
+			postString=actualString.substring(index+field.name.length+1);		
+			actualString=preString+postString;
+			frm.deleteFileNames.value=actualString;	
+		}
+	}
+
+</SCRIPT>

@@ -1,0 +1,131 @@
+#*
+ * @(#)MailView.vm
+ *  Copyright (c) 2006-2007 ETRG,IIT Kanpur.
+ *  All Rights Reserved.
+ *  Contributors: Members of ETRG, I.I.T. Kanpur
+ *  @author <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ *#
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home|$CName|Communication|Local Mail|Read Message")
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication </a> | 
+<a href=$link.setPage("call,Local_Mail,Mail.vm")>$brih_local $LocalMail_mail</a> |	 
+<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>$Notice_All $Notice_Mails</a> | $Notice_Read $LocalMail_mail
+| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+<a href=$link.setPage("call,IndexHome.vm")>$brih_home </a> 
+</font>
+</td>
+</tr>
+</table>
+<br>
+<br>
+<form method="post" enctype="multipart/form-data">
+  <div align="left">
+  <table align="center" border=1>
+    <tr> 
+    <td>   
+    <table bgcolor="$ui.tableColor" border=1 cellpadding="0" align=center>
+        
+      #if ($errorTemplate)
+      <tr>
+        <td colspan="4">
+          <table bgcolor="$ui.bgcolor">
+            <tr>
+              <td>
+                <img src="$ui.image($ui.alertImage,$data)">
+              </td>
+              <td>
+                #parse ($errorTemplate)
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      #end
+     <tr>
+     <td align="right" >$sub &nbsp;<b><u>: $Notice_Subject </u></b></td>
+     </tr>
+     
+     <tr>
+     <td align="right"> $retrive_user &nbsp;<b><u>: $Notice_Sender </u></b></td>
+     </tr>
+     
+     <tr>
+     <td align="right"> $retrive_date &nbsp <b><u>: $LocalMail_MailView_msg2 </u></b></td>
+     </tr>
+    
+    <tr>
+     <tr>
+     <td>
+      <table align=center>
+
+      <tr><td align="right">
+	<b><u>: $brih_msg2 </u><b>
+      </td></tr>
+      <tr>
+       <td bgcolor="$ui.bgcolor">
+	<textarea name=description rows=10 cols=55 wrap=physical onFocus="this.blur();"> $message</textarea>
+       </td>
+       </tr>
+      </table>
+      </td>
+      </tr>
+      <tr><td>
+		#foreach($file in $dirContent)
+		<tr><td><b><u>$brih_attachment :</u></b></td>
+		</tr>
+		<tr>
+		     #set($countfield=0)
+		     <td>
+		     #foreach($var in $file)
+		     #if($countfield==0)	
+			  <a href=javascript:popupWin("$link.setPage("ViewFileContent.vm").addPathInfo("topic","$msgID").addPathInfo("view","content").addPathInfo("type","UserArea").addPathInfo("filename","$var")","newWin");>$var</a>&nbsp;
+		     #else
+		         <b>$var</b></td>
+		     #end
+		     #set($countfield=1)
+		#end
+		</tr>
+		#end
+	</table>
+
+      </td>
+     </tr>
+
+    <tr bgcolor="$ui.menuColor">
+    <td align="center">
+#if($data.getUser().getUserName()!="guest")
+	#if($mode=="adminmail")
+        	<a href=$link.setPage("call,Local_Mail,MailCompose.vm").addPathInfo("msgid",$msgID).addPathInfo("status","reply")>$LocalMail_Reply</a>&nbsp&nbsp
+	#else
+        	<a href=$link.setPage("call,Local_Mail,MailTestMessage.vm").addPathInfo("msgid",$msgID).addPathInfo("status","reply")>$LocalMail_Reply</a>&nbsp&nbsp
+        #end
+
+#end
+#if($mode=="adminmail")
+	<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All").addPathInfo("stat","admns")>$LocalMail_Close</a>
+#else
+	<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>$LocalMail_Close</a>
+#end
+
+##<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>$LocalMail_Close</a>
+  </td>
+  </tr>
+  </table>
+  </td>
+    </tr>
+  </table>
+  </div>
+</form>
+<SCRIPT language="JavaScript">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+</SCRIPT>

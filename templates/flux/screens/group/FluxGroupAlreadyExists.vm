@@ -1,0 +1,12 @@
+#**
+
+@author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
+@version $Id: FluxGroupAlreadyExists.vm,v 1.1 2004/11/16 09:34:53 ynsingh Exp $
+
+*#
+
+<font face="$ui.sansSerifFonts">
+The group name <b>$name</b> is currently is use. Group names
+must be unique, please choose another group name.
+</font>
+

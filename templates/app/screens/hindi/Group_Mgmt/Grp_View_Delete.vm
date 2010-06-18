@@ -1,0 +1,101 @@
+<html>
+
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% > <tr>
+	<td><b>
+	<a href=$link.setPage("call,IndexHome.vm")>?????</a> |
+       	<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a>| 
+       	<a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")>???? ??????? </a> |
+		???? ??????  ???? /??????   </b>
+		</td>
+	<td align=right>
+        	        </td>
+</tr>
+</table> <table width=100% > 	<tr>
+		<td align ="right">
+		<img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/view-deletegroup.html","newWin");>??????</a>
+		</td>
+	</tr>
+</table> <form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Grp_View_Delete.vm").setAction("Groupmanagement")>
+	<table align="center" border=1 bgcolor="$ui.tableColor" width=85% > 	<tr bgcolor="$ui.menuColor"><td align ="center"colspan=5 vlaign="top"> 	        <b><font size=4<I> ????   </I><font color="blue"> " $courseid " </font>?? ????</font></b>
+		</td></tr>
+	<tr><td align="center" colspan="5"> 	<b><font size=4><I>???? ???????? :</I></font></font></b>
+	<b><font color="blue"><i>????????? ???? ??? ??? ???? ???? ?? ?</i></font></b>
+ 	</tr></td> 	<input type="hidden" name="actionName" >
+	<input type="hidden" name="grouptype" value="$grouptype" >
+	<input type="hidden" name="groupdesc" value="$groupdesc" >
+	<input type="hidden" name="deleteFileNames" value="">
+	<input type="hidden" name="stat" value="grpmgmt">
+	<input type="hidden" name="val" value="$val">
+</form>
+</table> </html>
+<SCRIPT LANGUAGE="javascript">
+	function deleteConfirm(frm,field)
+        {
+                var delfiles;
+                delfiles=frm.deleteFileNames.value;
+                if(delfiles.length!=0)
+                {
+                        if(confirm("Selected Group will be Deleted"))
+                        {
+                                frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+
+                }
+		else
+		alert("Please Select check box  !!");
+        }
+	function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        
+        }
+	function selectAll(field)
+        {
+                if(field.checked)
+                {
+                        var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.deleteFileNames.value="$count";
+                        while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                                var temp=actualString.substring(next,pre);
+                                next=pre+1;
+                                rmFile=document.frm.elements[temp].checked=true;
+                        }
+                }
+                else
+                {
+                        var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.deleteFileNames.value="$count";
+                        while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                                var temp=actualString.substring(next,pre);
+                                next=pre+1;
+                                rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+                }
+        }
+        function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+</script>

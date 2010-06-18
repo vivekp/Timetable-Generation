@@ -1,0 +1,113 @@
+
+
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td>
+		<font><b>
+	 				<a href=$link.setPage("Index.vm")>???</a> |
+		$page.setTitle("Course Calendar ")
+		<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		 ?????????  for $course 		</font>
+	</td>
+</tr>
+</table>
+
+<table width="100%" bgcolor="$ui.tableColor">
+<tr><td><I>* ????  ???????  ?????   ???????</I></td><td><font color="green"><I>??????</I></font></td>
+<td><font color="magenta"><I>?????</I></font></td><td><font color="green"><I>(R)??????  ??????  ??????? </I></font></td> 
+<td><font color="Gray"><I>????  ?????</font></I></td></tr>
+</table>
+
+
+<table align="center" width="100%">
+<tr><td align="center" valign="top">
+	<table align="left" bgcolor="$ui.tableColor" width="100">
+		</table>
+</td>
+<td align="center" >
+
+<table align="center" bgcolor="$ui.menuColor" cellspacing="1" width="80%">
+<tr>
+	<td align=center>
+		<font size=2><b><I>????? & ???</b></I></font>
+	</td>
+	<td align=center>
+		<font color="blue" size=2><b><I>$date</I></b></font>
+	</td>
+</tr>
+</table>
+<table align=center bgcolor="$ui.menuColor" width="80%">
+<tr>
+	<td>
+		<font face="$ui.sansSerifFonts" size=1><b>
+		<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","previous").addPathInfo("path",$path)><I>??????? ?????</I></a>
+          	</font>
+	</td>
+	<td align=center bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFont" size=1>
+		<b>$M - $year1</b>
+		</font>
+	</td>
+	<td align=right bgcolor="$ui.menuColor">
+		<font face="$ui.sansSerifFonts" size=1><b>
+        	<a href=$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm").addPathInfo("month",$month1).addPathInfo("year",$year1).addPathInfo("status","next").addPathInfo("path",$path)><I>????? ?????</I></a>
+		</font>
+	</td>
+</tr>
+</table>
+    	
+<form name="frm" method="post" action="$link.setPage("call,Calendar_Mgmt,Calendar_Display.vm")">
+		   <table align="center" bgcolor="$ui.tableColor" width="80%">
+		<tr bgcolor="$ui.tableColor"><td align="center">
+						<font size=1>	
+			<select name="month">
+       			<option value="$M">$M
+																																																																																										</option>
+	       		</select>
+       			<select name="year">
+		       <option value="$year1">$year1
+			       			</option>
+			</select>
+		</font>
+		<input type ="submit" value="Go">
+		<input type="hidden" name="status" value="current">
+		<input type="hidden" name="path" value="$path">
+	       </td>
+       </tr></table>
+        <table align=center bgcolor="$ui.tableColor" cellspacing="0" cellpadding="2" width=80%>
+                <tr>
+		              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ??? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ??? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ???? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ??? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ???? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ????? </font>
+		</td>
+              	               	<td bgcolor="$ui.tableColor">
+                	                	<font size=1> ??? </font>
+		</td>
+              	        </tr>
+	<tr>
+															
+																																																																																																																																																																							</tr>
+       </table>
+</td>
+<td align="left" Valign="top">
+	</td>
+</tr>
+</table>
+</form>

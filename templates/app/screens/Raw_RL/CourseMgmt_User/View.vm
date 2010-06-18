@@ -1,0 +1,256 @@
+#*
+ * @(#) View.vm
+ * Copyright (c) 2006-2007, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @author(Modify) <a href="mailto:awadhesh_trivedi@yahoo.co.in">Awadhesh Kumar Trivedi</a>
+ * @author <a href="mailto:shaista.shekh@gmail.com">Shaista</a>
+ * @modified date 21-04-2009
+*#
+
+$page.setBgColor($ui.bgcolor)
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts"><b>
+	#if($isAdmin=="true")
+		$page.setTitle("Home | $course | Course Content | View Content")
+		## <a href=$link.setPage("call,Admin.vm")>$brih_home</a> | $course |
+		<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+
+		$brih_course $brih_Of $brih_Content</a> |
+		$brih_view $brih_content
+		| $course |  <a href=$link.setPage("call,Admin.vm")>$brih_home</a>
+	#elseif ($isInstructor=="true")
+		$page.setTitle("$brih_home | $course | $brih_course $brih_mgmt | $brih_course $brih_content | $brih_view $brih_content")
+		##<a href=$link.setPage("Index.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+		 <a href=$link.setPage("call,CourseMgmt_User,CourseManagement.vm")>$brih_course $brih_mgmt</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+		$brih_course $brih_Of $brih_content</a> | 
+		$brih_view $brih_content
+		 | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | <a href=$link.setPage("Index.vm")>$brih_home</a>
+	#else
+ 		$page.setTitle("$brih_home | $course |$brih_course $brih_content | $brih_view $brih_content")
+        	##<a href=$link.setPage("Index.vm")>$brih_home</a> | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | 
+		<a href=$link.setPage("call,CourseMgmt_User,CourseContent.vm")>
+		$brih_course $brih_Of $brih_content</a> |
+		$brih_view $brih_content
+        	| <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> | <a href=$link.setPage("Index.vm")>$brih_home</a>
+	#end
+	</font>
+</td>
+</tr>
+</table>
+#if($Mode=="NoBlank")
+<form method="post" enctype="multipart/form-data" >
+<table align="center"><tr align="right"> <td>
+	<H2 center><u> $brih_Of2 $brih_content $topic </u></H2>
+##-------------------------------------------------------------##
+<b><u><a href=$link.setPage("call,Bookmarks,AddBookmarks.vm").addPathInfo("mode","Course").addPathInfo("name","$course").addPathInfo("location","$topic")>$WikiSave $brih_Of2 $brih_as $brih_Bookmark</a></u></b>
+##-------------------------------------------------------------##
+
+  	<div align="center">
+		<H3><u>$brih_desc</u></H3>
+		<textarea name=description rows=10 cols=90 >$!topicDesc</textarea>
+		##<div align="left">
+##</table> </tr></td>
+<br>
+		<table align="center">
+		<tr align="right"> 
+		<td>   
+		    	<table align="center" bgcolor="$ui.bgcolor" cellpadding="5">
+              		#if ($errorTemplate)
+			<tr>
+			<td colspan="4">
+				<table bgcolor="$ui.bgcolor">
+			        <tr>
+			        <td>
+			        	<img src="$ui.image($ui.alertImage,$data)">
+			        </td>
+			        <td>
+			        	#parse ($errorTemplate)
+			        </td>
+			        </tr>
+			        </table>
+			</td>
+			</tr>
+			#end
+	                <tr align="center">	
+			##<CENTER><H3><u>$brih_view/$brih_download </u></H3>
+			#if($status == "Remote")
+                                       <CENTER><H3><u>$brih_view </u></H3>
+                               #else
+                                       <CENTER><H3><u>$brih_view/$brih_download </u></H3>
+                               #end
+
+			</tr>	
+				#set ( $count=1 )
+				<table border=1 bgcolor="$ui.menuColor" cellpadding=0 cellspacing=2>
+				#if($role=="instructor")
+                                                <font color="$ui.fontColorBlue">$RemoteTag $RemoteInstitute $instnm </font>
+                                #end
+
+				#foreach($file in $dirContent)
+				<tr align="right">
+				#set ( $aliasval ="$!file.Alias")
+                		        #if($aliasval.length()==0)
+                                	#set ( $aliasval ="$file.Name")
+		                        #end
+					#set ($count2 = 1)
+					#foreach($file_type in $fileType)
+						#if($count == $count2)
+                                                        <td>$file.PDate</td>
+                                                        #if($file_type == "file")
+                                                                #if($status == "Remote")
+                                                                         <td></td>
+                                                                #elseif($status == "Repo")
+
+                                                                        <td><a href="$link.setPage("call,ViewFileContent.vm").addPathInfo("contents",$username).addPathInfo("TotalFiles",$topic).addPathInfo("dl",1).addPathInfo("type","repo").addPathInfo("filename",$file.Name)">$brih_download</a>&nbsp;&nbsp;</td>
+                                                                #else
+                                                                        <td> <a href="$link.setPage("call,ViewFileContent.vm").addPathInfo("topic",$topic).addPathInfo("dl",1).addPathInfo("type","content").addPathInfo("filename",$file.Name)">$brih_download</a>&nbsp;&nbsp;</td>
+                                                                #end
+                                                        #else
+                                                                <td> $brih_download &nbsp;&nbsp; </td>
+                                                        #end
+                                                        #if($status == "Remote")
+                                            <td><a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("pDate",$file.PDate).addPathInfo("contents",$username).addPathInfo("cName",$cName).addPathInfo("TotalFiles",$topic).addPathInfo("type","Remote").addPathInfo("filename",$file.Name)","newWin");>$aliasval</a></td>
+
+                                                        #elseif($status == "Repo")
+                                                <td><a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("contents",$username).addPathInfo("TotalFiles",$topic).addPathInfo("type","repo").addPathInfo("filename",$file.Name)","newWin")>$aliasval</a>&nbsp;&nbsp;</td>
+                                                        #else
+
+                                                        <td><a href=javascript:popupWin("$link.setPage("call,ViewFileContent.vm").addPathInfo("topic",$topic).addPathInfo("type","content").addPathInfo("filename",$file.Name)","newWin");>$aliasval</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                        <td><b><a href=$link.setPage("call,Bookmarks,AddBookmarks.vm").addPathInfo("mode","Course_file").addPathInfo("name","$topic").addPathInfo("location",$file.Name)>$brih_Bookmark</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                                                        #end
+                                                #end
+                                                #set ($count2=$count2+1)
+                                        #end
+					<td align="right">&nbsp;&nbsp;&nbsp; .$count</td>
+				</tr>
+				#set ( $count= $count+1)
+				#end
+				</table>
+		       </td>
+		      </tr>
+		    </table> 	
+		##</div>
+  </div>
+</table> </tr></td>
+</form>
+#else
+##No Publish File in the $topic Topic of $course
+		$brih_publishFileMsg $topic $brih_topic $brih_Of2 <b><font color="blue">$course</font></b>
+#end
+
+<SCRIPT language="JavaScript">
+	function popupWin(urlName,popupName)
+	{
+		window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+	}
+function dirtypop(urlName,popupName)
+{
+  var generator=window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+
+  generator.document.write('<html><head><title>Popup</title>');
+  generator.document.write('<link rel="stylesheet" href="style.css">');
+  generator.document.write('</head><body>');
+  generator.document.write('<p><a href="javascript:Bookmark()">Save as Bookmark</a> the popup.</p>');
+  generator.document.write('</body></html>');
+}
+function popitup2() {
+        newwindow2=window.open('','name','height=200,width=150');
+        var tmp = newwindow2.document;
+        tmp.write('<html><head><title>popup</title>');
+        tmp.write('<link rel="stylesheet" href="js.css">');
+        tmp.write('</head><body><p>this is once again a popup.</p>');
+        tmp.write('<p><a href="call,Bookmarks,AddBookmarks.vm">Bookmarks</a>.</p>');
+        tmp.write('<p><a href="javascript:self.close()">close</a> the popup.</p>');
+        tmp.write('</body></html>');
+        tmp.close();
+}
+</SCRIPT>
+<script language="JavaScript">
+<!--
+function onewind()
+{
+dave=window.open("","min","width=263 height=181");
+dave.document.write("<FONT FACE='Arial' SIZE='2'>")
+dave.document.write("<hr><br>This script is great for <h1><font color=\"red\">describing</font></h1>links.")
+dave.document.write("</FONT>")
+}
+
+
+// --></script>
+<script language="JavaScript">
+function dirtypop()
+{
+  var generator=window.open('','name','height=400,width=500');
+  generator.document.write('<html><head><title>Popup</title>');
+  generator.document.write('<link rel="stylesheet" href="style.css">');
+  generator.document.write('</head><body>');
+  generator.document.write('<p>This page was generated by the main window.</p>');
+  generator.document.write('<p><a href="javascript:self.close()">Close</a> the popup.</p>');
+  generator.document.write('</body></html>');
+  generator.document.close();
+}
+function initpop()
+{
+        var closeElementId='closewindow';
+        var closeLinkText='Close window';
+        var windowAttributes='width=310,height=400,left=0,top=0,scrollbars=no,location=no';
+
+        if(!window.opener)
+        {
+                var as,i,popfun
+                as=document.getElementsByTagName('a');
+                for (i=0;i<as.length;i++)
+                {
+                        if(as[i].target)
+                        {
+                                popfun=function(){window.open(this.href,'',windowAttributes);return false;};
+                                as[i].onclick=popfun;
+                                as[i].onkeypress=popfun;
+                        }
+                }
+        } else {
+                var closep,closelink,closetext;
+                closelink=document.createElement('a');
+                closetext=document.createTextNode(closeLinkText);
+                closelink.href='#';
+                closelink.appendChild(closetext);
+                closelink.onclick=function(){self.close();};
+                closelink.onkeypress=function(){self.close();};
+                if(document.getElementById(closeElementId))
+                {
+                        document.getElementById(closeElementId).appendChild(closelink);
+                } else {
+                        closep=document.createElement('p');
+                        closep.id=closeElementId;
+                        closep.appendChild(closelink);
+                        document.body.insertBefore(closep,document.body.firstChild);
+                }
+        }
+}
+// With thanks to Scott Andrew
+function addEvent(obj, evType, fn)
+{
+        if (obj.addEventListener)
+        {
+                obj.addEventListener(evType, fn, true);
+                return true;
+        } else if (obj.attachEvent){
+                var r = obj.attachEvent("on"+evType, fn);
+                return r;
+        } else {
+                return false;
+        }
+}
+if (document.getElementById && document.createTextNode)
+{
+addEvent(window,'load',initpop);
+}
+</script>
+
+</SCRIPT>

@@ -1,0 +1,169 @@
+<html>
+
+
+$page.setTitle("create group")
+$page.setBgColor($ui.bgcolor)
+
+
+<table bgcolor="$ui.tableColor" width=100% > 	<tr> <td><b>
+	<a href=$link.setPage("call,IndexHome.vm")>Home</a> |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$coursename </a> |
+        <a href=$link.setPage("call,Group_Mgmt,Grpmgmt.vm")> Group Management </a> |
+		Group Create
+	     </b></td></tr>
+</table> <table width=100% > 	<tr><td align ="right">
+          <img src="$content.getURI("/images/hand.gif")"><a href=javascript:popupWin("/brihaspati2/docs/Creategrp.html","newWin");>Help</a>
+	</td></tr>
+</table> <form name="frm" method="post" action=$link.setPage("call,Group_Mgmt,Creategroup.vm").setAction("Groupmanagement")>
+<table align="center" border=1 bgcolor="$ui.tableColor" width=85% > 		<tr bgcolor="$ui.tableHeaderColor"><td align ="center"colspan=5 vlaign="top"> 									<b><font size=5><I>Group Create</I></font></b>
+					</td></tr> 						        	        	        <br><br>
+                <br>
+         	<input type="hidden" name="actionName" >
+        <input type="hidden" name="grouptype" value="$grouptype" >
+        <input type="hidden" name="groupdesc" value="$groupdesc" >
+        <input type="hidden" name="deleteFileNames" value="">
+        <input type="hidden" name="stat" value="grpmgmt">
+        <input type="hidden" name="val" value="$val">
+</form>
+</table> </html>
+<SCRIPT LANGUAGE="javascript">
+function checkField1(frm,field)
+{
+        	frm.actionName.value=field.name;
+               	frm.submit();
+}
+function checkField(frm,field)
+{
+	if(frm.groupname.value!="")
+	{
+        	frm.actionName.value=field.name;
+               	frm.submit();
+	}
+	else
+       		alert("Please fill the Mandatory(*) Fields !!");
+}
+function checkselect(frm,field)
+{
+	var items;
+	items=frm.deleteFileNames.value;
+	if(items.length!=0) 
+        {
+		frm.actionName.value=field.name;
+               	frm.submit();
+	}
+	else
+		alert("Please check box");
+}
+function deleteConfirm(frm,field)
+{
+	var delfiles;
+        delfiles=frm.deleteFileNames.value;
+        if(delfiles.length!=0)
+        {
+        	if(confirm("Selected Group will be Deleted"))
+                {
+                	frm.actionName.value=field.name;
+                        frm.submit();
+                }
+
+        }
+	else
+		alert("Please Select check box  !!");
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked)
+        {
+        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else
+        {
+        	 var rmFile,index,actualString,preString,postString;
+                 actualString=frm.deleteFileNames.value;
+                 index=actualString.indexOf(field.name+"^",0);
+                 preString=actualString.substring(0,index);
+                 postString=actualString.substring(index+field.name.length+1);
+                 actualString=preString+postString;
+                 frm.deleteFileNames.value=actualString;
+         }
+        
+}
+function validate(obj)
+{
+      	value = obj.value;
+       	for (n = 0; n < value.length; n++)
+      	if ( ! isDigit(value.charAt(n)))
+	{
+       		alert("Field must be numeric !!");
+       		return;
+       	}	
+}
+function isDigit(ch) 
+{
+	if (ch >= '0' && ch <= '9')
+      	return true;
+      	return false;
+}
+function Changegroup(frm,field)
+{
+        frm.val.value=document.frm.activity.value;
+	alert(frm.val.value);
+}
+function popupWin(url,popupName)
+{
+        Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+function checkField2(frm,field)
+{
+	if((frm.groupname.value!="") && (frm.groupno.value!="") && (frm.studentno.value!=""))
+	{
+		if((frm.studentno.value>=1) && (frm.groupno.value>=1))
+		{
+                	frm.actionName.value=field.name;
+                        frm.submit();
+		}
+		else
+			alert("Number of student per group and Number of groups should not be less than 1");
+	}
+	else
+		alert("Please fill the Mandatory(*) Fields !!");
+}
+function checkField3(frm,field)
+{
+	if(frm.groupmode[1].checked)
+        {
+        	if((frm.groupname.value!="") && (frm.groupno.value!="") && (frm.studentno.value!=""))
+                {
+                	if((frm.studentno.value>=1) && (frm.groupno.value>=1))
+                        {
+                        	frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        	alert("Number of student per group and Number of groups should not be less than 1");
+                }
+                else
+                {
+                	alert("Please fill the Mandatory(*) Fields !!");
+                }
+           }
+           if(frm.groupmode[0].checked)
+           {
+           	if((frm.groupname.value!="") && (frm.groupno.value!=""))
+                {
+                	if(frm.groupno.value>=1)
+                        {
+                        	frm.actionName.value=field.name;
+                                frm.submit();
+                        }
+                        else
+                        	alert("Number of groups should not be less than 1 ");
+                }
+                else
+                {
+                	alert("Please fill the Mandatory(*) Fields !!");
+                }
+          }
+
+}
+</script>

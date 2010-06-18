@@ -1,0 +1,58 @@
+#*
+ * @(#) ProxyUser.vm
+ * Copyright (c) 2005,2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:nagendrakumarpal@yahoo.co.in">Nagendra Kumar Singh</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Admin Home | User Management | Proxy User")
+$!data.getMessage()
+<table bgcolor="$ui.menuColor" width=100%>
+<tr>
+	<td><a href=$link.setPage("Index.vm")>$brih_ad $brih_home</a> | $Proxy_User</td>
+</tr>
+</table>
+<form name=frm method="post" action="$link.setPage("call,UserMgmt_Admin,ProxyUser.vm").setAction("AddProxyUser")">
+<table align=left bgcolor="$ui.tableColor" width=100%>
+<tr>
+	<td colspan="2">
+	<font size=4><b>
+		#if(( $data.getUser().getTemp("lang" ).toString())=="hindi")
+			$Proxy_User $brih_Of1 $brih_detail $brih_upload
+		#else
+			Enter $Proxy_User $brih_detail
+		#end
+	</b></font>
+	</td>
+</tr>
+<tr bgcolor="$ui.menuColor">
+	#formCell ("$Proxy_User $brih_name <font color=red>*</font>" "UNAME" "")
+</tr>
+			<tr>
+				#formPasswordCell ("$brih_pwd" "PASSWD" "")
+			</tr>
+			<tr bgcolor="$ui.menuColor"><td width=100%>
+				<input type="hidden" name="actionName">
+				<input type="button" name="eventSubmit_doRegister" value="$brih_reg1" onClick="checkField(document.frm,this);"/> 
+			</td></tr>
+		</table>
+	</div>
+</form>
+
+
+
+<SCRIPT LANGUAGE="javascript">
+	function checkField(frm,field)
+	{
+		if(frm.UNAME.value!="") 
+		{
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill the Mandatory(*) Fields !!");
+		}
+	}
+</SCRIPT>

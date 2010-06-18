@@ -1,0 +1,150 @@
+#*
+ * @(#) ViewOnlineRegistrationInstructor.vm 
+ * Copyright (c) 2008, 2009 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista</a>
+ * @author <a href="mailto:omprakash_kgp@yahoo.co.in">Om Prakash</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+ * @modify 20-03-2009
+*#
+
+
+$page.setTitle("Admin Home | View Online Registration ")
+
+$page.setBgColor($ui.bgcolor)
+
+<table  bgcolor="$ui.tableColor" width=100% cellspacing=0>
+<tr align="right">
+ <td>
+ <font face="$ui.sansSerifFonts" size=3>
+ <b>
+        <a href=$link.setPage("call,UserMgmt_User,StudentManagement.vm")>$brih_mgmt $brih_student </a> | $brih_view $online_online $brih_reg |
+        <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> |
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 
+ </b></font>
+</td>
+</tr>
+</table>
+<br>
+
+$!data.getMessage()
+<body>
+
+<form name="frm" method="post" action="$link.setPage("call,OnLine_Rgtn,ViewOnlineRegistrationInstructor.vm").setAction("OnlineRegistration_Instructor")">
+
+<div align=center>
+#if($entry.size() !=0)
+	<table border=1 bgcolor="$ui.tableColor" cellpadding="5">
+
+       <tr bgcolor="$ui.menuColor">
+                <td align=center>
+                        <b> $brih_role</b>
+                </td>
+                <td align=center>
+                        <b> $brih_course $brih_ID </b>
+                </td>
+                <td align=center>
+                        <b> $brih_email </b>
+                </td>
+		<td align=center>
+			<b> $online_organisation </b>
+		</td>
+		<td align=center>
+			<b>$brih_last $brih_name </b>
+		</td>
+		<td align=center>
+			<b>$brih_first $brih_name</b>
+		</td>
+                <td align=center>
+                        <b> $brih_usr $brih_name </b>
+                </td>
+                <td align=center>
+                        <b> $brih_select </b>
+                </td>
+ 
+        </tr>
+        #foreach($e in $entry)
+        <tr>
+ 
+                <td >
+                        $e.getMsgID()
+                </td>
+                <td >
+                        $e.getStatus()
+                </td>
+                <td >
+                        $e.getMSubject()
+                </td>
+		<td>
+			$e.getGrpmgmtType()
+		</td>
+		<td>
+			$e.getPermission()
+		</td>
+		<td>
+			$e.getExpiryDate()
+		</td>
+                <td >
+                        $e.getSender()
+                </td>
+                <td align=center>
+                        ##<INPUT TYPE="CHECKBOX" NAME=$e.getMSubject() VALUE="" onClick="addDeleteList(this,document.frm);">
+			#set($GpUsrEmail ="${e.getSender()}:${e.getStatus()}:${e.getMSubject()}")
+			<INPUT TYPE="CHECKBOX" NAME=$GpUsrEmail VALUE="" onClick="addDeleteList(this,document.frm);">
+                </td>
+        </tr>
+        #end
+ 
+        <tr>
+                <td align="center"colspan=8 bgcolor="$ui.menuColor">
+                <input type="hidden" name="actionName" value="">
+                <input type="button" name="eventSubmit_AcceptUser" value="$online_accept" onClick="AcceptField(document.frm,this);">
+                <input type="button" name="eventSubmit_RejectUser" value="$online_reject" onClick="AcceptField(document.frm,this);">
+                <input type="hidden" name="deleteFileNames" value="">
+                ##<input type="hidden" name="group" value="$group">
+                <input type="hidden" name="role" value="$role">
+                </td>
+        </tr>
+</td>
+</tr>
+                
+</table>
+#end
+</form>
+</body>
+
+<SCRIPT LANGUAGE="javascript">
+
+        function AcceptField(frm,field)
+        {
+		if(frm.deleteFileNames.value != "")
+                {
+                       frm.actionName.value=field.name;
+                       frm.submit();
+                }
+                else
+                {
+                       alert("Please select the check box");
+                       return;
+                }
+	}
+ 
+        function addDeleteList(field,frm)
+        {
+                if(field.checked)
+                {
+                        frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+                }
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+        }
+</SCRIPT>
+

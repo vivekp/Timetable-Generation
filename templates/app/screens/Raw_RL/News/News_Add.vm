@@ -1,0 +1,159 @@
+#*
+ * @(#) News_Add.vm
+ * Copyright (c) 2005 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">jaivir singh</a>
+ * @author <a href="mailto:awadhesh_trivedi@yahoo.co.in ">Awadhesh Kumar Trivedi</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setBgColor($ui.bgcolor)
+$!data.getMessage()
+
+<body>
+## Representation of TOP BAR
+<table bgcolor="$ui.tableColor" width=100% cellspacing=0>
+        <tr align=right>
+                <td>
+                <font face="$ui.sansSerifFonts" size=3><b>
+			#if($data.getUser().getUserName() == "admin")
+			$page.setTitle("Admin Home ")
+			<a href=$link.setPage("call,Admin.vm")>$brih_ad $brih_Of1 $brih_home</a> |&nbsp;
+			#elseif($data.getUser().getTemp("role") != "")
+                        $page.setTitle("Home ")
+                        <a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> |&nbsp;
+                        #else
+                        $page.setTitle("Home ")
+                        <a href=$link.setPage("Index.vm")>$brih_home</a> |&nbsp;
+			#end
+			#if($status=="fromIndex")
+				$page.setTitle("| General News | Add News")
+				<a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status",$status)>$brih_genNews</a> &nbsp;|&nbsp;
+				$brih_news $brih_add 
+			#else
+			$page.setTitle("| $course | Communication | News | Addnews")
+			<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$course</a> &nbsp;| &nbsp;
+			<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>$brih_communication</a> &nbsp;|&nbsp;
+			<a href=$link.setPage("call,News,News_Edit.vm").addPathInfo("status",$status)>$brih_course $brih_Of $brih_news</a> &nbsp;| &nbsp;
+			$brih_add $brih_news
+			#end
+                </td>
+        </tr>
+</table>
+## Representation of HELP link
+<table width=100%>
+        <tr>
+                <td align=left>
+                        ## <a href="/brihaspati/docs/news.html">$brih_help</a>
+			<blink>	<a href="/brihaspati2/docs/CourseHome.html">$brih_help</a><img src="$content.getURI("/images/Lefthand.gif")"> </blink>
+                </td>
+        </tr>
+</table>
+</body>
+<br>
+#set($month=["01","02","03","04","05","06","07","08","09","10","11","12"])
+#set($day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"])
+
+<form name=frm method="post" action="$link.setAction("NewsAction").setPage("call,News,News_Edit.vm").addPathInfo("status",$status)">
+  <table Cell padding=20 Cell spacing=0 align=center bgcolor="$ui.tableColor" border=1">
+          <tr bgcolor="$ui.menuColor" align=center>
+                <td align=center>
+		<font size=4><b><I>$brih_news</I></b></font>&nbsp;&nbsp;<img src="$content.getURI("/images/newspaper.gif")"> 
+                </td>
+        </tr>
+        <tr align="right">
+                ## <td align=center>
+                <td>
+                <table border=1 Cellspacing=0 align=center bgcolor="$ui.tableColor">
+    		<tr align="right">
+             	<td align=right>
+                  <select name="Start_year">
+                  <option value="$cyear">$cyear
+		  #foreach($year in $year_list)
+		    #if($cyear != $year)
+		      <option value="$year">$year
+		    #end
+		  #end
+                </select>
+      &nbsp<b><font size=+1>-</font></b>&nbsp
+          <select name="Start_mon">
+            <option value="$cmonth">$cmonth
+	    #foreach($mon in $month)
+	    #if($mon != $cmonth)
+            <option value="$mon">$mon
+	    #end
+	    #end
+            </select>
+  		&nbsp;<b><font size=+1>-</font></b>&nbsp;
+                  <select name="Start_day">
+                  <option value="$cdays">$cdays
+		  #foreach($d in $day)
+		    #if($d!=$cdays)
+			<option value="$d">$d
+		    #end
+		  #end
+            </select>
+                  </td>
+            	<td>
+                <b>$brih_publish $brih_Of $brih_Da</b>
+            	</td>
+   </tr>		
+			<tr align="right">
+				<td><input type="text" size=25 name="nt" value=""></td>
+                                <td><b> <font color=RED> *</font> $brih_news1 $brih_Of $brih_title </b></td>
+				
+                        </tr>
+                        <tr align=right>
+				<td><textarea name="news" wrap="physical" rows=5 cols=50></textarea></td>
+				<td><b> <font color=RED> *</font> $brih_news1 $brih_Of $brih_desc</b></td>
+
+			</tr>
+                        <tr align=right>
+				<td><input type="text" size=3 name="et" value="7"></td>
+                                <td><b> <font color=RED> *</font> $brih_expiry </b></td>
+                        </tr>
+                        <tr>
+                                <td align=center colspan=2>
+                               <font face="$ui sanSerif fonts">
+			     <input type=button name="eventSubmit_doInsert" value="$brih_submit" onClick="checkNews(document.frm,this);"/>
+			     <input type=button name="reset" value="$brih_reset" onClick="clearData(document.frm,this);">
+			     <input type="hidden" name="actionName">
+                                </font>
+                                </td>
+                        </tr>
+   			</td>
+                       </tr>
+                </table>
+                </td>
+        </tr>
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function clearData(frm,field)
+	{
+		frm.nt.value="";
+		frm.news.value="";
+		frm.et.value="";
+		
+	}
+        function checkNews(frm,field)
+        {
+          if((frm.nt.value!="") &&(frm.news.value!="") && frm.et.value!="")
+                {
+		    	if((frm.et.value>=1) && (frm.et.value<=30))
+	       		{
+                        	frm.actionName.value=field.name;
+                        	frm.submit();
+			}
+			else
+			{
+				alert("The Expiry time Should be between 1 to 30 days");
+			}
+                }
+                else 
+                {
+                        alert("Please Fill All The mandatory (*) Fields");
+                }
+        }
+</SCRIPT>

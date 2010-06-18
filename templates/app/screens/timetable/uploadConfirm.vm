@@ -1,0 +1,6 @@
+$page.DefaultDoctype
+$page.setBgColor("$ui.bgcolor")
+$page.setTitle("File Uploaded")
+<p><b>The file has been uploaded</b></p>
+
+

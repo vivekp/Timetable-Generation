@@ -1,0 +1,341 @@
+#*
+ * @(#)ResearchRepo.vm
+ * Copyright (c) 2008-09 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ *
+ *  @author <a href="mailto:seema_020504@yahoo.com ">Seema Pal</a>
+ *  @author <a href="mailto:kshuklak@rediffmail.com ">Kishore kumar shukla</a>
+ *  @modify <a href="shaistashekh@hotmail.com">Shaista</a>
+ *  @date 10-06-2009
+ *
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+$page.setTitle("Res Repo Page")
+$page.setBgColor("bgcolor")
+$!data.getMessage()
+#set($lang = $data.getUser().getTemp("lang" ).toString())
+<table bgcolor="#d9e3ec" width=100%>
+<tr <tr align="right">
+<td>
+	<font face="$ui.sansSerifFonts">
+        <a href=$link.setPage("Index.vm")><b>$brih_home</a> |
+        $brih_Res $Repo_Repo1 $brih_grp
+        </font>
+</td>
+</table>
+<table  bgcolor="#d9e3ec" width=100%>
+<tr>
+<td>
+	<a href=javascript:popupWin("/brihaspati2/docs/ResearchRepository.html","newWin");>$brih_help</a> <img src="$content.getURI("/images/Lefthand.gif")">
+</td>
+</tr>
+</table>
+<br>
+<form name="frm" method="post" enctype="multipart/form-data" action=$link.setPage("call,ResearchRepository,ResearchRepo.vm").setAction("ResearchRepo_Action")>
+<table align="center" bgcolor="#e5e5e5" width="100%">
+	<tr align="right">
+		<td align="center"><b>
+		#if($data.getUser().getUserName()!= "admin" && $data.getUser().getUserName()!= "guest")
+			<a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("mode","createResgroup").addPathInfo("username",$username)>$WikiCreate $brih_Res $Repo_Repo1</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		#end
+    		<a href=$link.setPage("call,ResearchRepository,ResearchRepo.vm")>$brih_Res $Repo_Repo1 $brih_grp</a></b>&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+	</tr>
+</table>
+<br>
+<table align="center" border="0" bgcolor="#d9e3ec" width="80%" > ## table 3 start
+#if($mode == "createResgroup")
+                        <tr bgcolor="#eeeeee"><td align="right">
+                         <font="3"><b><left><font size="3"><i>$WikiCreate $brih_Res $Repo_Repo1</i></font></b>
+                        </td></tr>
+                        <tr align="right"><td><br><br>
+                                <table  border="0" bgcolor="#d9e3ec" width="100%" colspan="5">
+					<tr align="right">
+                                        <td><input type="text" name="topicname" size="30" value=""/></td>
+                                        <td><b>: $brih_Res $brih_grp $brih_Of1 $brih_name <font color=red>*</font> </b></td>
+                                        </tr>
+                                        <tr align="right">
+                                        <td><textarea name="description" rows="8" cols="80" ></textarea></td>
+                                        <td><b> : $brih_desc</b></td>
+                                        </tr>
+                                </table>
+                        </td></tr>
+                ## end of usage create ##
+              <tr><td> ## td tr 8 start
+                <table border="0" bgcolor="#e5e5e5" colspan="5" width="100%"> ## table 7 start
+                        <tr><td align="center" >
+                          <input type="button" name="eventSubmit_doCreate_resrepo" value="$WikiCreate" onClick="checkField(document.frm,this);"/>
+                           <input type="submit" name="eventSubmit_doCancel" value="$brih_cancel"/>
+                        </tr></td>
+                </table> ## end of table 7
+        </tr></td> ## end od td tr 8
+#else
+#if($content1 == "value" || $stat=="Search")
+<tr bgcolor="#e5e5e5"><td align ="center" vlaign="top">
+<table  border="0" bgcolor="#d9e3ec" width="100%"> ## table 5 start
+<tr bgcolor="#e5e5e5">
+        <td>
+                <input type="button" name="eventSubmit_doSearch" value="$brih_search" onClick="checkNull(document.frm,this);">
+                <input align=center type="text" name="valueString" value="">
+                <b>$brih_match_str</b>
+       </td>
+        <td align=left>
+                <select name="queryList">
+                <option value="Author Name">$brih_author $brih_Of1 $brih_name</option>
+                <option value="Research Group">$brih_Res $brih_grp</option>
+                </select>
+                <b>$brih_searchBy</b>
+        </td>
+</tr>
+</table>
+</td></tr>
+#end
+<tr bgcolor="#e5e5e5"><td align ="center" vlaign="top">
+<table  border="0" bgcolor="#d9e3ec" width="100%"> ## table 5 start
+#if($NoSearch=="NoSearch" && $content1=="value")
+<tr align="right">
+	<td align="right" bgcolor="#d9e3ec" ><b>$DisBoard_DB_msg25</td>
+        <td align="right" bgcolor="#d9e3ec" colspan="10"><b>$brih_availableAction</td>
+        <td align="right" bgcolor="#d9e3ec"> <b>$brih_Res $brih_grp</b></td>
+        <td align="right" bgcolor="#d9e3ec" >
+        <b>$brih_select</b></td>
+</tr>
+#end
+#if($stat == "Search" && $actionName == "eventSubmit_doSearch" && $check == "Noblank")
+<tr align="right">
+	<td align="right" bgcolor="#d9e3ec" ><b>$DisBoard_DB_msg25</td>
+        <td align="right" bgcolor="#d9e3ec" colspan="10"><b>$brih_availableAction</td>
+        <td align="right" bgcolor="#d9e3ec"> <b>$brih_Res $brih_grp</b></td>
+        <td align="right" bgcolor="#d9e3ec" >
+        <b>$brih_select</b></td>
+</tr>
+#end
+
+#if($NoSearch=="NoSearch" )
+	#if($content1 =="value")
+	#set ( $count="" )
+	#foreach($Restopics in $allTopics)
+		<tr bgcolor="#e5e5e5">
+		#if($data.getUser().getUserName()!= "guest" && $data.getUser().getUserName()!= "admin")
+	        	<td align="right"><b>$Restopics.studentno</b></td>
+	        	<td align="right"  colspan="7"><a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").setAction("ResearchRepo_Action").addPathInfo("topicname",$Restopics.Topic).addPathInfo("mode","post").addPathInfo("actionName","eventSubmit_doPost")">$DisBoard_DB_msg25</a></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <td align="right"><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").addPathInfo("topicname",$Restopics.Topic).addPathInfo("mode","view")">$brih_view</a></td>&nbsp;&nbsp;
+			#if($Restopics.UserName == $username)
+				<td> <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("type","Unjoin").addPathInfo("tname",$Restopics.Topic).addPathInfo("owner",$Restopics.UserName)">$brih_unjoin</a></td>
+			#else
+			       <td align="right"><u><font color="white">$brih_unjoin</font></u></td>
+			#end
+			#if($Restopics.UserName != $username)
+		        	<td align="right"><a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").setAction("ResearchRepo_Action").addPathInfo("topicname",$Restopics.Topic).addPathInfo("actionName","eventSubmit_doJoinUser")">$brih_join</a></td>
+			#else
+       				<td align="right"><u><font color="white">$brih_join</font></u></td>
+			#end
+		#else
+			############## THIS IS FOR ADMIN FACE ############
+			<td align="right" ><b>$Restopics.studentno</b></td>
+			<td align="right"  colspan="7"><u><font color="white">$DisBoard_DB_msg25</font></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        		<td align="right"><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").addPathInfo("topicname",$Restopics.Topic).addPathInfo("mode","view")">$brih_view</a></td>&nbsp;&nbsp;
+			#if($data.getUser().getUserName() == "admin")
+				<td align="right"> <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("type","Unjoin").addPathInfo("tname",$Restopics.Topic).addPathInfo("owner",$Restopics.UserName)">$brih_unjoin</a></td>    
+			#else
+			       <td align="right"><u><font color="white">$brih_unjoin</font></u></td>
+			#end
+		        <td align="right"><u><font color="white">$brih_join</font></u></td>
+		#end
+			################ THESE BELOW 2 COLUMNS ARE COMMON FOR INST FACE AS WELL AS FOR ADMIN FACE #############
+		        #foreach($usertype in $collect)
+			    <td colspan="3" align="right"><font color="blue">$usertype.Name</font></td>
+		        #end 
+       			<td align="right">$Restopics.Topic</td>
+	       		<td align="right">
+			#if($Restopics.UserName == $username ||$data.getUser().getUserName() == "admin")
+		        	<input type=checkbox name="$!Restopics.Topic" onClick="addDeleteList(this,document.frm);">
+			#else
+				<input type="CHECKBOX" disabled="true">
+		        #end
+        		</td>
+		</tr>
+		#set ( $count= "$count$!Restopics.Topic^")
+       	#end
+	#else
+		$brih_Res $brih_grp $Res_mess1...!!	
+        #end
+#end
+	#if($stat == "Search" && $actionName == "eventSubmit_doSearch")
+		#if($check == "Noblank")
+        		#foreach($topics in $Searchtopics)
+				<tr bgcolor="#e5e5e5">
+					#if($data.getUser().getUserName()!= "guest" && $data.getUser().getUserName()!= "admin")
+					        <td align="right"><b>$topics.studentno</b></td>
+					        <td align="right" colspan="7"><a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").setAction("ResearchRepo_Action").addPathInfo("topicname",$topics.Topic).addPathInfo("mode","post").addPathInfo("actionName","eventSubmit_doPost")">$brih_post</a></td>&nbsp;&nbsp;
+						<td align="right"><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").addPathInfo("topicname",$topics.Topic).addPathInfo("mode","view")">$brih_view</a></td>&nbsp;&nbsp;
+						#if($topics.UserName == $username)
+							<td align="right"> <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("type","Unjoin").addPathInfo("tname",$topics.Topic).addPathInfo("owner",$topics.UserName)">$brih_unjoin</a></td>
+						#else
+							<td align="center"><u><font color="white">$brih_unjoin</font></u></td>
+						#end
+						#if($topics.UserName != $username)
+							<td align="right"><a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").setAction("ResearchRepo_Action").addPathInfo("topicname",$topics.Topic).addPathInfo("actionName","eventSubmit_doJoinUser")">$brih_join</a></td>
+						#else
+						       <td align="right"><u><font color="white">$brih_join</font></u></td>
+						#end
+					#else
+					        <td align="right"><b>$topics.studentno</b></td>
+					        <td align="right" colspan="7"></u><font color="white">$DisBoard_DB_msg25</font></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					        <td align="right"><a href="$link.setPage("call,ResearchRepository,Post_Reply_topic.vm").addPathInfo("topicname",$topics.Topic).addPathInfo("mode","view")">$brih_view</a></td>&nbsp;&nbsp;
+						#if($data.getUser().getUserName() == "admin")
+						        <td align="right"><a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("type","Unjoin").addPathInfo("tname",$topics.Topic).addPathInfo("owner",$topics.UserName)">$brih_unjoin</a></td>
+					        #else
+							<td align="right"><u><font color="white">$brih_unjoin</font></u></td>
+						#end
+						<td align="right"><u><font color="white">$brih_join</font></u></td>
+					#end
+				        <td align="right">$topics.Topic</td>
+				        <td align="right">
+				        #if($topics.UserName == $username || $data.getUser().getUserName()=="admin")
+					        <input type=checkbox name="$!topics.Topic" onClick="addDeleteList(this,document.frm);">
+				        #else
+				        <input type="CHECKBOX" disabled="true">
+				        #end
+				        </td>
+				</tr>
+			       	#set ( $count= "$count$!topics.Topic^")
+			#end
+		#else
+			#if($select=="Author Name")
+				$brih_usr $Res_mess1...!!
+			#end
+			#if($select=="Research Group")
+				$brih_topic $Res_mess1...!!
+			#end
+		#end
+	#end
+#if($type == "Unjoin")
+	<table  border="0" bgcolor="#d9e3ec" width="100%"> ## table 5 start
+	#if($value=="yesvalue") 
+		<tr align="right">
+		<td align="right" bgcolor="#d9e3ec"><b>$brih_usr $Res_join </td>
+ 	       	<td align="right" bgcolor="#d9e3ec"><b>$brih_grp $brih_of $Res_owm</td>
+        	<td align="right" bgcolor="#d9e3ec"><b>$brih_Res $brih_grp</b></td>
+	        <td align="right" bgcolor="#d9e3ec"> <b>$brih_select</b></td>
+		</tr>
+		#set ( $count="" )
+                #foreach($usertype in $collect)
+			<tr align="right" bgcolor="#e5e5e5">
+			        <td><font color="blue">$usertype.Name</font></td>
+				<td>$usertype.UserName</td>
+			        <td>$usertype.Topic</td>
+			        <td align="right"> <input type=checkbox name="$!usertype.Name" onClick="addDeleteList(this,document.frm);"> </td>
+				#if($value1 == "balnk")
+					$brih_usr $Res_mess1 ..!!
+				#end
+			</tr>
+		        #set ( $count= "$count$!usertype.Name^")
+	        #end
+	#else
+		##User is not exists ..!!
+		$brih_usr $Res_mess1 ..!!
+	#end
+#end
+</table>
+<tr>
+        <td align="right">&nbsp;&nbsp; ## td 5 start
+	#if($stat!="Search" && $type!="Unjoin" && $content1=="value")
+	        #if($total_size <= $userConf)
+        	<u><font color="white">$brih_first</font></u> &nbsp;
+	        <u><font color="white">$brih_pre</font></u> &nbsp;
+        	<u><font color="white">$brih_nxt</font></u> &nbsp;
+	        <u><font color="white">$brih_last</font></u> &nbsp;
+       		#elseif($startIndex == $userConf_string)
+	        <u><font color="white">$brih_first</font></u> &nbsp;
+        	<u><font color="white">$brih_pre</font></u> &nbsp;
+	        <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$startIndex)">$brih_nxt</a> &nbsp;
+	        <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+	        #elseif($endIndex == $total_size || $endIndex > $total_size)
+	        <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$check_first)">$brih_first</a>&nbsp;
+        	<a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+	        <u><font color="white">$brih_nxt</font></u> &nbsp;
+	        <u><font color="white">$brih_last</font></u> &nbsp;
+        	#else
+	        <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$check_first)">$brih_first</a>&nbsp;
+        	<a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$check_pre)">$brih_pre</a> &nbsp;
+	        <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$startIndex).addPathInfo("end",$endIndex)">$brih_nxt</a> &nbsp;
+	        <a href="$link.setPage("call,ResearchRepository,ResearchRepo.vm").addPathInfo("startIndex",$check_last)">$brih_last</a> &nbsp;
+        	#end
+    	#end
+	#if($check=="Noblank" || $content1=="value")
+	        <input type="button" name="eventSubmit_doDeleteTopic" value="$brih_delete $brih_grp" onClick="deleteConfirm(document.frm,this);"/>
+	#end
+	#if($type=="Unjoin" && $value=="yesvalue")
+        	<input type="button" name="eventSubmit_doUnjoinUser" value="$brih_unjoin $brih_usr" onClick="deleteConfirm(document.frm,this);"/>
+	#end
+        </td>
+</tr>
+</td></tr>
+#end ##end of else mode(creatRes)
+        <input type="hidden" name="actionName" >
+        <input type="hidden" name="deleteFileNames" value="">
+        <input type="hidden" name="stat" value="Search">
+        <input type="hidden" name="tname" value="$tname"> 
+
+</table> ## end of table 3
+</form>
+<SCRIPT LANGUAGE="javascript">
+function checkField(frm,field)
+{
+	if(frm.topicname.value!="")
+        {
+                frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+                alert("Please fill the Mandatory(*) Fields !!");
+}
+function deleteConfirm(frm,field)
+{
+	var delfiles;
+        delfiles=frm.deleteFileNames.value;
+        if(delfiles.length!=0)
+        {
+        	if(confirm("Selected Group will be Deleted"))
+                {
+                	frm.actionName.value=field.name;
+                        frm.submit();
+                }
+        }
+        else
+        	alert("Please Select check box  !!");
+}
+function addDeleteList(field,frm)
+{
+	if(field.checked)
+        {
+        	frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+        }
+        else
+        {
+        	var rmFile,index,actualString,preString,postString;
+                actualString=frm.deleteFileNames.value;
+                index=actualString.indexOf(field.name+"^",0);
+                preString=actualString.substring(0,index);
+                postString=actualString.substring(index+field.name.length+1);
+                actualString=preString+postString;
+                frm.deleteFileNames.value=actualString;
+        }
+
+}
+function popupWin(url,popupName)
+{
+	Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+}
+function checkNull(frm,field)
+{
+	if(frm.valueString.value!="")
+	{
+		frm.actionName.value=field.name;
+                frm.submit();
+        }
+        else
+        	alert("The 'Match String' text box can not be NULL");
+}
+</SCRIPT>

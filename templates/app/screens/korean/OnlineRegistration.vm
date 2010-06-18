@@ -1,0 +1,196 @@
+
+
+$page.setTitle("Login Page | Online Registration ")
+<table bgcolor="$ui.menuColor" width=100%>
+<tr><td>
+		<font face="$ui.sansSerifFonts" size=3><b>
+			<a href=$link.setPage("BrihaspatiLogin.vm")> ë¡?ê·¸ì?¸ í??ì?´ì§? </a>| ì?¨ë?¼ì?¸ ë?±ë¡?   
+</td></tr>
+</table>
+<form name=frm method="post" action="$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).setAction("OnlineRegistration")">
+<table align="left" bgcolor="$ui.tableColor" width=100%><tr><td align="right"><img src="$content.getURI("/images/hand.gif")">
+	<font face="$ui.sansSerifFonts" size=3>
+	<a href=javascript:popupWin("/brihaspati2/docs/OnlineRegistration.html","newWin");>ë??ì??</a>
+	</font></td></tr>
+</table>
+
+<table align=left bgcolor="$ui.tableColor" width="100%">
+<tr bgcolor="$ui.menuColor">
+<td align=left width=50%><b>
+<a href=$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).addPathInfo("status","UserResitration")> ì?¬ì?©ì?? ë?±ë¡? </a>
+</td>
+<td<b><a href=$link.setPage("OnlineRegistration.vm").addPathInfo("lang",$lang).addPathInfo("status","CourseRegistration")> ê³¼ì ? ë?±ë¡? </a></td>
+</tr>
+		<br>
+
+
+	
+</table>
+
+</form>
+</body>
+
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400");
+        }
+	
+	function checkField(frm,field)
+	{
+		if((frm.UNAME.value!="")&&(frm.EMAIL.value!="")&&(frm.group.value!="")&&(frm.role.value!=""))
+		{
+			var emailID=document.frm.EMAIL;
+			if (echeck(emailID.value)==false){
+	                emailID.value="";
+			emailID.focus();
+			return; 
+			}
+			else
+				frm.actionName.value=field.name;
+				frm.submit();
+		}
+		else
+		{
+		        alert("Please fill all the Mandatory(*) Fields !");
+			
+		}
+	}
+function echeck(str) {
+
+
+
+                var at="@"
+
+                var dot="."
+
+                var lat=str.indexOf(at)
+
+                var lstr=str.length
+
+                var ldot=str.indexOf(dot)
+
+                if (str.indexOf(at)==-1){
+
+                   alert("Invalid E-mail ID")
+
+                   return false;
+
+                }
+
+                if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+
+                   alert("Invalid E-mail ID")
+
+                   return false;
+
+                }
+
+                if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                }
+
+                 if (str.indexOf(at,(lat+1))!=-1){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+		if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+
+                 if (str.indexOf(dot,(lat+2))==-1){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+
+                 if (str.indexOf(" ")!=-1){
+
+                    alert("Invalid E-mail ID")
+
+                    return false
+
+                 }
+
+                 return true
+        }
+
+
+	function ChangeRole(frm,field)
+	{
+		if(frm.group.value=="author")
+		{
+		       frm.role.value="author";
+		       frm.role_author.value=frm.role.value;
+		       makeDisable();
+		}
+		else
+		{
+		       if(frm.role.value=="author")
+		       {
+		       frm.role.value="";
+		       }
+		       makeEnable();
+		}
+	}
+	function ChangeGroup(frm,field)
+        {
+		if(frm.role.value=="author")
+		{
+		       frm.group.value="author";
+		       frm.group_author.value=frm.group.value;
+		       makeDisable_group();
+		}
+		else
+		{
+		       if(frm.group.value=="author")
+		       {
+		       frm.group.value="";
+		       }
+		       makeEnable_group();
+		}
+	}
+
+        function checkCourseName(frm,field)
+        {
+                if((frm.COURSEID.value!="")&&(frm.CNAME.value!="")&&(frm.UNAME.value!="")&&(frm.EMAIL.value!=""))
+                {
+			var emailID=document.frm.EMAIL;
+                        if (echeck(emailID.value)==false){
+	                        emailID.value=""
+        	                emailID.focus()
+				return;
+                        }
+                        else
+                        	frm.actionName.value=field.name;
+			frm.submit();
+                }
+                else
+                {
+                        alert("Please Fill All The Mandatory(*) Text Fields........");
+                }
+        }
+        function checkClear(frm,field)
+        {
+                frm.COURSEID.value="";
+                frm.CNAME.value="";
+                frm.UNAME.value="";
+                frm.EMAIL.value="";
+        }
+
+
+</SCRIPT>

@@ -1,0 +1,79 @@
+
+
+$page.setBgColor($ui.bgcolor)
+$page.setTitle("Home|$CName|Communication|Local Mail|Read Message")
+<table bgcolor="$ui.tableColor" width=100%>
+<tr>
+<td>
+<font face="$ui.sansSerifFonts"><b>
+<a href=$link.setPage("call,IndexHome.vm")>Home </a> | 
+<a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$CName</a> | 
+<a href=$link.setPage("call,CourseMgmt_User,Communication.vm")>Communication </a> | 
+<a href=$link.setPage("call,Local_Mail,Mail.vm")>Local Mail</a> |	 
+<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>All Mails</a> | Read mail
+</font>
+</td>
+</tr>
+</table>
+<br>
+<br>
+<form method="post" enctype="multipart/form-data">
+  <div align="left">
+  <table align="center" border=1>
+    <tr> 
+    <td>   
+    <table bgcolor="$ui.tableColor" border=1 cellpadding="0" align=center>
+        
+           <tr>
+     <td><b><u>Subject :</u></b>&nbsp $sub </td>
+     </tr>
+     
+     <tr>
+     <td><b><u>Sender :</u></b>&nbsp $retrive_user</td>
+     </tr>
+     
+     <tr>
+     <td><b><u>Posted on :</u></b>&nbsp $retrive_date</td>
+     </tr>
+    
+    <tr>
+     <tr>
+     <td>
+      <table align=center>
+
+      <tr><td>
+	<b><u>Message :</u><b>
+      </td></tr>
+      <tr>
+       <td bgcolor="$ui.bgcolor">
+	<textarea name=description rows=10 cols=55 wrap=physical onFocus="this.blur();"> $message</textarea>
+       </td>
+       </tr>
+      </table>
+      </td>
+      </tr>
+
+      <tr><td>
+			</table>
+
+      </td>
+     </tr>
+
+    <tr>
+    <td align="center" bgcolor="$ui.menuColor">
+<a href=$link.setPage("call,Local_Mail,MailContent.vm").addPathInfo("mode","All")>Close</a>
+  </td>
+  </tr>
+  </table>
+  </td>
+    </tr>
+  </table>
+  </div>
+</form>
+
+<SCRIPT language="JavaScript">
+        function popupWin(urlName,popupName)
+        {
+                window.open(urlName,popupName,"toolbar=yes,scrollbars=yes");
+        }
+</SCRIPT>

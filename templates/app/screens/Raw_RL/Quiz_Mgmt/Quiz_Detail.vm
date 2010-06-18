@@ -1,0 +1,130 @@
+#*
+ * @(#) Quiz_Detail.vm
+ * Copyright (c) 2008 ETRG,IIT Kanpur.
+ * All Rights Reserved.
+ * @author <a href="mailto:singh_jaivir@rediffmail.com ">Jaivir Singh</a>
+ * @author <a href="mailto:shaistashekh@hotmail.com">Shaista Bano</a>
+ * Contributors: Members of ETRG, I.I.T. Kanpur
+*#
+
+$page.setTitle("Quiz Management")
+$page.setBgColor($ui.bgcolor)
+#set($cnm = $data.getUser().getTemp("course_name" ).toString())
+
+<table bgcolor="$ui.tableColor" width=100%>
+<tr align="right">
+	<td>
+	<font face="$ui.sansSerifFonts"><b>
+        <a href=$link.setPage("call,Quiz_Mgmt,Quiz_Start.vm")>$brih_quiz </a> | $brih_quiz $brih_detail 
+        | <a href=$link.setPage("call,CourseMgmt_User,CourseHome.vm")>$cnm</a> |  
+	<a href=$link.setPage("call,IndexHome.vm")>$brih_home</a> 	
+        </font>
+        </td>
+</tr>
+</table><br>
+$!data.getMessage()
+
+<form name="frm" method="post" action="$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm").setAction("Quiz_Action")">
+	<table align=center border=1 bgcolor="$ui.tableColor" width="60%">
+	<tr bgcolor="$ui.tableColor" >
+		<td align="center" bgcolor="$ui.menuColor" colspan=7>
+		<b><i> $brih_quiz $brih_Of $brih_detail </i></b></td></tr>
+	#set($count="")
+       	#foreach($qid in $Quizid)
+		<tr align="right">
+			<td><a href=$link.setPage("call,Quiz_Mgmt,Quiz_Schedule.vm").addPathInfo("qname",$qid.getquizid()).addPathInfo("mode","QuizDetail")>$brih_update </a></td>
+			<td><a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm").setAction("Quiz_Action").addPathInfo("qname",$qid.getquizid()).addPathInfo("actionName","eventSubmit_doDestroy") onclick="javascript:return confirm('Do you want to delete this topic')"> $brih_delete </a></td>
+			<td><a href=$link.setPage("call,Quiz_Mgmt,ViewQuiz.vm").addPathInfo("qname",$qid.getquizid())>$brih_view </a></td>
+			<td><a href=$link.setPage("call,Quiz_Mgmt,Quiz_Detail.vm").setAction("Notice_Send_Delete").addPathInfo("mode1","quiz").addPathInfo("subject",$qid.getquizid()).addPathInfo("course_list",$courselist).addPathInfo("message",$message).addPathInfo("quezdate",$quezdate).addPathInfo("role","all").addPathInfo("actionName","eventSubmit_doSend")> $brih_QDannounce </a></td>
+			#if($qid.getsqid() == "0")
+			<td>
+				<a href=$link.setPage("call,Quiz_Mgmt,Create_Quiz.vm").addPathInfo("qname",$qid.getquizid())> $WikiCreate </a>
+			</td>
+			#else
+			<td>
+<a href=$link.setPage("call,Quiz_Mgmt,Multi_Type.vm").addPathInfo("quizid",$qid.getquizid()).setAction("Quiz_Action").addPathInfo("actionName","finishedQuestion")>$brih_add $brih_more $brih_qus </a></td>
+			#end
+       			<td> $qid.getquizid() </td>
+			<td><INPUT TYPE="CHECKBOX" NAME=$qid.getquizid() VALUE=$qid.getquizid() onClick="addDeleteList(this,document.frm);"></td>
+	        </tr>
+	<INPUT TYPE="hidden" NAME="qname" value=$qid.getquizid() >
+	#set($count="$count$qid.getquizid()^")
+	#end
+	#if($Quizid.size()!=0)
+	<tr bgcolor="$ui.menuColor" align="right">
+	        <td colspan=7 border=0>
+	        <input type="button" name="eventSubmit_doRemove" value=$brih_delete onClick="checkField(document.frm,this);"/>
+		<input type="reset" value="$brih_reset">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font face="$ui.sansSerifFonts"><b>$brih_selAll</b>
+		<input type="CHECKBOX" name="checkAll" onClick=selectAll(this);>
+	        </td>
+	</tr>
+	#end	
+		<INPUT TYPE="hidden" NAME="deleteFileNames">	
+        	<input type="hidden" name="actionName">
+</table>
+</form>
+
+<SCRIPT LANGUAGE="javascript">
+	function popupWin(url,popupName)
+        {
+                Win1=window.open(url,popupName,"resizable=0,scrollbars=1,height=400,width=400,align=left");
+        }
+
+	function checkField(frm,field)
+	{
+		if(frm.deleteFileNames.value!="")
+        	{
+                	frm.actionName.value=field.name;
+                	frm.submit();
+        	}
+        	else
+        	{
+                	alert("Please select checkbox for deletion !!");
+        	}
+	}
+
+	function addDeleteList(field,frm)
+	{
+		if(field.checked)
+		{
+			frm.deleteFileNames.value=frm.deleteFileNames.value+field.name+"^";
+		}
+                else
+                {
+                        var rmFile,index,actualString,preString,postString;
+                        actualString=frm.deleteFileNames.value;
+                        index=actualString.indexOf(field.name+"^",0);
+                        preString=actualString.substring(0,index);
+                        postString=actualString.substring(index+field.name.length+1);
+                        actualString=preString+postString;
+                        frm.deleteFileNames.value=actualString;
+                }
+	}
+	function selectAll(field)
+	{
+        	if(field.checked)
+        	{
+                	var rmFile,index,actualString,pre=0,next=0;
+                	actualString=document.frm.deleteFileNames.value="$count";
+                	while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+                        	var temp=actualString.substring(next,pre);
+                         	next=pre+1;
+                        	rmFile=document.frm.elements[temp].checked=true;
+                        }
+		}
+        	else
+        	{
+                	var rmFile,index,actualString,pre=0,next=0;
+                        actualString=document.frm.deleteFileNames.value="$count";
+			while( ( pre=actualString.indexOf("^",next) ) >=0 )
+                        {
+				var temp=actualString.substring(next,pre);
+                        	next=pre+1;
+                        	rmFile=document.frm.elements[temp].checked=false;
+                        }
+                        document.frm.deleteFileNames.value="";
+           	}
+	}
+</SCRIPT>
